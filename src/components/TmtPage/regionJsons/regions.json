@@ -1,0 +1,401 @@
+[
+  {
+    "Koodi": "01",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Uusimaa"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Nyland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Uusimaa"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "02",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Varsinais-Suomi"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Egentliga Finland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Southwest Finland"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "04",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Satakunta"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Satakunta"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Satakunta"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "05",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kanta-Häme"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Egentliga Tavastland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Kanta-Häme"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "06",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Pirkanmaa"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Birkaland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Pirkanmaa"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "07",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Päijät-Häme"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Päijänne-Tavastland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Päijät-Häme"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "08",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kymenlaakso"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kymmenedalen"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Kymenlaakso"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "09",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Etelä-Karjala"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Södra Karelen"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "South Karelia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "10",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Etelä-Savo"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Södra Savolax"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "South Savo"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "11",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Pohjois-Savo"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Norra Savolax"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "North Savo"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "12",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Pohjois-Karjala"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Norra Karelen"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "North Karelia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "13",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Keski-Suomi"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Mellersta Finland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Central Finland"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "14",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Etelä-Pohjanmaa"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Södra Österbotten"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "South Ostrobothnia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "15",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Pohjanmaa"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Österbotten"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Ostrobothnia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "16",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Keski-Pohjanmaa"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Mellersta Österbotten"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Central Ostrobothnia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "17",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Pohjois-Pohjanmaa"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Norra Österbotten"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "North Ostrobothnia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "18",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kainuu"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kajanaland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Kainuu"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "19",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Lappi"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Lappland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Lapland"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "21",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-09-01T04:54:28.497Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Ahvenanmaa - Åland"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Åland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Åland"
+      }
+    ],
+    "Laajennukset": []
+  }
+]

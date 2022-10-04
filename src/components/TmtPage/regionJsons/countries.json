@@ -1,0 +1,5210 @@
+[
+  {
+    "Koodi": "AF",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Afganistan"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Afghanistan"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Afghanistan"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "NL",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Alankomaat"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Nederländerna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Netherlands"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "AL",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Albania"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Albanien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Albania"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "DZ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Algeria"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Algeriet"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Algeria"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "AS",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Amerikan Samoa"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Amerikanska Samoa"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "American Samoa"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "AD",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Andorra"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Andorra"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Andorra"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "AO",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Angola"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Angola"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Angola"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "AI",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Anguilla"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Anguilla"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Anguilla"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "AQ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Antarktis"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Antarktis"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Antarctica"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "AG",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Antigua ja Barbuda"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Antigua och Barbuda"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Antigua And Barbuda"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "AE",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Arabiemiirikunnat"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Förenade Arabemiraten"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "United Arab Emirates"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "AR",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Argentiina"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Argentina"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Argentina"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "AM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Armenia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Armenien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Armenia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "AW",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Aruba"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Aruba"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Aruba"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "AU",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Australia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Australien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Australia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "AZ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Azerbaidžan"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Azerbajdzjan"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Azerbaijan"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BS",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Bahama"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Bahamas"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Bahamas"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BH",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Bahrain"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Bahrain"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Bahrain"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BD",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Bangladesh"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Bangladesh"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Bangladesh"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BB",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Barbados"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Barbados"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Barbados"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BE",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Belgia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Belgien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Belgium"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BZ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Belize"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Belize"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Belize"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BJ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Benin"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Benin"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Benin"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Bermuda"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Bermuda"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Bermuda"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BT",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Bhutan"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Bhutan"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Bhutan"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BO",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Bolivia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Bolivia"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Bolivia, Plurinational State Of"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BQ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Bonaire, Sint Eustatius ja Saba"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Bonaire, Sint Eustatius och Saba"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Bonaire, Sint Eustatius And Saba"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BA",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Bosnia ja Hertsegovina"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Bosnien och Hercegovina"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Bosnia And Herzegovina"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BW",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Botswana"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Botswana"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Botswana"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BV",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Bouvet’nsaari"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Bouvetön"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Bouvet Island"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BR",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Brasilia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Brasilien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Brazil"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GB",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Britannia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Förenade kungariket"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "United Kingdom"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "IO",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Brittiläinen Intian valtameren alue"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Brittiska territoriet i Indiska Oceanen"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "British Indian Ocean Territory"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "VG",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Brittiläiset Neitsytsaaret"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Brittiska Jungfruöarna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Virgin Islands, British"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BN",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Brunei"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Brunei"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Brunei Darussalam"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BG",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Bulgaria"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Bulgarien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Bulgaria"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BF",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Burkina Faso"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Burkina Faso"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Burkina Faso"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BI",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Burundi"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Burundi"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Burundi"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "KY",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Caymansaaret"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Caymanöarna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Cayman Islands"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CL",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Chile"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Chile"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Chile"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CK",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Cookinsaaret"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Cooköarna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Cook Islands"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CR",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Costa Rica"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Costa Rica"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Costa Rica"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CW",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Curaçao"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Curaçao"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Curaçao"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "DJ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Djibouti"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Djibouti"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Djibouti"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "DM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Dominica"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Dominica"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Dominica"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "DO",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Dominikaaninen tasavalta"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Dominikanska republiken"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Dominican Republic"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "EC",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Ecuador"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Ecuador"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Ecuador"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "EG",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Egypti"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Egypten"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Egypt"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SV",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "El Salvador"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "El Salvador"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "El Salvador"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "ER",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Eritrea"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Eritrea"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Eritrea"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "ES",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Espanja"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Spanien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Spain"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "ZA",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Etelä-Afrikka"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Sydafrika"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "South Africa"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GS",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Etelä-Georgia ja Eteläiset Sandwichsaaret"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Sydgeorgien och Sydsandwichöarna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "South Georgia And The South Sandwich Islands"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SS",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Etelä-Sudan"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Sydsudan"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "South Sudan"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "ET",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Etiopia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Etiopien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Ethiopia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "FK",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Falklandinsaaret"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Falklandsöarna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Falkland Islands (Malvinas)"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "FJ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Fidži"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Fiji"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Fiji"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "PH",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Filippiinit"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Filippinerna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Philippines"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "FO",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Färsaaret"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Färöarna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Faroe Islands"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GA",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Gabon"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Gabon"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Gabon"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Gambia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Gambia"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Gambia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GE",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Georgia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Georgien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Georgia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GH",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Ghana"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Ghana"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Ghana"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GI",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Gibraltar"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Gibraltar"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Gibraltar"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GD",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Grenada"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Grenada"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Grenada"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GL",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Grönlanti"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Grönland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Greenland"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GP",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Guadeloupe"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Guadeloupe"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Guadeloupe"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GU",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Guam"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Guam"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Guam"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GT",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Guatemala"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Guatemala"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Guatemala"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GG",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Guernsey"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Guernsey"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Guernsey"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GN",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Guinea"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Guinea"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Guinea"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GW",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Guinea-Bissau"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Guinea-Bissau"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Guinea-Bissau"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GY",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Guyana"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Guyana"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Guyana"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "HT",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Haiti"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Haiti"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Haiti"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "HM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Heard ja McDonaldinsaaret"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Heardön och McDonaldöarna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Heard Island And Mcdonald Islands"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "HN",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Honduras"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Honduras"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Honduras"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "HK",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Hongkong"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Hongkong"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Hong Kong"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "ID",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Indonesia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Indonesien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Indonesia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "IN",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Intia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Indien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "India"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "IQ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Irak"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Irak"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Iraq"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "IR",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Iran"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Iran"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Iran, Islamic Republic Of"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "IE",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Irlanti"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Irland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Ireland"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "IS",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Islanti"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Island"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Iceland"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "IL",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Israel"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Israel"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Israel"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "IT",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Italia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Italien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Italy"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TL",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Itä-Timor"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Östtimor"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Timor-Leste"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "AT",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Itävalta"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Österrike"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Austria"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "JM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Jamaika"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Jamaica"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Jamaica"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "JP",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Japani"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Japan"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Japan"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "YE",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Jemen"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Yemen"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Yemen"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "JE",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Jersey"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Jersey"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Jersey"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "JO",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Jordania"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Jordanien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Jordan"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CX",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Joulusaari"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Julön"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Christmas Island"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "KH",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kambodža"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kambodja"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Cambodia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kamerun"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kamerun"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Cameroon"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CA",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kanada"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kanada"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Canada"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CV",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kap Verde"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kap Verde"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Cabo Verde"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "KZ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kazakstan"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kazakstan"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Kazakhstan"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "KE",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kenia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kenya"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Kenya"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CF",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Keski-Afrikan tasavalta"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Centralafrikanska republiken"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Central African Republic"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CN",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kiina"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kina"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "China"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "KG",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kirgisia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kirgizistan"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Kyrgyzstan"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "KI",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kiribati"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kiribati"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Kiribati"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CO",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kolumbia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Colombia"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Colombia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "KM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Komorit"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Komorerna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Comoros"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CG",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kongo (Kongo-Brazzaville)"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kongo (Kongo-Brazzaville)"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Congo"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CD",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kongo (Kongo-Kinshasa)"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kongo (Kongo-Kinshasa)"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Congo, The Democratic Republic Of The"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CC",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kookossaaret"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Cocosöarna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Cocos (Keeling) Islands"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "KP",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Korean demokraattinen kansantasavalta (Pohjois-Korea)"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Demokratiska folkrepubliken Korea (Nordkorea)"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Korea, Democratic People'S Republic Of"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "KR",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Korean tasavalta (Etelä-Korea)"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Republiken Korea (Sydkorea)"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Korea, Republic Of"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GR",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kreikka"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Grekland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Greece"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "HR",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kroatia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kroatien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Croatia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CU",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kuuba"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kuba"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Cuba"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "KW",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kuwait"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Kuwait"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Kuwait"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CY",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Kypros"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Cypern"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Cyprus"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "LA",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Laos"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Laos"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Lao People'S Democratic Republic"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "LV",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Latvia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Lettland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Latvia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "LS",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Lesotho"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Lesotho"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Lesotho"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "LB",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Libanon"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Libanon"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Lebanon"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "LR",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Liberia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Liberia"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Liberia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "LY",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Libya"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Libyen"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Libya"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "LI",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Liechtenstein"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Liechtenstein"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Liechtenstein"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "LT",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Liettua"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Litauen"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Lithuania"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "LU",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Luxemburg"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Luxemburg"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Luxembourg"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "EH",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Länsi-Sahara"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Västsahara"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Western Sahara"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MO",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Macao"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Macao"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Macao"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MG",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Madagaskar"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Madagaskar"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Madagascar"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MK",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Makedonia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Nordmakedonien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "North Macedonia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MW",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Malawi"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Malawi"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Malawi"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MV",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Malediivit"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Maldiverna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Maldives"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MY",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Malesia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Malaysia"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Malaysia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "ML",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Mali"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Mali"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Mali"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MT",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Malta"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Malta"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Malta"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "IM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Mansaari"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Isle of Man"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Isle Of Man"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MA",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Marokko"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Marocko"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Morocco"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MH",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Marshallinsaaret"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Marshallöarna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Marshall Islands"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MQ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Martinique"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Martinique"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Martinique"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MR",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Mauritania"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Mauretanien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Mauritania"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MU",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Mauritius"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Mauritius"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Mauritius"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "YT",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Mayotte"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Mayotte"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Mayotte"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MX",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Meksiko"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Mexiko"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Mexico"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "FM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Mikronesia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Mikronesien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Micronesia, Federated States Of"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MD",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Moldova"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Moldavien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Moldova, Republic Of"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MC",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Monaco"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Monaco"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Monaco"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MN",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Mongolia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Mongoliet"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Mongolia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "ME",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Montenegro"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Montenegro"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Montenegro"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MS",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Montserrat"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Montserrat"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Montserrat"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MZ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Mosambik"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Moçambique"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Mozambique"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Myanmar"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Myanmar"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Myanmar"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "NA",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Namibia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Namibia"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Namibia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "NR",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Nauru"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Nauru"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Nauru"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "NP",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Nepal"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Nepal"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Nepal"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "NI",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Nicaragua"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Nicaragua"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Nicaragua"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "NE",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Niger"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Niger"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Niger"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "NG",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Nigeria"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Nigeria"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Nigeria"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "NU",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Niue"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Niue"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Niue"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "NF",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Norfolkinsaari"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Norfolkön"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Norfolk Island"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "NO",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Norja"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Norge"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Norway"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CI",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Norsunluurannikko"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Elfenbenskusten"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Côte D'Ivoire"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "OM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Oman"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Oman"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Oman"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "PK",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Pakistan"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Pakistan"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Pakistan"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "PW",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Palau"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Palau"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Palau"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "PS",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Palestiinan valtio"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Staten Palestina"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Palestine"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "PA",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Panama"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Panama"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Panama"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "PG",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Papua-Uusi-Guinea"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Papua Nya Guinea"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Papua New Guinea"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "PY",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Paraguay"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Paraguay"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Paraguay"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "PE",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Peru"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Peru"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Peru"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "PN",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Pitcairn"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Pitcairn"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Pitcairn"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MP",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Pohjois-Mariaanit"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Nordmarianerna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Northern Mariana Islands"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "PT",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Portugali"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Portugal"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Portugal"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "PR",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Puerto Rico"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Puerto Rico"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Puerto Rico"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "PL",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Puola"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Polen"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Poland"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GQ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Päiväntasaajan Guinea"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Ekvatorialguinea"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Equatorial Guinea"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "QA",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Qatar"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Qatar"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Qatar"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "FR",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Ranska"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Frankrike"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "France"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TF",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Ranskan eteläiset alueet"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "De franska territorierna i södra Indiska Oceanen"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "French Southern Territories"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "GF",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Ranskan Guayana"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Franska Guyana"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "French Guiana"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "PF",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Ranskan Polynesia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Franska Polynesien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "French Polynesia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "RE",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Réunion"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Réunion"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Réunion"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "RO",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Romania"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Rumänien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Romania"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "RW",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Ruanda"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Rwanda"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Rwanda"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SE",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Ruotsi"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Sverige"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Sweden"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BL",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Saint Barthélemy"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Saint Barthélemy"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Saint Barthélemy"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SH",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Saint Helena,  Ascension ja Tristan da Cunha"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Saint Helena, Ascension och Tristan da Cunha"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Saint Helena, Ascension And Tristan Da Cunha"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "KN",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Saint Kitts ja Nevis"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Saint Kitts och Nevis"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Saint Kitts And Nevis"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "LC",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Saint Lucia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Saint Lucia"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Saint Lucia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "MF",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Saint Martin (Ranskan osa)"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Saint Martin"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Saint Martin (French Part)"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "VC",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Saint Vincent ja Grenadiinit"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Saint Vincent och Grenadinerna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Saint Vincent And The Grenadines"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "PM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Saint-Pierre ja Miquelon"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Saint Pierre och Miquelon"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Saint Pierre And Miquelon"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "DE",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Saksa"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Tyskland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Germany"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SB",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Salomonsaaret"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Salomonöarna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Solomon Islands"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "ZM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Sambia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Zambia"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Zambia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "WS",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Samoa"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Samoa"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Samoa"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "San Marino"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "San Marino"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "San Marino"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "ST",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "São Tomé ja Príncipe"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "São Tomé och Príncipe"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Sao Tome And Principe"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SA",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Saudi-Arabia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Saudiarabien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Saudi Arabia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SN",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Senegal"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Senegal"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Senegal"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "RS",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Serbia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Serbien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Serbia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SC",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Seychellit"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Seychellerna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Seychelles"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SL",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Sierra Leone"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Sierra Leone"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Sierra Leone"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SG",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Singapore"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Singapore"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Singapore"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SX",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Sint Maarten (Alankomaiden osa)"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Sint Maarten (Nederländsk del)"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Sint Maarten (Dutch Part)"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SK",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Slovakia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Slovakien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Slovakia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SI",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Slovenia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Slovenien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Slovenia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SO",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Somalia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Somalia"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Somalia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "LK",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Sri Lanka"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Sri Lanka"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Sri Lanka"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SD",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Sudan"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Sudan"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Sudan"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "FI",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Suomi"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Finland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Finland"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SR",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Suriname"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Surinam"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Suriname"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SJ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Svalbard ja Jan Mayen"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Svalbard och Jan Mayen"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Svalbard And Jan Mayen"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SZ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Eswatini"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Eswatini"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Eswatini"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CH",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Sveitsi"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Schweiz"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Switzerland"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "SY",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Syyria"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Syrien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Syrian Arab Republic"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TJ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Tadžikistan"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Tadzjikistan"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Tajikistan"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TW",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Taiwan"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Taiwan"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Taiwan"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TZ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Tansania"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Tanzania"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Tanzania, United Republic Of"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "DK",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Tanska"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Danmark"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Denmark"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TH",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Thaimaa"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Thailand"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Thailand"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TG",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Togo"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Togo"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Togo"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TK",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Tokelau"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Tokelau"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Tokelau"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TO",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Tonga"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Tonga"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Tonga"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TT",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Trinidad ja Tobago"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Trinidad och Tobago"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Trinidad And Tobago"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TD",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Tšad"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Tchad"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Chad"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "CZ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Tšekki"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Tjeckien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Czech Republic"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TN",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Tunisia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Tunisien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Tunisia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TR",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Turkki"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Turkiet"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Turkey"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Turkmenistan"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Turkmenistan"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Turkmenistan"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TC",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Turks- ja Caicossaaret"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Turks- och Caicosöarna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Turks And Caicos Islands"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "TV",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Tuvalu"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Tuvalu"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Tuvalu"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "UG",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Uganda"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Uganda"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Uganda"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "UA",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Ukraina"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Ukraina"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Ukraine"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "HU",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Unkari"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Ungern"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Hungary"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "UY",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Uruguay"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Uruguay"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Uruguay"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "NC",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Uusi-Kaledonia"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Nya Kaledonien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "New Caledonia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "NZ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Uusi-Seelanti"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Nya Zeeland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "New Zealand"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "UZ",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Uzbekistan"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Uzbekistan"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Uzbekistan"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "BY",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Valko-Venäjä"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Vitryssland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Belarus"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "WF",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Wallis ja Futuna"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Wallis och Futuna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Wallis And Futuna"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "VU",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Vanuatu"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Vanuatu"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Vanuatu"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "VA",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Vatikaani"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Vatikanstaten"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Holy See (Vatican City State)"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "VE",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Venezuela"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Venezuela"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Venezuela, Bolivarian Republic Of"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "RU",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Venäjä"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Ryssland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Russian Federation"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "VN",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Vietnam"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Vietnam"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Viet Nam"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "EE",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Viro"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Estland"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Estonia"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "US",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Yhdysvallat (USA)"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Förenta Staterna (USA)"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "United States"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "VI",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Yhdysvaltain Neitsytsaaret"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Amerikanska Jungfruöarna"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Virgin Islands, U.S."
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "UM",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Yhdysvaltain pienet erillissaaret"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Förenta Staternas mindre öar i Oceanien och Västindien"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "United States Minor Outlying Islands"
+      }
+    ],
+    "Laajennukset": []
+  },
+  {
+    "Koodi": "ZW",
+    "Alkupaiva": "1900-01-01",
+    "Loppupaiva": "2999-12-31",
+    "Muokkausaika": "2020-10-07T12:46:56.93Z",
+    "Selitteet": [
+      {
+        "Kielikoodi": "fi",
+        "Teksti": "Zimbabwe"
+      },
+      {
+        "Kielikoodi": "sv",
+        "Teksti": "Zimbabwe"
+      },
+      {
+        "Kielikoodi": "en",
+        "Teksti": "Zimbabwe"
+      }
+    ],
+    "Laajennukset": []
+  }
+]

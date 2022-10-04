@@ -1,0 +1,17 @@
+<svg width="1270px" height="1270px" viewBox="0 0 1270 1270" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Sinuna_brandmark_black_rgb</title>
+    <defs>
+        <polygon id="path-1" points="0 0 1270 0 1270 1270 0 1270"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Sinuna_brandmark_black_rgb">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Clip-2"></g>
+            <polyline id="Fill-1" fill="#FFFFFF" mask="url(#mask-2)" points="0 0 0 158.768309 1111.23169 158.768309 1111.23169 1270 1270 1270 1270 0 0 0"></polyline>
+            <path d="M635,635 L635,1270 L476.236268,1270 L476.236268,952.5 C476.236268,864.830928 405.169072,793.768309 317.5,793.768309 C229.835505,793.768309 158.768309,864.830928 158.768309,952.5 L158.768309,1270 L0,1270 L0,635 L635,635" id="Fill-3" fill="#FFFFFF" mask="url(#mask-2)"></path>
+            <polyline id="Fill-4" fill="#FFFFFF" mask="url(#mask-2)" points="0 320 0 478.293005 795.820331 478.293005 795.820331 1270 955 1270 955 320 0 320"></polyline>
+        </g>
+    </g>
+</svg>

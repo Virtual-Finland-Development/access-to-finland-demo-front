@@ -1,0 +1,41 @@
+export enum PlaceType {
+  REGION,
+  MUNICIPALITY,
+  COUNTRY,
+}
+
+export interface PlaceSelection {
+  type?: PlaceType;
+  Alkupaiva: string;
+  Koodi: string;
+  Laajennukset?: any[];
+  Loppupaiva: string;
+  Muokkausaika: string;
+  Selitteet: {
+    Kielikoodi: string;
+    Teksti: string;
+  }[];
+}
+
+export interface JobPostingEntry {
+  employer: string;
+  location: {
+    municipality: string;
+    postcode: string;
+  };
+  basicInfo: {
+    title: string;
+    description: string;
+    workTimeType: '01' | '02';
+  };
+  publishedAt: string;
+  applicationEndDate: string;
+  applicationUrl: string;
+}
+
+export interface RequestPayload {
+  search: string | null;
+  selectedPlaces: any[];
+  limit: number;
+  offset: number;
+}
