@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Stack } from '@chakra-ui/react';
+import { Button, Heading, Stack } from '@chakra-ui/react';
 import { IoLogIn, IoLogoLinkedin } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 

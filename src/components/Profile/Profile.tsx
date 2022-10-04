@@ -1,4 +1,4 @@
-import { Flex, Heading, Stack } from '@chakra-ui/react';
+import { Heading, Stack } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
 // context
