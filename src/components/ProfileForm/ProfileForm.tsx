@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
+import { faker } from '@faker-js/faker';
 import {
   Button,
   FormControl,
@@ -10,17 +11,28 @@ import {
   FormErrorMessage,
   Divider,
 } from '@chakra-ui/react';
-import { Select, OptionBase, GroupBase, MultiValue } from 'chakra-react-select';
+import {
+  Select,
+  OptionBase,
+  GroupBase,
+  MultiValue,
+  ActionMeta,
+} from 'chakra-react-select';
+
+// region selections
+import regions from '../TmtPage/regionJsons/regions.json';
+import municipalities from '../TmtPage/regionJsons/municipalities.json';
 
 interface UserProfile {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
+  firstNames: string;
+  familyNames: string;
+  address: string;
+  jobTitle: string[];
   languages: string[];
+  regions: string[];
 }
 
-interface LanguageOption extends OptionBase {
+interface Option extends OptionBase {
   label: string;
   value: string;
 }
@@ -29,6 +41,23 @@ const languageOptions = [
   { value: 'fi', label: 'Finnish' },
   { value: 'en', label: 'English' },
   { value: 'sv', label: 'Swedish' },
+];
+
+const groupedRegionOptions = [
+  {
+    label: 'Regions',
+    options: regions.map(r => ({
+      value: r.Koodi,
+      label: r.Selitteet[2].Teksti,
+    })),
+  },
+  {
+    label: 'Municipalities',
+    options: municipalities.map(m => ({
+      value: m.Koodi,
+      label: m.Selitteet[2].Teksti,
+    })),
+  },
 ];
 
 interface ProfileFormProps {
@@ -55,6 +84,7 @@ export default function ProfileForm(props: ProfileFormProps) {
    */
   useEffect(() => {
     register('languages', { required: 'Language is required' });
+    register('regions', { required: 'Regions required' });
   }, [register]);
 
   const onSubmit = async (values: Partial<UserProfile>) => {
@@ -63,15 +93,22 @@ export default function ProfileForm(props: ProfileFormProps) {
   };
 
   /**
-   * Handle icon change
+   * Handle multi select changes-
    */
-  const handleLanguagesChange = (selections: MultiValue<LanguageOption>) => {
-    if (errors?.languages) {
-      clearErrors('languages');
+  const handleMultiSelectChange = (
+    selections: MultiValue<Option>,
+    meta: ActionMeta<Option>
+  ) => {
+    if (!meta.name) return;
+
+    const field = meta.name as 'languages' | 'regions';
+
+    if (errors?.[`${field}`]) {
+      clearErrors(field);
     }
 
     setValue(
-      'languages',
+      field,
       selections.map(s => s.value),
       { shouldDirty: true }
     );
@@ -81,8 +118,8 @@ export default function ProfileForm(props: ProfileFormProps) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={4}>
         <FormControl
-          isInvalid={Boolean(errors?.firstName)}
-          id="firstName"
+          isInvalid={Boolean(errors?.firstNames)}
+          id="firstNames"
           // isRequired
         >
           <FormLabel>First name</FormLabel>
@@ -90,19 +127,21 @@ export default function ProfileForm(props: ProfileFormProps) {
             type="text"
             placeholder="John"
             _placeholder={{ color: 'gray.500' }}
-            {...register('firstName', {
+            {...register('firstNames', {
               required: 'First name is required',
             })}
+            defaultValue={faker.name.firstName()}
+            readOnly
           />
           <ErrorMessage
             errors={errors}
             as={<FormErrorMessage />}
-            name="firstName"
+            name="firstNames"
           />
         </FormControl>
         <FormControl
-          isInvalid={Boolean(errors?.lastName)}
-          id="lastName"
+          isInvalid={Boolean(errors?.familyNames)}
+          id="familyNames"
           // isRequired
         >
           <FormLabel>Last name</FormLabel>
@@ -110,9 +149,11 @@ export default function ProfileForm(props: ProfileFormProps) {
             type="text"
             placeholder="Doe"
             _placeholder={{ color: 'gray.500' }}
-            {...register('lastName', {
+            {...register('familyNames', {
               required: 'Last name is required',
             })}
+            defaultValue={faker.name.lastName()}
+            readOnly
           />
           <ErrorMessage
             errors={errors}
@@ -121,37 +162,25 @@ export default function ProfileForm(props: ProfileFormProps) {
           />
         </FormControl>
         <FormControl
-          isInvalid={Boolean(errors?.email)}
-          id="email" /* isRequired */
+          isInvalid={Boolean(errors?.address)}
+          id="address"
+          // isRequired
         >
-          <FormLabel>Email address</FormLabel>
+          <FormLabel>Address</FormLabel>
           <Input
-            placeholder="john-doe@example.com"
+            type="text"
+            placeholder="Address"
             _placeholder={{ color: 'gray.500' }}
-            type="email"
-            {...register('email', { required: 'Email is required' })}
+            {...register('address', {
+              required: 'Address  sis required',
+            })}
+            defaultValue={faker.address.streetAddress()}
+            readOnly
           />
           <ErrorMessage
             errors={errors}
             as={<FormErrorMessage />}
-            name="email"
-          />
-        </FormControl>
-        <FormControl
-          isInvalid={Boolean(errors?.phone)}
-          id="phone" /* isRequired */
-        >
-          <FormLabel>Phone number</FormLabel>
-          <Input
-            placeholder="international (+358 409275924)"
-            _placeholder={{ color: 'gray.500' }}
-            type="tel"
-            {...register('phone', { required: 'Phone is required' })}
-          />
-          <ErrorMessage
-            errors={errors}
-            as={<FormErrorMessage />}
-            name="phone"
+            name="lastName"
           />
         </FormControl>
         <FormControl
@@ -159,19 +188,39 @@ export default function ProfileForm(props: ProfileFormProps) {
           id="languages" /* isRequired */
         >
           <FormLabel>Languages</FormLabel>
-          <Select<LanguageOption, true, GroupBase<LanguageOption>>
+          <Select<Option, true, GroupBase<Option>>
             isMulti
             name="languages"
             options={languageOptions}
             placeholder="Choose languages..."
             closeMenuOnSelect={false}
             size="md"
-            onChange={handleLanguagesChange}
+            onChange={handleMultiSelectChange}
           />
           <ErrorMessage
             errors={errors}
             as={<FormErrorMessage />}
             name="phone"
+          />
+        </FormControl>
+        <FormControl
+          isInvalid={Boolean(errors?.regions)}
+          id="regions" /* isRequired */
+        >
+          <FormLabel>Regions</FormLabel>
+          <Select<Option, true, GroupBase<Option>>
+            isMulti
+            name="regions"
+            options={groupedRegionOptions}
+            placeholder="Choose your preferred regions..."
+            closeMenuOnSelect={false}
+            size="md"
+            onChange={handleMultiSelectChange}
+          />
+          <ErrorMessage
+            errors={errors}
+            as={<FormErrorMessage />}
+            name="regions"
           />
         </FormControl>
         <Divider />
