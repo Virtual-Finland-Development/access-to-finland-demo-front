@@ -6,6 +6,7 @@ import { Box, Container } from '@chakra-ui/react';
 import WelcomePage from '../WelcomePage/WelcomePage';
 import NavBar from '../NavBar/NavBar';
 import Loading from '../Loading/Loading';
+import PageNotFound from '../PageNotFound/PageNotFound';
 
 const LazyTmt = lazy(() => import('../TmtPage/TmtPage'));
 
@@ -39,6 +40,7 @@ export default function AppRoutes() {
           }
         />
         <Route path="about" element={<About />} />
+        <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
   );

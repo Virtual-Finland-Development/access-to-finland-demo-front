@@ -22,23 +22,21 @@ export default function Profile() {
   };
 
   return (
-    <Flex minH="100vh" align="center" justify="center" bg="gray.50">
-      <Stack
-        spacing={4}
-        w="full"
-        maxW="md"
-        bg="white"
-        rounded="xl"
-        boxShadow="lg"
-        p={6}
-        my={12}
-        mx={{ base: 4, md: 0 }}
-      >
-        <Heading lineHeight={1.1} fontSize={{ base: '2xl', sm: '3xl' }}>
-          Fill in your profile
-        </Heading>
-        <ProfileForm onProfileSubmit={onProfileSubmit} onCancel={onCancel} />
-      </Stack>
-    </Flex>
+    <Stack
+      spacing={4}
+      w="full"
+      maxW="md"
+      bg="white"
+      rounded="xl"
+      boxShadow="lg"
+      p={6}
+      my={12}
+      mx={{ base: 4, md: 0 }}
+    >
+      <Heading lineHeight={1.1} fontSize={{ base: '2xl', sm: '3xl' }}>
+        Fill in your profile
+      </Heading>
+      <ProfileForm onProfileSubmit={onProfileSubmit} onCancel={onCancel} />
+    </Stack>
   );
 }

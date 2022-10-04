@@ -22,75 +22,73 @@ export default function Login() {
   const navigate = useNavigate();
 
   return (
-    <Flex minH="100vh" align="center" justify="center" bg="gray.50">
-      <Stack
-        spacing={4}
-        w="full"
-        maxW="md"
-        bg="white"
-        rounded="xl"
-        boxShadow="lg"
-        p={6}
-        my={12}
-        mx={{ base: 4, md: 0 }}
+    <Stack
+      spacing={4}
+      w="full"
+      maxW="md"
+      bg="white"
+      rounded="xl"
+      boxShadow="lg"
+      p={6}
+      my={12}
+      mx={{ base: 4, md: 0 }}
+    >
+      <Heading
+        lineHeight={1.1}
+        fontSize={{ base: '2xl', md: '3xl' }}
+        textAlign="center"
       >
-        <Heading
-          lineHeight={1.1}
-          fontSize={{ base: '2xl', md: '3xl' }}
-          textAlign="center"
+        Log in
+      </Heading>
+      <Stack spacing={6}>
+        <Button
+          bg="blue.400"
+          color="white"
+          _hover={{
+            bg: 'blue.500',
+          }}
+          leftIcon={<IoLogIn size="20" />}
+          onClick={() => navigate('profile')}
         >
-          Log in
-        </Heading>
-        <Stack spacing={6}>
-          <Button
-            bg="blue.400"
-            color="white"
-            _hover={{
-              bg: 'blue.500',
-            }}
-            leftIcon={<IoLogIn size="20" />}
-            onClick={() => navigate('profile')}
-          >
-            Login with Dummy
-          </Button>
-          <Button
-            bg="#203CCC"
-            color="white"
-            _hover={{
-              bg: 'blue.500',
-              _disabled: {
-                bg: '#203CCC',
-              },
-            }}
-            leftIcon={<SinunaIcon />}
-            disabled
-          >
-            Login with Sinuna
-          </Button>
-          <Button
-            bg="#003479"
-            color="white"
-            _hover={{
-              bg: 'blue.500',
-              _disabled: {
-                bg: '#003479',
-              },
-            }}
-            leftIcon={<SuomiFiIcon />}
-            disabled
-          >
-            Login with Suomi.fi
-          </Button>
-          <Button
-            colorScheme="linkedin"
-            leftIcon={<IoLogoLinkedin />}
-            onClick={() => logIn()}
-            disabled
-          >
-            Login with LinkedIn
-          </Button>
-        </Stack>
+          Login with Dummy
+        </Button>
+        <Button
+          bg="#203CCC"
+          color="white"
+          _hover={{
+            bg: 'blue.500',
+            _disabled: {
+              bg: '#203CCC',
+            },
+          }}
+          leftIcon={<SinunaIcon />}
+          disabled
+        >
+          Login with Sinuna
+        </Button>
+        <Button
+          bg="#003479"
+          color="white"
+          _hover={{
+            bg: 'blue.500',
+            _disabled: {
+              bg: '#003479',
+            },
+          }}
+          leftIcon={<SuomiFiIcon />}
+          disabled
+        >
+          Login with Suomi.fi
+        </Button>
+        <Button
+          colorScheme="linkedin"
+          leftIcon={<IoLogoLinkedin />}
+          onClick={() => logIn()}
+          disabled
+        >
+          Login with LinkedIn
+        </Button>
       </Stack>
-    </Flex>
+    </Stack>
   );
 }
