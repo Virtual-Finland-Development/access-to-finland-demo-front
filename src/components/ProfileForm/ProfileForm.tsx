@@ -10,6 +10,7 @@ import {
   Stack,
   FormErrorMessage,
   Divider,
+  useToast,
 } from '@chakra-ui/react';
 import {
   Select,
@@ -83,17 +84,19 @@ export default function ProfileForm(props: ProfileFormProps) {
     setValue,
     clearErrors,
     watch,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, dirtyFields },
   } = useForm<UserProfile>({
     mode: 'onSubmit',
     /* defaultValues: {}, */
   });
 
+  const toast = useToast();
+
   /**
    * Custom register languages.
    */
   useEffect(() => {
-    // register('languages', { required: 'Language is required' });
+    // register('languages');
     register('jobTitles');
     register('regions');
   }, [register]);
@@ -104,10 +107,45 @@ export default function ProfileForm(props: ProfileFormProps) {
   /**
    * Handle form submit.
    */
-  const onSubmit = async (values: Partial<UserProfile>) => {
-    console.log(values);
-    onProfileSubmit();
-  };
+  const onSubmit = useCallback(
+    async (values: any) => {
+      try {
+        let payload: Partial<UserProfile> = {};
+        const dirtyKeys = Object.keys(dirtyFields);
+
+        if (dirtyKeys.length) {
+          for (const key of dirtyKeys) {
+            if (values[key]) {
+              payload[key as keyof UserProfile] = values[key];
+            }
+          }
+        }
+
+        console.log(payload);
+        // post payload to api
+
+        onProfileSubmit();
+
+        toast({
+          title: 'Profile saved.',
+          description: 'Your profile was updated successfully.',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+      } catch (error) {
+        console.log(error);
+        toast({
+          title: 'Error.',
+          description: 'Something went wrong, please try again later.',
+          status: 'error',
+          duration: 50000,
+          isClosable: true,
+        });
+      }
+    },
+    [dirtyFields, onProfileSubmit, toast]
+  );
 
   /**
    * Handle multi select input changes.
@@ -154,7 +192,9 @@ export default function ProfileForm(props: ProfileFormProps) {
               return;
             }
 
-            setValue('jobTitles', [...existingJobTitles, jobTitlesInputValue]);
+            setValue('jobTitles', [...existingJobTitles, jobTitlesInputValue], {
+              shouldDirty: true,
+            });
         }
       },
       [jobTitlesInputValue, jobTitles, setValue]
@@ -163,19 +203,13 @@ export default function ProfileForm(props: ProfileFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={4}>
-        <FormControl
-          isInvalid={Boolean(errors?.firstNames)}
-          id="firstNames"
-          // isRequired
-        >
+        <FormControl isInvalid={Boolean(errors?.firstNames)} id="firstNames">
           <FormLabel>First name</FormLabel>
           <Input
             type="text"
             placeholder="John"
             _placeholder={{ color: 'gray.500' }}
-            {...register('firstNames', {
-              required: 'First name is required',
-            })}
+            {...register('firstNames')}
             defaultValue={faker.name.firstName()}
             readOnly
           />
@@ -185,19 +219,13 @@ export default function ProfileForm(props: ProfileFormProps) {
             name="firstNames"
           />
         </FormControl>
-        <FormControl
-          isInvalid={Boolean(errors?.familyNames)}
-          id="familyNames"
-          // isRequired
-        >
+        <FormControl isInvalid={Boolean(errors?.familyNames)} id="familyNames">
           <FormLabel>Last name</FormLabel>
           <Input
             type="text"
             placeholder="Doe"
             _placeholder={{ color: 'gray.500' }}
-            {...register('familyNames', {
-              required: 'Last name is required',
-            })}
+            {...register('familyNames')}
             defaultValue={faker.name.lastName()}
             readOnly
           />
@@ -207,19 +235,13 @@ export default function ProfileForm(props: ProfileFormProps) {
             name="lastName"
           />
         </FormControl>
-        <FormControl
-          isInvalid={Boolean(errors?.address)}
-          id="address"
-          // isRequired
-        >
+        <FormControl isInvalid={Boolean(errors?.address)} id="address">
           <FormLabel>Address</FormLabel>
           <Input
             type="text"
             placeholder="Address"
             _placeholder={{ color: 'gray.500' }}
-            {...register('address', {
-              required: 'Address  sis required',
-            })}
+            {...register('address')}
             defaultValue={faker.address.streetAddress()}
             readOnly
           />
@@ -231,7 +253,7 @@ export default function ProfileForm(props: ProfileFormProps) {
         </FormControl>
         {/* <FormControl
           isInvalid={Boolean(errors?.languages)}
-          id="languages" isRequired
+          id="languages"
         >
           <FormLabel>Languages</FormLabel>
           <Select<Option, true, GroupBase<Option>>
@@ -266,11 +288,7 @@ export default function ProfileForm(props: ProfileFormProps) {
             onKeyDown={handleJobTitlesKeyDown}
           />
         </FormControl>
-        <FormControl
-          isInvalid={Boolean(errors?.regions)}
-          id="regions"
-          // isRequired
-        >
+        <FormControl isInvalid={Boolean(errors?.regions)} id="regions">
           <FormLabel>Regions</FormLabel>
           <Select<Option, true, GroupBase<Option>>
             isMulti
