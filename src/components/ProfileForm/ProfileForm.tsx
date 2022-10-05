@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback, KeyboardEventHandler } from 'react';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { faker } from '@faker-js/faker';
@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import {
   Select,
+  CreatableSelect,
   OptionBase,
   GroupBase,
   MultiValue,
@@ -27,7 +28,7 @@ interface UserProfile {
   firstNames: string;
   familyNames: string;
   address: string;
-  jobTitle: string[];
+  jobTitles: string[];
   languages: string[];
   regions: string[];
 }
@@ -37,11 +38,11 @@ interface Option extends OptionBase {
   value: string;
 }
 
-const languageOptions = [
+/* const languageOptions = [
   { value: 'fi', label: 'Finnish' },
   { value: 'en', label: 'English' },
   { value: 'sv', label: 'Swedish' },
-];
+]; */
 
 const groupedRegionOptions = [
   {
@@ -60,6 +61,11 @@ const groupedRegionOptions = [
   },
 ];
 
+const createOption = (label: string) => ({
+  label,
+  value: label,
+});
+
 interface ProfileFormProps {
   onProfileSubmit: () => void;
   onCancel: () => void;
@@ -68,11 +74,15 @@ interface ProfileFormProps {
 
 export default function ProfileForm(props: ProfileFormProps) {
   const { onProfileSubmit, onCancel, isEdit } = props;
+
+  const [jobTitlesInputValue, setJobTitlesInputValue] = useState<string>('');
+
   const {
     handleSubmit,
     register,
     setValue,
     clearErrors,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<UserProfile>({
     mode: 'onSubmit',
@@ -83,17 +93,24 @@ export default function ProfileForm(props: ProfileFormProps) {
    * Custom register languages.
    */
   useEffect(() => {
-    register('languages', { required: 'Language is required' });
-    register('regions', { required: 'Regions required' });
+    // register('languages', { required: 'Language is required' });
+    register('jobTitles');
+    register('regions');
   }, [register]);
 
+  // watch jobTitles value
+  const { jobTitles } = watch();
+
+  /**
+   * Handle form submit.
+   */
   const onSubmit = async (values: Partial<UserProfile>) => {
     console.log(values);
     onProfileSubmit();
   };
 
   /**
-   * Handle multi select changes-
+   * Handle multi select input changes.
    */
   const handleMultiSelectChange = (
     selections: MultiValue<Option>,
@@ -101,7 +118,7 @@ export default function ProfileForm(props: ProfileFormProps) {
   ) => {
     if (!meta.name) return;
 
-    const field = meta.name as 'languages' | 'regions';
+    const field = meta.name as 'languages' | 'regions' | 'jobTitles';
 
     if (errors?.[`${field}`]) {
       clearErrors(field);
@@ -113,6 +130,25 @@ export default function ProfileForm(props: ProfileFormProps) {
       { shouldDirty: true }
     );
   };
+
+  /**
+   * Handle key down evetn for job titles input. Update values to hook-form state by jobTitlesInputValue.
+   */
+  const handleJobTitlesKeyDown: KeyboardEventHandler<HTMLDivElement> =
+    useCallback(
+      event => {
+        if (!jobTitlesInputValue) return;
+
+        switch (event.key) {
+          case 'Enter':
+          case 'Tab':
+            setJobTitlesInputValue('');
+            setValue('jobTitles', [...(jobTitles || []), jobTitlesInputValue]);
+            event.preventDefault();
+        }
+      },
+      [jobTitlesInputValue, jobTitles, setValue]
+    );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -183,9 +219,9 @@ export default function ProfileForm(props: ProfileFormProps) {
             name="lastName"
           />
         </FormControl>
-        <FormControl
+        {/* <FormControl
           isInvalid={Boolean(errors?.languages)}
-          id="languages" /* isRequired */
+          id="languages" isRequired
         >
           <FormLabel>Languages</FormLabel>
           <Select<Option, true, GroupBase<Option>>
@@ -202,10 +238,28 @@ export default function ProfileForm(props: ProfileFormProps) {
             as={<FormErrorMessage />}
             name="phone"
           />
+        </FormControl> */}
+        <FormControl isInvalid={Boolean(errors?.jobTitles)} id="jobTitles">
+          <FormLabel>Job titles or job tasks</FormLabel>
+          <CreatableSelect<Option, true, GroupBase<Option>>
+            isMulti
+            isClearable
+            menuIsOpen={false}
+            name="jobTitles"
+            placeholder="Type to add..."
+            components={{ DropdownIndicator: null }}
+            formatCreateLabel={(inputValue: string) => <>Add "{inputValue}"</>}
+            inputValue={jobTitlesInputValue}
+            value={jobTitles ? jobTitles.map(v => createOption(v)) : []}
+            onChange={handleMultiSelectChange}
+            onInputChange={(value: string) => setJobTitlesInputValue(value)}
+            onKeyDown={handleJobTitlesKeyDown}
+          />
         </FormControl>
         <FormControl
           isInvalid={Boolean(errors?.regions)}
-          id="regions" /* isRequired */
+          id="regions"
+          // isRequired
         >
           <FormLabel>Regions</FormLabel>
           <Select<Option, true, GroupBase<Option>>
