@@ -142,9 +142,19 @@ export default function ProfileForm(props: ProfileFormProps) {
         switch (event.key) {
           case 'Enter':
           case 'Tab':
-            setJobTitlesInputValue('');
-            setValue('jobTitles', [...(jobTitles || []), jobTitlesInputValue]);
             event.preventDefault();
+            setJobTitlesInputValue('');
+            const existingJobTitles = jobTitles || [];
+
+            if (
+              existingJobTitles.some(
+                v => v.toLowerCase() === jobTitlesInputValue.toLowerCase()
+              )
+            ) {
+              return;
+            }
+
+            setValue('jobTitles', [...existingJobTitles, jobTitlesInputValue]);
         }
       },
       [jobTitlesInputValue, jobTitles, setValue]
