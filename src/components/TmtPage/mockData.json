@@ -1,0 +1,605 @@
+{
+  "results": [
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    },
+    {
+      "employer": "Fapplication Oy",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "Etsitään kapteenia",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "www.google.com"
+    },
+    {
+      "employer": "Roope Setä",
+      "location": {
+        "city": "string",
+        "postcode": "string"
+      },
+      "basicInfo": {
+        "title": "string",
+        "description": "string",
+        "workTimeType": "02"
+      },
+      "publishedAt": "2022-05-02T12:06:55.818Z",
+      "applicationEndDate": "2022-05-10T12:00:00Z",
+      "applicationUrl": "http://www.akuankka.fi"
+    }
+  ],
+  "totalCount": 40
+}

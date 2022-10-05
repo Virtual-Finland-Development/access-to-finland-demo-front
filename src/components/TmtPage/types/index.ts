@@ -26,7 +26,7 @@ export interface JobPostingEntry {
   basicInfo: {
     title: string;
     description: string;
-    workTimeType: '01' | '02';
+    workTimeType: string;
   };
   publishedAt: string;
   applicationEndDate: string;

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, FormEvent } from 'react';
+import { useState, useCallback, useEffect, FormEvent } from 'react';
 import {
   Button,
   Flex,
@@ -8,8 +8,6 @@ import {
   Input,
   Stack,
   Select,
-  Box,
-  Text,
   Spinner,
   SimpleGrid,
   Tag,
@@ -19,9 +17,10 @@ import {
 import { CloseIcon } from '@chakra-ui/icons';
 
 // types
-import { PlaceType, PlaceSelection, JobPostingEntry } from './types';
+import { PlaceType, PlaceSelection } from './types';
 
 // components
+import JobPostingItem from './JobPostingItem';
 import Pagination from '../Pagination/Pagination';
 
 // data hooks
@@ -37,7 +36,7 @@ const mapSelectOptions = (
   items: PlaceSelection[],
   placesInState: PlaceSelection[]
 ) => (
-  <React.Fragment>
+  <>
     {items.map((item: PlaceSelection) => (
       <option
         key={item.Koodi}
@@ -47,7 +46,7 @@ const mapSelectOptions = (
         {item.Selitteet.find(s => s.Kielikoodi === 'en')?.Teksti || ''}
       </option>
     ))}
-  </React.Fragment>
+  </>
 );
 
 export default function TmtPage() {
@@ -120,7 +119,7 @@ export default function TmtPage() {
   );
 
   return (
-    <React.Fragment>
+    <>
       <Flex bg="white" flexDirection="column" shadow="lg" borderRadius="md">
         <form onSubmit={handleSubmit}>
           <Flex flexDirection="column" px={3} pt={6}>
@@ -229,7 +228,7 @@ export default function TmtPage() {
       )}
 
       {pokeData?.results && (
-        <React.Fragment>
+        <>
           <SimpleGrid
             columns={1}
             spacing={5}
@@ -237,8 +236,8 @@ export default function TmtPage() {
             mb={6}
             opacity={dataFething ? '0.5' : '1'}
           >
-            {pokeData.results.map((item: any) => (
-              <DataItem key={item.name} item={item} />
+            {pokeData.results.map((item: any, index: number) => (
+              <JobPostingItem key={item.name} mockItem={item} index={index} />
             ))}
           </SimpleGrid>
 
@@ -246,23 +245,8 @@ export default function TmtPage() {
             total={pokeData.count}
             onPaginationStateChange={handlePaginationStateChange}
           />
-        </React.Fragment>
+        </>
       )}
-    </React.Fragment>
-  );
-}
-
-function DataItem({ item }: { item: any }) {
-  return (
-    <Box
-      borderWidth="1px"
-      borderRadius="md"
-      bg="white"
-      px={3}
-      py={4}
-      shadow="sm"
-    >
-      <Text>{item.name}</Text>
-    </Box>
+    </>
   );
 }
