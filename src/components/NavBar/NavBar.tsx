@@ -57,7 +57,11 @@ export default function WithSubnavigation() {
     openModal({
       title: 'Edit your profile',
       content: (
-        <ProfileForm onProfileSubmit={() => {}} onCancel={closeModal} isEdit />
+        <ProfileForm
+          onProfileSubmit={closeModal}
+          onCancel={closeModal}
+          isEdit
+        />
       ),
       onClose: () => {
         console.log('modal on close');
