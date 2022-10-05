@@ -11,8 +11,8 @@ import {
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  title: string;
-  content: string | ReactElement;
+  title?: string;
+  content?: string | ReactElement;
 }
 
 export default function Modal(props: ModalProps) {
@@ -22,9 +22,9 @@ export default function Modal(props: ModalProps) {
     <ChakraModal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent mx={{ base: 2, md: 0 }}>
-        <ModalHeader>{title}</ModalHeader>
+        <ModalHeader>{title || ''}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody pb={6}>{content}</ModalBody>
+        <ModalBody pb={6}>{content || ''}</ModalBody>
       </ModalContent>
     </ChakraModal>
   );

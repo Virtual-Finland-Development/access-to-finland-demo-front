@@ -33,9 +33,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 // context
 import { useAppContext } from '../../context/AppContext';
+import { useModal } from '../../context/ModalContext';
 
 // components
-import Modal from '../Modal/Modal';
 import ProfileForm from '../ProfileForm/ProfileForm';
 
 export default function WithSubnavigation() {
@@ -45,13 +45,24 @@ export default function WithSubnavigation() {
     onToggle: onToggleMobileNav,
     onClose: onCloseMobileNav,
   } = useDisclosure();
-  const {
-    isOpen: isModalOpen,
-    onOpen: onModalOpen,
-    onClose: onModalClose,
-  } = useDisclosure();
+
+  const { openModal, closeModal } = useModal();
 
   const navigate = useNavigate();
+
+  /**
+   * Handle open userProfile modal with useModal hook.
+   */
+  const openUserProfile = () =>
+    openModal({
+      title: 'Edit your profile',
+      content: (
+        <ProfileForm onProfileSubmit={() => {}} onCancel={closeModal} isEdit />
+      ),
+      onClose: () => {
+        console.log('modal on close');
+      },
+    });
 
   return (
     <>
@@ -167,7 +178,7 @@ export default function WithSubnavigation() {
                     </HStack>
                   </MenuButton>
                   <MenuList bg="white" borderColor="gray.200">
-                    <MenuItem onClick={onModalOpen}>Profile</MenuItem>
+                    <MenuItem onClick={openUserProfile}>Profile</MenuItem>
                     <MenuDivider />
                     <MenuItem onClick={logOut}>Sign out</MenuItem>
                   </MenuList>
@@ -192,19 +203,6 @@ export default function WithSubnavigation() {
           <MobileNav onClose={onCloseMobileNav} />
         </Collapse>
       </Box>
-
-      <Modal
-        isOpen={isModalOpen}
-        onClose={onModalClose}
-        title="Edit your profile"
-        content={
-          <ProfileForm
-            onProfileSubmit={() => {}}
-            onCancel={onModalClose}
-            isEdit
-          />
-        }
-      />
     </>
   );
 }
