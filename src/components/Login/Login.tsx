@@ -3,7 +3,7 @@ import { IoLogIn, IoLogoLinkedin } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
 // context
-import { useAppContext } from '../../context/AppContext';
+import { useAppContext } from '../../context/AppContext/AppContext';
 
 // assets
 import sinunaSvg from '../../assets/sinuna.svg';
@@ -48,7 +48,16 @@ export default function Login() {
             bg: 'blue.500',
           }}
           leftIcon={<IoLogIn size="20" />}
-          onClick={() => navigate('profile')}
+          onClick={() => {
+            const userProfile = localStorage.getItem('userProfile');
+
+            if (userProfile) {
+              logIn();
+              navigate('/');
+            } else {
+              navigate('profile');
+            }
+          }}
         >
           Login with Dummy
         </Button>

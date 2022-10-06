@@ -2,7 +2,7 @@ import { Heading, Stack } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
 // context
-import { useAppContext } from '../../context/AppContext';
+import { useAppContext } from '../../context/AppContext/AppContext';
 
 // components
 import ProfileForm from '../ProfileForm/ProfileForm';

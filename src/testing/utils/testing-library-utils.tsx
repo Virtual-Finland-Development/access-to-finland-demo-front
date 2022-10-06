@@ -2,7 +2,7 @@ import { render, RenderOptions } from '@testing-library/react';
 import { ReactElement } from 'react';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
-import { AppProvider } from '../../context/AppContext';
+import { AppProvider } from '../../context/AppContext/AppContext';
 
 /**
  * Custom render function 1

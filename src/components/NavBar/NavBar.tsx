@@ -32,8 +32,8 @@ import {
 import { NavLink, useNavigate } from 'react-router-dom';
 
 // context
-import { useAppContext } from '../../context/AppContext';
-import { useModal } from '../../context/ModalContext';
+import { useAppContext } from '../../context/AppContext/AppContext';
+import { useModal } from '../../context/ModalContext/ModalContext';
 
 // components
 import ProfileForm from '../ProfileForm/ProfileForm';

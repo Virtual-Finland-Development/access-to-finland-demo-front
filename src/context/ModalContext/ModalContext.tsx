@@ -8,7 +8,7 @@ import {
 import { useDisclosure } from '@chakra-ui/react';
 
 // components
-import Modal from './../components/Modal/Modal';
+import Modal from '../../components/Modal/Modal';
 
 interface IModalContext {
   openModal: (modal: any) => void;

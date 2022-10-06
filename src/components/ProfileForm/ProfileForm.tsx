@@ -1,4 +1,10 @@
-import { useEffect, useState, useCallback, KeyboardEventHandler } from 'react';
+import {
+  useEffect,
+  useState,
+  useCallback,
+  KeyboardEventHandler,
+  useMemo,
+} from 'react';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { faker } from '@faker-js/faker';
@@ -21,9 +27,12 @@ import {
   ActionMeta,
 } from 'chakra-react-select';
 
+// context
+import { useAppContext } from '../../context/AppContext/AppContext';
+
 // region selections
-import regions from '../TmtPage/regionJsons/regions.json';
-import municipalities from '../TmtPage/regionJsons/municipalities.json';
+import regionsJson from '../TmtPage/regionJsons/regions.json';
+import municipalitiesJson from '../TmtPage/regionJsons/municipalities.json';
 
 interface UserProfile {
   firstNames: string;
@@ -48,14 +57,14 @@ interface Option extends OptionBase {
 const groupedRegionOptions = [
   {
     label: 'Regions',
-    options: regions.map(r => ({
+    options: regionsJson.map(r => ({
       value: r.Koodi,
       label: r.Selitteet[2].Teksti,
     })),
   },
   {
     label: 'Municipalities',
-    options: municipalities.map(m => ({
+    options: municipalitiesJson.map(m => ({
       value: m.Koodi,
       label: m.Selitteet[2].Teksti,
     })),
@@ -74,6 +83,8 @@ interface ProfileFormProps {
 }
 
 export default function ProfileForm(props: ProfileFormProps) {
+  const { userId, userProfile, setUserProfile } = useAppContext();
+
   const { onProfileSubmit, onCancel, isEdit } = props;
 
   const [jobTitlesInputValue, setJobTitlesInputValue] = useState<string>('');
@@ -87,7 +98,13 @@ export default function ProfileForm(props: ProfileFormProps) {
     formState: { errors, isSubmitting, dirtyFields },
   } = useForm<UserProfile>({
     mode: 'onSubmit',
-    /* defaultValues: {}, */
+    defaultValues: userId
+      ? { ...userProfile }
+      : {
+          firstNames: faker.name.firstName(),
+          familyNames: faker.name.lastName(),
+          address: faker.address.streetAddress(),
+        },
   });
 
   const toast = useToast();
@@ -102,7 +119,34 @@ export default function ProfileForm(props: ProfileFormProps) {
   }, [register]);
 
   // watch jobTitles value
-  const { jobTitles } = watch();
+  const { jobTitles, regions } = watch();
+
+  /**
+   * Get default values for regions select, if provided in userProfile.
+   */
+  const regionsDefaulOptions = useMemo(() => {
+    if (!userId) return [];
+
+    let options: Option[] = [];
+    const selections = [...regionsJson, ...municipalitiesJson];
+
+    if (regions?.length) {
+      options = regions.reduce((acc: Option[], code) => {
+        const selected = selections.find(s => s.Koodi === code);
+
+        if (selected) {
+          acc.push({
+            value: selected.Koodi,
+            label: selected.Selitteet[2].Teksti,
+          });
+        }
+
+        return acc;
+      }, []);
+    }
+
+    return options;
+  }, [regions, userId]);
 
   /**
    * Handle form submit.
@@ -121,8 +165,12 @@ export default function ProfileForm(props: ProfileFormProps) {
           }
         }
 
-        console.log(payload);
         // post payload to api
+        localStorage.setItem(
+          'userProfile',
+          JSON.stringify({ ...values, ...payload })
+        );
+        setUserProfile({ ...values, ...payload });
 
         onProfileSubmit();
 
@@ -134,7 +182,6 @@ export default function ProfileForm(props: ProfileFormProps) {
           isClosable: true,
         });
       } catch (error) {
-        console.log(error);
         toast({
           title: 'Error.',
           description: 'Something went wrong, please try again later.',
@@ -144,7 +191,7 @@ export default function ProfileForm(props: ProfileFormProps) {
         });
       }
     },
-    [dirtyFields, onProfileSubmit, toast]
+    [dirtyFields, onProfileSubmit, setUserProfile, toast]
   );
 
   /**
@@ -210,7 +257,6 @@ export default function ProfileForm(props: ProfileFormProps) {
             placeholder="John"
             _placeholder={{ color: 'gray.500' }}
             {...register('firstNames')}
-            defaultValue={faker.name.firstName()}
             readOnly
           />
           <ErrorMessage
@@ -226,7 +272,6 @@ export default function ProfileForm(props: ProfileFormProps) {
             placeholder="Doe"
             _placeholder={{ color: 'gray.500' }}
             {...register('familyNames')}
-            defaultValue={faker.name.lastName()}
             readOnly
           />
           <ErrorMessage
@@ -242,7 +287,6 @@ export default function ProfileForm(props: ProfileFormProps) {
             placeholder="Address"
             _placeholder={{ color: 'gray.500' }}
             {...register('address')}
-            defaultValue={faker.address.streetAddress()}
             readOnly
           />
           <ErrorMessage
@@ -293,6 +337,7 @@ export default function ProfileForm(props: ProfileFormProps) {
           <Select<Option, true, GroupBase<Option>>
             isMulti
             name="regions"
+            defaultValue={regionsDefaulOptions}
             options={groupedRegionOptions}
             placeholder="Choose your preferred regions..."
             closeMenuOnSelect={false}

@@ -15,6 +15,9 @@ import {
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 
+// context
+import { useAppContext } from '../../context/AppContext/AppContext';
+
 // types
 import { PlaceType, PlaceSelection } from './types';
 
@@ -50,6 +53,8 @@ const mapSelectOptions = (
 );
 
 export default function TmtPage() {
+  const { userId, userProfile } = useAppContext();
+
   const [searchInputValue, setSearchInputValue] = useState<string>('');
   const [search, setSearch] = useState<string | null>(null);
   const [selectedPlaces, setSelectedPlaces] = useState<PlaceSelection[]>([]);
@@ -60,6 +65,40 @@ export default function TmtPage() {
     offset: 0,
     limit: 25,
   });
+
+  /**
+   * Set default search keys from userProfile, if provided.
+   */
+  useEffect(() => {
+    if (userId && userProfile) {
+      if (userProfile.jobTitles.length) {
+        setSearch(userProfile.jobTitles.join(' '));
+      }
+    }
+  }, [userId, userProfile]);
+
+  /**
+   * Set default selected places for filtering, if provided in userProfile.
+   */
+  useEffect(() => {
+    if (userId && userProfile) {
+      const selections: PlaceSelection[] = [...regions, ...municipalities];
+      let values: PlaceSelection[] = [];
+
+      if (userProfile.regions?.length) {
+        values = userProfile.regions.reduce(
+          (acc: PlaceSelection[], code: string) => {
+            const selected = selections.find(s => s.Koodi === code);
+            if (selected) acc.push(selected);
+            return acc;
+          },
+          []
+        );
+      }
+
+      setSelectedPlaces(values);
+    }
+  }, [userId, userProfile]);
 
   const {
     data: pokeData,
@@ -134,7 +173,7 @@ export default function TmtPage() {
             spacing={6}
             alignItems={{ md: 'end' }}
           >
-            <FormControl w="auto">
+            <FormControl w={{ base: 'auto', md: 'md' }}>
               <FormLabel>Word search</FormLabel>
               <Input
                 placeholder="Search..."

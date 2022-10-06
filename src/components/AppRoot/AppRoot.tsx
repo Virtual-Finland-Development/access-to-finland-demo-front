@@ -1,6 +1,6 @@
 // context
-import { AppProvider, AppConsumer } from '../../context/AppContext';
-import { ModalProvider } from '../../context/ModalContext';
+import { AppProvider, AppConsumer } from '../../context/AppContext/AppContext';
+import { ModalProvider } from '../../context/ModalContext/ModalContext';
 
 // routes
 import LoginRoutes from '../LoginRoutes/LoginRoutes';
