@@ -12,12 +12,12 @@ export default function Profile() {
   const navigate = useNavigate();
 
   const onProfileSubmit = () => {
-    logIn();
+    // logIn();
     navigate('/');
   };
 
   const onCancel = () => {
-    logIn();
+    // logIn();
     navigate('/');
   };
 

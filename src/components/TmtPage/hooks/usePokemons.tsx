@@ -11,7 +11,10 @@ export default function usePokemons(payload: RequestPayload) {
   const pokemonsQuery = useQuery(
     ['pokemons'],
     async () => {
-      const response = await api.getPokemons(payload.limit, payload.offset);
+      const response = await api.data.getPokemons(
+        payload.limit,
+        payload.offset
+      );
       return response.data;
     },
     {

@@ -1,13 +1,23 @@
+import { useState } from 'react';
 import { Button, Heading, Stack } from '@chakra-ui/react';
 import { IoLogIn, IoLogoLinkedin } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
-// context
-import { useAppContext } from '../../context/AppContext/AppContext';
+// types
+import { AuthProvider } from '../../api/types';
 
 // assets
 import sinunaSvg from '../../assets/sinuna.svg';
 import suomiFiPng from '../../assets/suomifi.png';
+
+// api
+import api from '../../api';
+
+enum LoginType {
+  TESTBED,
+  SINUNA,
+  SUOMIFI,
+}
 
 const SinunaIcon = () => (
   <img src={sinunaSvg} alt="Sinuna logo" width="14" height="auto" />
@@ -18,8 +28,22 @@ const SuomiFiIcon = () => (
 );
 
 export default function Login() {
-  const { logIn } = useAppContext();
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  /**
+   * Handle login button click. Redirect user to auth gw login request route.
+   */
+  const handleLoginClick = (loginType: LoginType) => {
+    setIsLoading(true);
+
+    if (loginType === LoginType.TESTBED) {
+      api.auth.directToAuthGwLogin(AuthProvider.TESTBED);
+    } else if (loginType === LoginType.SINUNA) {
+      api.auth.directToAuthGwLogin(AuthProvider.SINUNA);
+    } else if (loginType === LoginType.SUOMIFI) {
+      api.auth.directToAuthGwLogin(AuthProvider.SUOMIFI);
+    }
+  };
 
   return (
     <Stack
@@ -48,18 +72,11 @@ export default function Login() {
             bg: 'blue.500',
           }}
           leftIcon={<IoLogIn size="20" />}
-          onClick={() => {
-            const userProfile = localStorage.getItem('userProfile');
-
-            if (userProfile) {
-              logIn();
-              navigate('/');
-            } else {
-              navigate('profile');
-            }
-          }}
+          onClick={() => handleLoginClick(LoginType.TESTBED)}
+          isLoading={isLoading}
+          disabled={isLoading}
         >
-          Login with Dummy
+          Login with Testbed
         </Button>
         <Button
           bg="#203CCC"
@@ -89,12 +106,7 @@ export default function Login() {
         >
           Login with Suomi.fi
         </Button>
-        <Button
-          colorScheme="linkedin"
-          leftIcon={<IoLogoLinkedin />}
-          onClick={() => logIn()}
-          disabled
-        >
+        <Button colorScheme="linkedin" leftIcon={<IoLogoLinkedin />} disabled>
           Login with LinkedIn
         </Button>
       </Stack>

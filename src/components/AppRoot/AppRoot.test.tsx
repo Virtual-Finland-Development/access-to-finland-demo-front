@@ -20,7 +20,7 @@ test('Should show login screen, then profile screen, then logged in app.', async
 
   // login button in screen
   const loginButton = screen.getByRole('button', {
-    name: /login with dummy/i,
+    name: /login with testbed/i,
   });
   expect(loginButton).toBeInTheDocument();
 

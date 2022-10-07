@@ -3,6 +3,7 @@ import { Flex } from '@chakra-ui/react';
 
 // components
 import Login from '../Login/Login';
+import Auth from '../Auth/Auth';
 import Profile from '../Profile/Profile';
 import PageNotFound from '../PageNotFound/PageNotFound';
 
@@ -18,6 +19,7 @@ export default function LoginRoutes() {
         }
       >
         <Route index element={<Login />} />
+        <Route path="auth" element={<Auth />} />
         <Route path="profile" element={<Profile />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>

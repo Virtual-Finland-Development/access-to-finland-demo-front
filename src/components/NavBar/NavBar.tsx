@@ -31,15 +31,22 @@ import {
 } from '@chakra-ui/icons';
 import { NavLink, useNavigate } from 'react-router-dom';
 
+// types
+import { AuthProvider } from '../../api/types';
+
+// constants
+import { LOCAL_STORAGE_AUTH_PROVIDER } from '../../constants';
+
 // context
-import { useAppContext } from '../../context/AppContext/AppContext';
 import { useModal } from '../../context/ModalContext/ModalContext';
 
 // components
 import ProfileForm from '../ProfileForm/ProfileForm';
 
+// api
+import api from '../../api';
+
 export default function WithSubnavigation() {
-  const { logOut } = useAppContext();
   const {
     isOpen: isOpenMobileNav,
     onToggle: onToggleMobileNav,
@@ -67,6 +74,16 @@ export default function WithSubnavigation() {
         console.log('modal on close');
       },
     });
+
+  /**
+   * Handle log out click.
+   */
+  const handleLogOutClick = () => {
+    // setIsLoading(true);
+
+    const provider = localStorage.getItem(LOCAL_STORAGE_AUTH_PROVIDER)!;
+    api.auth.directToAuthGwLogout(provider as AuthProvider);
+  };
 
   return (
     <>
@@ -184,7 +201,7 @@ export default function WithSubnavigation() {
                   <MenuList bg="white" borderColor="gray.200">
                     <MenuItem onClick={openUserProfile}>Profile</MenuItem>
                     <MenuDivider />
-                    <MenuItem onClick={logOut}>Sign out</MenuItem>
+                    <MenuItem onClick={handleLogOutClick}>Sign out</MenuItem>
                   </MenuList>
                 </Menu>
               </Flex>

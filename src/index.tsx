@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
+  <React.Fragment>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <ChakraProvider>
@@ -24,7 +24,7 @@ root.render(
         </ChakraProvider>
       </QueryClientProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.Fragment>
 );
 
 // If you want to start measuring performance in your app, pass a function

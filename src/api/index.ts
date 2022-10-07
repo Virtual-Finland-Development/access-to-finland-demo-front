@@ -1,13 +1,11 @@
-import axios from 'axios';
-
-async function getPokemons(limit: number, offset: number) {
-  return axios.get(
-    `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
-  );
-}
+import * as auth from './services/auth';
+import * as user from './services/user';
+import * as data from './services/data';
 
 const api = {
-  getPokemons,
+  auth,
+  user,
+  data,
 };
 
 export default api;
