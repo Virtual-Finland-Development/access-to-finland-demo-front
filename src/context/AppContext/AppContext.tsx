@@ -7,9 +7,11 @@ import {
   Reducer,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { isSameSecond, isPast, parseISO } from 'date-fns';
+import { useToast } from '@chakra-ui/react';
 
 // types
-import { AuthProvider, AuthTokens } from '../../api/types';
+import { AuthProvider, AuthTokens, UserProfile } from '../../@types';
 
 // constants
 import {
@@ -36,16 +38,17 @@ import api from '../../api';
 
 interface AppContextInterface {
   authenticated: boolean;
-  userId: null | string;
   userProfile: any;
   loading: boolean;
-  logIn: (
+  storeAuthKeysAndVerifyUser: (
     authProvider: AuthProvider,
     autTokens: AuthTokens,
     userEmail: string
   ) => void;
+  logIn: () => void;
   logOut: () => void;
   setUserProfile: (profile: any) => void;
+  error: any;
 }
 
 interface AppProviderProps {
@@ -63,30 +66,39 @@ function AppProvider({ children }: AppProviderProps) {
     appStateReducer,
     initialState
   );
-  const { authenticated, userId, userProfile, loading } = state;
+  const { authenticated, userProfile, loading, error } = state;
   const navigate = useNavigate();
+  const toast = useToast();
 
   /**
    * Handle save user profile.
    */
-  const setUserProfile = useCallback((profile: any) => {
-    dispatch({ type: ActionTypes.SET_USER_ID, userId: '123-random' });
-    dispatch({ type: ActionTypes.SET_PROFILE, profile });
+  const setUserProfile = useCallback((userProfile: Partial<UserProfile>) => {
+    dispatch({ type: ActionTypes.SET_PROFILE, userProfile });
   }, []);
 
   /**
-   * Fetch user profile.
+   * Fetch user profile. Set user as logged in.
    */
-  const getUserProfile = useCallback(async () => {
+  const getUserProfileAndLogIn = useCallback(async () => {
     try {
       const response = await api.user.get();
-      console.log(response);
+      const userProfile: UserProfile = response.data;
       dispatch({ type: ActionTypes.LOG_IN });
       dispatch({ type: ActionTypes.SET_LOADING, loading: false });
-    } catch (error) {
-      console.log(error);
+      dispatch({ type: ActionTypes.SET_PROFILE, userProfile });
+    } catch (error: any) {
+      dispatch({ type: ActionTypes.SET_ERROR, error });
+      toast({
+        title: 'Error.',
+        description:
+          error?.message || 'Something went wrong, please try again later.',
+        status: 'error',
+        duration: 50000,
+        isClosable: true,
+      });
     }
-  }, []);
+  }, [toast]);
 
   /**
    * Verify api user after authentication.
@@ -96,22 +108,36 @@ function AppProvider({ children }: AppProviderProps) {
   const verifyUser = useCallback(async () => {
     try {
       const response = await api.user.verify();
-      const { id: userId } = response.data;
-      console.log(response);
-      console.log(userId);
-      getUserProfile();
-    } catch (error: any) {
-      console.log(error);
-      if (error?.code === 404) {
+      const { id: userId, created, modified } = response.data;
+      const isNewUser = isSameSecond(parseISO(created), parseISO(modified));
+      console.log('USERID:', userId);
+      console.log(created);
+      console.log(modified);
+      console.log(isNewUser);
+
+      if (isNewUser) {
+        dispatch({ type: ActionTypes.SET_LOADING, loading: false });
         navigate('profile');
+      } else {
+        getUserProfileAndLogIn();
       }
+    } catch (error: any) {
+      dispatch({ type: ActionTypes.SET_ERROR, error });
+      toast({
+        title: 'Error.',
+        description:
+          error?.message || 'Something went wrong, please try again later.',
+        status: 'error',
+        duration: 50000,
+        isClosable: true,
+      });
     }
-  }, [getUserProfile, navigate]);
+  }, [getUserProfileAndLogIn, navigate, toast]);
 
   /**
-   * Handle login.
+   * Store auth keys to local storage, continue to verify user after authentication (Auth.tsx).
    */
-  const logIn = useCallback(
+  const storeAuthKeysAndVerifyUser = useCallback(
     (authProvider: AuthProvider, tokens: AuthTokens, authUserId: string) => {
       localStorage.setItem(LOCAL_STORAGE_AUTH_PROVIDER, authProvider);
       localStorage.setItem(LOCAL_STORAGE_AUTH_USER_ID, authUserId);
@@ -121,6 +147,11 @@ function AppProvider({ children }: AppProviderProps) {
     },
     [verifyUser]
   );
+
+  /**
+   * Handle login.
+   */
+  const logIn = () => dispatch({ type: ActionTypes.LOG_IN });
 
   /**
    * Handle log out.
@@ -141,8 +172,11 @@ function AppProvider({ children }: AppProviderProps) {
     const authUserId = localStorage.getItem(LOCAL_STORAGE_AUTH_USER_ID);
 
     if (authProvider && authTokens && authUserId) {
-      dispatch({ type: ActionTypes.SET_LOADING, loading: true });
-      verifyUser();
+      if (!isPast(parseISO(authTokens.expiresAt))) {
+        dispatch({ type: ActionTypes.SET_LOADING, loading: true });
+        getUserProfileAndLogIn();
+        // verifyUser();
+      }
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -150,12 +184,13 @@ function AppProvider({ children }: AppProviderProps) {
     <AppContext.Provider
       value={{
         authenticated,
-        userId,
         userProfile,
         loading,
+        storeAuthKeysAndVerifyUser,
         logIn,
         logOut,
         setUserProfile,
+        error,
       }}
     >
       {children}

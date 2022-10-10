@@ -1,3 +1,5 @@
+import { UserProfile } from '../../../@types';
+
 /**
  * Action types / actions
  */
@@ -7,6 +9,7 @@ export enum ActionTypes {
   SET_LOADING = 'SET_LOADING',
   SET_USER_ID = 'SET_USER_ID',
   SET_PROFILE = 'SET_PROFILE',
+  SET_ERROR = 'SET_ERROR',
 }
 
 type LogInAction = {
@@ -22,22 +25,22 @@ type LoadingAction = {
   loading: boolean;
 };
 
-type SetUserId = {
-  type: ActionTypes.SET_USER_ID;
-  userId: string;
-};
-
 type SetProfileAction = {
   type: ActionTypes.SET_PROFILE;
-  profile: object;
+  userProfile: Partial<UserProfile>;
+};
+
+type ErrorAction = {
+  type: ActionTypes.SET_ERROR;
+  error: any;
 };
 
 export type Action =
   | LogInAction
   | LogOutAction
   | LoadingAction
-  | SetUserId
-  | SetProfileAction;
+  | SetProfileAction
+  | ErrorAction;
 
 /**
  * Appstate interface
@@ -45,8 +48,8 @@ export type Action =
 export interface AppState {
   authenticated: boolean;
   loading: boolean;
-  userId: null | string;
-  userProfile: {};
+  userProfile: UserProfile | {};
+  error: any;
 }
 
 /**
@@ -55,8 +58,8 @@ export interface AppState {
 export const initialState: AppState = {
   authenticated: false,
   loading: false,
-  userId: null,
   userProfile: {},
+  error: null,
 };
 
 /**
@@ -79,18 +82,18 @@ export function appStateReducer(state: AppState, action: Action) {
         ...state,
         loading: action.loading,
       };
-    case ActionTypes.SET_USER_ID:
-      return {
-        ...state,
-        userId: action.userId,
-      };
     case ActionTypes.SET_PROFILE:
       return {
         ...state,
         userProfile: {
           ...state.userProfile,
-          ...action.profile,
+          ...action.userProfile,
         },
+      };
+    case ActionTypes.SET_ERROR:
+      return {
+        ...state,
+        error: action.error,
       };
     default:
       return state;

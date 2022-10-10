@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { Button, Heading, Stack } from '@chakra-ui/react';
 import { IoLogIn, IoLogoLinkedin } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
 
 // types
-import { AuthProvider } from '../../api/types';
+import { AuthProvider } from '../../@types';
 
 // assets
 import sinunaSvg from '../../assets/sinuna.svg';

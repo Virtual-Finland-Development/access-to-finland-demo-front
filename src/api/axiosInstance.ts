@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // types
-import { AuthProvider } from './types';
+import { AuthProvider } from '../@types';
 
 // endpoints
 import { USER_API_ENDPOINT } from './endpoints';

@@ -1,7 +1,7 @@
 import axiosInstance from '../axiosInstance';
 
 // types
-import { AuthProvider, AuthTokens } from '../types';
+import { AuthProvider, AuthTokens } from '../../@types';
 
 // endpoints
 import { AUTH_GW_ENDPOINT } from '../endpoints';

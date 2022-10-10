@@ -27,12 +27,14 @@ import {
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
-  BellIcon,
 } from '@chakra-ui/icons';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 // types
-import { AuthProvider } from '../../api/types';
+import { AuthProvider } from '../../@types';
+
+// context
+import { useAppContext } from '../../context/AppContext/AppContext';
 
 // constants
 import { LOCAL_STORAGE_AUTH_PROVIDER } from '../../constants';
@@ -47,6 +49,9 @@ import ProfileForm from '../ProfileForm/ProfileForm';
 import api from '../../api';
 
 export default function WithSubnavigation() {
+  const { userProfile } = useAppContext();
+  const { firstName, lastName } = userProfile;
+
   const {
     isOpen: isOpenMobileNav,
     onToggle: onToggleMobileNav,
@@ -160,14 +165,14 @@ export default function WithSubnavigation() {
             spacing={6}
           >
             <HStack spacing={{ base: '0', md: '6' }}>
-              <IconButton
+              {/* <IconButton
                 size="lg"
                 variant="ghost"
                 aria-label="open menu"
                 icon={<BellIcon />}
                 color="white"
                 _hover={{ color: 'black', bg: 'white' }}
-              />
+              /> */}
               <Flex alignItems="center">
                 <Menu>
                   <MenuButton
@@ -190,7 +195,9 @@ export default function WithSubnavigation() {
                         ml="2"
                       >
                         <Text fontSize="sm" color="white">
-                          John Doe
+                          {firstName?.length && lastName?.length
+                            ? `${firstName} ${lastName}`
+                            : ''}
                         </Text>
                       </VStack>
                       <Box display={{ base: 'none', md: 'flex' }} color="white">

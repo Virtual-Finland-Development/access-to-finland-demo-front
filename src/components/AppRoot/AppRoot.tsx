@@ -10,6 +10,7 @@ import AuthRoutes from '../AuthRoutes/AuthRoutes';
 
 // components
 import Loading from '../Loading/Loading';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 export default function AppRoot() {
   return (
@@ -21,9 +22,9 @@ export default function AppRoot() {
               return null;
             }
 
-            const { authenticated, loading } = provider;
+            const { authenticated, loading, error } = provider;
 
-            if (loading) {
+            if (loading || error) {
               return (
                 <Flex
                   h="100vh"
@@ -31,7 +32,8 @@ export default function AppRoot() {
                   justifyContent="center"
                   bg="gray.50"
                 >
-                  <Loading />
+                  {loading && <Loading />}
+                  {error && <ErrorMessage error={error} />}
                 </Flex>
               );
             }

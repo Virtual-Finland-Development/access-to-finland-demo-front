@@ -24,8 +24,7 @@ export default function WelcomePage() {
         </Heading>
         <Text color={'gray.500'}>
           At Job Market Finland, you can find information content and services
-          related to employment. By logging in, you get the most out of Job
-          Market Finland.
+          related to employment.
         </Text>
         <Stack
           direction={'column'}

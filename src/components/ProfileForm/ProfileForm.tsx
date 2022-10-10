@@ -26,6 +26,10 @@ import {
   MultiValue,
   ActionMeta,
 } from 'chakra-react-select';
+import { isSameSecond, isPast, parseISO } from 'date-fns';
+
+// types
+import { UserProfile } from '../../@types';
 
 // context
 import { useAppContext } from '../../context/AppContext/AppContext';
@@ -34,25 +38,13 @@ import { useAppContext } from '../../context/AppContext/AppContext';
 import regionsJson from '../TmtPage/regionJsons/regions.json';
 import municipalitiesJson from '../TmtPage/regionJsons/municipalities.json';
 
-interface UserProfile {
-  firstNames: string;
-  familyNames: string;
-  address: string;
-  jobTitles: string[];
-  languages: string[];
-  regions: string[];
-}
+// api
+import api from '../../api';
 
 interface Option extends OptionBase {
   label: string;
   value: string;
 }
-
-/* const languageOptions = [
-  { value: 'fi', label: 'Finnish' },
-  { value: 'en', label: 'English' },
-  { value: 'sv', label: 'Swedish' },
-]; */
 
 const groupedRegionOptions = [
   {
@@ -83,11 +75,15 @@ interface ProfileFormProps {
 }
 
 export default function ProfileForm(props: ProfileFormProps) {
-  const { userId, userProfile, setUserProfile } = useAppContext();
-
+  const { userProfile, setUserProfile } = useAppContext();
+  const { id: userId, created, modified, ...restOfProfile } = userProfile;
   const { onProfileSubmit, onCancel, isEdit } = props;
 
   const [jobTitlesInputValue, setJobTitlesInputValue] = useState<string>('');
+
+  const isNewUser =
+    !(created && modified) ||
+    isSameSecond(parseISO(created), parseISO(modified));
 
   const {
     handleSubmit,
@@ -98,11 +94,11 @@ export default function ProfileForm(props: ProfileFormProps) {
     formState: { errors, isSubmitting, dirtyFields },
   } = useForm<UserProfile>({
     mode: 'onSubmit',
-    defaultValues: userId
-      ? { ...userProfile }
+    defaultValues: !isNewUser
+      ? { ...restOfProfile }
       : {
-          firstNames: faker.name.firstName(),
-          familyNames: faker.name.lastName(),
+          firstName: faker.name.firstName(),
+          lastName: faker.name.lastName(),
           address: faker.address.streetAddress(),
         },
   });
@@ -113,7 +109,6 @@ export default function ProfileForm(props: ProfileFormProps) {
    * Custom register languages.
    */
   useEffect(() => {
-    // register('languages');
     register('jobTitles');
     register('regions');
   }, [register]);
@@ -157,19 +152,21 @@ export default function ProfileForm(props: ProfileFormProps) {
         let payload: Partial<UserProfile> = {};
         const dirtyKeys = Object.keys(dirtyFields);
 
-        if (dirtyKeys.length) {
-          for (const key of dirtyKeys) {
-            if (values[key]) {
-              payload[key as keyof UserProfile] = values[key];
+        if (isNewUser) {
+          payload = { ...values };
+        } else {
+          if (dirtyKeys.length) {
+            for (const key of dirtyKeys) {
+              if (values[key]) {
+                payload[key as keyof UserProfile] = values[key];
+              }
             }
           }
         }
+        console.log(payload);
+        const response = await api.user.patch(payload);
+        console.log(response);
 
-        // post payload to api
-        localStorage.setItem(
-          'userProfile',
-          JSON.stringify({ ...values, ...payload })
-        );
         setUserProfile({ ...values, ...payload });
 
         onProfileSubmit();
@@ -191,7 +188,7 @@ export default function ProfileForm(props: ProfileFormProps) {
         });
       }
     },
-    [dirtyFields, onProfileSubmit, setUserProfile, toast]
+    [dirtyFields, isNewUser, onProfileSubmit, setUserProfile, toast]
   );
 
   /**
@@ -203,7 +200,7 @@ export default function ProfileForm(props: ProfileFormProps) {
   ) => {
     if (!meta.name) return;
 
-    const field = meta.name as 'languages' | 'regions' | 'jobTitles';
+    const field = meta.name as 'regions' | 'jobTitles';
 
     if (errors?.[`${field}`]) {
       clearErrors(field);
@@ -250,13 +247,13 @@ export default function ProfileForm(props: ProfileFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={4}>
-        <FormControl isInvalid={Boolean(errors?.firstNames)} id="firstNames">
+        <FormControl isInvalid={Boolean(errors?.firstName)} id="firstName">
           <FormLabel>First name</FormLabel>
           <Input
             type="text"
             placeholder="John"
             _placeholder={{ color: 'gray.500' }}
-            {...register('firstNames')}
+            {...register('firstName')}
             readOnly
           />
           <ErrorMessage
@@ -265,13 +262,13 @@ export default function ProfileForm(props: ProfileFormProps) {
             name="firstNames"
           />
         </FormControl>
-        <FormControl isInvalid={Boolean(errors?.familyNames)} id="familyNames">
+        <FormControl isInvalid={Boolean(errors?.lastName)} id="lastName">
           <FormLabel>Last name</FormLabel>
           <Input
             type="text"
             placeholder="Doe"
             _placeholder={{ color: 'gray.500' }}
-            {...register('familyNames')}
+            {...register('lastName')}
             readOnly
           />
           <ErrorMessage
@@ -295,26 +292,6 @@ export default function ProfileForm(props: ProfileFormProps) {
             name="lastName"
           />
         </FormControl>
-        {/* <FormControl
-          isInvalid={Boolean(errors?.languages)}
-          id="languages"
-        >
-          <FormLabel>Languages</FormLabel>
-          <Select<Option, true, GroupBase<Option>>
-            isMulti
-            name="languages"
-            options={languageOptions}
-            placeholder="Choose languages..."
-            closeMenuOnSelect={false}
-            size="md"
-            onChange={handleMultiSelectChange}
-          />
-          <ErrorMessage
-            errors={errors}
-            as={<FormErrorMessage />}
-            name="phone"
-          />
-        </FormControl> */}
         <FormControl isInvalid={Boolean(errors?.jobTitles)} id="jobTitles">
           <FormLabel>Job titles or job tasks</FormLabel>
           <CreatableSelect<Option, true, GroupBase<Option>>
@@ -333,7 +310,7 @@ export default function ProfileForm(props: ProfileFormProps) {
           />
         </FormControl>
         <FormControl isInvalid={Boolean(errors?.regions)} id="regions">
-          <FormLabel>Regions</FormLabel>
+          <FormLabel>Preferred regions to work in</FormLabel>
           <Select<Option, true, GroupBase<Option>>
             isMulti
             name="regions"

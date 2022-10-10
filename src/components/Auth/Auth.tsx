@@ -6,11 +6,11 @@ import {
 } from 'react-router-dom';
 import { Stack, Link, useToast } from '@chakra-ui/react';
 
+// types
+import { AuthProvider } from '../../@types';
+
 // context
 import { useAppContext } from '../../context/AppContext/AppContext';
-
-// types
-import { AuthProvider } from '../../api/types';
 
 // constants
 import {
@@ -26,7 +26,7 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import api from '../../api';
 
 export default function Auth() {
-  const { logIn, logOut } = useAppContext();
+  const { storeAuthKeysAndVerifyUser, logOut } = useAppContext();
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -77,7 +77,11 @@ export default function Auth() {
           } = userInfoResponse.data);
         }
 
-        logIn(authProviderParam as AuthProvider, authTokens, authUserId);
+        storeAuthKeysAndVerifyUser(
+          authProviderParam as AuthProvider,
+          authTokens,
+          authUserId
+        );
         navigate(localStorage.getItem(LOCAL_STORAGE_ROUTE_NAME) || '/');
       } catch (error) {
         setError(error);
@@ -85,7 +89,7 @@ export default function Auth() {
         setLoading(false);
       }
     },
-    [authProviderParam, logIn, loginCodeParam, navigate]
+    [authProviderParam, storeAuthKeysAndVerifyUser, loginCodeParam, navigate]
   );
 
   /**

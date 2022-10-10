@@ -53,7 +53,7 @@ const mapSelectOptions = (
 );
 
 export default function TmtPage() {
-  const { userId, userProfile } = useAppContext();
+  const { userProfile } = useAppContext();
 
   const [searchInputValue, setSearchInputValue] = useState<string>('');
   const [search, setSearch] = useState<string | null>(null);
@@ -70,18 +70,18 @@ export default function TmtPage() {
    * Set default search keys from userProfile, if provided.
    */
   useEffect(() => {
-    if (userId && userProfile) {
+    if (userProfile?.id) {
       if (userProfile.jobTitles.length) {
         setSearch(userProfile.jobTitles.join(' '));
       }
     }
-  }, [userId, userProfile]);
+  }, [userProfile]);
 
   /**
    * Set default selected places for filtering, if provided in userProfile.
    */
   useEffect(() => {
-    if (userId && userProfile) {
+    if (userProfile?.id) {
       const selections: PlaceSelection[] = [...regions, ...municipalities];
       let values: PlaceSelection[] = [];
 
@@ -98,7 +98,7 @@ export default function TmtPage() {
 
       setSelectedPlaces(values);
     }
-  }, [userId, userProfile]);
+  }, [userProfile]);
 
   const {
     data: pokeData,
