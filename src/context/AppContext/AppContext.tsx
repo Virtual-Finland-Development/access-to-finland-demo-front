@@ -18,7 +18,6 @@ import {
   LOCAL_STORAGE_AUTH_PROVIDER,
   LOCAL_STORAGE_AUTH_TOKENS,
   LOCAL_STORAGE_AUTH_USER_ID,
-  appContextUrlEncoded,
 } from '../../constants';
 
 // utils

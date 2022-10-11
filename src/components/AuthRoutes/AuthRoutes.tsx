@@ -4,15 +4,12 @@ import { Box, Container, useBreakpointValue } from '@chakra-ui/react';
 
 // components
 import WelcomePage from '../WelcomePage/WelcomePage';
+import AboutPage from '../AboutPage/AboutPage';
 import NavBar from '../NavBar/NavBar';
 import Loading from '../Loading/Loading';
 import PageNotFound from '../PageNotFound/PageNotFound';
 
 const LazyTmt = lazy(() => import('../TmtPage/TmtPage'));
-
-const About = () => {
-  return <div>About page</div>;
-};
 
 export default function AppRoutes() {
   // layout container height calculation - subtract navbar height from viewport height
@@ -29,7 +26,7 @@ export default function AppRoutes() {
           <>
             <NavBar />
             <Box minH={minH} bg="gray.50">
-              <Container maxW="container.xl" pt={4}>
+              <Container maxW="container.xl" pt={6}>
                 <Outlet />
               </Container>
             </Box>
@@ -45,7 +42,7 @@ export default function AppRoutes() {
             </Suspense>
           }
         />
-        <Route path="about" element={<About />} />
+        <Route path="about" element={<AboutPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
