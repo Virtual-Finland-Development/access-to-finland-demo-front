@@ -48,6 +48,7 @@ interface AppContextInterface {
   logIn: () => void;
   logOut: () => void;
   setUserProfile: (profile: any) => void;
+  setLoading: (loading: boolean) => void;
   error: any;
 }
 
@@ -167,6 +168,12 @@ function AppProvider({ children }: AppProviderProps) {
   }, []);
 
   /**
+   * Handle set app state loading.
+   */
+  const setLoading = (loading: boolean) =>
+    dispatch({ type: ActionTypes.SET_LOADING, loading });
+
+  /**
    * If auth keys provided in local storage, and if token is not expired, try to fetch user profile and log user in.
    */
   useEffect(() => {
@@ -192,6 +199,7 @@ function AppProvider({ children }: AppProviderProps) {
         logIn,
         logOut,
         setUserProfile,
+        setLoading,
         error,
       }}
     >

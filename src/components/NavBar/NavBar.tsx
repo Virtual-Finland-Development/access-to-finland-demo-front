@@ -49,7 +49,7 @@ import ProfileForm from '../ProfileForm/ProfileForm';
 import api from '../../api';
 
 export default function WithSubnavigation() {
-  const { userProfile } = useAppContext();
+  const { userProfile, setLoading } = useAppContext();
   const { firstName, lastName } = userProfile;
 
   const {
@@ -84,7 +84,7 @@ export default function WithSubnavigation() {
    * Handle log out click.
    */
   const handleLogOutClick = () => {
-    // setIsLoading(true);
+    setLoading(true);
 
     const provider = localStorage.getItem(LOCAL_STORAGE_AUTH_PROVIDER)!;
     api.auth.directToAuthGwLogout(provider as AuthProvider);
