@@ -329,18 +329,20 @@ export default function ProfileForm(props: ProfileFormProps) {
         </FormControl>
         <Divider />
         <Stack spacing={6} direction={['column', 'row']}>
-          <Button
-            {...(!isEdit && {
-              bg: 'red.400',
-              color: 'white',
-              _hover: { bg: 'red.500' },
-            })}
-            w="full"
-            disabled={isSubmitting}
-            onClick={onCancel}
-          >
-            {!isEdit ? 'Skip' : 'Cancel'}
-          </Button>
+          {isEdit && (
+            <Button
+              /* {...(!isEdit && {
+                bg: 'red.400',
+                color: 'white',
+                _hover: { bg: 'red.500' },
+              })} */
+              w="full"
+              disabled={isSubmitting}
+              onClick={onCancel}
+            >
+              {!isEdit ? 'Skip' : 'Cancel'}
+            </Button>
+          )}
           <Button
             type="submit"
             bg={'blue.400'}
