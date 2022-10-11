@@ -17,4 +17,6 @@ export interface UserProfile {
   address: string;
   jobTitles: string[];
   regions: string[];
+  created: string;
+  modified: string;
 }

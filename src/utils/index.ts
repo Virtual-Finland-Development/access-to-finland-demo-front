@@ -1,3 +1,8 @@
+import { isSameSecond, parseISO } from 'date-fns';
+
+// types
+import { UserProfile } from '../@types';
+
 //  Helper function to get auth tokens from query params.
 export const JSONLocalStorage = {
   get(key: string) {
@@ -14,4 +19,10 @@ export function scrollToElement(element: HTMLElement) {
   if (typeof element?.scrollIntoView === 'function') {
     element.scrollIntoView({ behavior: 'smooth' });
   }
+}
+
+// Helper function to check if user-api user is "new", no modifications made.
+export function isNewUser(user: Partial<UserProfile>) {
+  const { created, modified } = user;
+  return isSameSecond(parseISO(created!), parseISO(modified!));
 }

@@ -7,7 +7,7 @@ import {
   Reducer,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { isSameSecond, isPast, parseISO } from 'date-fns';
+import { isPast, parseISO } from 'date-fns';
 import { useToast } from '@chakra-ui/react';
 
 // types
@@ -22,7 +22,7 @@ import {
 } from '../../constants';
 
 // utils
-import { JSONLocalStorage } from '../../utils';
+import { JSONLocalStorage, isNewUser } from '../../utils';
 
 // reducers
 import {
@@ -79,13 +79,21 @@ function AppProvider({ children }: AppProviderProps) {
 
   /**
    * Fetch user profile. Set user as logged in.
+   * OR if user has not filled profile information, direct to profile step. (isNewUser)
    */
   const getUserProfileAndLogIn = useCallback(async () => {
     try {
       const response = await api.user.get();
       const userProfile: UserProfile = response.data;
-      dispatch({ type: ActionTypes.LOG_IN });
+
       dispatch({ type: ActionTypes.SET_LOADING, loading: false });
+
+      if (isNewUser(userProfile)) {
+        navigate('profile');
+        return;
+      }
+
+      dispatch({ type: ActionTypes.LOG_IN });
       dispatch({ type: ActionTypes.SET_PROFILE, userProfile });
     } catch (error: any) {
       dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -98,24 +106,19 @@ function AppProvider({ children }: AppProviderProps) {
         isClosable: true,
       });
     }
-  }, [toast]);
+  }, [navigate, toast]);
 
   /**
    * Verify api user after authentication.
    * If user can be verified (user exists in api), fetch user profile, set user as logged in.
-   * If user can't be verified === new user, direct to profile creation step.
+   * If user can't be verified === new user, direct to profile creation step. API will create the user in background.
    */
   const verifyUser = useCallback(async () => {
     try {
       const response = await api.user.verify();
-      const { id: userId, created, modified } = response.data;
-      const isNewUser = isSameSecond(parseISO(created), parseISO(modified));
-      console.log('USERID:', userId);
-      console.log(created);
-      console.log(modified);
-      console.log(isNewUser);
+      const verifiedUser: Partial<UserProfile> = response.data;
 
-      if (isNewUser) {
+      if (isNewUser(verifiedUser)) {
         dispatch({ type: ActionTypes.SET_LOADING, loading: false });
         navigate('profile');
       } else {
@@ -164,7 +167,7 @@ function AppProvider({ children }: AppProviderProps) {
   }, []);
 
   /**
-   * Try to verify user / log in to app automatically, if.
+   * If auth keys provided in local storage, and if token is not expired, try to fetch user profile and log user in.
    */
   useEffect(() => {
     const authProvider = localStorage.getItem(LOCAL_STORAGE_AUTH_PROVIDER);
@@ -175,7 +178,6 @@ function AppProvider({ children }: AppProviderProps) {
       if (!isPast(parseISO(authTokens.expiresAt))) {
         dispatch({ type: ActionTypes.SET_LOADING, loading: true });
         getUserProfileAndLogIn();
-        // verifyUser();
       }
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

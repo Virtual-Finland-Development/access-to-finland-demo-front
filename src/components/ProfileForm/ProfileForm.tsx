@@ -26,13 +26,15 @@ import {
   MultiValue,
   ActionMeta,
 } from 'chakra-react-select';
-import { isSameSecond, isPast, parseISO } from 'date-fns';
 
 // types
 import { UserProfile } from '../../@types';
 
 // context
 import { useAppContext } from '../../context/AppContext/AppContext';
+
+// utils
+import { isNewUser } from '../../utils';
 
 // region selections
 import regionsJson from '../TmtPage/regionJsons/regions.json';
@@ -81,9 +83,8 @@ export default function ProfileForm(props: ProfileFormProps) {
 
   const [jobTitlesInputValue, setJobTitlesInputValue] = useState<string>('');
 
-  const isNewUser =
-    !(created && modified) ||
-    isSameSecond(parseISO(created), parseISO(modified));
+  const isNewProfile =
+    !(created && modified) || isNewUser({ created, modified });
 
   const {
     handleSubmit,
@@ -94,7 +95,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     formState: { errors, isSubmitting, dirtyFields },
   } = useForm<UserProfile>({
     mode: 'onSubmit',
-    defaultValues: !isNewUser
+    defaultValues: !isNewProfile
       ? { ...restOfProfile }
       : {
           firstName: faker.name.firstName(),
@@ -152,7 +153,7 @@ export default function ProfileForm(props: ProfileFormProps) {
         let payload: Partial<UserProfile> = {};
         const dirtyKeys = Object.keys(dirtyFields);
 
-        if (isNewUser) {
+        if (isNewProfile) {
           payload = { ...values };
         } else {
           if (dirtyKeys.length) {
@@ -188,7 +189,7 @@ export default function ProfileForm(props: ProfileFormProps) {
         });
       }
     },
-    [dirtyFields, isNewUser, onProfileSubmit, setUserProfile, toast]
+    [dirtyFields, isNewProfile, onProfileSubmit, setUserProfile, toast]
   );
 
   /**
