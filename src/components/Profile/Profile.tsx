@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Heading, Stack, Flex, Link, Spinner } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
 
 // types
 import { AuthProvider } from '../../@types';
@@ -19,18 +18,11 @@ import api from '../../api';
 
 export default function Profile() {
   const { logIn } = useAppContext();
-  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onProfileSubmit = () => {
     logIn();
-    navigate('/');
-  };
-
-  const onCancel = () => {
-    logIn();
-    navigate('/');
   };
 
   /**
@@ -67,7 +59,7 @@ export default function Profile() {
           <Spinner size="md" color="blue.500" mr={5} />
         )}
       </Flex>
-      <ProfileForm onProfileSubmit={onProfileSubmit} onCancel={onCancel} />
+      <ProfileForm onProfileSubmit={onProfileSubmit} />
     </Stack>
   );
 }

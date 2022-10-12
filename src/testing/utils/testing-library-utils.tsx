@@ -38,7 +38,9 @@ const WrapperWithMemoryRouter = ({
   initialEntries?: string[];
 }) => (
   <MemoryRouter initialEntries={initialEntries}>
-    <AppProvider>{children}</AppProvider>
+    <ChakraProvider>
+      <AppProvider>{children}</AppProvider>
+    </ChakraProvider>
   </MemoryRouter>
 );
 

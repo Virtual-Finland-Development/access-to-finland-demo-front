@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    # build:
+    # context: .
+    # dockerfile: Dockerfile
+    image: node:18-alpine
+    command: sh -c "npm install && npm run start"
+    working_dir: /app
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
+    ports:
+      - 3000:3000
+    # environment:
+    # - CHOKIDAR_USEPOLLING=true
+    # - WATCHPACK_POLLING=true

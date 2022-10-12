@@ -72,7 +72,7 @@ const createOption = (label: string) => ({
 
 interface ProfileFormProps {
   onProfileSubmit: () => void;
-  onCancel: () => void;
+  onCancel?: () => void;
   isEdit?: boolean;
 }
 
@@ -164,11 +164,10 @@ export default function ProfileForm(props: ProfileFormProps) {
             }
           }
         }
-        console.log(payload);
-        const response = await api.user.patch(payload);
-        console.log(response);
 
-        setUserProfile({ ...values, ...payload });
+        const response = await api.user.patch(payload);
+
+        setUserProfile(response.data);
 
         onProfileSubmit();
 

@@ -154,7 +154,10 @@ function AppProvider({ children }: AppProviderProps) {
   /**
    * Handle login.
    */
-  const logIn = () => dispatch({ type: ActionTypes.LOG_IN });
+  const logIn = () => {
+    dispatch({ type: ActionTypes.LOG_IN });
+    navigate('/');
+  };
 
   /**
    * Handle log out.

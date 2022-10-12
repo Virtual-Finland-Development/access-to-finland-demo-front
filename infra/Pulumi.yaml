@@ -1,0 +1,3 @@
+name: access-to-finland-demo-front
+description: A minimal AWS TypeScript Pulumi program
+runtime: nodejs
