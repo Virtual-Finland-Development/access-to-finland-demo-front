@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Heading, Stack, Flex, Link, Spinner } from '@chakra-ui/react';
+import { Heading, Stack, Flex, Link, Button, Spinner } from '@chakra-ui/react';
 
 // types
 import { AuthProvider } from '../../@types';
@@ -52,9 +52,9 @@ export default function Profile() {
           Fill in your profile
         </Heading>
         {!isLoading ? (
-          <Link color="blue.500" onClick={handleLogOutClick}>
+          <Button variant="link" color="blue.500" onClick={handleLogOutClick}>
             Sign out
-          </Link>
+          </Button>
         ) : (
           <Spinner size="md" color="blue.500" mr={5} />
         )}

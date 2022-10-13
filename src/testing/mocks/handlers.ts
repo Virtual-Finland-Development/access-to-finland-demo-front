@@ -3,6 +3,17 @@ import { rest } from 'msw';
 // endpoints
 import { AUTH_GW_ENDPOINT, USER_API_ENDPOINT } from '../../api/endpoints';
 
+const mockUser = {
+  id: '12312-123123-asdasd',
+  firstName: 'Donald',
+  lastName: 'Duck',
+  address: '1313 Webfoot Street, Duckburg',
+  jobTitles: ['Developer'],
+  regions: ['01', '02'],
+  created: '2022-10-12T12:05:46.6262126Z',
+  modified: '2022-10-12T12:05:46.6262127Z',
+};
+
 /**
  * msw handlers to override HTTP request for testing
  */
@@ -27,23 +38,16 @@ export const handlers = [
   rest.get(`${USER_API_ENDPOINT}/identity/testbed/verify`, (req, res, ctx) => {
     return res(
       ctx.json({
-        id: '12312-123123-asdasd',
-        created: '2022-10-12T12:05:46.6262126Z',
-        modified: '2022-10-12T12:05:46.6262127Z',
+        id: mockUser.id,
+        created: mockUser.created,
+        modified: mockUser.modified,
       })
     );
   }),
+  rest.get(`${USER_API_ENDPOINT}/user`, (req, res, ctx) => {
+    return res(ctx.json(mockUser));
+  }),
   rest.patch(`${USER_API_ENDPOINT}/user`, (req, res, ctx) => {
-    return res(
-      ctx.json({
-        firstName: 'Donald',
-        lastName: 'Duck',
-        address: '1313 Webfoot Street, Duckburg',
-        jobTitles: ['Developer'],
-        regions: ['01', '02'],
-        created: '2022-10-12T12:05:46.6262126Z',
-        modified: '2022-10-12T12:05:46.6262127Z',
-      })
-    );
+    return res(ctx.json(mockUser));
   }),
 ];

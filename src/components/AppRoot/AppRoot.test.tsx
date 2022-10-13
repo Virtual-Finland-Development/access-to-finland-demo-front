@@ -32,9 +32,6 @@ describe('Test app authentication based rendering', () => {
     });
     expect(loginButton).toBeInTheDocument();
 
-    // mock location.assign
-    window.location.assign = jest.fn();
-
     // click login button
     userEvent.click(loginButton);
 
@@ -70,5 +67,42 @@ describe('Test app authentication based rendering', () => {
       name: /access to finland/i,
     });
     expect(atfText).toBeInTheDocument();
+  });
+
+  test('User clicks sign out, logout request should occur.', async () => {
+    // user is redirected to auth route with loginCode query param, user should be logged in
+    customRender2(<AppRoot />, {
+      initialEntries: ['/auth?provider=testbed&loginCode=123'],
+    });
+
+    // logout button should be visible once user has authenticated (profile view)
+    const logoutButton = await screen.findByRole('button', {
+      name: /sign out/i,
+    });
+    expect(logoutButton).toBeInTheDocument();
+
+    userEvent.click(logoutButton);
+
+    // once log out button clicked, user should be directed to authentication log out (api gateway route)
+    expect(window.location.assign).toBeCalledWith(
+      `${AUTH_GW_ENDPOINT}/auth/openid/testbed/logout-request?appContext=${appContextUrlEncoded}&idToken=undefined`
+    );
+
+    // loading spinner should appear
+    const loadingSpinner = await screen.findByText(/loading.../i);
+    expect(loadingSpinner).toBeInTheDocument();
+  });
+
+  test('User should be logged out, when logout redirect has occured.', async () => {
+    // user is redirected to auth route with log out query param
+    customRender2(<AppRoot />, {
+      initialEntries: ['/auth?logout=success'],
+    });
+
+    // user should be logged out, login button should appear in the document
+    const loginButton = await screen.findByRole('button', {
+      name: /login with testbed/i,
+    });
+    expect(loginButton).toBeInTheDocument();
   });
 });
