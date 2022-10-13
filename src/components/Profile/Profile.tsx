@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Heading, Stack, Flex, Link, Button, Spinner } from '@chakra-ui/react';
+import { Heading, Stack, Flex, Button, Spinner } from '@chakra-ui/react';
 
 // types
 import { AuthProvider } from '../../@types';
