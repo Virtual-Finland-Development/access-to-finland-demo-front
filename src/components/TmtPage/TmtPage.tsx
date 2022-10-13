@@ -114,7 +114,7 @@ export default function TmtPage() {
 
   useEffect(() => {
     if (typeof search === 'string' || selectedPlaces.length) {
-      const payload = {
+      /* const payload = {
         query: typeof search === 'string' ? search.split(' ').toString() : '',
         location: {
           regions: selectedPlaces
@@ -131,7 +131,7 @@ export default function TmtPage() {
           limit: paginationState.limit || 25,
           offset: paginationState.offset || 0,
         },
-      };
+      }; */
       refetch();
     }
   }, [
