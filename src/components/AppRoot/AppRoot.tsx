@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, Stack } from '@chakra-ui/react';
 
 // context
 import { AppProvider, AppConsumer } from '../../context/AppContext/AppContext';
@@ -33,7 +33,11 @@ export default function AppRoot() {
                   bg="gray.50"
                 >
                   {loading && <Loading />}
-                  {error && <ErrorMessage error={error} />}
+                  {error && (
+                    <Stack w="full" maxW="md">
+                      <ErrorMessage error={error} />
+                    </Stack>
+                  )}
                 </Flex>
               );
             }
