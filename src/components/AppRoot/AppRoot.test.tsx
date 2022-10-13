@@ -5,6 +5,9 @@ import {
 } from '../../testing/utils/testing-library-utils';
 import userEvent from '@testing-library/user-event';
 import AppRoot from './AppRoot';
+import Profile from '../Profile/Profile';
+
+import * as AppContextExports from '../../context/AppContext/AppContext';
 
 // endpoints
 import { AUTH_GW_ENDPOINT } from '../../api/endpoints';
@@ -23,6 +26,15 @@ global.matchMedia =
   };
 
 describe('Test app authentication based rendering', () => {
+  beforeEach(() => {
+    // mock 'validLoginState' function in AppContext, return true value
+    const mockValidLoginState = jest.spyOn(
+      AppContextExports,
+      'validLoginState'
+    );
+    mockValidLoginState.mockImplementation(() => true);
+  });
+
   test('Should show login screen, after log in button click loading state appears and login button gets disabled.', async () => {
     customRender1(<AppRoot />);
 
