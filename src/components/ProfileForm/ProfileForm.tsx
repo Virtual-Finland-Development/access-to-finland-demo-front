@@ -7,7 +7,6 @@ import {
 } from 'react';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage as HookFormError } from '@hookform/error-message';
-import { faker } from '@faker-js/faker';
 import {
   Button,
   FormControl,
@@ -40,6 +39,11 @@ import { isNewUser } from '../../utils';
 import regionsJson from '../TmtPage/regionJsons/regions.json';
 import municipalitiesJson from '../TmtPage/regionJsons/municipalities.json';
 
+// fake data lists
+import firstNames from './fakeData/firstNames.json';
+import lastNames from './fakeData/lastNames.json';
+import addresses from './fakeData/addresses.json';
+
 // api
 import api from '../../api';
 
@@ -70,6 +74,19 @@ const createOption = (label: string) => ({
   value: label,
 });
 
+const pickRandomName = (type: 'firstName' | 'lastName') => {
+  const list: string[] = type === 'firstName' ? firstNames : lastNames;
+  return list[Math.floor(Math.random() * list.length)] || type;
+};
+
+const pickRandomAddress = () => {
+  const number = Math.floor(Math.random() * addresses.length);
+  const address = addresses[number];
+  return address
+    ? `${number} ${address.detail} ${address.name}`
+    : 'Random address 123';
+};
+
 interface ProfileFormProps {
   onProfileSubmit: () => void;
   onCancel?: () => void;
@@ -98,9 +115,9 @@ export default function ProfileForm(props: ProfileFormProps) {
     defaultValues: !isNewProfile
       ? { ...restOfProfile }
       : {
-          firstName: faker.name.firstName(),
-          lastName: faker.name.lastName(),
-          address: faker.address.streetAddress(),
+          firstName: pickRandomName('firstName'),
+          lastName: pickRandomName('lastName'),
+          address: pickRandomAddress(),
         },
   });
 
