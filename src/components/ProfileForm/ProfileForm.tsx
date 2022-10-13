@@ -6,7 +6,7 @@ import {
   useMemo,
 } from 'react';
 import { useForm } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
+import { ErrorMessage as HookFormError } from '@hookform/error-message';
 import { faker } from '@faker-js/faker';
 import {
   Button,
@@ -72,7 +72,7 @@ const createOption = (label: string) => ({
 
 interface ProfileFormProps {
   onProfileSubmit: () => void;
-  onCancel: () => void;
+  onCancel?: () => void;
   isEdit?: boolean;
 }
 
@@ -164,11 +164,10 @@ export default function ProfileForm(props: ProfileFormProps) {
             }
           }
         }
-        console.log(payload);
-        const response = await api.user.patch(payload);
-        console.log(response);
 
-        setUserProfile({ ...values, ...payload });
+        const response = await api.user.patch(payload);
+
+        setUserProfile(response.data);
 
         onProfileSubmit();
 
@@ -257,7 +256,7 @@ export default function ProfileForm(props: ProfileFormProps) {
             {...register('firstName')}
             readOnly
           />
-          <ErrorMessage
+          <HookFormError
             errors={errors}
             as={<FormErrorMessage />}
             name="firstNames"
@@ -272,7 +271,7 @@ export default function ProfileForm(props: ProfileFormProps) {
             {...register('lastName')}
             readOnly
           />
-          <ErrorMessage
+          <HookFormError
             errors={errors}
             as={<FormErrorMessage />}
             name="lastName"
@@ -287,7 +286,7 @@ export default function ProfileForm(props: ProfileFormProps) {
             {...register('address')}
             readOnly
           />
-          <ErrorMessage
+          <HookFormError
             errors={errors}
             as={<FormErrorMessage />}
             name="lastName"
@@ -322,7 +321,7 @@ export default function ProfileForm(props: ProfileFormProps) {
             size="md"
             onChange={handleMultiSelectChange}
           />
-          <ErrorMessage
+          <HookFormError
             errors={errors}
             as={<FormErrorMessage />}
             name="regions"

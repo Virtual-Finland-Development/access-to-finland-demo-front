@@ -94,6 +94,7 @@ export function appStateReducer(state: AppState, action: Action) {
       return {
         ...state,
         error: action.error,
+        loading: false,
       };
     default:
       return state;

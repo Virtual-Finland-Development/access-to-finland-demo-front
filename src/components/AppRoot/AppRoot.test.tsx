@@ -1,9 +1,16 @@
 import {
   customRender1,
+  customRender2,
   screen,
 } from '../../testing/utils/testing-library-utils';
 import userEvent from '@testing-library/user-event';
 import AppRoot from './AppRoot';
+
+// endpoints
+import { AUTH_GW_ENDPOINT } from '../../api/endpoints';
+
+// constants
+import { appContextUrlEncoded } from '../../constants';
 
 // https://stackoverflow.com/questions/64813447/cannot-read-property-addlistener-of-undefined-react-testing-library
 global.matchMedia =
@@ -15,30 +22,87 @@ global.matchMedia =
     };
   };
 
-test('Should show login screen, then profile screen, then logged in app.', async () => {
-  customRender1(<AppRoot />);
+describe('Test app authentication based rendering', () => {
+  test('Should show login screen, after log in button click loading state appears and login button gets disabled.', async () => {
+    customRender1(<AppRoot />);
 
-  // login button in screen
-  const loginButton = screen.getByRole('button', {
-    name: /login with testbed/i,
+    // login button in screen
+    const loginButton = screen.getByRole('button', {
+      name: /login with testbed/i,
+    });
+    expect(loginButton).toBeInTheDocument();
+
+    // click login button
+    userEvent.click(loginButton);
+
+    // once login button clicked, user should be directed to testbed authentication (api gateway route)
+    expect(window.location.assign).toBeCalledWith(
+      `${AUTH_GW_ENDPOINT}/auth/openid/testbed/login-request?appContext=${appContextUrlEncoded}`
+    );
+
+    // login button should be disabled when login action is clicked
+    expect(loginButton).toBeDisabled();
   });
-  expect(loginButton).toBeInTheDocument();
 
-  // click login button
-  userEvent.click(loginButton);
+  test('User should be authenticated when directed to auth route with loginCode. After authentication, user fills profile information, saves profile and logs in to the app.', async () => {
+    // user is redirected to auth route with loginCode query param, user should be logged in
+    customRender2(<AppRoot />, {
+      initialEntries: ['/auth?provider=testbed&loginCode=123'],
+    });
 
-  // profile screen skip button (profile form)
-  const skipButton = await screen.findByRole('button', {
-    name: /skip/i,
+    const profileHeader = await screen.findByRole('heading', {
+      name: /fill in your profile/i,
+    });
+    expect(profileHeader).toBeInTheDocument();
+
+    const saveButton = screen.getByRole('button', {
+      name: /save/i,
+    });
+    expect(saveButton).toBeInTheDocument();
+
+    userEvent.click(saveButton);
+
+    // Access to Finland button should appear in top-left corner the of the app (user is logged in)
+    const atfText = await screen.findByRole('button', {
+      name: /access to finland/i,
+    });
+    expect(atfText).toBeInTheDocument();
   });
-  expect(skipButton).toBeInTheDocument();
 
-  // click skip button
-  userEvent.click(skipButton);
+  test('User clicks sign out, logout request should occur.', async () => {
+    // user is redirected to auth route with loginCode query param, user should be logged in
+    customRender2(<AppRoot />, {
+      initialEntries: ['/auth?provider=testbed&loginCode=123'],
+    });
 
-  // Access to Finland button should appear in top-left corner the of the app (user is logged in)
-  const atfText = await screen.findByRole('button', {
-    name: /access to finland/i,
+    // logout button should be visible once user has authenticated (profile view)
+    const logoutButton = await screen.findByRole('button', {
+      name: /sign out/i,
+    });
+    expect(logoutButton).toBeInTheDocument();
+
+    userEvent.click(logoutButton);
+
+    // once log out button clicked, user should be directed to authentication log out (api gateway route)
+    expect(window.location.assign).toBeCalledWith(
+      `${AUTH_GW_ENDPOINT}/auth/openid/testbed/logout-request?appContext=${appContextUrlEncoded}&idToken=undefined`
+    );
+
+    // loading spinner should appear
+    const loadingSpinner = await screen.findByText(/loading.../i);
+    expect(loadingSpinner).toBeInTheDocument();
   });
-  expect(atfText).toBeInTheDocument();
+
+  test('User should be logged out, when logout redirect has occured.', async () => {
+    // user is redirected to auth route with log out query param
+    customRender2(<AppRoot />, {
+      initialEntries: ['/auth?logout=success'],
+    });
+
+    // user should be logged out, login button should appear in the document
+    const loginButton = await screen.findByRole('button', {
+      name: /login with testbed/i,
+    });
+    expect(loginButton).toBeInTheDocument();
+  });
 });
