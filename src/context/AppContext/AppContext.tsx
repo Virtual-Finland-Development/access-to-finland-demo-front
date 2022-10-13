@@ -56,6 +56,19 @@ interface AppProviderProps {
 }
 
 /**
+ * Helper function to determine valid login state
+ */
+export function validLoginState(): boolean {
+  const authProvider = localStorage.getItem(LOCAL_STORAGE_AUTH_PROVIDER);
+  const authTokens = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS);
+  const authUserId = localStorage.getItem(LOCAL_STORAGE_AUTH_USER_ID);
+  const tokenNotExpired = authTokens?.expiresAt
+    ? !isPast(parseISO(authTokens.expiresAt))
+    : false;
+  return authProvider && authTokens && authUserId && tokenNotExpired;
+}
+
+/**
  * App Context
  */
 const AppContext = createContext<AppContextInterface | undefined>(undefined);
@@ -179,15 +192,9 @@ function AppProvider({ children }: AppProviderProps) {
    * If auth keys provided in local storage, and if token is not expired, try to fetch user profile and log user in.
    */
   useEffect(() => {
-    const authProvider = localStorage.getItem(LOCAL_STORAGE_AUTH_PROVIDER);
-    const authTokens = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS);
-    const authUserId = localStorage.getItem(LOCAL_STORAGE_AUTH_USER_ID);
-
-    if (authProvider && authTokens && authUserId) {
-      if (!isPast(parseISO(authTokens.expiresAt))) {
-        dispatch({ type: ActionTypes.SET_LOADING, loading: true });
-        getUserProfileAndLogIn();
-      }
+    if (validLoginState()) {
+      dispatch({ type: ActionTypes.SET_LOADING, loading: true });
+      getUserProfileAndLogIn();
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
