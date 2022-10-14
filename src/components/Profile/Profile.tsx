@@ -47,12 +47,23 @@ export default function Profile() {
       my={12}
       mx={{ base: 4, md: 0 }}
     >
-      <Flex alignItems="end " justifyContent="space-between" w="100">
-        <Heading lineHeight={1.1} fontSize={{ base: '2xl', sm: '3xl' }}>
-          Fill in your profile
-        </Heading>
+      <Flex justifyContent="space-between" w="100" position="relative">
+        <Stack>
+          <Heading lineHeight={1.1} fontSize={{ base: 'xl', sm: '2xl' }}>
+            Welcome
+          </Heading>
+          <Heading fontSize={{ base: 'lg', sm: 'xl' }}>
+            Please fill your profile information to continue
+          </Heading>
+        </Stack>
         {!isLoading ? (
-          <Button variant="link" color="blue.500" onClick={handleLogOutClick}>
+          <Button
+            variant="link"
+            color="blue.500"
+            onClick={handleLogOutClick}
+            position="absolute"
+            right={0}
+          >
             Sign out
           </Button>
         ) : (

@@ -316,7 +316,7 @@ export default function ProfileForm(props: ProfileFormProps) {
             isClearable
             menuIsOpen={false}
             name="jobTitles"
-            placeholder="Type to add..."
+            placeholder="Type to add and press enter..."
             components={{ DropdownIndicator: null }}
             formatCreateLabel={(inputValue: string) => <>Add "{inputValue}"</>}
             inputValue={jobTitlesInputValue}
@@ -333,7 +333,7 @@ export default function ProfileForm(props: ProfileFormProps) {
             name="regions"
             defaultValue={regionsDefaulOptions}
             options={groupedRegionOptions}
-            placeholder="Choose your preferred regions..."
+            placeholder="Type or select..."
             closeMenuOnSelect={false}
             size="md"
             onChange={handleMultiSelectChange}
