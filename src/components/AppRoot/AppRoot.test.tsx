@@ -62,7 +62,7 @@ describe('Test app authentication based rendering', () => {
     });
 
     const profileHeader = await screen.findByRole('heading', {
-      name: /fill in your profile/i,
+      name: /please fill your profile information to continue/i,
     });
     expect(profileHeader).toBeInTheDocument();
 

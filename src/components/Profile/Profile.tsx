@@ -63,11 +63,12 @@ export default function Profile() {
             onClick={handleLogOutClick}
             position="absolute"
             right={0}
+            fontSize="sm"
           >
             Sign out
           </Button>
         ) : (
-          <Spinner size="md" color="blue.500" mr={5} />
+          <Spinner size="md" color="blue.500" />
         )}
       </Flex>
       <ProfileForm onProfileSubmit={onProfileSubmit} />
