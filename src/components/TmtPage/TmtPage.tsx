@@ -72,6 +72,7 @@ export default function TmtPage() {
   useEffect(() => {
     if (userProfile?.id) {
       if (userProfile.jobTitles?.length) {
+        setSearchInputValue(userProfile.jobTitles.join(' '));
         setSearch(userProfile.jobTitles.join(' '));
       }
     }
