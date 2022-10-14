@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, FormEvent } from 'react';
+import { useState, useCallback, useEffect, FormEvent, useMemo } from 'react';
 import {
   Button,
   Flex,
@@ -71,7 +71,7 @@ export default function TmtPage() {
    */
   useEffect(() => {
     if (userProfile?.id) {
-      if (userProfile.jobTitles.length) {
+      if (userProfile.jobTitles?.length) {
         setSearch(userProfile.jobTitles.join(' '));
       }
     }

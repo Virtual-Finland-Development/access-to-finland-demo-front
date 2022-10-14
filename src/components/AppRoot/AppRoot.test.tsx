@@ -5,7 +5,6 @@ import {
 } from '../../testing/utils/testing-library-utils';
 import userEvent from '@testing-library/user-event';
 import AppRoot from './AppRoot';
-import Profile from '../Profile/Profile';
 
 import * as AppContextExports from '../../context/AppContext/AppContext';
 
