@@ -1,53 +1,39 @@
-import { Box, Heading, Container, Text, Button, Stack } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { Box, Heading, Container, Text, Stack, Link } from '@chakra-ui/react';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 export default function WelcomePage() {
-  const navigate = useNavigate();
-
   return (
     <Container maxW={'3xl'}>
-      <Stack as={Box} textAlign={'center'} spacing={{ base: 8, md: 14 }}>
+      <Stack as={Box} spacing={{ base: 8, md: 14 }}>
         <Heading
           fontWeight={600}
           fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
           lineHeight={'110%'}
+          textAlign={'center'}
         >
-          Meeting place for <br />
+          Access to{' '}
           <Text as={'span'} color={'blue.400'}>
-            people and jobs
+            Finland
           </Text>
         </Heading>
-        <Text color={'gray.500'}>
-          At Job Market Finland, you can find information content and services
-          related to employment.
-        </Text>
-        <Stack
-          direction={'column'}
-          spacing={3}
-          align={'center'}
-          alignSelf={'center'}
-          position={'relative'}
-        >
-          <Button
-            colorScheme={'green'}
-            bg={'green.400'}
-            rounded={'full'}
-            px={6}
-            _hover={{
-              bg: 'green.500',
-            }}
-            onClick={() => navigate('/vacancies')}
-          >
-            Get Started
-          </Button>
-          <Button
-            variant={'link'}
-            colorScheme={'blue'}
-            size={'sm'}
-            onClick={() => navigate('/about')}
-          >
-            Learn more
-          </Button>
+        <Stack spacing={3}>
+          <Text color={'gray.500'}>
+            Are you planning on becoming employed in Finland? At{' '}
+            <i>
+              <b>Job Market Finland</b>
+            </i>{' '}
+            vacancies search, you can find information content and services
+            related to employment.
+          </Text>
+          <Link as={ReactRouterLink} to="vacancies" color="blue.500">
+            Search for open vacancies here
+          </Link>
+        </Stack>
+        <Stack spacing={3}>
+          <Text color={'gray.500'}>Looking for other useful services?</Text>
+          <Link as={ReactRouterLink} to="services" color="blue.500">
+            See other services here
+          </Link>
         </Stack>
       </Stack>
     </Container>

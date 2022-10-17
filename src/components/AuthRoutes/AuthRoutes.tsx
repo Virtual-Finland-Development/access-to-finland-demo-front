@@ -7,7 +7,7 @@ import { useAppContext } from '../../context/AppContext/AppContext';
 
 // components
 import WelcomePage from '../WelcomePage/WelcomePage';
-import AboutPage from '../AboutPage/AboutPage';
+import ServicesPage from '../ServicesPage/ServicesPage';
 import NavBar from '../NavBar/NavBar';
 import Loading from '../Loading/Loading';
 import PageNotFound from '../PageNotFound/PageNotFound';
@@ -53,7 +53,7 @@ export default function AppRoutes() {
       >
         <Route index element={<WelcomePage />} />
         <Route path="vacancies" element={<TmtPageConsentSentry />} />
-        <Route path="about" element={<AboutPage />} />
+        <Route path="services" element={<ServicesPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

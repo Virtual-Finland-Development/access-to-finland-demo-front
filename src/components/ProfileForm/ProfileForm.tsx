@@ -356,7 +356,8 @@ export default function ProfileForm(props: ProfileFormProps) {
             I permit my profile data to be used in vacancies search
           </Checkbox>
           <FormHelperText>
-            Your profile data will be used to improve search capabilities.
+            Your profile information will be used to improve search capabilities
+            in a third party service.
           </FormHelperText>
         </FormControl>
         <Divider />

@@ -39,7 +39,7 @@ export default function Profile() {
     <Stack
       spacing={4}
       w="full"
-      maxW="md"
+      maxW="lg"
       bg="white"
       rounded="xl"
       boxShadow="lg"
