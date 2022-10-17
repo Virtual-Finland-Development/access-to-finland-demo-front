@@ -223,7 +223,7 @@ function AppProvider({ children }: AppProviderProps) {
   return (
     <AppContext.Provider
       value={{
-        authenticated: authenticated && validLoginState(),
+        authenticated,
         userProfile,
         loading,
         storeAuthKeysAndVerifyUser,
