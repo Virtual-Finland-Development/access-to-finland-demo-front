@@ -19,4 +19,5 @@ export interface UserProfile {
   regions: string[];
   created: string;
   modified: string;
+  jobsDataConsent: boolean;
 }

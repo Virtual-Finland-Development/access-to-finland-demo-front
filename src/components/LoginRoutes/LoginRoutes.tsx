@@ -27,7 +27,7 @@ export default function LoginRoutes() {
       <Route
         path="/"
         element={
-          <Flex minH="100vh" align="center" justify="center" bg="gray.50">
+          <Flex minH="100vh" align="center" justify="center">
             <Outlet />
           </Flex>
         }

@@ -46,7 +46,7 @@ interface AppContextInterface {
   ) => void;
   logIn: () => void;
   logOut: () => void;
-  setUserProfile: (profile: any) => void;
+  setUserProfile: (profile: Partial<UserProfile>) => void;
   setLoading: (loading: boolean) => void;
   error: any;
 }

@@ -20,7 +20,10 @@ export default function ErrorMessage({
       <Box>
         <AlertTitle>{error?.title || 'Error'}</AlertTitle>
         <AlertDescription>
-          {error?.message || 'An unexpected error has occured.'}
+          {error?.message && error.message}
+          {error?.detail && error.detail}
+          {(!error.message || !error.detail) &&
+            'An unexpected error has occured.'}
           {addition && <Box mt={2}>{addition}</Box>}
         </AlertDescription>
       </Box>

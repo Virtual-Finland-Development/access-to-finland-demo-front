@@ -26,12 +26,7 @@ export default function AppRoot() {
 
             if (loading || error) {
               return (
-                <Flex
-                  h="100vh"
-                  alignItems="center"
-                  justifyContent="center"
-                  bg="gray.50"
-                >
+                <Flex h="100vh" alignItems="center" justifyContent="center">
                   {loading && <Loading />}
                   {error && (
                     <Stack w="full" maxW="md">

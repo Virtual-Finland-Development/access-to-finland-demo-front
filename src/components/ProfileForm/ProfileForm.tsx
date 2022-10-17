@@ -11,10 +11,12 @@ import {
   Button,
   FormControl,
   FormLabel,
+  FormHelperText,
   Input,
   Stack,
   FormErrorMessage,
   Divider,
+  Checkbox,
   useToast,
 } from '@chakra-ui/react';
 import {
@@ -132,7 +134,7 @@ export default function ProfileForm(props: ProfileFormProps) {
   }, [register]);
 
   // watch jobTitles value
-  const { jobTitles, regions } = watch();
+  const { jobTitles, regions, jobsDataConsent } = watch();
 
   /**
    * Get default values for regions select, if provided in userProfile.
@@ -175,7 +177,7 @@ export default function ProfileForm(props: ProfileFormProps) {
         } else {
           if (dirtyKeys.length) {
             for (const key of dirtyKeys) {
-              if (values[key]) {
+              if (values[key] !== undefined) {
                 payload[key as keyof UserProfile] = values[key];
               }
             }
@@ -195,10 +197,11 @@ export default function ProfileForm(props: ProfileFormProps) {
           duration: 3000,
           isClosable: true,
         });
-      } catch (error) {
+      } catch (error: any) {
         toast({
-          title: 'Error.',
-          description: 'Something went wrong, please try again later.',
+          title: error?.title || 'Error.',
+          description:
+            error?.detail || 'Something went wrong, please try again later.',
           status: 'error',
           duration: 50000,
           isClosable: true,
@@ -343,6 +346,18 @@ export default function ProfileForm(props: ProfileFormProps) {
             as={<FormErrorMessage />}
             name="regions"
           />
+        </FormControl>
+        <FormControl id="jobsDataConsent">
+          <FormLabel>Profile consent</FormLabel>
+          <Checkbox
+            {...register('jobsDataConsent')}
+            defaultChecked={jobsDataConsent}
+          >
+            I permit my profile data to be used in vacancies search
+          </Checkbox>
+          <FormHelperText>
+            Your profile data will be used to improve search capabilities.
+          </FormHelperText>
         </FormControl>
         <Divider />
         <Stack spacing={6} direction={['column', 'row']}>

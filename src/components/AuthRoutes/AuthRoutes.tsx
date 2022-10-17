@@ -1,6 +1,9 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
-import { Box, Container, useBreakpointValue } from '@chakra-ui/react';
+import { Box, Container } from '@chakra-ui/react';
+
+// context
+import { useAppContext } from '../../context/AppContext/AppContext';
 
 // components
 import WelcomePage from '../WelcomePage/WelcomePage';
@@ -8,16 +11,31 @@ import AboutPage from '../AboutPage/AboutPage';
 import NavBar from '../NavBar/NavBar';
 import Loading from '../Loading/Loading';
 import PageNotFound from '../PageNotFound/PageNotFound';
+import ConsentSentry from '../ConsentSentry/ConsentSentry';
 
 const LazyTmt = lazy(() => import('../TmtPage/TmtPage'));
 
-export default function AppRoutes() {
-  // layout container height calculation - subtract navbar height from viewport height
-  const minH = useBreakpointValue({
-    base: 'calc(100vh - 71px)',
-    md: 'calc(100vh - 119px)',
-  });
+/**
+ * User needs to give consent to use profile data in vacancies seach
+ * Show ConsentSentry to user for approving giving consent before vacancies can be shown
+ */
+function TmtPageConsentSentry() {
+  const {
+    userProfile: { jobsDataConsent },
+  } = useAppContext();
 
+  if (!jobsDataConsent) {
+    return <ConsentSentry />;
+  }
+
+  return (
+    <Suspense fallback={<Loading />}>
+      <LazyTmt />
+    </Suspense>
+  );
+}
+
+export default function AppRoutes() {
   return (
     <Routes>
       <Route
@@ -25,7 +43,7 @@ export default function AppRoutes() {
         element={
           <>
             <NavBar />
-            <Box minH={minH} bg="gray.50">
+            <Box>
               <Container maxW="container.xl" pt={6}>
                 <Outlet />
               </Container>
@@ -34,14 +52,7 @@ export default function AppRoutes() {
         }
       >
         <Route index element={<WelcomePage />} />
-        <Route
-          path="vacancies"
-          element={
-            <Suspense fallback={<Loading />}>
-              <LazyTmt />
-            </Suspense>
-          }
-        />
+        <Route path="vacancies" element={<TmtPageConsentSentry />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
