@@ -1,4 +1,4 @@
-import { Container, Stack, Heading, Box, Text, Link } from '@chakra-ui/react';
+import { Container, Stack, Heading, Box, Link } from '@chakra-ui/react';
 
 export default function ServicesPage() {
   return (
