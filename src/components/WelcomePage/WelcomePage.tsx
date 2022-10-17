@@ -16,7 +16,7 @@ export default function WelcomePage() {
             Finland
           </Text>
         </Heading>
-        <Stack spacing={3}>
+        <Stack spacing={3} alignItems="start">
           <Text color={'gray.500'}>
             Are you planning on becoming employed in Finland? At{' '}
             <i>
@@ -29,7 +29,7 @@ export default function WelcomePage() {
             Search for open vacancies here
           </Link>
         </Stack>
-        <Stack spacing={3}>
+        <Stack spacing={3} alignItems="start">
           <Text color={'gray.500'}>Looking for other useful services?</Text>
           <Link as={ReactRouterLink} to="services" color="blue.500">
             See other services here

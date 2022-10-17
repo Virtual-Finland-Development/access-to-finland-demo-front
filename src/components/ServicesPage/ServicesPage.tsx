@@ -11,7 +11,7 @@ export default function ServicesPage() {
         >
           Other services
         </Heading>
-        <Stack spacing={10}>
+        <Stack spacing={10} alignItems="start">
           <Link color="blue.500">Link to somewhere</Link>
           <Link
             color="gray.500"

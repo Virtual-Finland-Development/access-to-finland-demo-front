@@ -73,10 +73,7 @@ export function appStateReducer(state: AppState, action: Action) {
         authenticated: true,
       };
     case ActionTypes.LOG_OUT:
-      return {
-        ...state,
-        authenticated: false,
-      };
+      return initialState;
     case ActionTypes.SET_LOADING:
       return {
         ...state,

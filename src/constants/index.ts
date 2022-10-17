@@ -17,3 +17,5 @@ export const appContextUrlEncoded = (() => {
   const appContextBase64 = btoa(JSON.stringify(applicationContextObj));
   return encodeURIComponent(appContextBase64);
 })();
+
+export const REQUEST_NOT_AUTHORIZED = 'atf-request-not-authrorized';

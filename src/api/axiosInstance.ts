@@ -10,6 +10,8 @@ import { USER_API_ENDPOINT } from './endpoints';
 import {
   LOCAL_STORAGE_AUTH_PROVIDER,
   LOCAL_STORAGE_AUTH_TOKENS,
+  LOCAL_STORAGE_AUTH_USER_ID,
+  REQUEST_NOT_AUTHORIZED,
 } from '../constants';
 
 // utils
@@ -58,5 +60,25 @@ axiosInstance.interceptors.request.use(config => {
 
   return config;
 });
+
+// Axios response interceptor. Catch all 401 exceptions (unauthorized), post message to window for logging user out (AppContext)
+axiosInstance.interceptors.response.use(
+  response => response,
+  error => {
+    const provider = localStorage.getItem(LOCAL_STORAGE_AUTH_PROVIDER);
+    const authTokens = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS);
+
+    if (provider && authTokens && error?.response?.status === 401) {
+      alert('Your session has expired, please authenticate to continue.');
+      localStorage.removeItem(LOCAL_STORAGE_AUTH_PROVIDER);
+      localStorage.removeItem(LOCAL_STORAGE_AUTH_TOKENS);
+      localStorage.removeItem(LOCAL_STORAGE_AUTH_USER_ID);
+      window.postMessage(REQUEST_NOT_AUTHORIZED);
+      return new Promise(() => {});
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export default axiosInstance;

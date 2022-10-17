@@ -18,6 +18,7 @@ import {
   LOCAL_STORAGE_AUTH_PROVIDER,
   LOCAL_STORAGE_AUTH_TOKENS,
   LOCAL_STORAGE_AUTH_USER_ID,
+  REQUEST_NOT_AUTHORIZED,
 } from '../../constants';
 
 // utils
@@ -189,6 +190,19 @@ function AppProvider({ children }: AppProviderProps) {
     dispatch({ type: ActionTypes.SET_LOADING, loading });
 
   /**
+   * Windows message event handler for logging user out, in case of unauthorized api calls.
+   */
+  const onWindowMessageEvent = useCallback(
+    (event: MessageEvent) => {
+      if (event.data === REQUEST_NOT_AUTHORIZED) {
+        logOut();
+        navigate('/');
+      }
+    },
+    [logOut, navigate]
+  );
+
+  /**
    * If auth keys provided in local storage, and if token is not expired, try to fetch user profile and log user in.
    */
   useEffect(() => {
@@ -198,10 +212,18 @@ function AppProvider({ children }: AppProviderProps) {
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  /**
+   * Add window event listener, used to track custom event message that is made from axios interceptor (axiosInstance.ts)
+   */
+  useEffect(() => {
+    window.addEventListener('message', onWindowMessageEvent);
+    return () => window.removeEventListener('message', onWindowMessageEvent);
+  }, [onWindowMessageEvent]);
+
   return (
     <AppContext.Provider
       value={{
-        authenticated,
+        authenticated: authenticated && validLoginState(),
         userProfile,
         loading,
         storeAuthKeysAndVerifyUser,

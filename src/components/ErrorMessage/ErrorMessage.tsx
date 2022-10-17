@@ -22,7 +22,8 @@ export default function ErrorMessage({
         <AlertDescription>
           {error?.message && error.message}
           {error?.detail && error.detail}
-          {(!error.message || !error.detail) &&
+          {!error.message &&
+            !error.detail &&
             'An unexpected error has occured.'}
           {addition && <Box mt={2}>{addition}</Box>}
         </AlertDescription>
