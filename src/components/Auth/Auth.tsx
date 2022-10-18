@@ -56,25 +56,35 @@ export default function Auth() {
         );
 
         // get user 'autUserhId' after token retrieval, response differs between auth providers
-        let authUserId;
+        let authUserId = '';
 
         const userInfoResponse = await api.auth.getUserInfo(authProvider, {
           accessToken: authTokens.accessToken,
           appContext: appContextUrlEncoded,
         });
 
-        if (authProvider === AuthProvider.TESTBED) {
-          ({ sub: authUserId } = userInfoResponse.data);
+        if (
+          authProvider === AuthProvider.TESTBED &&
+          'sub' in userInfoResponse
+        ) {
+          ({ sub: authUserId } = userInfoResponse);
         }
 
-        if (authProvider === AuthProvider.SINUNA) {
-          ({ inum: authUserId } = userInfoResponse.data);
+        if (
+          authProvider === AuthProvider.SINUNA &&
+          'inum' in userInfoResponse &&
+          userInfoResponse.inum !== undefined
+        ) {
+          ({ inum: authUserId } = userInfoResponse);
         }
 
-        if (authProvider === AuthProvider.SUOMIFI) {
+        if (
+          authProvider === AuthProvider.SUOMIFI &&
+          'profile' in userInfoResponse
+        ) {
           ({
             profile: { nameID: authUserId },
-          } = userInfoResponse.data);
+          } = userInfoResponse);
         }
 
         storeAuthKeysAndVerifyUser(

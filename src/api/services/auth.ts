@@ -1,7 +1,8 @@
-import axiosInstance from '../axiosInstance';
+import { DefaultService } from '../openapi/generated';
+import { AuthGWClient } from '../openapi/generated';
 
 // types
-import { AuthProvider, AuthTokens } from '../../@types';
+import { AuthProvider } from '../../@types';
 
 // endpoints
 import { AUTH_GW_ENDPOINT } from '../endpoints';
@@ -15,67 +16,85 @@ import {
 // utils
 import { JSONLocalStorage } from '../../utils';
 
-function getAuthRoute(authProvider: AuthProvider) {
-  let route = '';
+class AuthService {
+  client: DefaultService;
 
-  switch (authProvider) {
-    case AuthProvider.TESTBED:
-    case AuthProvider.SINUNA:
-      route = 'openid';
-      break;
-    case AuthProvider.SUOMIFI:
-      route = 'saml2';
-      break;
-    default:
-      route = 'openid';
+  constructor() {
+    this.client = new AuthGWClient({
+      BASE: AUTH_GW_ENDPOINT,
+      WITH_CREDENTIALS: true,
+    }).default;
   }
 
-  return route;
-}
+  private getAuthRoute(authProvider: AuthProvider) {
+    let route = '';
 
-export function directToAuthGwLogin(authProvider: AuthProvider) {
-  const authRoute = getAuthRoute(authProvider);
-  window.location.assign(
-    `${AUTH_GW_ENDPOINT}/auth/${authRoute}/${authProvider}/login-request?appContext=${appContextUrlEncoded}`
-  );
-}
-
-export function directToAuthGwLogout(authProvider: AuthProvider) {
-  const authRoute = getAuthRoute(authProvider);
-  const idToken = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS).idToken;
-  window.location.assign(
-    `${AUTH_GW_ENDPOINT}/auth/${authRoute}/${authProvider}/logout-request?appContext=${appContextUrlEncoded}&idToken=${idToken}`
-  );
-}
-
-export async function getAuthTokens(
-  authPayload: {
-    loginCode: string;
-    appContext: string;
-  },
-  authProvider: AuthProvider
-): Promise<AuthTokens> {
-  const authRoute = getAuthRoute(authProvider);
-  const response = await axiosInstance.post(
-    `${AUTH_GW_ENDPOINT}/auth/${authRoute}/${authProvider}/auth-token-request`,
-    authPayload,
-    {
-      withCredentials: true,
+    switch (authProvider) {
+      case AuthProvider.TESTBED:
+      case AuthProvider.SINUNA:
+        route = 'openid';
+        break;
+      case AuthProvider.SUOMIFI:
+        route = 'saml2';
+        break;
+      default:
+        route = 'openid';
     }
-  );
-  return response.data;
+
+    return route;
+  }
+
+  directToAuthGwLogin(authProvider: AuthProvider) {
+    const authRoute = this.getAuthRoute(authProvider);
+
+    window.location.assign(
+      `${AUTH_GW_ENDPOINT}/auth/${authRoute}/${authProvider}/login-request?appContext=${appContextUrlEncoded}`
+    );
+  }
+
+  directToAuthGwLogout(authProvider: AuthProvider) {
+    const authRoute = this.getAuthRoute(authProvider);
+    const idToken = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS).idToken;
+
+    window.location.assign(
+      `${AUTH_GW_ENDPOINT}/auth/${authRoute}/${authProvider}/logout-request?appContext=${appContextUrlEncoded}&idToken=${idToken}`
+    );
+  }
+
+  async getAuthTokens(
+    authPayload: {
+      loginCode: string;
+      appContext: string;
+    },
+    authProvider: AuthProvider
+  ) {
+    switch (authProvider) {
+      case AuthProvider.TESTBED:
+      case AuthProvider.SINUNA:
+        return this.client.openIdAuthTokenRequest(authProvider, authPayload);
+      case AuthProvider.SUOMIFI:
+        return this.client.saml2AuthTokenRequest(authProvider, authPayload);
+      default:
+        throw new Error(`Invalid protocol: ${authPayload}`);
+    }
+  }
+
+  async getUserInfo(
+    authProvider: AuthProvider,
+    payload: { accessToken: string; appContext: string }
+  ) {
+    switch (authProvider) {
+      case AuthProvider.TESTBED:
+      case AuthProvider.SINUNA:
+        return this.client.openIdUserInfoRequest(authProvider, payload);
+      case AuthProvider.SUOMIFI:
+        return this.client.saml2UserInfoRequest(authProvider, payload);
+      default:
+        throw new Error(`Invalid protocol: ${authProvider}`);
+    }
+  }
 }
 
-export async function getUserInfo(
-  authProvider: AuthProvider,
-  payload: { accessToken: string; appContext: string }
-) {
-  const authRoute = getAuthRoute(authProvider);
-  return axiosInstance.post(
-    `${AUTH_GW_ENDPOINT}/auth/${authRoute}/${authProvider}/user-info-request`,
-    payload,
-    {
-      withCredentials: true,
-    }
-  );
-}
+const auth = new AuthService();
+
+export default auth;

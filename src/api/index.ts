@@ -1,4 +1,4 @@
-import * as auth from './services/auth';
+import auth from './services/auth';
 import * as user from './services/user';
 import * as data from './services/data';
 

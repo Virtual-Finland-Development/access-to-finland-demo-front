@@ -8,7 +8,7 @@ export const LOCAL_STORAGE_ROUTE_NAME = 'atf-route-name';
 const applicationBaseUrl =
   process.env.NODE_ENV === 'production'
     ? 'https://duem4bx7ribgb.cloudfront.net'
-    : 'http://localhost:3000';
+    : 'http://localhost:3001';
 const applicationContextObj = {
   appName: 'access-to-finland-demo',
   redirectUrl: `${applicationBaseUrl}/auth`,
