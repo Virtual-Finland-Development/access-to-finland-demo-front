@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Heading, Stack } from '@chakra-ui/react';
-import { IoLogIn, IoLogoLinkedin } from 'react-icons/io5';
+import { IoLogIn } from 'react-icons/io5';
 
 // types
 import { AuthProvider } from '../../@types';
