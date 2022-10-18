@@ -347,19 +347,21 @@ export default function ProfileForm(props: ProfileFormProps) {
             name="regions"
           />
         </FormControl>
-        <FormControl id="jobsDataConsent">
-          <FormLabel>Profile consent</FormLabel>
-          <Checkbox
-            {...register('jobsDataConsent')}
-            defaultChecked={jobsDataConsent}
-          >
-            I permit my profile data to be used in vacancies search
-          </Checkbox>
-          <FormHelperText>
-            Your profile information will be used to improve search capabilities
-            in a third party service.
-          </FormHelperText>
-        </FormControl>
+        {isEdit && (
+          <FormControl id="jobsDataConsent">
+            <FormLabel>Profile consent</FormLabel>
+            <Checkbox
+              {...register('jobsDataConsent')}
+              defaultChecked={jobsDataConsent}
+            >
+              I permit my profile data to be used in vacancies search
+            </Checkbox>
+            <FormHelperText>
+              Your profile information will be used to improve search
+              capabilities in a third party service.
+            </FormHelperText>
+          </FormControl>
+        )}
         <Divider />
         <Stack spacing={6} direction={['column', 'row']}>
           {isEdit && (

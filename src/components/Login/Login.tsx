@@ -105,9 +105,9 @@ export default function Login() {
         >
           Login with Suomi.fi
         </Button>
-        <Button colorScheme="linkedin" leftIcon={<IoLogoLinkedin />} disabled>
+        {/* <Button colorScheme="linkedin" leftIcon={<IoLogoLinkedin />} disabled>
           Login with LinkedIn
-        </Button>
+        </Button> */}
       </Stack>
     </Stack>
   );

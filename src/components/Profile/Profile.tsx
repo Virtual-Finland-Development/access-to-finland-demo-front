@@ -71,7 +71,7 @@ export default function Profile() {
           <Spinner size="md" color="blue.500" />
         )}
       </Flex>
-      <ProfileForm onProfileSubmit={onProfileSubmit} />
+      <ProfileForm onProfileSubmit={onProfileSubmit} isEdit={false} />
     </Stack>
   );
 }
