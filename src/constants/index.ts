@@ -19,3 +19,8 @@ export const appContextUrlEncoded = (() => {
 })();
 
 export const REQUEST_NOT_AUTHORIZED = 'atf-request-not-authrorized';
+
+export const EXT_REGISTRATION_SERVICE_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'http://localhost:3001'
+    : 'http://localhost:3001';
