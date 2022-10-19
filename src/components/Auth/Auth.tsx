@@ -30,7 +30,7 @@ export default function Auth() {
   const navigate = useNavigate();
   const toast = useToast();
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
 
   // parse query params
@@ -39,6 +39,25 @@ export default function Auth() {
   const authProviderParam = queryParams.get('provider');
   const loginCodeParam = queryParams.get('loginCode');
   const logOutParam = queryParams.get('logout');
+  const errorParam = queryParams.get('error');
+  const errorType = queryParams.get('type');
+  const authError = errorParam && errorType === 'danger';
+
+  /**
+   * Catch any auth errors, on either LoginRequest / LogOutRequest intent
+   */
+  useEffect(() => {
+    if (authError) {
+      setError({ message: errorParam });
+      toast({
+        title: 'Error.',
+        description: errorParam,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  }, [authError, errorParam, toast]);
 
   /**
    * Handle authentication.
@@ -97,15 +116,23 @@ export default function Auth() {
    */
   useEffect(() => {
     if (authProviderParam && loginCodeParam) {
+      setLoading(true);
+
       if (
         Object.values(AuthProvider).includes(authProviderParam as AuthProvider)
       ) {
         handleAuthentication(authProviderParam as AuthProvider);
       }
-    } else {
+    } else if (!authError) {
       navigate('/');
     }
-  }, [authProviderParam, handleAuthentication, loginCodeParam, navigate]);
+  }, [
+    authError,
+    authProviderParam,
+    handleAuthentication,
+    loginCodeParam,
+    navigate,
+  ]);
 
   /**
    * Handle user log out, if Auth GW log out redirect occured.
@@ -122,7 +149,7 @@ export default function Auth() {
           title: 'Error.',
           description: 'Logout request failed.',
           status: 'error',
-          duration: 50000,
+          duration: 5000,
           isClosable: true,
         });
       }
