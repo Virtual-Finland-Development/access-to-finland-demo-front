@@ -17,3 +17,12 @@ export async function get() {
 export async function patch(payload: Partial<UserProfile>) {
   return axiosInstance.patch(`${USER_API_ENDPOINT}/user`, payload);
 }
+
+// profile related codesets
+export function getCountries() {
+  return axiosInstance.get(`${USER_API_ENDPOINT}/code-sets/countries`);
+}
+
+export function getOccupations() {
+  return axiosInstance.get(`${USER_API_ENDPOINT}/code-sets/occupations`);
+}

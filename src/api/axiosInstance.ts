@@ -23,6 +23,8 @@ const axiosInstance = axios.create();
 const USER_API_URLS = [
   `${USER_API_ENDPOINT}/identity/testbed/verify`,
   `${USER_API_ENDPOINT}/user`,
+  `${USER_API_ENDPOINT}/code-sets/countries`,
+  `${USER_API_ENDPOINT}/code-sets/occupations`,
 ];
 
 const DATA_URL = '';

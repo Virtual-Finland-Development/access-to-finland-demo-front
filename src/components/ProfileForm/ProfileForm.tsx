@@ -24,6 +24,7 @@ import {
   CreatableSelect,
   OptionBase,
   GroupBase,
+  SingleValue,
   MultiValue,
   ActionMeta,
 } from 'chakra-react-select';
@@ -45,6 +46,13 @@ import municipalitiesJson from '../TmtPage/regionJsons/municipalities.json';
 import firstNames from './fakeData/firstNames.json';
 import lastNames from './fakeData/lastNames.json';
 import addresses from './fakeData/addresses.json';
+
+// hooks
+import useCountries from './hooks/useCountries';
+import useOccupations from './hooks/useOccupations';
+
+// components
+import Loading from '../Loading/Loading';
 
 // api
 import api from '../../api';
@@ -102,6 +110,10 @@ export default function ProfileForm(props: ProfileFormProps) {
 
   const [jobTitlesInputValue, setJobTitlesInputValue] = useState<string>('');
 
+  // User api provided countries and occupations list and metadata
+  const { data: countries, isLoading: countriesLoading } = useCountries();
+  const { data: occupations, isLoading: occupationsLoading } = useOccupations();
+
   const isNewProfile =
     !(created && modified) || isNewUser({ created, modified });
 
@@ -131,10 +143,18 @@ export default function ProfileForm(props: ProfileFormProps) {
   useEffect(() => {
     register('jobTitles');
     register('regions');
+    register('countryOfBirthCode');
+    register('occupationCode');
   }, [register]);
 
-  // watch jobTitles value
-  const { jobTitles, regions, jobsDataConsent } = watch();
+  // watch field values
+  const {
+    jobTitles,
+    regions,
+    jobsDataConsent,
+    countryOfBirthCode,
+    occupationCode,
+  } = watch();
 
   /**
    * Get default values for regions select, if provided in userProfile.
@@ -162,6 +182,34 @@ export default function ProfileForm(props: ProfileFormProps) {
 
     return options;
   }, [regions, userId]);
+
+  /**
+   * Default value for 'ountryOfBirthCode', mapped as react-select option (in array)
+   */
+  const defaultCountryOfBirthCode = useMemo(() => {
+    if (!countries || !countryOfBirthCode) return null;
+
+    return countries
+      .filter(c => c.id === countryOfBirthCode)
+      .map(c => ({
+        label: c.englishName,
+        value: c.id,
+      }));
+  }, [countries, countryOfBirthCode]);
+
+  /**
+   * Default value for 'occupationCode', mapped as react-select option (in array)
+   */
+  const defaultOccupationCode = useMemo(() => {
+    if (!occupations || !occupationCode) return null;
+
+    return occupations
+      .filter(o => o.id === occupationCode)
+      .map(o => ({
+        label: o.name.en,
+        value: o.id,
+      }));
+  }, [occupationCode, occupations]);
 
   /**
    * Handle form submit.
@@ -210,6 +258,22 @@ export default function ProfileForm(props: ProfileFormProps) {
     },
     [dirtyFields, isNewProfile, onProfileSubmit, setUserProfile, toast]
   );
+
+  /**
+   * Handle single select input changes.
+   */
+  const handleSingleSelectChange = (
+    selected: SingleValue<Option>,
+    meta: ActionMeta<Option>
+  ) => {
+    const field = meta.name as 'countryOfBirthCode' | 'occupationCode';
+
+    if (errors?.[`${field}`]) {
+      clearErrors(field);
+    }
+
+    setValue(field, selected?.value || '', { shouldDirty: true });
+  };
 
   /**
    * Handle multi select input changes.
@@ -264,6 +328,10 @@ export default function ProfileForm(props: ProfileFormProps) {
       [jobTitlesInputValue, jobTitles, setValue]
     );
 
+  if (countriesLoading || occupationsLoading) {
+    return <Loading />;
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={4}>
@@ -279,7 +347,7 @@ export default function ProfileForm(props: ProfileFormProps) {
           <HookFormError
             errors={errors}
             as={<FormErrorMessage />}
-            name="firstNames"
+            name="firstName"
           />
         </FormControl>
         <FormControl isInvalid={Boolean(errors?.lastName)} id="lastName">
@@ -309,11 +377,53 @@ export default function ProfileForm(props: ProfileFormProps) {
           <HookFormError
             errors={errors}
             as={<FormErrorMessage />}
-            name="lastName"
+            name="address"
           />
         </FormControl>
+        {countries && (
+          <FormControl
+            isInvalid={Boolean(errors?.countryOfBirthCode)}
+            id="countryOfBirthCode"
+          >
+            <FormLabel>Country of birth</FormLabel>
+            <Select<Option, false, GroupBase<Option>>
+              isMulti={false}
+              name="countryOfBirthCode"
+              defaultValue={defaultCountryOfBirthCode}
+              options={countries.map(c => ({
+                label: c.englishName,
+                value: c.id,
+              }))}
+              placeholder="Type or select..."
+              closeMenuOnSelect={true}
+              size="md"
+              onChange={handleSingleSelectChange}
+            />
+          </FormControl>
+        )}
+        {occupations && (
+          <FormControl
+            isInvalid={Boolean(errors?.occupationCode)}
+            id="professionCode"
+          >
+            <FormLabel>Profession</FormLabel>
+            <Select<Option, false, GroupBase<Option>>
+              isMulti={false}
+              name="professionCode"
+              defaultValue={defaultOccupationCode}
+              options={occupations.map(o => ({
+                label: o.name.en,
+                value: o.id,
+              }))}
+              placeholder="Type or select..."
+              closeMenuOnSelect={true}
+              size="md"
+              onChange={handleSingleSelectChange}
+            />
+          </FormControl>
+        )}
         <FormControl isInvalid={Boolean(errors?.jobTitles)} id="jobTitles">
-          <FormLabel>Job titles or job tasks</FormLabel>
+          <FormLabel>Job titles or job tasks you are looking for</FormLabel>
           <CreatableSelect<Option, true, GroupBase<Option>>
             isMulti
             isClearable
