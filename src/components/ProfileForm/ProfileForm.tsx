@@ -404,12 +404,12 @@ export default function ProfileForm(props: ProfileFormProps) {
         {occupations && (
           <FormControl
             isInvalid={Boolean(errors?.occupationCode)}
-            id="professionCode"
+            id="occupationCode"
           >
-            <FormLabel>Profession</FormLabel>
+            <FormLabel>Occupation</FormLabel>
             <Select<Option, false, GroupBase<Option>>
               isMulti={false}
-              name="professionCode"
+              name="occupationCode"
               defaultValue={defaultOccupationCode}
               options={occupations.map(o => ({
                 label: o.name.en,
