@@ -5,7 +5,7 @@ import {
   KeyboardEventHandler,
   useMemo,
 } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage as HookFormError } from '@hookform/error-message';
 import {
   Button,
@@ -18,6 +18,8 @@ import {
   Divider,
   Checkbox,
   useToast,
+  Radio,
+  RadioGroup,
 } from '@chakra-ui/react';
 import {
   Select,
@@ -50,6 +52,7 @@ import addresses from './fakeData/addresses.json';
 // hooks
 import useCountries from './hooks/useCountries';
 import useOccupations from './hooks/useOccupations';
+import useLanguages from './hooks/useLanguages';
 
 // components
 import Loading from '../Loading/Loading';
@@ -110,9 +113,13 @@ export default function ProfileForm(props: ProfileFormProps) {
 
   const [jobTitlesInputValue, setJobTitlesInputValue] = useState<string>('');
 
-  // User api provided countries and occupations list and metadata
+  // User api provided lists and metadata
   const { data: countries, isLoading: countriesLoading } = useCountries();
   const { data: occupations, isLoading: occupationsLoading } = useOccupations();
+  const { data: languages, isLoading: languagesLoading } = useLanguages();
+
+  const listsLoading =
+    countriesLoading || occupationsLoading || languagesLoading;
 
   const isNewProfile =
     !(created && modified) || isNewUser({ created, modified });
@@ -123,6 +130,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     setValue,
     clearErrors,
     watch,
+    control,
     formState: { errors, isSubmitting, dirtyFields },
   } = useForm<UserProfile>({
     mode: 'onSubmit',
@@ -137,6 +145,9 @@ export default function ProfileForm(props: ProfileFormProps) {
 
   const toast = useToast();
 
+  // nationalityCode: string;
+  // nativeLanguageCode: string;
+
   /**
    * Custom register languages.
    */
@@ -145,6 +156,8 @@ export default function ProfileForm(props: ProfileFormProps) {
     register('regions');
     register('countryOfBirthCode');
     register('occupationCode');
+    register('nationalityCode');
+    register('nativeLanguageCode');
   }, [register]);
 
   // watch field values
@@ -153,6 +166,8 @@ export default function ProfileForm(props: ProfileFormProps) {
     regions,
     jobsDataConsent,
     countryOfBirthCode,
+    nationalityCode,
+    nativeLanguageCode,
     occupationCode,
   } = watch();
 
@@ -183,9 +198,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     return options;
   }, [regions, userId]);
 
-  /**
-   * Default value for 'ountryOfBirthCode', mapped as react-select option (in array)
-   */
+  // Default value for 'ountryOfBirthCode', mapped as react-select option (in array)
   const defaultCountryOfBirthCode = useMemo(() => {
     if (!countries || !countryOfBirthCode) return null;
 
@@ -197,9 +210,31 @@ export default function ProfileForm(props: ProfileFormProps) {
       }));
   }, [countries, countryOfBirthCode]);
 
-  /**
-   * Default value for 'occupationCode', mapped as react-select option (in array)
-   */
+  // Default value for 'nationalityCode', mapped as react-select option (in array)
+  const defaultNationalityCode = useMemo(() => {
+    if (!countries || !nationalityCode) return null;
+
+    return countries
+      .filter(c => c.id === nationalityCode)
+      .map(c => ({
+        label: c.englishName,
+        value: c.id,
+      }));
+  }, [countries, nationalityCode]);
+
+  // Default value for 'nativeLanguageCode', mapped as react-select option (in array)
+  const defaultNativeLanguageCode = useMemo(() => {
+    if (!languages || !nativeLanguageCode) return null;
+
+    return languages
+      .filter(l => l.id === nativeLanguageCode)
+      .map(l => ({
+        label: l.englishName,
+        value: l.id,
+      }));
+  }, [languages, nativeLanguageCode]);
+
+  // Default value for 'occupationCode', mapped as react-select option (in array)
   const defaultOccupationCode = useMemo(() => {
     if (!occupations || !occupationCode) return null;
 
@@ -266,7 +301,10 @@ export default function ProfileForm(props: ProfileFormProps) {
     selected: SingleValue<Option>,
     meta: ActionMeta<Option>
   ) => {
-    const field = meta.name as 'countryOfBirthCode' | 'occupationCode';
+    const field = meta.name as
+      | 'countryOfBirthCode'
+      | 'nationalityCode'
+      | 'occupationCode';
 
     if (errors?.[`${field}`]) {
       clearErrors(field);
@@ -328,7 +366,7 @@ export default function ProfileForm(props: ProfileFormProps) {
       [jobTitlesInputValue, jobTitles, setValue]
     );
 
-  if (countriesLoading || occupationsLoading) {
+  if (listsLoading) {
     return <Loading />;
   }
 
@@ -380,19 +418,88 @@ export default function ProfileForm(props: ProfileFormProps) {
             name="address"
           />
         </FormControl>
+        <FormControl id="dateOfBirth">
+          <FormLabel>Date of birth</FormLabel>
+          <Input type="date" {...register('dateOfBirth')} />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Gender</FormLabel>
+          {/* <RadioGroup>
+            <Stack direction="row">
+              <Radio value="1">First</Radio>
+              <Radio value="2">Second</Radio>
+              <Radio value="3">Third</Radio>
+            </Stack>
+          </RadioGroup> */}
+          <Controller
+            name="gender"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <RadioGroup onChange={onChange} value={value}>
+                <Stack direction="row">
+                  <Radio value="male">Male</Radio>
+                  <Radio value="female">Female</Radio>
+                </Stack>
+              </RadioGroup>
+            )}
+          />
+        </FormControl>
         {countries && (
+          <>
+            <FormControl
+              isInvalid={Boolean(errors?.countryOfBirthCode)}
+              id="countryOfBirthCode"
+            >
+              <FormLabel>Country of birth</FormLabel>
+              <Select<Option, false, GroupBase<Option>>
+                isMulti={false}
+                name="countryOfBirthCode"
+                defaultValue={defaultCountryOfBirthCode}
+                options={countries.map(c => ({
+                  label: c.englishName,
+                  value: c.id,
+                }))}
+                placeholder="Type or select..."
+                closeMenuOnSelect={true}
+                size="md"
+                onChange={handleSingleSelectChange}
+              />
+            </FormControl>
+
+            <FormControl
+              isInvalid={Boolean(errors?.countryOfBirthCode)}
+              id="nationalityCode"
+            >
+              <FormLabel>Nationality</FormLabel>
+              <Select<Option, false, GroupBase<Option>>
+                isMulti={false}
+                name="nationalityCode"
+                defaultValue={defaultNationalityCode}
+                options={countries.map(c => ({
+                  label: c.englishName,
+                  value: c.id,
+                }))}
+                placeholder="Type or select..."
+                closeMenuOnSelect={true}
+                size="md"
+                onChange={handleSingleSelectChange}
+              />
+            </FormControl>
+          </>
+        )}
+        {languages && (
           <FormControl
-            isInvalid={Boolean(errors?.countryOfBirthCode)}
-            id="countryOfBirthCode"
+            isInvalid={Boolean(errors?.nativeLanguageCode)}
+            id="nativeLanguageCode"
           >
-            <FormLabel>Country of birth</FormLabel>
+            <FormLabel>Native language</FormLabel>
             <Select<Option, false, GroupBase<Option>>
               isMulti={false}
-              name="countryOfBirthCode"
-              defaultValue={defaultCountryOfBirthCode}
-              options={countries.map(c => ({
-                label: c.englishName,
-                value: c.id,
+              name="nativeLanguageCode"
+              defaultValue={defaultNativeLanguageCode}
+              options={languages.map(l => ({
+                label: l.englishName,
+                value: l.id,
               }))}
               placeholder="Type or select..."
               closeMenuOnSelect={true}

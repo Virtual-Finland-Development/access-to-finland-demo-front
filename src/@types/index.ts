@@ -22,6 +22,10 @@ export interface UserProfile {
   jobsDataConsent: boolean;
   countryOfBirthCode: string;
   occupationCode: string;
+  nationalityCode: string;
+  nativeLanguageCode: string;
+  gender: string;
+  dateOfBirth: string;
 }
 
 export interface CountryOption {
@@ -38,4 +42,9 @@ export interface OccupationOption {
   name: {
     en: string;
   };
+}
+
+export interface LanguageOption {
+  id: string;
+  englishName: string;
 }

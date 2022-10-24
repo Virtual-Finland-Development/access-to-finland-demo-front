@@ -19,9 +19,9 @@ export default function Modal(props: ModalProps) {
   const { isOpen, onClose, title, content } = props;
 
   return (
-    <ChakraModal isOpen={isOpen} onClose={onClose} isCentered size="lg">
+    <ChakraModal isOpen={isOpen} onClose={onClose} isCentered size="2xl">
       <ModalOverlay />
-      <ModalContent mx={{ base: 2, md: 0 }}>
+      <ModalContent mx={{ base: 2, md: 0 }} maxH="100vh" overflowY="auto">
         <ModalHeader>{title || ''}</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>{content || ''}</ModalBody>

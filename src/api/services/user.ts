@@ -26,3 +26,11 @@ export function getCountries() {
 export function getOccupations() {
   return axiosInstance.get(`${USER_API_ENDPOINT}/code-sets/occupations`);
 }
+
+export function getLanguages() {
+  return axiosInstance.get(`${USER_API_ENDPOINT}/code-sets/languages`);
+}
+
+export function getGenders() {
+  return axiosInstance.get(`${USER_API_ENDPOINT}/code-sets/genders`);
+}
