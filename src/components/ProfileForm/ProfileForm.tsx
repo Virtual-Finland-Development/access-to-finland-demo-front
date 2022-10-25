@@ -7,8 +7,10 @@ import {
 } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage as HookFormError } from '@hookform/error-message';
+import { format, parseISO } from 'date-fns';
 import {
   Button,
+  Flex,
   FormControl,
   FormLabel,
   FormHelperText,
@@ -135,7 +137,12 @@ export default function ProfileForm(props: ProfileFormProps) {
   } = useForm<UserProfile>({
     mode: 'onSubmit',
     defaultValues: !isNewProfile
-      ? { ...restOfProfile }
+      ? {
+          ...restOfProfile,
+          dateOfBirth: restOfProfile.dateOfBirth
+            ? format(parseISO(restOfProfile.dateOfBirth), 'yyyy-MM-dd')
+            : null,
+        }
       : {
           firstName: pickRandomName('firstName'),
           lastName: pickRandomName('lastName'),
@@ -144,9 +151,6 @@ export default function ProfileForm(props: ProfileFormProps) {
   });
 
   const toast = useToast();
-
-  // nationalityCode: string;
-  // nativeLanguageCode: string;
 
   /**
    * Custom register languages.
@@ -373,36 +377,38 @@ export default function ProfileForm(props: ProfileFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={4}>
-        <FormControl isInvalid={Boolean(errors?.firstName)} id="firstName">
-          <FormLabel>First name</FormLabel>
-          <Input
-            type="text"
-            placeholder="John"
-            _placeholder={{ color: 'gray.500' }}
-            {...register('firstName')}
-            readOnly
-          />
-          <HookFormError
-            errors={errors}
-            as={<FormErrorMessage />}
-            name="firstName"
-          />
-        </FormControl>
-        <FormControl isInvalid={Boolean(errors?.lastName)} id="lastName">
-          <FormLabel>Last name</FormLabel>
-          <Input
-            type="text"
-            placeholder="Doe"
-            _placeholder={{ color: 'gray.500' }}
-            {...register('lastName')}
-            readOnly
-          />
-          <HookFormError
-            errors={errors}
-            as={<FormErrorMessage />}
-            name="lastName"
-          />
-        </FormControl>
+        <Flex direction={{ base: 'column', md: 'row' }} gap={4}>
+          <FormControl isInvalid={Boolean(errors?.firstName)} id="firstName">
+            <FormLabel>First name</FormLabel>
+            <Input
+              type="text"
+              placeholder="John"
+              _placeholder={{ color: 'gray.500' }}
+              {...register('firstName')}
+              readOnly
+            />
+            <HookFormError
+              errors={errors}
+              as={<FormErrorMessage />}
+              name="firstName"
+            />
+          </FormControl>
+          <FormControl isInvalid={Boolean(errors?.lastName)} id="lastName">
+            <FormLabel>Last name</FormLabel>
+            <Input
+              type="text"
+              placeholder="Doe"
+              _placeholder={{ color: 'gray.500' }}
+              {...register('lastName')}
+              readOnly
+            />
+            <HookFormError
+              errors={errors}
+              as={<FormErrorMessage />}
+              name="lastName"
+            />
+          </FormControl>
+        </Flex>
         <FormControl isInvalid={Boolean(errors?.address)} id="address">
           <FormLabel>Address</FormLabel>
           <Input
@@ -418,32 +424,27 @@ export default function ProfileForm(props: ProfileFormProps) {
             name="address"
           />
         </FormControl>
-        <FormControl id="dateOfBirth">
-          <FormLabel>Date of birth</FormLabel>
-          <Input type="date" {...register('dateOfBirth')} />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Gender</FormLabel>
-          {/* <RadioGroup>
-            <Stack direction="row">
-              <Radio value="1">First</Radio>
-              <Radio value="2">Second</Radio>
-              <Radio value="3">Third</Radio>
-            </Stack>
-          </RadioGroup> */}
-          <Controller
-            name="gender"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <RadioGroup onChange={onChange} value={value}>
-                <Stack direction="row">
-                  <Radio value="male">Male</Radio>
-                  <Radio value="female">Female</Radio>
-                </Stack>
-              </RadioGroup>
-            )}
-          />
-        </FormControl>
+        <Flex direction={{ base: 'column', md: 'row' }} gap={4}>
+          <FormControl>
+            <FormLabel>Gender</FormLabel>
+            <Controller
+              name="gender"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <RadioGroup onChange={onChange} value={value}>
+                  <Stack direction="row">
+                    <Radio value="male">Male</Radio>
+                    <Radio value="female">Female</Radio>
+                  </Stack>
+                </RadioGroup>
+              )}
+            />
+          </FormControl>
+          <FormControl id="dateOfBirth">
+            <FormLabel>Date of birth</FormLabel>
+            <Input type="date" {...register('dateOfBirth')} />
+          </FormControl>
+        </Flex>
         {countries && (
           <>
             <FormControl
