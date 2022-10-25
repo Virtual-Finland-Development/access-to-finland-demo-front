@@ -50,4 +50,44 @@ export const handlers = [
   rest.patch(`${USER_API_ENDPOINT}/user`, (req, res, ctx) => {
     return res(ctx.json(mockUser));
   }),
+  rest.get(`${USER_API_ENDPOINT}/code-sets/countries`, (req, res, ctx) => {
+    return res(
+      ctx.json([
+        {
+          displayName: 'Aruba',
+          englishName: 'Aruba',
+          id: 'AW',
+          nativeName: '',
+          threeLetterISOCode: 'ABW',
+          twoLetterISOCode: 'AW',
+        },
+      ])
+    );
+  }),
+  rest.get(`${USER_API_ENDPOINT}/code-sets/occupations`, (req, res, ctx) => {
+    return res(
+      ctx.json([
+        {
+          id: '0',
+          name: {
+            en: 'Armed forces',
+          },
+        },
+      ])
+    );
+  }),
+  rest.get(`${USER_API_ENDPOINT}/code-sets/languages`, (req, res, ctx) => {
+    return res(
+      ctx.json([
+        {
+          id: '',
+          displayName: 'Invariant Language (Invariant Country)',
+          englishName: 'Invariant Language (Invariant Country)',
+          nativeName: 'Invariant Language (Invariant Country)',
+          twoLetterISORegionName: 'iv',
+          threeLetterISORegionName: 'ivl',
+        },
+      ])
+    );
+  }),
 ];
