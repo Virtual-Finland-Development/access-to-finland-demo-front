@@ -20,4 +20,31 @@ export interface UserProfile {
   created: string;
   modified: string;
   jobsDataConsent: boolean;
+  countryOfBirthCode: string;
+  occupationCode: string;
+  nationalityCode: string;
+  nativeLanguageCode: string;
+  gender: string;
+  dateOfBirth: string;
+}
+
+export interface CountryOption {
+  displayName: string;
+  englishName: string;
+  id: string;
+  nativeName: string;
+  threeLetterISORegionName: string;
+  twoLetterISORegionName: string;
+}
+
+export interface OccupationOption {
+  id: string;
+  name: {
+    en: string;
+  };
+}
+
+export interface LanguageOption {
+  id: string;
+  englishName: string;
 }

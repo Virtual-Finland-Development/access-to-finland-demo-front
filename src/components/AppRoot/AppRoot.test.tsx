@@ -66,7 +66,7 @@ describe('Test app authentication based rendering', () => {
     });
     expect(profileHeader).toBeInTheDocument();
 
-    const saveButton = screen.getByRole('button', {
+    const saveButton = await screen.findByRole('button', {
       name: /save/i,
     });
     expect(saveButton).toBeInTheDocument();
