@@ -1,13 +1,11 @@
-name: Build, test, deploy
+name: Build, test, deploy - Staging
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 jobs:
-  up:
-    name: Update
+  deploy-staging:
+    name: Deploy staging
     runs-on: ubuntu-latest
-    environment: dev
+    environment: staging
     strategy:
       matrix:
         node-version: [16.x]
@@ -29,7 +27,7 @@ jobs:
       - name: Run app tests
         run: npm test
       - name: Build app
-        run: npm run build:development
+        run: npm run build:staging
 
       - name: Install Pulumi dependencies
         working-directory: ./infra
@@ -42,6 +40,6 @@ jobs:
         with:
           work-dir: ./infra
           command: up
-          stack-name: virtualfinland/dev
+          stack-name: virtualfinland/staging
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
