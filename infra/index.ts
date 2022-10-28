@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import * as pulumi from '@pulumi/pulumi';
 import {
   createOriginAccessIdentity,
   createBucket,
@@ -7,7 +8,17 @@ import {
   uploadAssetsToBucket,
 } from './resources';
 
-const BUCKET_NAME = 'access-to-finland-demo';
+const stack = pulumi.getStack();
+
+let BUCKET_NAME;
+
+if (stack === 'dev') {
+  BUCKET_NAME = 'access-to-finland-demo';
+} else if (stack === 'staging') {
+  BUCKET_NAME = 'access-to-finland-demo-staging';
+} else {
+  throw new Error('Use correct stack');
+}
 
 // create origin access identity
 const originAccessIdentity = createOriginAccessIdentity(BUCKET_NAME);

@@ -19,11 +19,7 @@
     "axios": "^0.27.2",
     "chakra-react-select": "^4.2.4",
     "date-fns": "^2.29.3",
-    "eslint-plugin-jest-dom": "^4.0.2",
-    "eslint-plugin-testing-library": "^5.7.2",
     "framer-motion": "^7.5.1",
-    "jest-location-mock": "^1.0.9",
-    "msw": "^0.47.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.36.1",
@@ -33,11 +29,20 @@
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint-plugin-jest-dom": "^4.0.2",
+    "eslint-plugin-testing-library": "^5.9.1",
+    "jest-location-mock": "^1.0.9",
+    "msw": "^0.47.4"
+  },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env REACT_APP_ENV=local react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "cross-env REACT_APP_ENV=local react-scripts test",
+    "eject": "react-scripts eject",
+    "build:development": "cross-env REACT_APP_ENV=development npm run build",
+    "build:staging": "cross-env REACT_APP_ENV=staging npm run build"
   },
   "browserslist": {
     "production": [
