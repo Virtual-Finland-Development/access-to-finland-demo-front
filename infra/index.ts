@@ -8,17 +8,7 @@ import {
   uploadAssetsToBucket,
 } from './resources';
 
-const stack = pulumi.getStack();
-
-let BUCKET_NAME;
-
-if (stack === 'dev') {
-  BUCKET_NAME = 'access-to-finland-demo';
-} else if (stack === 'staging') {
-  BUCKET_NAME = 'access-to-finland-demo-staging';
-} else {
-  throw new Error('Use correct stack');
-}
+const BUCKET_NAME = `access-to-finland-demo-${pulumi.getStack}`;
 
 // create origin access identity
 const originAccessIdentity = createOriginAccessIdentity(BUCKET_NAME);
