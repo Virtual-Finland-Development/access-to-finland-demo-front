@@ -19,7 +19,7 @@ export const AUTH_GW_ENDPOINT = (() => {
   switch (process.env.REACT_APP_ENV) {
     case 'local':
     case 'development':
-      return 'https://devlife.execute-api.eu-north-1.amazonaws.com';
+      return 'https://q88uo5prmh.execute-api.eu-north-1.amazonaws.com';
     case 'staging':
       return '';
     // @ts-ignore
