@@ -259,14 +259,21 @@ export default function ProfileForm(props: ProfileFormProps) {
         let payload: Partial<UserProfile> = {};
         const dirtyKeys = Object.keys(dirtyFields);
 
+        // if new profile, set names, address as a minimum payload (pre-populated values)
         if (isNewProfile) {
-          payload = { ...values };
-        } else {
-          if (dirtyKeys.length) {
-            for (const key of dirtyKeys) {
-              if (values[key] !== undefined) {
-                payload[key as keyof UserProfile] = values[key];
-              }
+          const { firstName, lastName, address } = values;
+          payload = {
+            firstName,
+            lastName,
+            address,
+          };
+        }
+
+        // loop trough all dirty input values, set to payload
+        if (dirtyKeys.length) {
+          for (const key of dirtyKeys) {
+            if (values[key] !== undefined) {
+              payload[key as keyof UserProfile] = values[key];
             }
           }
         }
