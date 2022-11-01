@@ -39,7 +39,7 @@ export const USER_API_ENDPOINT = (() => {
     case 'development':
       return 'https://im46dbktwe3mnbo5bzd6kk4i3m0mpnbf.lambda-url.eu-north-1.on.aws';
     case 'staging':
-      return 'https://fzg7uxfalpej7qwaejo4pakv5a0ucmqi.lambda-url.eu-north-1.on.aws/ ';
+      return 'https://fzg7uxfalpej7qwaejo4pakv5a0ucmqi.lambda-url.eu-north-1.on.aws';
     // @ts-ignore
     case 'production':
       throw new Error('Production endpoint not yet defined');
