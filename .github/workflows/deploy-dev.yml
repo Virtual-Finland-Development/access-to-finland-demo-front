@@ -1,47 +1,15 @@
-name: Build, test, deploy - Development
+name: Deploy Dev
+
 on:
   push:
-    branches:
-      - main
+    branches: ['main']
+
 jobs:
-  deploy-dev:
-    name: Deploy development
-    runs-on: ubuntu-latest
-    environment: dev
-    strategy:
-      matrix:
-        node-version: [16.x]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-region: 'eu-north-1'
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      - name: Install app dependencies
-        run: npm install
-      - name: Run app tests
-        run: npm test
-      - name: Build app
-        run: npm run build
-
-      - name: Install Pulumi dependencies
-        working-directory: ./infra
-        run: npm install
-      - name: Run pulumi tests
-        working-directory: ./infra
-        run: npm test
-      - name: Deploy with Pulumi
-        uses: pulumi/actions@v3
-        with:
-          work-dir: ./infra
-          command: up
-          stack-name: virtualfinland/dev
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+  deploy:
+    uses: Virtual-Finland-Development/access-to-finland-demo-front/.github/workflows/deployment.yml@main
+    with:
+      deployment_stage: dev
+    secrets:
+      PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

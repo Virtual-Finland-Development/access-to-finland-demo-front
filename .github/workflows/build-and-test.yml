@@ -1,0 +1,39 @@
+name: Build and test
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_call:
+    inputs:
+      deployment_stage:
+        required: true
+        type: string
+      wants_artifacts:
+        required: false
+        type: boolean
+        default: false
+jobs:
+  build-and-test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: App install, test, and build
+        run: |
+          npm install
+          npm test
+          npm run build:${{ inputs.deployment_stage }}
+      - name: Archive the build artifacts
+        if: ${{ inputs.wants_artifacts }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact-${{ inputs.deployment_stage }}
+          path: build
+          if-no-files-found: error
