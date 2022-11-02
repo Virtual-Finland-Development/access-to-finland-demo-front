@@ -13,6 +13,12 @@ on:
         required: true
       AWS_SECRET_ACCESS_KEY:
         required: true
+      APP_BASE_URL:
+        required: true
+      AUTH_GW_BASE_URL:
+        required: true
+      USER_API_BASE_URL:
+        required: true
 
 env:
   pulumi_stack_organization: virtualfinland
@@ -24,9 +30,11 @@ jobs:
     with:
       deployment_stage: ${{ inputs.deployment_stage }}
       wants_artifacts: true
+      app_base_url: ${{ secrets.APP_BASE_URL }}
+      auth_gw_base_url: ${{ secrets.AUTH_GW_BASE_URL }}
+      user_api_base_url: ${{ secrets.USER_API_BASE_URL }}
   deploy:
     name: Deployment
-    environment: ${{ inputs.deployment_stage }}
     runs-on: ubuntu-latest
     needs: build-and-test
     steps:
