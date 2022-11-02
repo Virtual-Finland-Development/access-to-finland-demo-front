@@ -22,7 +22,13 @@ on:
       # user_api_base_url:
       # required: false
       # type: string
-    secrets: inherit
+    secrets:
+      APP_BASE_URL:
+        required: true
+      AUTH_GW_BASE_URL:
+        required: true
+      USER_API_BASE_URL:
+        required: true
 
 jobs:
   build-and-test:
