@@ -1,12 +1,6 @@
 import * as pulumi from '@pulumi/pulumi';
 import * as aws from '@pulumi/aws';
 
-import {
-  createOriginAccessIdentity,
-  createBucket,
-  createCloudFrontDistribution,
-} from '../resources';
-
 function promiseOf<T>(output: pulumi.Output<T>): Promise<T> {
   return new Promise(resolve => output.apply(resolve));
 }
@@ -45,12 +39,19 @@ pulumi.runtime.setMocks({
 });
 
 describe('Infrastructure tests', () => {
+  let resources: typeof import('../resources/index');
   let bucket: aws.s3.Bucket;
   let originAccessIdentity: aws.cloudfront.OriginAccessIdentity;
   let cloudFrontDistribution: aws.cloudfront.Distribution;
 
   beforeAll(async () => {
     // It's important to import the program _after_ the mocks are defined.
+    resources = await import('../resources/index');
+    const {
+      createOriginAccessIdentity,
+      createBucket,
+      createCloudFrontDistribution,
+    } = resources;
     const bucketName = 'test-bucket';
 
     originAccessIdentity = createOriginAccessIdentity(bucketName);
