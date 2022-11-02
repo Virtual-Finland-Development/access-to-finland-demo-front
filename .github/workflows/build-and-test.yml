@@ -45,7 +45,7 @@ jobs:
         run: npm run build
         env:
           REACT_APP_APPLICATION_BASE_URL: ${{ inputs.app_base_url }}
-          REACT_APP_AUTH_GW_BASE_URL: ${{ inputs.auth_gw_base_url }}
+          REACT_APP_AUTH_GW_BASE_URL: ${{ input.auth_gw_base_url }}
           REACT_APP_USER_API_BASE_URL: ${{ inputs.user_api_base_url }}
       - name: Archive the build artifacts
         if: ${{ inputs.wants_artifacts }}
