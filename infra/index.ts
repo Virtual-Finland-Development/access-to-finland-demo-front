@@ -35,3 +35,5 @@ const cloudFrontDistribution = createCloudFrontDistribution({
 
 // upload built assets to created bucket
 uploadAssetsToBucket(bucket);
+
+export const url = pulumi.interpolate`http://${cloudFrontDistribution.domainName}`;
