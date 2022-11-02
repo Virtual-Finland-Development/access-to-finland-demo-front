@@ -27,6 +27,7 @@ env:
 jobs:
   build-and-test:
     uses: Virtual-Finland-Development/access-to-finland-demo-front/.github/workflows/build-and-test.yml@main
+    environment: ${{ inputs.deployment_stage }}
     with:
       deployment_stage: ${{ inputs.deployment_stage }}
       wants_artifacts: true
