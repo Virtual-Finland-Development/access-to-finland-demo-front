@@ -13,12 +13,6 @@ on:
         required: true
       AWS_SECRET_ACCESS_KEY:
         required: true
-      APP_BASE_URL:
-        required: true
-      AUTH_GW_BASE_URL:
-        required: true
-      USER_API_BASE_URL:
-        required: true
 
 env:
   pulumi_stack_organization: virtualfinland
