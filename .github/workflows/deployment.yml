@@ -6,21 +6,18 @@ on:
       deployment_stage:
         required: true
         type: string
-      app_base_url:
-        required: true
-        type: string
-      auth_gw_base_url:
-        required: true
-        type: string
-      user_api_base_url:
-        required: true
-        type: string
     secrets:
       PULUMI_ACCESS_TOKEN:
         required: true
       AWS_ACCESS_KEY_ID:
         required: true
       AWS_SECRET_ACCESS_KEY:
+        required: true
+      APP_BASE_URL:
+        required: true
+      AUTH_GW_BASE_URL:
+        required: true
+      USER_API_BASE_URL:
         required: true
 
 env:
@@ -33,9 +30,9 @@ jobs:
     with:
       deployment_stage: ${{ inputs.deployment_stage }}
       wants_artifacts: true
-      app_base_url: ${{ inputs.app_base_url }}
-      auth_gw_base_url: ${{ inputs.auth_gw_base_url }}
-      user_api_base_url: ${{ inputs.user_api_base_url }}
+      app_base_url: ${{ secrets.APP_BASE_URL }}
+      auth_gw_base_url: ${{ secrets._AUTH_GW_BASE_URL }}
+      user_api_base_url: ${{ secrets._USER_API_BASE_URL }}
   deploy:
     name: Deployment
     runs-on: ubuntu-latest
