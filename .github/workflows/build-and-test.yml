@@ -37,7 +37,7 @@ jobs:
           npm test
       - name: App build
         if: ${{ inputs.deployment_stage }}
-        run: npm build
+        run: npm run build
       - name: Archive the build artifacts
         if: ${{ inputs.wants_artifacts }}
         uses: actions/upload-artifact@v3
