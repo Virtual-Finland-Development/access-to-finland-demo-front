@@ -48,14 +48,15 @@ export const USER_API_ENDPOINT = (() => {
       );
   }
 })(); */
-console.log(process.env.APP_BASE_URL);
-console.log(process.env.AUTH_GW_BASE_URL);
-console.log(process.env.USER_API_BASE_URL);
-export const APP_BASE_URL = process.env.APP_BASE_URL || 'http://localhost:3000';
+console.log(process.env.REACT_APP_APPLICATION_BASE_URL);
+console.log(process.env.REACT_APP_AUTH_GW_BASE_URL);
+console.log(process.env.REACT_APP_USER_API_BASE_URL);
+export const APP_BASE_URL =
+  process.env.REACT_APP_APPLICATION_BASE_URL || 'http://localhost:3000';
 
 export const AUTH_GW_BASE_URL =
-  process.env.AUTH_GW_BASE_URL ||
+  process.env.REACT_APP_AUTH_GW_BASE_URL ||
   'https://q88uo5prmh.execute-api.eu-north-1.amazonaws.com';
 
 export const USER_API_BASE_URL =
-  process.env.USER_API_BASE_URL || 'http://localhost:5001';
+  process.env.REACT_APP_USER_API_BASE_URL || 'http://localhost:5001';
