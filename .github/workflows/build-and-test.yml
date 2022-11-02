@@ -19,10 +19,6 @@ jobs:
     name: Build and test
     runs-on: ubuntu-latest
     environment: ${{ inputs.deployment_stage }}
-    env:
-      REACT_APP_APPLICATION_BASE_URL: ${{ secrets.APP_BASE_URL }}
-      REACT_APP_AUTH_GW_BASE_URL: ${{ secrets.AUTH_GW_BASE_URL }}
-      REACT_APP_USER_API_BASE_URL: ${{ secrets.USER_API_BASE_URL }}
     strategy:
       matrix:
         node-version: [16.x]
@@ -38,6 +34,10 @@ jobs:
       - name: App build
         if: ${{ inputs.deployment_stage }}
         run: npm run build
+        env:
+          REACT_APP_APPLICATION_BASE_URL: ${{ secrets.APP_BASE_URL }}
+          REACT_APP_AUTH_GW_BASE_URL: ${{ secrets.AUTH_GW_BASE_URL }}
+          REACT_APP_USER_API_BASE_URL: ${{ secrets.USER_API_BASE_URL }}
       - name: Archive the build artifacts
         if: ${{ inputs.wants_artifacts }}
         uses: actions/upload-artifact@v3
