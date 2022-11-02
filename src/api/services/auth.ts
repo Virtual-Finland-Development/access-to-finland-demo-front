@@ -4,7 +4,7 @@ import axiosInstance from '../axiosInstance';
 import { AuthProvider, AuthTokens } from '../../@types';
 
 // endpoints
-import { AUTH_GW_ENDPOINT } from '../endpoints';
+import { AUTH_GW_BASE_URL } from '../endpoints';
 
 // constants
 import {
@@ -36,7 +36,7 @@ function getAuthRoute(authProvider: AuthProvider) {
 export function directToAuthGwLogin(authProvider: AuthProvider) {
   const authRoute = getAuthRoute(authProvider);
   window.location.assign(
-    `${AUTH_GW_ENDPOINT}/auth/${authRoute}/${authProvider}/login-request?appContext=${appContextUrlEncoded}`
+    `${AUTH_GW_BASE_URL}/auth/${authRoute}/${authProvider}/login-request?appContext=${appContextUrlEncoded}`
   );
 }
 
@@ -44,7 +44,7 @@ export function directToAuthGwLogout(authProvider: AuthProvider) {
   const authRoute = getAuthRoute(authProvider);
   const idToken = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS).idToken;
   window.location.assign(
-    `${AUTH_GW_ENDPOINT}/auth/${authRoute}/${authProvider}/logout-request?appContext=${appContextUrlEncoded}&idToken=${idToken}`
+    `${AUTH_GW_BASE_URL}/auth/${authRoute}/${authProvider}/logout-request?appContext=${appContextUrlEncoded}&idToken=${idToken}`
   );
 }
 
@@ -57,7 +57,7 @@ export async function getAuthTokens(
 ): Promise<AuthTokens> {
   const authRoute = getAuthRoute(authProvider);
   const response = await axiosInstance.post(
-    `${AUTH_GW_ENDPOINT}/auth/${authRoute}/${authProvider}/auth-token-request`,
+    `${AUTH_GW_BASE_URL}/auth/${authRoute}/${authProvider}/auth-token-request`,
     authPayload,
     {
       withCredentials: true,
@@ -72,7 +72,7 @@ export async function getUserInfo(
 ) {
   const authRoute = getAuthRoute(authProvider);
   return axiosInstance.post(
-    `${AUTH_GW_ENDPOINT}/auth/${authRoute}/${authProvider}/user-info-request`,
+    `${AUTH_GW_BASE_URL}/auth/${authRoute}/${authProvider}/user-info-request`,
     payload,
     {
       withCredentials: true,

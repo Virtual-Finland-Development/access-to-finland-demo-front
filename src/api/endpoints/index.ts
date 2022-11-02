@@ -1,4 +1,4 @@
-export const APP_BASE_URL = (() => {
+/* export const APP_BASE_URL = (() => {
   switch (process.env.REACT_APP_ENV) {
     case 'local':
       return 'http://localhost:3000';
@@ -47,4 +47,13 @@ export const USER_API_ENDPOINT = (() => {
         `Unknown runtime environment: ${process.env.REACT_APP_ENV}`
       );
   }
-})();
+})(); */
+
+export const APP_BASE_URL = process.env.APP_BASE_URL || 'http://localhost:3000';
+
+export const AUTH_GW_BASE_URL =
+  process.env.AUTH_GW_BASE_URL ||
+  'https://q88uo5prmh.execute-api.eu-north-1.amazonaws.com';
+
+export const USER_API_BASE_URL =
+  process.env.USER_API_BASE_URL || 'http://localhost:5001';

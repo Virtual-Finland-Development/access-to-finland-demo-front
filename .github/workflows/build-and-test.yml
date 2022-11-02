@@ -13,10 +13,16 @@ on:
         required: false
         type: boolean
         default: false
+
 jobs:
   build-and-test:
     name: Build and test
     runs-on: ubuntu-latest
+    environment: ${{ inputs.deployment_stage }}
+    env:
+      APP_BASE_URL: ${{ secrets.APP_BASE_URL }}
+      AUTH_GW_BASE_URL: ${{ secrets.AUTH_GW_BASE_URL }}
+      USER_API_BASE_URL: ${{ secrets.USER_API_BASE_URL }}
     strategy:
       matrix:
         node-version: [16.x]
@@ -31,7 +37,7 @@ jobs:
           npm test
       - name: App build
         if: ${{ inputs.deployment_stage }}
-        run: npm run build:${{ inputs.deployment_stage }}
+        run: npm build
       - name: Archive the build artifacts
         if: ${{ inputs.wants_artifacts }}
         uses: actions/upload-artifact@v3
