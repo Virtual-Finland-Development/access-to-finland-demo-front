@@ -8,7 +8,10 @@ import {
   uploadAssetsToBucket,
 } from './resources';
 
-const BUCKET_NAME = `access-to-finland-demo-${pulumi.getStack}`;
+const stack = pulumi.getStack();
+const projectName = pulumi.getProject();
+
+const BUCKET_NAME = `${projectName}-${stack}`;
 
 // create origin access identity
 const originAccessIdentity = createOriginAccessIdentity(BUCKET_NAME);
