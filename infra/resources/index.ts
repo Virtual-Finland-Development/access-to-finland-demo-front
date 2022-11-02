@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as pulumi from '@pulumi/pulumi';
 import * as aws from '@pulumi/aws';
 import * as mime from 'mime';
 import * as fs from 'fs';
 import * as path from 'path';
+
+const stack = pulumi.getStack();
+const projectName = pulumi.getProject();
 
 /**
  * TYPES
@@ -108,6 +112,10 @@ function getBucket(bucketName: string) {
       indexDocument: 'index.html',
       errorDocument: 'index.html',
     },
+    tags: {
+      'vfd:project': projectName,
+      'vfd:stack': stack,
+    },
   });
 
   return bucket;
@@ -132,7 +140,7 @@ function getCloudFrontDistribution(config: BucketConfig) {
   const { bucketResource, originAccessIdentity, bucketName } = config;
 
   const cloudFrontDistribution = new aws.cloudfront.Distribution(
-    `${bucketName}-cloudfront-distribution`,
+    `${bucketName}-cdn`,
     {
       origins: [
         {
@@ -189,6 +197,10 @@ function getCloudFrontDistribution(config: BucketConfig) {
       waitForDeployment: true,
       enabled: true,
       retainOnDelete: false,
+      tags: {
+        'vfd:project': projectName,
+        'vfd:stack': stack,
+      },
     },
     {
       protect: true,

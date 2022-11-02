@@ -4,33 +4,33 @@ import axiosInstance from '../axiosInstance';
 import { UserProfile } from '../../@types';
 
 // endpoints
-import { USER_API_ENDPOINT } from '../endpoints';
+import { USER_API_BASE_URL } from '../endpoints';
 
 export async function verify() {
-  return axiosInstance.get(`${USER_API_ENDPOINT}/identity/testbed/verify`);
+  return axiosInstance.get(`${USER_API_BASE_URL}/identity/testbed/verify`);
 }
 
 export async function get() {
-  return axiosInstance.get(`${USER_API_ENDPOINT}/user`);
+  return axiosInstance.get(`${USER_API_BASE_URL}/user`);
 }
 
 export async function patch(payload: Partial<UserProfile>) {
-  return axiosInstance.patch(`${USER_API_ENDPOINT}/user`, payload);
+  return axiosInstance.patch(`${USER_API_BASE_URL}/user`, payload);
 }
 
 // profile related codesets
 export function getCountries() {
-  return axiosInstance.get(`${USER_API_ENDPOINT}/code-sets/countries`);
+  return axiosInstance.get(`${USER_API_BASE_URL}/code-sets/countries`);
 }
 
 export function getOccupations() {
-  return axiosInstance.get(`${USER_API_ENDPOINT}/code-sets/occupations`);
+  return axiosInstance.get(`${USER_API_BASE_URL}/code-sets/occupations`);
 }
 
 export function getLanguages() {
-  return axiosInstance.get(`${USER_API_ENDPOINT}/code-sets/languages`);
+  return axiosInstance.get(`${USER_API_BASE_URL}/code-sets/languages`);
 }
 
 export function getGenders() {
-  return axiosInstance.get(`${USER_API_ENDPOINT}/code-sets/genders`);
+  return axiosInstance.get(`${USER_API_BASE_URL}/code-sets/genders`);
 }

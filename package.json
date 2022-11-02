@@ -19,11 +19,7 @@
     "axios": "^0.27.2",
     "chakra-react-select": "^4.2.4",
     "date-fns": "^2.29.3",
-    "eslint-plugin-jest-dom": "^4.0.2",
-    "eslint-plugin-testing-library": "^5.7.2",
     "framer-motion": "^7.5.1",
-    "jest-location-mock": "^1.0.9",
-    "msw": "^0.47.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.36.1",
@@ -32,6 +28,12 @@
     "react-scripts": "5.0.1",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "eslint-plugin-jest-dom": "^4.0.2",
+    "eslint-plugin-testing-library": "^5.9.1",
+    "jest-location-mock": "^1.0.9",
+    "msw": "^0.47.4"
   },
   "scripts": {
     "start": "react-scripts start",

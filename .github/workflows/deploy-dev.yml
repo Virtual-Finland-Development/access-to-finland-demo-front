@@ -1,0 +1,15 @@
+name: Deploy Dev
+
+on:
+  workflow_dispatch:
+    branches: ['main']
+
+jobs:
+  deploy:
+    uses: Virtual-Finland-Development/access-to-finland-demo-front/.github/workflows/deployment.yml@main
+    with:
+      deployment_stage: dev
+    secrets:
+      PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
