@@ -30,9 +30,6 @@ jobs:
     with:
       deployment_stage: ${{ inputs.deployment_stage }}
       wants_artifacts: true
-      # app_base_url: ${{ secrets.APP_BASE_URL }}
-      # auth_gw_base_url: ${{ secrets.AUTH_GW_BASE_URL }}
-      # user_api_base_url: ${{ secrets.USER_API_BASE_URL }}
     secrets:
       APP_BASE_URL: ${{ secrets.APP_BASE_URL }}
       AUTH_GW_BASE_URL: ${{ secrets.AUTH_GW_BASE_URL }}

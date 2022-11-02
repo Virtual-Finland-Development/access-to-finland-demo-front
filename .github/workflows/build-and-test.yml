@@ -13,15 +13,6 @@ on:
         required: false
         type: boolean
         default: false
-      # app_base_url:
-      # required: false
-      # type: string
-      # auth_gw_base_url:
-      #required: false
-      # type: string
-      # user_api_base_url:
-      # required: false
-      # type: string
     secrets:
       APP_BASE_URL:
         required: true
