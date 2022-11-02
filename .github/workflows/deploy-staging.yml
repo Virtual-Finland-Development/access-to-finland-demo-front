@@ -7,7 +7,8 @@ on:
 jobs:
   deploy:
     uses: Virtual-Finland-Development/access-to-finland-demo-front/.github/workflows/deployment.yml@main
-    environment: staging
+    environment:
+      name: staging
     with:
       deployment_stage: staging
     secrets:
