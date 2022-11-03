@@ -22,7 +22,7 @@ export interface UserProfile {
   jobsDataConsent: boolean;
   countryOfBirthCode: string;
   occupationCode: string;
-  nationalityCode: string;
+  citizenshipCode: string;
   nativeLanguageCode: string;
   gender: string;
   dateOfBirth: string;
