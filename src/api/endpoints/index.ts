@@ -1,5 +1,14 @@
-export const APP_BASE_URL =
-  process.env.REACT_APP_APPLICATION_BASE_URL || 'http://localhost:3000';
+export const APP_BASE_URL = (() => {
+  const {
+    location: { protocol, hostname, port },
+  } = window;
+
+  if (process.env.NODE_ENV === 'development') {
+    return `${protocol}//${hostname}:${port}`;
+  } else {
+    return `${protocol}//${hostname}`;
+  }
+})();
 
 export const AUTH_GW_BASE_URL =
   process.env.REACT_APP_AUTH_GW_BASE_URL ||
