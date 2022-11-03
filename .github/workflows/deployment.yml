@@ -13,8 +13,6 @@ on:
         required: true
       AWS_SECRET_ACCESS_KEY:
         required: true
-      APP_BASE_URL:
-        required: true
       AUTH_GW_BASE_URL:
         required: true
       USER_API_BASE_URL:
@@ -31,7 +29,6 @@ jobs:
       deployment_stage: ${{ inputs.deployment_stage }}
       wants_artifacts: true
     secrets:
-      APP_BASE_URL: ${{ secrets.APP_BASE_URL }}
       AUTH_GW_BASE_URL: ${{ secrets.AUTH_GW_BASE_URL }}
       USER_API_BASE_URL: ${{ secrets.USER_API_BASE_URL }}
   deploy:
