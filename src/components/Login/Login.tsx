@@ -27,13 +27,13 @@ const SuomiFiIcon = () => (
 );
 
 export default function Login() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<LoginType | null>(null);
 
   /**
    * Handle login button click. Redirect user to auth gw login request route.
    */
   const handleLoginClick = (loginType: LoginType) => {
-    setIsLoading(true);
+    setIsLoading(loginType);
 
     if (loginType === LoginType.TESTBED) {
       api.auth.directToAuthGwLogin(AuthProvider.TESTBED);
@@ -69,11 +69,14 @@ export default function Login() {
           color="white"
           _hover={{
             bg: 'blue.500',
+            _disabled: {
+              bg: 'blue.400',
+            },
           }}
           leftIcon={<IoLogIn size="20" />}
           onClick={() => handleLoginClick(LoginType.TESTBED)}
-          isLoading={isLoading}
-          disabled={isLoading}
+          isLoading={isLoading === LoginType.TESTBED}
+          disabled={isLoading !== null}
         >
           Login with Testbed
         </Button>
@@ -81,13 +84,15 @@ export default function Login() {
           bg="#203CCC"
           color="white"
           _hover={{
-            bg: 'blue.500',
+            bg: 'blue.600',
             _disabled: {
               bg: '#203CCC',
             },
           }}
           leftIcon={<SinunaIcon />}
-          disabled
+          onClick={() => handleLoginClick(LoginType.SINUNA)}
+          isLoading={isLoading === LoginType.SINUNA}
+          disabled={isLoading !== null}
         >
           Login with Sinuna
         </Button>
@@ -95,13 +100,15 @@ export default function Login() {
           bg="#003479"
           color="white"
           _hover={{
-            bg: 'blue.500',
-            _disabled: {
-              bg: '#003479',
-            },
+            bg: '#003479',
+          }}
+          _active={{
+            bg: '#003479',
           }}
           leftIcon={<SuomiFiIcon />}
-          disabled
+          onClick={() => handleLoginClick(LoginType.SUOMIFI)}
+          isLoading={isLoading === LoginType.SUOMIFI}
+          disabled={isLoading !== null}
         >
           Login with Suomi.fi
         </Button>
