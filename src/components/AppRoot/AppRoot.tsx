@@ -1,4 +1,4 @@
-import { Flex, Stack } from '@chakra-ui/react';
+import { Flex, Stack, Button } from '@chakra-ui/react';
 
 // context
 import { AppProvider, AppConsumer } from '../../context/AppContext/AppContext';
@@ -21,7 +21,7 @@ export default function AppRoot() {
             return null;
           }
 
-          const { authenticated, loading, error } = provider;
+          const { authenticated, loading, error, logOut } = provider;
 
           if (loading || error) {
             return (
@@ -29,7 +29,19 @@ export default function AppRoot() {
                 {loading && <Loading />}
                 {error && (
                   <Stack w="full" maxW="md">
-                    <ErrorMessage error={error} />
+                    <ErrorMessage
+                      error={error}
+                      addition={
+                        <Button
+                          variant="link"
+                          color="blue.500"
+                          fontWeight="normal"
+                          onClick={logOut}
+                        >
+                          Go to Home
+                        </Button>
+                      }
+                    />
                   </Stack>
                 )}
               </Flex>

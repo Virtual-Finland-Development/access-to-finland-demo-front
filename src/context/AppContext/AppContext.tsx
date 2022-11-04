@@ -178,9 +178,7 @@ function AppProvider({ children }: AppProviderProps) {
    */
   const logOut = useCallback(() => {
     dispatch({ type: ActionTypes.LOG_OUT });
-    localStorage.removeItem(LOCAL_STORAGE_AUTH_PROVIDER);
-    localStorage.removeItem(LOCAL_STORAGE_AUTH_TOKENS);
-    localStorage.removeItem(LOCAL_STORAGE_AUTH_USER_ID);
+    localStorage.clear();
   }, []);
 
   /**

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { isPast, parseISO } from 'date-fns';
 
 // types
 import { AuthProvider } from '../@types';
@@ -71,8 +72,14 @@ axiosInstance.interceptors.response.use(
   error => {
     const provider = localStorage.getItem(LOCAL_STORAGE_AUTH_PROVIDER);
     const authTokens = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS);
+    const hasExpired = isPast(parseISO(authTokens.expiresAt));
 
-    if (provider && authTokens && error?.response?.status === 401) {
+    if (
+      provider &&
+      authTokens &&
+      error?.response?.status === 401 &&
+      hasExpired
+    ) {
       alert('Your session has expired, please authenticate to continue.');
       localStorage.removeItem(LOCAL_STORAGE_AUTH_PROVIDER);
       localStorage.removeItem(LOCAL_STORAGE_AUTH_TOKENS);
