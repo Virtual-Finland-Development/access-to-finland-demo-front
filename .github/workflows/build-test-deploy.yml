@@ -29,6 +29,8 @@ jobs:
         run: npm test
       - name: Build app
         run: npm run build
+        env:
+          EXT_REGISTRATION_SERVICE_URL: ${{ secrets.EXT_REGISTRATION_SERVICE_URL }}
 
       - name: Install Pulumi dependencies
         working-directory: ./infra
