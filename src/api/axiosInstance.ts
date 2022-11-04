@@ -83,9 +83,7 @@ axiosInstance.interceptors.response.use(
       hasExpired
     ) {
       alert('Your session has expired, please authenticate to continue.');
-      localStorage.removeItem(LOCAL_STORAGE_AUTH_PROVIDER);
-      localStorage.removeItem(LOCAL_STORAGE_AUTH_TOKENS);
-      localStorage.removeItem(LOCAL_STORAGE_AUTH_USER_ID);
+      localStorage.clear();
       window.postMessage(REQUEST_NOT_AUTHORIZED);
       return new Promise(() => {});
     }
