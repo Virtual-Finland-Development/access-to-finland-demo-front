@@ -17,6 +17,8 @@ on:
         required: true
       USER_API_BASE_URL:
         required: true
+      EXT_REGISTRATION_SERVICE_URL:
+        required: true
 
 env:
   pulumi_stack_organization: virtualfinland
@@ -31,6 +33,7 @@ jobs:
     secrets:
       AUTH_GW_BASE_URL: ${{ secrets.AUTH_GW_BASE_URL }}
       USER_API_BASE_URL: ${{ secrets.USER_API_BASE_URL }}
+      EXT_REGISTRATION_SERVICE_URL: ${{ secrets.EXT_REGISTRATION_SERVICE_URL }}
   deploy:
     name: Deployment
     runs-on: ubuntu-latest

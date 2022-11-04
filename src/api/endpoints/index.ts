@@ -16,3 +16,6 @@ export const AUTH_GW_BASE_URL =
 
 export const USER_API_BASE_URL =
   process.env.REACT_APP_USER_API_BASE_URL || 'http://localhost:5001';
+
+export const EXT_REGISTRATION_SERVICE_URL =
+  process.env.REACT_APP_EXT_REGISTRATION_SERVICE_URL || 'http://localhost:3001';
