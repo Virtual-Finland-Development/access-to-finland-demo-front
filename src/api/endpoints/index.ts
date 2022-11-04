@@ -5,3 +5,8 @@ export const USER_API_ENDPOINT =
   process.env.NODE_ENV === 'production'
     ? 'https://im46dbktwe3mnbo5bzd6kk4i3m0mpnbf.lambda-url.eu-north-1.on.aws'
     : 'http://localhost:5001';
+
+export const EXT_REGISTRATION_SERVICE_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'http://localhost:3001'
+    : 'http://localhost:3001';
