@@ -477,7 +477,7 @@ export default function ProfileForm(props: ProfileFormProps) {
               isInvalid={Boolean(errors?.citizenshipCode)}
               id="citizenshipCode"
             >
-              <FormLabel>Nationality</FormLabel>
+              <FormLabel>Citizenship</FormLabel>
               <Select<Option, false, GroupBase<Option>>
                 isMulti={false}
                 name="citizenshipCode"
