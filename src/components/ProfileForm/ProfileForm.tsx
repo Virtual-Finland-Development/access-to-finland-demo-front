@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage as HookFormError } from '@hookform/error-message';
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, isMatch } from 'date-fns';
 import {
   Button,
   Flex,
@@ -447,9 +447,27 @@ export default function ProfileForm(props: ProfileFormProps) {
               )}
             />
           </FormControl>
-          <FormControl id="dateOfBirth">
+          <FormControl
+            isInvalid={Boolean(errors?.dateOfBirth)}
+            id="dateOfBirth"
+          >
             <FormLabel>Date of birth</FormLabel>
-            <Input type="date" {...register('dateOfBirth')} />
+            <Input
+              type="date"
+              {...register('dateOfBirth', {
+                validate: value => {
+                  if (!isMatch(value, 'yyyy-MM-dd')) {
+                    return 'Incorrect value';
+                  }
+                  return true;
+                },
+              })}
+            />
+            <HookFormError
+              errors={errors}
+              as={<FormErrorMessage />}
+              name="dateOfBirth"
+            />
           </FormControl>
         </Flex>
         {countries && (
