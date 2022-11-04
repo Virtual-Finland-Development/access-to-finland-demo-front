@@ -75,9 +75,7 @@ export default function WithSubnavigation() {
           isEdit
         />
       ),
-      onClose: () => {
-        console.log('modal on close');
-      },
+      onClose: () => {},
     });
 
   /**

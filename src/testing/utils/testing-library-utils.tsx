@@ -3,6 +3,9 @@ import { ReactElement } from 'react';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import { AppProvider } from '../../context/AppContext/AppContext';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 /**
  * Custom render function 1
@@ -10,9 +13,11 @@ import { AppProvider } from '../../context/AppContext/AppContext';
  */
 const WrapperWithBrowserRouter = ({ children }: { children: ReactElement }) => (
   <BrowserRouter>
-    <ChakraProvider>
-      <AppProvider>{children}</AppProvider>
-    </ChakraProvider>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider>
+        <AppProvider>{children}</AppProvider>
+      </ChakraProvider>
+    </QueryClientProvider>
   </BrowserRouter>
 );
 
@@ -38,9 +43,11 @@ const WrapperWithMemoryRouter = ({
   initialEntries?: string[];
 }) => (
   <MemoryRouter initialEntries={initialEntries}>
-    <ChakraProvider>
-      <AppProvider>{children}</AppProvider>
-    </ChakraProvider>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider>
+        <AppProvider>{children}</AppProvider>
+      </ChakraProvider>
+    </QueryClientProvider>
   </MemoryRouter>
 );
 

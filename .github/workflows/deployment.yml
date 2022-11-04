@@ -1,0 +1,70 @@
+name: Deploy a stage
+
+on:
+  workflow_call:
+    inputs:
+      deployment_stage:
+        required: true
+        type: string
+    secrets:
+      PULUMI_ACCESS_TOKEN:
+        required: true
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      AUTH_GW_BASE_URL:
+        required: true
+      USER_API_BASE_URL:
+        required: true
+      EXT_REGISTRATION_SERVICE_URL:
+        required: true
+
+env:
+  pulumi_stack_organization: virtualfinland
+  aws_region: eu-north-1
+
+jobs:
+  build-and-test:
+    uses: Virtual-Finland-Development/access-to-finland-demo-front/.github/workflows/build-and-test.yml@main
+    with:
+      deployment_stage: ${{ inputs.deployment_stage }}
+      wants_artifacts: true
+    secrets:
+      AUTH_GW_BASE_URL: ${{ secrets.AUTH_GW_BASE_URL }}
+      USER_API_BASE_URL: ${{ secrets.USER_API_BASE_URL }}
+      EXT_REGISTRATION_SERVICE_URL: ${{ secrets.EXT_REGISTRATION_SERVICE_URL }}
+  deploy:
+    name: Deployment
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download the built artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifact-${{ inputs.deployment_stage }}
+          path: ./build
+      - name: Display structure of downloaded artifact files
+        run: |
+          ls -R build
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.aws_region }}
+      - name: Pulumi install, test
+        working-directory: ./infra
+        run: |
+          npm install
+          npm test
+      - name: Deploy with Pulumi
+        uses: pulumi/actions@v3
+        with:
+          work-dir: ./infra
+          command: up
+          stack-name: ${{ env.pulumi_stack_organization }}/${{ inputs.deployment_stage }}
+          upsert: true # create stack if no exists
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}

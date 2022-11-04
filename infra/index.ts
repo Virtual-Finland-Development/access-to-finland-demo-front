@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import * as pulumi from '@pulumi/pulumi';
 import {
   createOriginAccessIdentity,
   createBucket,
@@ -7,7 +8,10 @@ import {
   uploadAssetsToBucket,
 } from './resources';
 
-const BUCKET_NAME = 'access-to-finland-demo';
+const stack = pulumi.getStack();
+const projectName = pulumi.getProject();
+
+const BUCKET_NAME = `${projectName}-${stack}`;
 
 // create origin access identity
 const originAccessIdentity = createOriginAccessIdentity(BUCKET_NAME);
@@ -31,3 +35,5 @@ const cloudFrontDistribution = createCloudFrontDistribution({
 
 // upload built assets to created bucket
 uploadAssetsToBucket(bucket);
+
+export const url = pulumi.interpolate`http://${cloudFrontDistribution.domainName}`;

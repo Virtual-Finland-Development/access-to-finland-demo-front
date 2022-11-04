@@ -4,7 +4,7 @@ import axios from 'axios';
 import { AuthProvider } from '../@types';
 
 // endpoints
-import { USER_API_ENDPOINT } from './endpoints';
+import { USER_API_BASE_URL } from './endpoints';
 
 // constants
 import {
@@ -21,8 +21,12 @@ import { JSONLocalStorage } from '../utils';
 const axiosInstance = axios.create();
 
 const USER_API_URLS = [
-  `${USER_API_ENDPOINT}/identity/testbed/verify`,
-  `${USER_API_ENDPOINT}/user`,
+  `${USER_API_BASE_URL}/identity/testbed/verify`,
+  `${USER_API_BASE_URL}/user`,
+  `${USER_API_BASE_URL}/code-sets/countries`,
+  `${USER_API_BASE_URL}/code-sets/occupations`,
+  `${USER_API_BASE_URL}/code-sets/languages`,
+  `${USER_API_BASE_URL}/code-sets/genders`,
 ];
 
 const DATA_URL = '';

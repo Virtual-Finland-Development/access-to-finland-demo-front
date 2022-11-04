@@ -15,32 +15,36 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 export default function AppRoot() {
   return (
     <AppProvider>
-      <ModalProvider>
-        <AppConsumer>
-          {provider => {
-            if (typeof provider === 'undefined') {
-              return null;
-            }
+      <AppConsumer>
+        {provider => {
+          if (typeof provider === 'undefined') {
+            return null;
+          }
 
-            const { authenticated, loading, error } = provider;
+          const { authenticated, loading, error } = provider;
 
-            if (loading || error) {
-              return (
-                <Flex h="100vh" alignItems="center" justifyContent="center">
-                  {loading && <Loading />}
-                  {error && (
-                    <Stack w="full" maxW="md">
-                      <ErrorMessage error={error} />
-                    </Stack>
-                  )}
-                </Flex>
-              );
-            }
+          if (loading || error) {
+            return (
+              <Flex h="100vh" alignItems="center" justifyContent="center">
+                {loading && <Loading />}
+                {error && (
+                  <Stack w="full" maxW="md">
+                    <ErrorMessage error={error} />
+                  </Stack>
+                )}
+              </Flex>
+            );
+          }
 
-            return !authenticated ? <LoginRoutes /> : <AuthRoutes />;
-          }}
-        </AppConsumer>
-      </ModalProvider>
+          return !authenticated ? (
+            <LoginRoutes />
+          ) : (
+            <ModalProvider>
+              <AuthRoutes />
+            </ModalProvider>
+          );
+        }}
+      </AppConsumer>
     </AppProvider>
   );
 }
