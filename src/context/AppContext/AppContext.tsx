@@ -116,7 +116,7 @@ function AppProvider({ children }: AppProviderProps) {
         description:
           error?.message || 'Something went wrong, please try again later.',
         status: 'error',
-        duration: 50000,
+        duration: 5000,
         isClosable: true,
       });
     }
@@ -145,7 +145,7 @@ function AppProvider({ children }: AppProviderProps) {
         description:
           error?.message || 'Something went wrong, please try again later.',
         status: 'error',
-        duration: 50000,
+        duration: 5000,
         isClosable: true,
       });
     }
