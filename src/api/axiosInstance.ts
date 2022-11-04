@@ -72,7 +72,9 @@ axiosInstance.interceptors.response.use(
   error => {
     const provider = localStorage.getItem(LOCAL_STORAGE_AUTH_PROVIDER);
     const authTokens = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS);
-    const hasExpired = isPast(parseISO(authTokens.expiresAt));
+    const hasExpired = authTokens?.expiresAt
+      ? isPast(parseISO(authTokens.expiresAt))
+      : false;
 
     if (
       provider &&
