@@ -7,6 +7,4 @@ export const USER_API_ENDPOINT =
     : 'http://localhost:5001';
 
 export const EXT_REGISTRATION_SERVICE_URL =
-  process.env.NODE_ENV === 'production'
-    ? 'http://localhost:3001'
-    : 'http://localhost:3001';
+  process.env.EXT_REGISTRATION_SERVICE_URL || 'http://localhost:3001';
