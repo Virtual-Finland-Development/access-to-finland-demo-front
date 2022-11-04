@@ -11,7 +11,6 @@ import { USER_API_BASE_URL } from './endpoints';
 import {
   LOCAL_STORAGE_AUTH_PROVIDER,
   LOCAL_STORAGE_AUTH_TOKENS,
-  LOCAL_STORAGE_AUTH_USER_ID,
   REQUEST_NOT_AUTHORIZED,
 } from '../constants';
 
