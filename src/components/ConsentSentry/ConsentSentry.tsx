@@ -46,7 +46,7 @@ export default function ConsentSentry() {
         description:
           error?.detail || 'Something went wrong, please try again later.',
         status: 'error',
-        duration: 50000,
+        duration: 5000,
         isClosable: true,
       });
     } finally {

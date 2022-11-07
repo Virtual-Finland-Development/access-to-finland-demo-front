@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { isPast, parseISO } from 'date-fns';
 
 // types
 import { AuthProvider } from '../@types';
@@ -10,7 +11,6 @@ import { USER_API_BASE_URL } from './endpoints';
 import {
   LOCAL_STORAGE_AUTH_PROVIDER,
   LOCAL_STORAGE_AUTH_TOKENS,
-  LOCAL_STORAGE_AUTH_USER_ID,
   REQUEST_NOT_AUTHORIZED,
 } from '../constants';
 
@@ -21,7 +21,7 @@ import { JSONLocalStorage } from '../utils';
 const axiosInstance = axios.create();
 
 const USER_API_URLS = [
-  `${USER_API_BASE_URL}/identity/testbed/verify`,
+  `${USER_API_BASE_URL}/identity/verify`,
   `${USER_API_BASE_URL}/user`,
   `${USER_API_BASE_URL}/code-sets/countries`,
   `${USER_API_BASE_URL}/code-sets/occupations`,
@@ -71,12 +71,18 @@ axiosInstance.interceptors.response.use(
   error => {
     const provider = localStorage.getItem(LOCAL_STORAGE_AUTH_PROVIDER);
     const authTokens = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS);
+    const hasExpired = authTokens?.expiresAt
+      ? isPast(parseISO(authTokens.expiresAt))
+      : false;
 
-    if (provider && authTokens && error?.response?.status === 401) {
+    if (
+      provider &&
+      authTokens &&
+      error?.response?.status === 401 &&
+      hasExpired
+    ) {
       alert('Your session has expired, please authenticate to continue.');
-      localStorage.removeItem(LOCAL_STORAGE_AUTH_PROVIDER);
-      localStorage.removeItem(LOCAL_STORAGE_AUTH_TOKENS);
-      localStorage.removeItem(LOCAL_STORAGE_AUTH_USER_ID);
+      localStorage.clear();
       window.postMessage(REQUEST_NOT_AUTHORIZED);
       return new Promise(() => {});
     }
