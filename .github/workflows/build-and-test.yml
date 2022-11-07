@@ -13,13 +13,6 @@ on:
         required: false
         type: boolean
         default: false
-    # secrets:
-    # AUTH_GW_BASE_URL:
-    # required: true
-    # USER_API_BASE_URL:
-    # required: true
-    # EXT_REGISTRATION_SERVICE_URL:
-    # required: true
 
 jobs:
   build-and-test:

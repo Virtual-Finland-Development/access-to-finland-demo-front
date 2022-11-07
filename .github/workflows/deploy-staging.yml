@@ -9,10 +9,4 @@ jobs:
     uses: Virtual-Finland-Development/access-to-finland-demo-front/.github/workflows/deployment.yml@main
     with:
       deployment_stage: staging
-    secrets:
-      PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AUTH_GW_BASE_URL: ${{ secrets.AUTH_GW_BASE_URL_STAGING }}
-      USER_API_BASE_URL: ${{ secrets.USER_API_BASE_URL_STAGING }}
-      EXT_REGISTRATION_SERVICE_URL: ${{ secrets.EXT_REGISTRATION_SERVICE_URL_STAGING }}
+    secrets: inherit
