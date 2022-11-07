@@ -272,7 +272,7 @@ export default function ProfileForm(props: ProfileFormProps) {
         // loop trough all dirty input values, set to payload
         if (dirtyKeys.length) {
           for (const key of dirtyKeys) {
-            if (values[key] !== undefined) {
+            if (values[key]) {
               payload[key as keyof UserProfile] = values[key];
             }
           }
@@ -456,7 +456,7 @@ export default function ProfileForm(props: ProfileFormProps) {
               type="date"
               {...register('dateOfBirth', {
                 validate: value => {
-                  if (!isMatch(value, 'yyyy-MM-dd')) {
+                  if (value && !isMatch(value, 'yyyy-MM-dd')) {
                     return 'Incorrect value';
                   }
                   return true;

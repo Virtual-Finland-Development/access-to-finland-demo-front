@@ -35,7 +35,7 @@ export const handlers = [
       );
     }
   ),
-  rest.get(`${USER_API_BASE_URL}/identity/testbed/verify`, (req, res, ctx) => {
+  rest.get(`${USER_API_BASE_URL}/identity/verify`, (req, res, ctx) => {
     return res(
       ctx.json({
         id: mockUser.id,
