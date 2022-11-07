@@ -160,7 +160,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     register('regions');
     register('countryOfBirthCode');
     register('occupationCode');
-    register('nationalityCode');
+    register('citizenshipCode');
     register('nativeLanguageCode');
   }, [register]);
 
@@ -170,7 +170,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     regions,
     jobsDataConsent,
     countryOfBirthCode,
-    nationalityCode,
+    citizenshipCode,
     nativeLanguageCode,
     occupationCode,
   } = watch();
@@ -214,17 +214,17 @@ export default function ProfileForm(props: ProfileFormProps) {
       }));
   }, [countries, countryOfBirthCode]);
 
-  // Default value for 'nationalityCode', mapped as react-select option (in array)
-  const defaultNationalityCode = useMemo(() => {
-    if (!countries || !nationalityCode) return null;
+  // Default value for 'citizenshipCode', mapped as react-select option (in array)
+  const defaultCitizenshipCode = useMemo(() => {
+    if (!countries || !citizenshipCode) return null;
 
     return countries
-      .filter(c => c.id === nationalityCode)
+      .filter(c => c.id === citizenshipCode)
       .map(c => ({
         label: c.englishName,
         value: c.id,
       }));
-  }, [countries, nationalityCode]);
+  }, [countries, citizenshipCode]);
 
   // Default value for 'nativeLanguageCode', mapped as react-select option (in array)
   const defaultNativeLanguageCode = useMemo(() => {
@@ -314,7 +314,7 @@ export default function ProfileForm(props: ProfileFormProps) {
   ) => {
     const field = meta.name as
       | 'countryOfBirthCode'
-      | 'nationalityCode'
+      | 'citizenshipCode'
       | 'occupationCode';
 
     if (errors?.[`${field}`]) {
@@ -473,16 +473,15 @@ export default function ProfileForm(props: ProfileFormProps) {
                 onChange={handleSingleSelectChange}
               />
             </FormControl>
-
             <FormControl
-              isInvalid={Boolean(errors?.countryOfBirthCode)}
-              id="nationalityCode"
+              isInvalid={Boolean(errors?.citizenshipCode)}
+              id="citizenshipCode"
             >
-              <FormLabel>Nationality</FormLabel>
+              <FormLabel>Citizenship</FormLabel>
               <Select<Option, false, GroupBase<Option>>
                 isMulti={false}
-                name="nationalityCode"
-                defaultValue={defaultNationalityCode}
+                name="citizenshipCode"
+                defaultValue={defaultCitizenshipCode}
                 options={countries.map(c => ({
                   label: c.englishName,
                   value: c.id,
