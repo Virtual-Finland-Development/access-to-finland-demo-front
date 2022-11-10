@@ -48,7 +48,7 @@ export function directToAuthGwLogout(authProvider: AuthProvider) {
   );
 }
 
-export async function getLoggedInState(
+export async function logIn(
   authPayload: {
     loginCode: string;
     appContext: string;

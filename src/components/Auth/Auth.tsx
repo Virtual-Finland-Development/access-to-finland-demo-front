@@ -66,7 +66,7 @@ export default function Auth() {
     async (authProvider: AuthProvider) => {
       try {
         // get token
-        const loggedInState = await api.auth.getLoggedInState(
+        const loggedInState = await api.auth.logIn(
           {
             loginCode: loginCodeParam as string,
             appContext: appContextUrlEncoded,
