@@ -4,10 +4,13 @@ export enum AuthProvider {
   SUOMIFI = 'suomifi',
 }
 
-export type AuthTokens = {
-  accessToken: string;
+export type LoggedInState = {
   idToken: string;
   expiresAt: string;
+  profileData: {
+    email?: string;
+    [key: string]: any;
+  };
 };
 
 export interface UserProfile {

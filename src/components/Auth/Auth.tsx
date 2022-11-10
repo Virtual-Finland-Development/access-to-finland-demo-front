@@ -1,10 +1,10 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { Link, Stack, useToast } from '@chakra-ui/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Link as ReactRouterLink,
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import { Stack, Link, useToast } from '@chakra-ui/react';
 
 // types
 import { AuthProvider } from '../../@types';
@@ -19,8 +19,8 @@ import {
 } from '../../constants';
 
 // components
-import Loading from '../Loading/Loading';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import Loading from '../Loading/Loading';
 
 // api
 import api from '../../api';
@@ -66,7 +66,7 @@ export default function Auth() {
     async (authProvider: AuthProvider) => {
       try {
         // get token
-        const authTokens = await api.auth.getAuthTokens(
+        const loggedInState = await api.auth.getLoggedInState(
           {
             loginCode: loginCodeParam as string,
             appContext: appContextUrlEncoded,
@@ -77,28 +77,23 @@ export default function Auth() {
         // get user 'autUserhId' after token retrieval, response differs between auth providers
         let authUserId;
 
-        const userInfoResponse = await api.auth.getUserInfo(authProvider, {
-          accessToken: authTokens.accessToken,
-          appContext: appContextUrlEncoded,
-        });
-
         if (authProvider === AuthProvider.TESTBED) {
-          ({ sub: authUserId } = userInfoResponse.data);
+          ({ sub: authUserId } = loggedInState.profileData);
         }
 
         if (authProvider === AuthProvider.SINUNA) {
-          ({ inum: authUserId } = userInfoResponse.data);
+          ({ inum: authUserId } = loggedInState.profileData);
         }
 
         if (authProvider === AuthProvider.SUOMIFI) {
           ({
             profile: { nameID: authUserId },
-          } = userInfoResponse.data);
+          } = loggedInState.profileData);
         }
 
         storeAuthKeysAndVerifyUser(
           authProviderParam as AuthProvider,
-          authTokens,
+          loggedInState,
           authUserId
         );
         navigate(localStorage.getItem(LOCAL_STORAGE_ROUTE_NAME) || '/');

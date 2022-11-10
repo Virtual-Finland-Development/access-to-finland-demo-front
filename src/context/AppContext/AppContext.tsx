@@ -1,17 +1,17 @@
+import { useToast } from '@chakra-ui/react';
+import { isPast, parseISO } from 'date-fns';
 import {
   createContext,
-  useEffect,
-  useCallback,
-  useReducer,
-  useContext,
   Reducer,
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { isPast, parseISO } from 'date-fns';
-import { useToast } from '@chakra-ui/react';
 
 // types
-import { AuthProvider, AuthTokens, UserProfile } from '../../@types';
+import { AuthProvider, LoggedInState, UserProfile } from '../../@types';
 
 // constants
 import {
@@ -22,15 +22,15 @@ import {
 } from '../../constants';
 
 // utils
-import { JSONLocalStorage, isNewUser } from '../../utils';
+import { isNewUser, JSONLocalStorage } from '../../utils';
 
 // reducers
 import {
-  AppState,
   Action,
+  ActionTypes,
+  AppState,
   appStateReducer,
   initialState,
-  ActionTypes,
 } from './reducers/appStateReducer';
 
 // api
@@ -42,7 +42,7 @@ interface AppContextInterface {
   loading: boolean;
   storeAuthKeysAndVerifyUser: (
     authProvider: AuthProvider,
-    autTokens: AuthTokens,
+    loggedInState: LoggedInState,
     userEmail: string
   ) => void;
   logIn: () => void;
@@ -61,12 +61,12 @@ interface AppProviderProps {
  */
 export function validLoginState(): boolean {
   const authProvider = localStorage.getItem(LOCAL_STORAGE_AUTH_PROVIDER);
-  const authTokens = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS);
+  const loggedInState = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS);
   const authUserId = localStorage.getItem(LOCAL_STORAGE_AUTH_USER_ID);
-  const tokenNotExpired = authTokens?.expiresAt
-    ? !isPast(parseISO(authTokens.expiresAt))
+  const tokenNotExpired = loggedInState?.expiresAt
+    ? !isPast(parseISO(loggedInState.expiresAt))
     : false;
-  return authProvider && authTokens && authUserId && tokenNotExpired;
+  return authProvider && loggedInState && authUserId && tokenNotExpired;
 }
 
 /**
@@ -155,10 +155,14 @@ function AppProvider({ children }: AppProviderProps) {
    * Store auth keys to local storage, continue to verify user after authentication (Auth.tsx).
    */
   const storeAuthKeysAndVerifyUser = useCallback(
-    (authProvider: AuthProvider, tokens: AuthTokens, authUserId: string) => {
+    (
+      authProvider: AuthProvider,
+      loggedInState: LoggedInState,
+      authUserId: string
+    ) => {
       localStorage.setItem(LOCAL_STORAGE_AUTH_PROVIDER, authProvider);
       localStorage.setItem(LOCAL_STORAGE_AUTH_USER_ID, authUserId);
-      JSONLocalStorage.set(LOCAL_STORAGE_AUTH_TOKENS, tokens);
+      JSONLocalStorage.set(LOCAL_STORAGE_AUTH_TOKENS, loggedInState);
       dispatch({ type: ActionTypes.SET_LOADING, loading: true });
       verifyUser();
     },

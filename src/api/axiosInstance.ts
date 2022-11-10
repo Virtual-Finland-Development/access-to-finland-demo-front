@@ -2,7 +2,6 @@ import axios from 'axios';
 import { isPast, parseISO } from 'date-fns';
 
 // types
-import { AuthProvider } from '../@types';
 
 // endpoints
 import { USER_API_BASE_URL } from './endpoints';
@@ -34,23 +33,19 @@ const DATA_URL = '';
 // Axios request interceptor. Pass token to request Authorization for selected routes, if found.
 axiosInstance.interceptors.request.use(config => {
   const provider = localStorage.getItem(LOCAL_STORAGE_AUTH_PROVIDER);
-  const authTokens = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS);
+  const loggedInState = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS);
 
   if (config.url !== undefined && config.headers !== undefined) {
-    if (authTokens) {
+    if (loggedInState) {
       // pass id token for all user api calls
       if (USER_API_URLS.includes(config.url)) {
-        const idToken = authTokens.idToken;
+        const idToken = loggedInState.idToken;
         config.headers.Authorization = idToken ? `Bearer ${idToken}` : '';
       }
 
       if ([DATA_URL].includes(config.url)) {
         // The token that is used to authorize the user in the protected, external API queries
-        let authorizationToken = authTokens.idToken;
-        // The exception: Sinuna does not operate with idToken, use accessToken instead
-        if (provider === AuthProvider.SINUNA) {
-          authorizationToken = authTokens.token;
-        }
+        let authorizationToken = loggedInState.idToken;
 
         config.headers.Authorization = authorizationToken
           ? `Bearer ${authorizationToken}`
@@ -70,14 +65,14 @@ axiosInstance.interceptors.response.use(
   response => response,
   error => {
     const provider = localStorage.getItem(LOCAL_STORAGE_AUTH_PROVIDER);
-    const authTokens = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS);
-    const hasExpired = authTokens?.expiresAt
-      ? isPast(parseISO(authTokens.expiresAt))
+    const loggedInState = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS);
+    const hasExpired = loggedInState?.expiresAt
+      ? isPast(parseISO(loggedInState.expiresAt))
       : false;
 
     if (
       provider &&
-      authTokens &&
+      loggedInState &&
       error?.response?.status === 401 &&
       hasExpired
     ) {
