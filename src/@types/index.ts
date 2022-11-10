@@ -8,7 +8,8 @@ export type LoggedInState = {
   idToken: string;
   expiresAt: string;
   profileData: {
-    email?: string;
+    userId: string; // sub, inum etc.
+    email: string; // Email is not always available
     [key: string]: any;
   };
 };

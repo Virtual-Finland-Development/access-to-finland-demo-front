@@ -74,27 +74,10 @@ export default function Auth() {
           authProvider
         );
 
-        // get user 'autUserhId' after token retrieval, response differs between auth providers
-        let authUserId;
-
-        if (authProvider === AuthProvider.TESTBED) {
-          ({ sub: authUserId } = loggedInState.profileData);
-        }
-
-        if (authProvider === AuthProvider.SINUNA) {
-          ({ inum: authUserId } = loggedInState.profileData);
-        }
-
-        if (authProvider === AuthProvider.SUOMIFI) {
-          ({
-            profile: { nameID: authUserId },
-          } = loggedInState.profileData);
-        }
-
         storeAuthKeysAndVerifyUser(
           authProviderParam as AuthProvider,
           loggedInState,
-          authUserId
+          loggedInState.profileData.userId
         );
         navigate(localStorage.getItem(LOCAL_STORAGE_ROUTE_NAME) || '/');
       } catch (error) {
