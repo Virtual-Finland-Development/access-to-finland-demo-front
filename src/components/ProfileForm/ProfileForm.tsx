@@ -272,7 +272,7 @@ export default function ProfileForm(props: ProfileFormProps) {
         // loop trough all dirty input values, set to payload
         if (dirtyKeys.length) {
           for (const key of dirtyKeys) {
-            if (values[key]) {
+            if (typeof values[key] === 'boolean' || values[key]) {
               payload[key as keyof UserProfile] = values[key];
             }
           }
