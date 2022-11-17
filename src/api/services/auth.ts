@@ -1,7 +1,7 @@
 import axiosInstance from '../axiosInstance';
 
 // types
-import { AuthProvider, AuthTokens } from '../../@types';
+import { AuthProvider, LoggedInState } from '../../@types';
 
 // endpoints
 import { AUTH_GW_BASE_URL } from '../endpoints';
@@ -36,7 +36,7 @@ function getAuthRoute(authProvider: AuthProvider) {
 export function directToAuthGwLogin(authProvider: AuthProvider) {
   const authRoute = getAuthRoute(authProvider);
   window.location.assign(
-    `${AUTH_GW_BASE_URL}/auth/${authRoute}/${authProvider}/login-request?appContext=${appContextUrlEncoded}`
+    `${AUTH_GW_BASE_URL}/auth/${authRoute}/${authProvider}/authentication-request?appContext=${appContextUrlEncoded}`
   );
 }
 
@@ -48,34 +48,20 @@ export function directToAuthGwLogout(authProvider: AuthProvider) {
   );
 }
 
-export async function getAuthTokens(
+export async function logIn(
   authPayload: {
     loginCode: string;
     appContext: string;
   },
   authProvider: AuthProvider
-): Promise<AuthTokens> {
+): Promise<LoggedInState> {
   const authRoute = getAuthRoute(authProvider);
   const response = await axiosInstance.post(
-    `${AUTH_GW_BASE_URL}/auth/${authRoute}/${authProvider}/auth-token-request`,
+    `${AUTH_GW_BASE_URL}/auth/${authRoute}/${authProvider}/login-request`,
     authPayload,
     {
       withCredentials: true,
     }
   );
   return response.data;
-}
-
-export async function getUserInfo(
-  authProvider: AuthProvider,
-  payload: { accessToken: string; appContext: string }
-) {
-  const authRoute = getAuthRoute(authProvider);
-  return axiosInstance.post(
-    `${AUTH_GW_BASE_URL}/auth/${authRoute}/${authProvider}/user-info-request`,
-    payload,
-    {
-      withCredentials: true,
-    }
-  );
 }

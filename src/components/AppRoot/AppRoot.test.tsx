@@ -1,9 +1,9 @@
+import userEvent from '@testing-library/user-event';
 import {
   customRender1,
   customRender2,
   screen,
 } from '../../testing/utils/testing-library-utils';
-import userEvent from '@testing-library/user-event';
 import AppRoot from './AppRoot';
 
 import * as AppContextExports from '../../context/AppContext/AppContext';
@@ -48,7 +48,7 @@ describe('Test app authentication based rendering', () => {
 
     // once login button clicked, user should be directed to testbed authentication (api gateway route)
     expect(window.location.assign).toBeCalledWith(
-      `${AUTH_GW_BASE_URL}/auth/openid/testbed/login-request?appContext=${appContextUrlEncoded}`
+      `${AUTH_GW_BASE_URL}/auth/openid/testbed/authentication-request?appContext=${appContextUrlEncoded}`
     );
 
     // login button should be disabled when login action is clicked
