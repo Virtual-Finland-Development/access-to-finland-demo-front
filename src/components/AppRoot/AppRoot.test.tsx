@@ -96,7 +96,7 @@ describe('Test app authentication based rendering', () => {
 
     // once log out button clicked, user should be directed to authentication log out (api gateway route)
     expect(window.location.assign).toBeCalledWith(
-      `${AUTH_GW_BASE_URL}/auth/openid/testbed/logout-request?appContext=${appContextUrlEncoded}&idToken=undefined`
+      `${AUTH_GW_BASE_URL}/auth/openid/testbed/logout-request?appContext=${appContextUrlEncoded}&idToken=test-token`
     );
 
     // loading spinner should appear
