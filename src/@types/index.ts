@@ -30,7 +30,7 @@ export interface UserProfile {
   id: string;
   firstName: string;
   lastName: string;
-  address: string;
+  address: Address;
   jobTitles: string[];
   regions: string[];
   created: string;
