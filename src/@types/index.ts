@@ -40,7 +40,7 @@ export interface UserProfile {
   occupationCode: string;
   citizenshipCode: string;
   nativeLanguageCode: string;
-  gender: string;
+  gender: Gender;
   dateOfBirth: string;
 }
 

@@ -34,7 +34,7 @@ import {
 } from 'chakra-react-select';
 
 // types
-import { UserProfile } from '../../@types';
+import { Gender, UserProfile } from '../../@types';
 
 // context
 import { useAppContext } from '../../context/AppContext/AppContext';
@@ -426,8 +426,8 @@ export default function ProfileForm(props: ProfileFormProps) {
               render={({ field: { onChange, value } }) => (
                 <RadioGroup onChange={onChange} value={value}>
                   <Stack direction="row">
-                    <Radio value="male">Male</Radio>
-                    <Radio value="female">Female</Radio>
+                    <Radio value={Gender.Male}>Male</Radio>
+                    <Radio value={Gender.Female}>Female</Radio>
                   </Stack>
                 </RadioGroup>
               )}
