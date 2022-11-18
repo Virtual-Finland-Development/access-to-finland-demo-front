@@ -1,36 +1,36 @@
 import {
-  useEffect,
-  useState,
-  useCallback,
   KeyboardEventHandler,
+  useCallback,
+  useEffect,
   useMemo,
+  useState,
 } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { ErrorMessage as HookFormError } from '@hookform/error-message';
-import { format, parseISO, isMatch } from 'date-fns';
+import { format, isMatch, parseISO } from 'date-fns';
 import {
   Button,
+  Checkbox,
+  Divider,
   Flex,
   FormControl,
-  FormLabel,
-  FormHelperText,
-  Input,
-  Stack,
   FormErrorMessage,
-  Divider,
-  Checkbox,
-  useToast,
+  FormHelperText,
+  FormLabel,
+  Input,
   Radio,
   RadioGroup,
+  Stack,
+  useToast,
 } from '@chakra-ui/react';
 import {
-  Select,
-  CreatableSelect,
-  OptionBase,
-  GroupBase,
-  SingleValue,
-  MultiValue,
   ActionMeta,
+  CreatableSelect,
+  GroupBase,
+  MultiValue,
+  OptionBase,
+  Select,
+  SingleValue,
 } from 'chakra-react-select';
 
 // types
@@ -46,10 +46,9 @@ import { isNewUser } from '../../utils';
 import regionsJson from '../TmtPage/regionJsons/regions.json';
 import municipalitiesJson from '../TmtPage/regionJsons/municipalities.json';
 
-// fake data lists
-import firstNames from './fakeData/firstNames.json';
-import lastNames from './fakeData/lastNames.json';
-import addresses from './fakeData/addresses.json';
+// fake data
+import { pickRandomAddress } from './PickRandomAddress';
+import { pickRandomName } from './PickRandomName';
 
 // hooks
 import useCountries from './hooks/useCountries';
@@ -88,19 +87,6 @@ const createOption = (label: string) => ({
   label,
   value: label,
 });
-
-const pickRandomName = (type: 'firstName' | 'lastName') => {
-  const list: string[] = type === 'firstName' ? firstNames : lastNames;
-  return list[Math.floor(Math.random() * list.length)] || type;
-};
-
-const pickRandomAddress = () => {
-  const number = Math.floor(Math.random() * addresses.length);
-  const address = addresses[number];
-  return address
-    ? `${number} ${address.detail} ${address.name}`
-    : 'Random address 123';
-};
 
 interface ProfileFormProps {
   onProfileSubmit: () => void;
@@ -178,7 +164,7 @@ export default function ProfileForm(props: ProfileFormProps) {
   /**
    * Get default values for regions select, if provided in userProfile.
    */
-  const regionsDefaulOptions = useMemo(() => {
+  const regionsDefaultOptions = useMemo(() => {
     if (!userId) return [];
 
     let options: Option[] = [];
@@ -202,7 +188,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     return options;
   }, [regions, userId]);
 
-  // Default value for 'ountryOfBirthCode', mapped as react-select option (in array)
+  // Default value for 'countryOfBirthCode', mapped as react-select option (in array)
   const defaultCountryOfBirthCode = useMemo(() => {
     if (!countries || !countryOfBirthCode) return null;
 
@@ -269,7 +255,7 @@ export default function ProfileForm(props: ProfileFormProps) {
           };
         }
 
-        // loop trough all dirty input values, set to payload
+        // loop through all dirty input values, set to payload
         if (dirtyKeys.length) {
           for (const key of dirtyKeys) {
             if (typeof values[key] === 'boolean' || values[key]) {
@@ -347,7 +333,7 @@ export default function ProfileForm(props: ProfileFormProps) {
   };
 
   /**
-   * Handle key down evetn for job titles input. Update values to hook-form state by jobTitlesInputValue.
+   * Handle key down event for job titles input. Update values to hook-form state by jobTitlesInputValue.
    */
   const handleJobTitlesKeyDown: KeyboardEventHandler<HTMLDivElement> =
     useCallback(
@@ -576,7 +562,7 @@ export default function ProfileForm(props: ProfileFormProps) {
           <Select<Option, true, GroupBase<Option>>
             isMulti
             name="regions"
-            defaultValue={regionsDefaulOptions}
+            defaultValue={regionsDefaultOptions}
             options={groupedRegionOptions}
             placeholder="Type or select..."
             closeMenuOnSelect={false}
