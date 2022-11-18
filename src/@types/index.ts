@@ -14,6 +14,18 @@ export type LoggedInState = {
   };
 };
 
+export enum Gender {
+  Male = "MALE",
+  Female = "FEMALE"
+}
+
+export interface Address {
+  street_address: string;
+  zip_code: string;
+  city: string;
+  country: string;
+}
+
 export interface UserProfile {
   id: string;
   firstName: string;
