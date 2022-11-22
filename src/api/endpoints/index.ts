@@ -19,3 +19,7 @@ export const USER_API_BASE_URL =
 
 export const EXT_REGISTRATION_SERVICE_URL =
   process.env.REACT_APP_EXT_REGISTRATION_SERVICE_URL || 'http://localhost:3001';
+
+export const TMT_API_URL =
+  process.env.REACT_APP_TMT_API_URL ||
+  'https://v2xw5b7nhqkduxcw6v56pas5yy0livjb.lambda-url.eu-north-1.on.aws/testbed/productizers/find-job-postings';

@@ -19,7 +19,7 @@ import { CloseIcon } from '@chakra-ui/icons';
 import { useAppContext } from '../../context/AppContext/AppContext';
 
 // types
-import { PlaceType, PlaceSelection } from './types';
+import { PlaceType, PlaceSelection, JobPostingsRequestPayload } from './types';
 
 // components
 import JobPostingItem from './JobPostingItem';
@@ -28,6 +28,7 @@ import Pagination from '../Pagination/Pagination';
 
 // data hooks
 import usePokemons from './hooks/usePokemons';
+import useJobPostings from './hooks/useJobPostings';
 
 // selections
 import regions from './regionJsons/regions.json';
@@ -66,6 +67,10 @@ export default function TmtPage() {
     limit: 25,
   });
 
+  const [payload, setPayload] = useState<JobPostingsRequestPayload | null>(
+    null
+  );
+
   /**
    * Set default search keys from userProfile, if provided.
    */
@@ -101,7 +106,7 @@ export default function TmtPage() {
     }
   }, [userProfile]);
 
-  const {
+  /* const {
     data: pokeData,
     isLoading: dataLoading,
     isFetching: dataFething,
@@ -111,11 +116,20 @@ export default function TmtPage() {
     selectedPlaces,
     limit: paginationState.limit,
     offset: paginationState.offset,
-  });
+  }); */
+
+  const {
+    data: jobPostings,
+    isLoading: dataLoading,
+    isFetching: dataFetching,
+    refetch,
+  } = useJobPostings(payload);
+
+  console.log(jobPostings);
 
   useEffect(() => {
     if (typeof search === 'string' || selectedPlaces.length) {
-      /* const payload = {
+      const payload = {
         query: typeof search === 'string' ? search.split(' ').toString() : '',
         location: {
           regions: selectedPlaces
@@ -132,8 +146,9 @@ export default function TmtPage() {
           limit: paginationState.limit || 25,
           offset: paginationState.offset || 0,
         },
-      }; */
-      refetch();
+      };
+      setPayload(payload);
+      // refetch();
     }
   }, [
     refetch,
@@ -210,7 +225,7 @@ export default function TmtPage() {
                 </optgroup>
               </Select>
             </FormControl>
-            <Button type="submit" colorScheme="green" isDisabled={dataFething}>
+            <Button type="submit" colorScheme="green" isDisabled={dataFetching}>
               Show jobs
             </Button>
           </Stack>
@@ -255,9 +270,9 @@ export default function TmtPage() {
         </Flex>
       )}
 
-      {dataLoading && dataFething && <Loading />}
+      {dataLoading && dataFetching && <Loading />}
 
-      {pokeData?.results && (
+      {/* pokeData?.results && (
         <div style={{ position: 'relative' }}>
           {dataFething && <Loading asOverlay />}
 
@@ -272,7 +287,7 @@ export default function TmtPage() {
             onPaginationStateChange={handlePaginationStateChange}
           />
         </div>
-      )}
+      ) */}
     </>
   );
 }

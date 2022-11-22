@@ -39,3 +39,35 @@ export interface RequestPayload {
   limit: number;
   offset: number;
 }
+
+/* const payload = {
+        query: typeof search === 'string' ? search.split(' ').toString() : '',
+        location: {
+          regions: selectedPlaces
+            .filter(p => p.type === PlaceType.REGION)
+            .map(p => p.Koodi),
+          municipalities: selectedPlaces
+            .filter(p => p.type === PlaceType.MUNICIPALITY)
+            .map(p => p.Koodi),
+          countries: selectedPlaces
+            .filter(p => p.type === PlaceType.COUNTRY)
+            .map(p => p.Koodi),
+        },
+        paging: {
+          limit: paginationState.limit || 25,
+          offset: paginationState.offset || 0,
+        },
+      }; */
+
+export interface JobPostingsRequestPayload {
+  query: string;
+  location: {
+    regions: string[];
+    municipalities: string[];
+    countries: string[];
+  };
+  paging: {
+    limit: number;
+    offset: number;
+  };
+}
