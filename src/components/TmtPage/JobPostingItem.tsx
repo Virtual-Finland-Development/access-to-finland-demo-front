@@ -13,23 +13,11 @@ import { format, parseISO } from 'date-fns';
 // types
 import { JobPostingEntry } from './types';
 
-import mockData from './mockData.json';
+// context
+import { useModal } from '../../context/ModalContext/ModalContext';
 
-export default function JobPostingItem({
-  mockItem,
-  index,
-}: {
-  mockItem: any;
-  index: number;
-}) {
-  const item: JobPostingEntry = {
-    ...mockData.results[index],
-    employer: mockItem.name,
-    location: {
-      municipality: 'Helsinki',
-      postcode: '000100',
-    },
-  };
+export default function JobPostingItem({ item }: { item: JobPostingEntry }) {
+  const { openModal } = useModal();
 
   const domain = item.applicationUrl
     ? new URL(
@@ -44,6 +32,24 @@ export default function JobPostingItem({
       ? domain.host.replace('www.', '')
       : null;
 
+  const openDetails = () =>
+    openModal({
+      title: item.basicInfo.title,
+      content: (
+        <Stack direction="column">
+          <Text textAlign="left" maxW="4xl">
+            {item.basicInfo.description}
+          </Text>
+          {host && (
+            <Link href={item.applicationUrl} isExternal color="blue.400">
+              {host}
+            </Link>
+          )}
+        </Stack>
+      ),
+      onClose: () => {},
+    });
+
   return (
     <Stack
       boxShadow="lg"
@@ -52,6 +58,8 @@ export default function JobPostingItem({
       bg="white"
       border="1px"
       borderColor="blue.100"
+      onClick={openDetails}
+      role="button"
     >
       <Stack
         p="4"
@@ -74,11 +82,16 @@ export default function JobPostingItem({
         p="4"
       >
         <Stack direction="column">
-          <Text textAlign="left" maxW="4xl">
+          <Text textAlign="left" maxW="4xl" noOfLines={5}>
             {item.basicInfo.description}
           </Text>
           {host && (
-            <Link href={item.applicationUrl} isExternal color="blue.400">
+            <Link
+              href={item.applicationUrl}
+              isExternal
+              color="blue.400"
+              onClick={e => e.stopPropagation()}
+            >
               {host}
             </Link>
           )}

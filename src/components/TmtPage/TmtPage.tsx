@@ -24,10 +24,10 @@ import { PlaceType, PlaceSelection, JobPostingsRequestPayload } from './types';
 // components
 import JobPostingItem from './JobPostingItem';
 import Loading from '../Loading/Loading';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Pagination from '../Pagination/Pagination';
 
 // data hooks
-import usePokemons from './hooks/usePokemons';
 import useJobPostings from './hooks/useJobPostings';
 
 // selections
@@ -64,7 +64,7 @@ export default function TmtPage() {
     limit: number;
   }>({
     offset: 0,
-    limit: 25,
+    limit: 100,
   });
 
   const [payload, setPayload] = useState<JobPostingsRequestPayload | null>(
@@ -106,26 +106,13 @@ export default function TmtPage() {
     }
   }, [userProfile]);
 
-  /* const {
-    data: pokeData,
-    isLoading: dataLoading,
-    isFetching: dataFething,
-    refetch,
-  } = usePokemons({
-    search,
-    selectedPlaces,
-    limit: paginationState.limit,
-    offset: paginationState.offset,
-  }); */
-
   const {
     data: jobPostings,
-    isLoading: dataLoading,
-    isFetching: dataFetching,
-    refetch,
+    isLoading: jobPostingsLoading,
+    isFetching: jobPostingsFetching,
+    error: jobPostingsError,
+    refetch: fetchJobPostings,
   } = useJobPostings(payload);
-
-  console.log(jobPostings);
 
   useEffect(() => {
     if (typeof search === 'string' || selectedPlaces.length) {
@@ -143,20 +130,23 @@ export default function TmtPage() {
             .map(p => p.Koodi),
         },
         paging: {
-          limit: paginationState.limit || 25,
+          limit: paginationState.limit || 100,
           offset: paginationState.offset || 0,
         },
       };
+      console.log('yo');
       setPayload(payload);
-      // refetch();
     }
-  }, [
-    refetch,
-    paginationState.limit,
-    paginationState.offset,
-    search,
-    selectedPlaces,
-  ]);
+  }, [paginationState.limit, paginationState.offset, search, selectedPlaces]);
+
+  /**
+   * Track payload state and fetch jobPostings on change
+   */
+  useEffect(() => {
+    if (payload) {
+      fetchJobPostings();
+    }
+  }, [fetchJobPostings, payload]);
 
   const handleSubmit = useCallback(
     (event: FormEvent) => {
@@ -225,7 +215,11 @@ export default function TmtPage() {
                 </optgroup>
               </Select>
             </FormControl>
-            <Button type="submit" colorScheme="green" isDisabled={dataFetching}>
+            <Button
+              type="submit"
+              colorScheme="green"
+              isDisabled={jobPostingsFetching}
+            >
               Show jobs
             </Button>
           </Stack>
@@ -270,24 +264,39 @@ export default function TmtPage() {
         </Flex>
       )}
 
-      {dataLoading && dataFetching && <Loading />}
+      {jobPostingsLoading && jobPostingsFetching && (
+        <Stack mt={6}>
+          <Loading />
+        </Stack>
+      )}
 
-      {/* pokeData?.results && (
+      {jobPostingsError && (
+        <Flex alignItems="center" justifyContent="center" mt={6}>
+          <Stack w="full" maxW="md">
+            <ErrorMessage error={jobPostingsError} />
+          </Stack>
+        </Flex>
+      )}
+
+      {jobPostings?.results && (
         <div style={{ position: 'relative' }}>
-          {dataFething && <Loading asOverlay />}
+          {jobPostingsFetching && <Loading asOverlay />}
 
           <SimpleGrid columns={1} spacing={5} mt={6} mb={6}>
-            {pokeData.results.map((item: any, index: number) => (
-              <JobPostingItem key={item.name} mockItem={item} index={index} />
+            {jobPostings.results.map(item => (
+              <JobPostingItem
+                key={`${item.basicInfo.title}-${item.publishedAt}`}
+                item={item}
+              />
             ))}
           </SimpleGrid>
 
           <Pagination
-            total={pokeData.count}
+            total={jobPostings.totalCount}
             onPaginationStateChange={handlePaginationStateChange}
           />
         </div>
-      ) */}
+      )}
     </>
   );
 }

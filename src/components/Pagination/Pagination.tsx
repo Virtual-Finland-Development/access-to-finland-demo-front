@@ -62,7 +62,7 @@ export default function Pagination(props: any) {
     total,
     limits,
     initialState: {
-      pageSize: 25,
+      pageSize: 100,
       isDisabled: false,
       currentPage: 1,
     },
@@ -89,9 +89,9 @@ export default function Pagination(props: any) {
       <Flex alignItems="center">
         <FormLabel>Results per page</FormLabel>
         <Select onChange={handlePageSizeChange} w={40} bg="white">
-          <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="75">75</option>
+          <option value="100">100</option>
+          <option value="150">150</option>
+          <option value="175">175</option>
         </Select>
       </Flex>
       <Stack alignSelf={'center'} w={pagiNationWrapperWidth}>

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 // types
-import { JobPostingsRequestPayload } from '../types';
+import { JobPostingsRequestPayload, JobPostingsResponse } from '../types';
 
 // api
 import api from '../../../api';
@@ -15,11 +15,12 @@ export default function useJobPostings(
     async () => {
       if (!payload) return;
       const response = await api.data.getJobPostings(payload);
-      return response.data;
+      return response.data as JobPostingsResponse;
     },
     {
       keepPreviousData: true,
       enabled: Boolean(payload),
+      refetchOnWindowFocus: false,
     }
   );
 
