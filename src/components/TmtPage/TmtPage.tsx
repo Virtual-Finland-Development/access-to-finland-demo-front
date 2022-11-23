@@ -284,9 +284,11 @@ export default function TmtPage() {
         <div style={{ position: 'relative' }}>
           {jobPostingsFetching && <Loading asOverlay />}
 
-          {!jobPostingsFetching && !jobPostings.results.length && (
-            <Text mt={6}>No search results.</Text>
-          )}
+          {!jobPostingsFetching &&
+            !jobPostingsError &&
+            !jobPostings.results.length && (
+              <Text mt={6}>No search results.</Text>
+            )}
 
           {jobPostings.results.length > 0 && (
             <>

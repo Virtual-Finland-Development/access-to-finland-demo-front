@@ -107,10 +107,12 @@ export default function JobPostingItem({ item }: { item: JobPostingEntry }) {
             <Icon as={IoLocationOutline} />{' '}
             {item.location.municipality ? item.location.municipality : ''}
           </Text>
-          <Text>
-            <Icon as={IoCalendarOutline} />{' '}
-            {format(parseISO(item.applicationEndDate), 'dd.MM.yyyy HH:mm')}
-          </Text>
+          {item.applicationEndDate && (
+            <Text>
+              <Icon as={IoCalendarOutline} />{' '}
+              {format(parseISO(item.applicationEndDate), 'dd.MM.yyyy HH:mm')}
+            </Text>
+          )}
         </Stack>
       </Stack>
     </Stack>
