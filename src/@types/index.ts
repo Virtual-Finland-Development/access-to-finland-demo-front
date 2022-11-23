@@ -20,8 +20,8 @@ export enum Gender {
 }
 
 export interface Address {
-  street_address: string;
-  zip_code: string;
+  streetAddress: string;
+  zipCode: string;
   city: string;
   country: string;
 }

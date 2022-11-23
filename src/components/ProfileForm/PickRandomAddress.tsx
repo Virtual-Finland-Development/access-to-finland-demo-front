@@ -6,10 +6,10 @@ export const pickRandomAddress = () => {
   const randomAddress = addresses[number];
   if (randomAddress) {
     let formattedAddress: Address = {
-      street_address: randomAddress.detail + ' street',
+      streetAddress: randomAddress.detail + ' street',
       city: randomAddress.detail.split(',')[0],
       country: 'United States',
-      zip_code: randomAddress.name,
+      zipCode: randomAddress.name,
     };
     return formattedAddress;
   }
