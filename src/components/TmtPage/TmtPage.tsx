@@ -12,6 +12,7 @@ import {
   Tag,
   TagLabel,
   TagCloseButton,
+  Text,
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -151,7 +152,8 @@ export default function TmtPage() {
   const handleSubmit = useCallback(
     (event: FormEvent) => {
       event.preventDefault();
-      setSearch(searchInputValue);
+      console.log(searchInputValue);
+      setSearch(String(searchInputValue));
     },
     [searchInputValue]
   );
@@ -282,19 +284,27 @@ export default function TmtPage() {
         <div style={{ position: 'relative' }}>
           {jobPostingsFetching && <Loading asOverlay />}
 
-          <SimpleGrid columns={1} spacing={5} mt={6} mb={6}>
-            {jobPostings.results.map(item => (
-              <JobPostingItem
-                key={`${item.basicInfo.title}-${item.publishedAt}`}
-                item={item}
-              />
-            ))}
-          </SimpleGrid>
+          {!jobPostingsFetching && !jobPostings.results.length && (
+            <Text mt={6}>No search results.</Text>
+          )}
 
-          <Pagination
-            total={jobPostings.totalCount}
-            onPaginationStateChange={handlePaginationStateChange}
-          />
+          {jobPostings.results.length > 0 && (
+            <>
+              <SimpleGrid columns={1} spacing={5} mt={6} mb={6}>
+                {jobPostings.results.map(item => (
+                  <JobPostingItem
+                    key={`${item.basicInfo.title}-${item.publishedAt}`}
+                    item={item}
+                  />
+                ))}
+              </SimpleGrid>
+
+              <Pagination
+                total={jobPostings.totalCount}
+                onPaginationStateChange={handlePaginationStateChange}
+              />
+            </>
+          )}
         </div>
       )}
     </>
