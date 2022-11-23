@@ -15,8 +15,8 @@ export type LoggedInState = {
 };
 
 export enum Gender {
-  Male = "MALE",
-  Female = "FEMALE"
+  Male = "Male",
+  Female = "Female"
 }
 
 export interface Address {

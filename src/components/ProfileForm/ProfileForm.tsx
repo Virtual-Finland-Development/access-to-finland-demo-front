@@ -402,13 +402,13 @@ export default function ProfileForm(props: ProfileFormProps) {
             />
           </FormControl>
         </Flex>
-        <FormControl isInvalid={Boolean(errors?.address)} id="address">
+        <FormControl isInvalid={Boolean(errors?.address?.streetAddress)} id="streetAddress">
           <FormLabel>Address</FormLabel>
           <Input
             type="text"
-            placeholder="Address"
+            placeholder="Street Address"
             _placeholder={{ color: 'gray.500' }}
-            {...register('address')}
+            {...register('address.streetAddress')}
             readOnly
           />
           <HookFormError
