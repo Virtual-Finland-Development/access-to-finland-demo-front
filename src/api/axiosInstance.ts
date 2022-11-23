@@ -4,7 +4,7 @@ import { isPast, parseISO } from 'date-fns';
 // types
 
 // endpoints
-import { USER_API_BASE_URL, TMT_API_URL } from './endpoints';
+import { USER_API_BASE_URL, TESTBED_API_BASE_URL } from './endpoints';
 
 // constants
 import {
@@ -28,7 +28,9 @@ const USER_API_URLS = [
   `${USER_API_BASE_URL}/code-sets/genders`,
 ];
 
-const DATA_URLS = [`${TMT_API_URL}`];
+const DATA_URLS = [
+  `${TESTBED_API_BASE_URL}/testbed/productizers/find-job-postings`,
+];
 
 // Axios request interceptor. Pass token to request Authorization for selected routes, if found.
 axiosInstance.interceptors.request.use(config => {
