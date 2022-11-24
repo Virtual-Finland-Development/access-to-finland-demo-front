@@ -46,9 +46,8 @@ import { isNewUser } from '../../utils';
 import regionsJson from '../TmtPage/regionJsons/regions.json';
 import municipalitiesJson from '../TmtPage/regionJsons/municipalities.json';
 
-// fake data
-import { pickRandomAddress } from './PickRandomAddress';
-import { pickRandomName } from './PickRandomName';
+// utils
+import { pickRandomAddress, pickRandomName, formatAddress } from './utils';
 
 // hooks
 import useCountries from './hooks/useCountries';
@@ -148,6 +147,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     register('occupationCode');
     register('citizenshipCode');
     register('nativeLanguageCode');
+    register('address');
   }, [register]);
 
   // watch field values
@@ -159,6 +159,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     citizenshipCode,
     nativeLanguageCode,
     occupationCode,
+    address,
   } = watch();
 
   /**
@@ -402,13 +403,13 @@ export default function ProfileForm(props: ProfileFormProps) {
             />
           </FormControl>
         </Flex>
-        <FormControl isInvalid={Boolean(errors?.address?.streetAddress)} id="streetAddress">
+        <FormControl id="address">
           <FormLabel>Address</FormLabel>
           <Input
             type="text"
-            placeholder="Street Address"
+            placeholder="Address"
             _placeholder={{ color: 'gray.500' }}
-            {...register('address.streetAddress')}
+            defaultValue={formatAddress(address)}
             readOnly
           />
           <HookFormError
