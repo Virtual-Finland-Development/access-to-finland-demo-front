@@ -28,7 +28,8 @@ import Loading from '../Loading/Loading';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Pagination from '../Pagination/Pagination';
 
-// data hooks
+// hooks
+import usePrevious from './hooks/usePrevious';
 import useJobPostings from './hooks/useJobPostings';
 
 // selections
@@ -115,8 +116,17 @@ export default function TmtPage() {
     refetch: fetchJobPostings,
   } = useJobPostings(payload);
 
+  // keep track of previous selected places to compare in useEffect
+  const previousPlaces = usePrevious(selectedPlaces);
+
+  /**
+   * Track search / selectedPlaces state and construct payload
+   */
   useEffect(() => {
-    if (typeof search === 'string' || selectedPlaces.length) {
+    if (
+      typeof search === 'string' ||
+      selectedPlaces.length !== previousPlaces.length
+    ) {
       const payload = {
         query: typeof search === 'string' ? search.split(' ').toString() : '',
         location: {
@@ -135,10 +145,16 @@ export default function TmtPage() {
           offset: paginationState.offset || 0,
         },
       };
-      console.log('yo');
+
       setPayload(payload);
     }
-  }, [paginationState.limit, paginationState.offset, search, selectedPlaces]);
+  }, [
+    paginationState.limit,
+    paginationState.offset,
+    previousPlaces.length,
+    search,
+    selectedPlaces,
+  ]);
 
   /**
    * Track payload state and fetch jobPostings on change
@@ -152,8 +168,7 @@ export default function TmtPage() {
   const handleSubmit = useCallback(
     (event: FormEvent) => {
       event.preventDefault();
-      console.log(searchInputValue);
-      setSearch(String(searchInputValue));
+      setSearch(searchInputValue);
     },
     [searchInputValue]
   );
