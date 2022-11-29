@@ -37,9 +37,11 @@ export default function JobPostingItem({ item }: { item: JobPostingEntry }) {
       title: item.basicInfo.title,
       content: (
         <Stack direction="column">
-          <Text textAlign="left" maxW="4xl">
-            {item.basicInfo.description}
-          </Text>
+          {item.basicInfo.description !== '-' && (
+            <Text textAlign="left" maxW="4xl">
+              {item.basicInfo.description}
+            </Text>
+          )}
           {host && (
             <Link href={item.applicationUrl} isExternal color="blue.400">
               {host}
@@ -71,9 +73,11 @@ export default function JobPostingItem({ item }: { item: JobPostingEntry }) {
         <Text fontWeight="semibold" color="blue.700">
           {item.basicInfo.title}
         </Text>
-        <Badge variant="solid" colorScheme="blue">
-          {item.basicInfo.workTimeType === '01' ? 'Full-time' : 'Part-time'}
-        </Badge>
+        {['01', '02'].includes(item.basicInfo.workTimeType) && (
+          <Badge variant="solid" colorScheme="blue">
+            {item.basicInfo.workTimeType === '01' ? 'Full-time' : 'Part-time'}
+          </Badge>
+        )}
       </Stack>
 
       <Stack
@@ -82,9 +86,11 @@ export default function JobPostingItem({ item }: { item: JobPostingEntry }) {
         p="4"
       >
         <Stack direction="column">
-          <Text textAlign="left" maxW="4xl" noOfLines={5}>
-            {item.basicInfo.description}
-          </Text>
+          {item.basicInfo.description !== '-' && (
+            <Text textAlign="left" maxW="4xl" noOfLines={5}>
+              {item.basicInfo.description}
+            </Text>
+          )}
           {host && (
             <Link
               href={item.applicationUrl}
