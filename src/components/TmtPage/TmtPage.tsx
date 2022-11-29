@@ -66,7 +66,7 @@ export default function TmtPage() {
     limit: number;
   }>({
     offset: 0,
-    limit: 100,
+    limit: 25,
   });
 
   const [payload, setPayload] = useState<JobPostingsRequestPayload | null>(
@@ -141,7 +141,7 @@ export default function TmtPage() {
             .map(p => p.Koodi),
         },
         paging: {
-          limit: paginationState.limit || 100,
+          limit: paginationState.limit || 25,
           offset: paginationState.offset || 0,
         },
       };
