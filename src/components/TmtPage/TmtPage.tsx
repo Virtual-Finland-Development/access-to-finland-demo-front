@@ -26,7 +26,8 @@ import { PlaceType, PlaceSelection, JobPostingsRequestPayload } from './types';
 import JobPostingItem from './JobPostingItem';
 import Loading from '../Loading/Loading';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import Pagination from '../Pagination/Pagination';
+// import Pagination from '../Pagination/Pagination';
+import LoadMore from '../LoadMore/LoadMore';
 
 // hooks
 import usePrevious from './hooks/usePrevious';
@@ -66,7 +67,7 @@ export default function TmtPage() {
     limit: number;
   }>({
     offset: 0,
-    limit: 25,
+    limit: 100,
   });
 
   const [payload, setPayload] = useState<JobPostingsRequestPayload | null>(
@@ -141,7 +142,7 @@ export default function TmtPage() {
             .map(p => p.Koodi),
         },
         paging: {
-          limit: paginationState.limit || 25,
+          limit: paginationState.limit || 100,
           offset: paginationState.offset || 0,
         },
       };
@@ -173,12 +174,22 @@ export default function TmtPage() {
     [searchInputValue]
   );
 
-  const handlePaginationStateChange = useCallback(
+  /**
+   * Handle state change when paginating
+   */
+  /* const handlePaginationStateChange = useCallback(
     (offset: number, limit: number) => {
       setPaginationState({ offset, limit });
     },
     []
-  );
+  ); */
+
+  /**
+   * Handle load more job posting results
+   */
+  const handleLoadMoreClick = useCallback(() => {
+    setPaginationState(state => ({ ...state, limit: state.limit + 25 }));
+  }, []);
 
   return (
     <>
@@ -308,17 +319,19 @@ export default function TmtPage() {
           {jobPostings.results.length > 0 && (
             <>
               <SimpleGrid columns={1} spacing={5} mt={6} mb={6}>
-                {jobPostings.results.map(item => (
-                  <JobPostingItem
-                    key={`${item.basicInfo.title}-${item.publishedAt}`}
-                    item={item}
-                  />
+                {jobPostings.results.map((item, index) => (
+                  <JobPostingItem key={index} item={item} />
                 ))}
               </SimpleGrid>
 
-              <Pagination
+              {/* <Pagination
                 total={jobPostings.totalCount}
                 onPaginationStateChange={handlePaginationStateChange}
+              /> */}
+
+              <LoadMore
+                isLoading={jobPostingsFetching}
+                handleClick={handleLoadMoreClick}
               />
             </>
           )}
