@@ -38,6 +38,9 @@ import LoadMore from '../LoadMore/LoadMore';
 import usePrevious from './hooks/usePrevious';
 import useJobPostings from './hooks/useJobPostings';
 
+// utils
+import { scrollToElement } from '../../utils';
+
 // selections
 import regions from './regionJsons/regions.json';
 import municipalities from './regionJsons/municipalities.json';
@@ -67,13 +70,6 @@ export default function TmtPage() {
   const [searchInputValue, setSearchInputValue] = useState<string>('');
   const [search, setSearch] = useState<string | null>(null);
   const [selectedPlaces, setSelectedPlaces] = useState<PlaceSelection[]>([]);
-  /* const [paginationState, setPaginationState] = useState<{
-    offset: number;
-    limit: number;
-  }>({
-    offset: 0,
-    limit: 10,
-  }); */
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 
   const [payload, setPayload] = useState<JobPostingsRequestPayload | null>(
@@ -227,6 +223,22 @@ export default function TmtPage() {
                 </optgroup>
               </Select>
             </FormControl>
+            <FormControl w="auto">
+              <FormLabel>Results per page</FormLabel>
+              <Select
+                w={40}
+                bg="white"
+                disabled={jobPostingsFetching}
+                onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+                  setItemsPerPage(Number(event.target.value))
+                }
+              >
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </Select>
+            </FormControl>
             <Button
               type="submit"
               colorScheme="green"
@@ -299,42 +311,24 @@ export default function TmtPage() {
               <SimpleGrid columns={1} spacing={5} mt={6} mb={6}>
                 {jobPostings.pages.map((page, index) => (
                   <React.Fragment key={index}>
-                    {page?.results.map((item, index) => (
-                      <JobPostingItem key={`${index}-${item.id}`} item={item} />
+                    {page?.results.map(item => (
+                      <JobPostingItem key={item.id} item={item} />
                     ))}
                   </React.Fragment>
                 ))}
               </SimpleGrid>
 
-              <Flex alignItems="center" mb={3}>
-                <FormLabel>Results per page</FormLabel>
-                <Select
-                  w={40}
-                  bg="white"
-                  disabled={jobPostingsFetching}
-                  onChange={(event: ChangeEvent<HTMLSelectElement>) =>
-                    setItemsPerPage(Number(event.target.value))
-                  }
-                >
-                  <option value="10">10</option>
-                  <option value="25">25</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                </Select>
-              </Flex>
-
-              {hasNextPage && (
-                <LoadMore
-                  isLoading={jobPostingsFetching}
-                  handleClick={() => fetchNextPage()}
-                />
-              )}
+              <LoadMore
+                isLoading={jobPostingsFetching}
+                isDisabled={!hasNextPage}
+                handleClick={() => fetchNextPage()}
+              />
 
               {!jobPostingsFetching && !hasNextPage && (
                 <Flex
                   alignItems="center"
                   justifyContent="center"
-                  my={8}
+                  mb={8}
                   border={1}
                 >
                   <Stack w="full" maxW="md" textAlign="center">

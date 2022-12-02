@@ -2,9 +2,11 @@ import { Flex, Button } from '@chakra-ui/react';
 
 export default function LoadMore({
   isLoading,
+  isDisabled,
   handleClick,
 }: {
   isLoading: boolean;
+  isDisabled: boolean;
   handleClick: () => void;
 }) {
   return (
@@ -12,7 +14,7 @@ export default function LoadMore({
       <Button
         colorScheme="blue"
         isLoading={isLoading}
-        disabled={isLoading}
+        disabled={isLoading || isDisabled}
         onClick={handleClick}
       >
         Load more results
