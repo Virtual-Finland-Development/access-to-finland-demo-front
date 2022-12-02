@@ -39,8 +39,6 @@ export default function useJobPostings(
             lastPage.results.length === 0 ||
             lastPage.results.length < payload.paging.items_per_page
           ) {
-            console.log(lastPage.results);
-            console.log(payload.paging.items_per_page);
             return undefined;
           }
         }

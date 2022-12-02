@@ -124,7 +124,6 @@ export default function TmtPage() {
     fetchNextPage,
     hasNextPage,
   } = useJobPostings(payload);
-  console.log(jobPostings);
 
   // keep track of previous selected places to compare in useEffect
   const previousPlaces = usePrevious(selectedPlaces);
