@@ -1,4 +1,10 @@
-import { useState, useCallback, useEffect, FormEvent } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  FormEvent,
+  ChangeEvent,
+} from 'react';
 import {
   Button,
   Flex,
@@ -26,7 +32,6 @@ import { PlaceType, PlaceSelection, JobPostingsRequestPayload } from './types';
 import JobPostingItem from './JobPostingItem';
 import Loading from '../Loading/Loading';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-// import Pagination from '../Pagination/Pagination';
 import LoadMore from '../LoadMore/LoadMore';
 
 // hooks
@@ -62,13 +67,14 @@ export default function TmtPage() {
   const [searchInputValue, setSearchInputValue] = useState<string>('');
   const [search, setSearch] = useState<string | null>(null);
   const [selectedPlaces, setSelectedPlaces] = useState<PlaceSelection[]>([]);
-  const [paginationState, setPaginationState] = useState<{
+  /* const [paginationState, setPaginationState] = useState<{
     offset: number;
     limit: number;
   }>({
     offset: 0,
-    limit: 100,
-  });
+    limit: 10,
+  }); */
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 
   const [payload, setPayload] = useState<JobPostingsRequestPayload | null>(
     null
@@ -115,7 +121,10 @@ export default function TmtPage() {
     isFetching: jobPostingsFetching,
     error: jobPostingsError,
     refetch: fetchJobPostings,
+    fetchNextPage,
+    hasNextPage,
   } = useJobPostings(payload);
+  console.log(jobPostings);
 
   // keep track of previous selected places to compare in useEffect
   const previousPlaces = usePrevious(selectedPlaces);
@@ -142,20 +151,13 @@ export default function TmtPage() {
             .map(p => p.Koodi),
         },
         paging: {
-          limit: paginationState.limit || 100,
-          offset: paginationState.offset || 0,
+          items_per_page: itemsPerPage,
         },
       };
 
       setPayload(payload);
     }
-  }, [
-    paginationState.limit,
-    paginationState.offset,
-    previousPlaces.length,
-    search,
-    selectedPlaces,
-  ]);
+  }, [itemsPerPage, previousPlaces.length, search, selectedPlaces]);
 
   /**
    * Track payload state and fetch jobPostings on change
@@ -173,23 +175,6 @@ export default function TmtPage() {
     },
     [searchInputValue]
   );
-
-  /**
-   * Handle state change when paginating
-   */
-  /* const handlePaginationStateChange = useCallback(
-    (offset: number, limit: number) => {
-      setPaginationState({ offset, limit });
-    },
-    []
-  ); */
-
-  /**
-   * Handle load more job posting results
-   */
-  const handleLoadMoreClick = useCallback(() => {
-    setPaginationState(state => ({ ...state, limit: state.limit + 25 }));
-  }, []);
 
   return (
     <>
@@ -306,33 +291,60 @@ export default function TmtPage() {
         </Flex>
       )}
 
-      {jobPostings?.results && (
+      {jobPostings?.pages && (
         <div style={{ position: 'relative' }}>
           {jobPostingsFetching && <Loading asOverlay />}
 
-          {!jobPostingsFetching &&
-            !jobPostingsError &&
-            !jobPostings.results.length && (
-              <Text mt={6}>No search results.</Text>
-            )}
-
-          {jobPostings.results.length > 0 && (
+          {jobPostings.pages.length > 0 && (
             <>
               <SimpleGrid columns={1} spacing={5} mt={6} mb={6}>
-                {jobPostings.results.map((item, index) => (
-                  <JobPostingItem key={index} item={item} />
+                {jobPostings.pages.map((page, index) => (
+                  <React.Fragment key={index}>
+                    {page?.results.map((item, index) => (
+                      <JobPostingItem key={`${index}-${item.id}`} item={item} />
+                    ))}
+                  </React.Fragment>
                 ))}
               </SimpleGrid>
 
-              {/* <Pagination
-                total={jobPostings.totalCount}
-                onPaginationStateChange={handlePaginationStateChange}
-              /> */}
+              <Flex alignItems="center" mb={3}>
+                <FormLabel>Results per page</FormLabel>
+                <Select
+                  w={40}
+                  bg="white"
+                  disabled={jobPostingsFetching}
+                  onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+                    setItemsPerPage(Number(event.target.value))
+                  }
+                >
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </Select>
+              </Flex>
 
-              <LoadMore
-                isLoading={jobPostingsFetching}
-                handleClick={handleLoadMoreClick}
-              />
+              {hasNextPage && (
+                <LoadMore
+                  isLoading={jobPostingsFetching}
+                  handleClick={() => fetchNextPage()}
+                />
+              )}
+
+              {!jobPostingsFetching && !hasNextPage && (
+                <Flex
+                  alignItems="center"
+                  justifyContent="center"
+                  my={8}
+                  border={1}
+                >
+                  <Stack w="full" maxW="md" textAlign="center">
+                    <Text fontSize="xl" fontWeight="semibold" color="blue.400">
+                      All results loaded!
+                    </Text>
+                  </Stack>
+                </Flex>
+              )}
             </>
           )}
         </div>

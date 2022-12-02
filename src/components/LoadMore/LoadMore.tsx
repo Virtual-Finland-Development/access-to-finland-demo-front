@@ -15,7 +15,7 @@ export default function LoadMore({
         disabled={isLoading}
         onClick={handleClick}
       >
-        Load more
+        Load more results
       </Button>
     </Flex>
   );

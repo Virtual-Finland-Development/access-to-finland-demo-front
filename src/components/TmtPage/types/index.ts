@@ -18,6 +18,7 @@ export interface PlaceSelection {
 }
 
 export interface JobPostingEntry {
+  id: string;
   employer: string;
   location: {
     municipality: string;
@@ -31,6 +32,7 @@ export interface JobPostingEntry {
   publishedAt: string;
   applicationEndDate: string;
   applicationUrl: string;
+  jobsSource: string;
 }
 
 export interface RequestPayload {
@@ -48,8 +50,8 @@ export interface JobPostingsRequestPayload {
     countries: string[];
   };
   paging: {
-    limit: number;
-    offset: number;
+    items_per_page: number;
+    page_number?: number;
   };
 }
 
