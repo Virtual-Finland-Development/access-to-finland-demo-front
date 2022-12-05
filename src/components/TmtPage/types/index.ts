@@ -51,7 +51,7 @@ export interface JobPostingsRequestPayload {
   };
   paging: {
     itemsPerPage: number;
-    pageNumber?: number;
+    pageNumber: number;
   };
 }
 

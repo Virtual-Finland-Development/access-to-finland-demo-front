@@ -17,6 +17,7 @@ export default function useJobPostings(
 
       const response = await api.data.getJobPostings({
         ...payload,
+        // override payload.paging.pageNumber, set programmatically using usInfiniteQuery pageParam
         paging: { ...payload.paging, pageNumber: pageParam - 1 },
       });
 
