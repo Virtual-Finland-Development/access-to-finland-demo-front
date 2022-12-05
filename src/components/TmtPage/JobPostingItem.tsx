@@ -32,6 +32,9 @@ export default function JobPostingItem({ item }: { item: JobPostingEntry }) {
     item.applicationUrl && domain?.host
       ? domain.host.replace('www.', '')
       : null;
+  console.log(domain);
+  const pathName =
+    item.applicationUrl && domain?.pathname ? domain.pathname : '';
 
   const openDetails = () =>
     openModal({
@@ -111,7 +114,7 @@ export default function JobPostingItem({ item }: { item: JobPostingEntry }) {
               color="blue.400"
               onClick={e => e.stopPropagation()}
             >
-              {host}
+              {`${host}${pathName && `${pathName}`}`}
             </Link>
           )}
         </Stack>
