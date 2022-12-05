@@ -38,9 +38,6 @@ import LoadMore from '../LoadMore/LoadMore';
 import usePrevious from './hooks/usePrevious';
 import useJobPostings from './hooks/useJobPostings';
 
-// utils
-import { scrollToElement } from '../../utils';
-
 // selections
 import regions from './regionJsons/regions.json';
 import municipalities from './regionJsons/municipalities.json';
@@ -70,7 +67,7 @@ export default function TmtPage() {
   const [searchInputValue, setSearchInputValue] = useState<string>('');
   const [search, setSearch] = useState<string | null>(null);
   const [selectedPlaces, setSelectedPlaces] = useState<PlaceSelection[]>([]);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(25);
 
   const [payload, setPayload] = useState<JobPostingsRequestPayload | null>(
     null
@@ -233,7 +230,6 @@ export default function TmtPage() {
                   setItemsPerPage(Number(event.target.value))
                 }
               >
-                <option value="10">10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
                 <option value="100">100</option>
