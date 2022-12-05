@@ -91,7 +91,7 @@ export default function Pagination(props: any) {
         <Select onChange={handlePageSizeChange} w={40} bg="white">
           <option value="25">25</option>
           <option value="50">50</option>
-          <option value="75">75</option>
+          <option value="100">100</option>
         </Select>
       </Flex>
       <Stack alignSelf={'center'} w={pagiNationWrapperWidth}>

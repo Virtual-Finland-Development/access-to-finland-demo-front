@@ -1,5 +1,6 @@
 import {
   Stack,
+  Flex,
   Text,
   Link,
   Badge,
@@ -13,23 +14,11 @@ import { format, parseISO } from 'date-fns';
 // types
 import { JobPostingEntry } from './types';
 
-import mockData from './mockData.json';
+// context
+import { useModal } from '../../context/ModalContext/ModalContext';
 
-export default function JobPostingItem({
-  mockItem,
-  index,
-}: {
-  mockItem: any;
-  index: number;
-}) {
-  const item: JobPostingEntry = {
-    ...mockData.results[index],
-    employer: mockItem.name,
-    location: {
-      municipality: 'Helsinki',
-      postcode: '000100',
-    },
-  };
+export default function JobPostingItem({ item }: { item: JobPostingEntry }) {
+  const { openModal } = useModal();
 
   const domain = item.applicationUrl
     ? new URL(
@@ -44,6 +33,29 @@ export default function JobPostingItem({
       ? domain.host.replace('www.', '')
       : null;
 
+  const pathName =
+    item.applicationUrl && domain?.pathname ? domain.pathname : '';
+
+  const openDetails = () =>
+    openModal({
+      title: item.basicInfo.title,
+      content: (
+        <Stack direction="column">
+          {item.basicInfo.description !== '-' && (
+            <Text textAlign="left" maxW="4xl">
+              {item.basicInfo.description}
+            </Text>
+          )}
+          {host && (
+            <Link href={item.applicationUrl} isExternal color="blue.400">
+              {host}
+            </Link>
+          )}
+        </Stack>
+      ),
+      onClose: () => {},
+    });
+
   return (
     <Stack
       boxShadow="lg"
@@ -52,6 +64,8 @@ export default function JobPostingItem({
       bg="white"
       border="1px"
       borderColor="blue.100"
+      onClick={openDetails}
+      role="button"
     >
       <Stack
         p="4"
@@ -60,12 +74,26 @@ export default function JobPostingItem({
         justifyContent="space-between"
         bg="blue.100"
       >
-        <Text fontWeight="semibold" color="blue.700">
+        <Text fontWeight="semibold" color="blue.700" alignSelf="start">
           {item.basicInfo.title}
         </Text>
-        <Badge variant="solid" colorScheme="blue">
-          {item.basicInfo.workTimeType === '01' ? 'Full-time' : 'Part-time'}
-        </Badge>
+        <Flex
+          flexDirection="column"
+          gap={2}
+          alignItems={{ base: 'start', md: 'end' }}
+        >
+          {item.jobsSource && (
+            <Badge variant="solid" colorScheme="purple">
+              {item.jobsSource === 'tyomarkkinatori' && 'Job Market Finland'}
+              {item.jobsSource === 'jobs_in_finland' && 'Jobs In Finland'}
+            </Badge>
+          )}
+          {['01', '02'].includes(item.basicInfo.workTimeType) && (
+            <Badge variant="solid" colorScheme="blue">
+              {item.basicInfo.workTimeType === '01' ? 'Full-time' : 'Part-time'}
+            </Badge>
+          )}
+        </Flex>
       </Stack>
 
       <Stack
@@ -74,12 +102,19 @@ export default function JobPostingItem({
         p="4"
       >
         <Stack direction="column">
-          <Text textAlign="left" maxW="4xl">
-            {item.basicInfo.description}
-          </Text>
+          {item.basicInfo.description !== '-' && (
+            <Text textAlign="left" maxW="4xl" noOfLines={5}>
+              {item.basicInfo.description}
+            </Text>
+          )}
           {host && (
-            <Link href={item.applicationUrl} isExternal color="blue.400">
-              {host}
+            <Link
+              href={item.applicationUrl}
+              isExternal
+              color="blue.400"
+              onClick={e => e.stopPropagation()}
+            >
+              {`${host}${pathName && `${pathName}`}`}
             </Link>
           )}
         </Stack>
@@ -94,10 +129,12 @@ export default function JobPostingItem({
             <Icon as={IoLocationOutline} />{' '}
             {item.location.municipality ? item.location.municipality : ''}
           </Text>
-          <Text>
-            <Icon as={IoCalendarOutline} />{' '}
-            {format(parseISO(item.applicationEndDate), 'dd.MM.yyyy HH:mm')}
-          </Text>
+          {item.applicationEndDate && (
+            <Text>
+              <Icon as={IoCalendarOutline} />{' '}
+              {format(parseISO(item.applicationEndDate), 'dd.MM.yyyy HH:mm')}
+            </Text>
+          )}
         </Stack>
       </Stack>
     </Stack>

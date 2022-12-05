@@ -1,7 +1,11 @@
 import { rest } from 'msw';
 
 // endpoints
-import { AUTH_GW_BASE_URL, USER_API_BASE_URL } from '../../api/endpoints';
+import {
+  AUTH_GW_BASE_URL,
+  USER_API_BASE_URL,
+  TESTBED_API_BASE_URL,
+} from '../../api/endpoints';
 
 const mockAuthUser = {
   idToken: 'test-token',
@@ -26,6 +30,28 @@ const mockUser = {
   regions: ['01', '02'],
   created: '2022-10-12T12:05:46.6262126Z',
   modified: '2022-10-12T12:05:46.6262127Z',
+};
+
+const mockJobPostings = {
+  results: [
+    {
+      id: '12312342345',
+      applicationEndDate: '2023-01-31T13:00:00+00:00',
+      applicationUrl: null,
+      basicInfo: {
+        description:
+          'Koetko Lapin kutsuvan sinua talvikaudella 2022 - 2023? Haluatko olla mukana luomassa parasta ruokakokemusta asiakkaillesi? Proextra hakee useampaa kokkia Lapin eri hiihtokeskuksiin talvikaudeksi 2022 - 2023. \nTöiden aloitus olisi loka-marraskuu huhtikuulle saakka. Palkkaus TES:in mukaan kokemusvuodet huomioiden tai sopimuksen mukaan.\n\nKimppa-asunto järjestyy läheltä työpaikkaa, vuokra 200-300€/kk.\n\n ',
+        title: 'Kokki Lappiin',
+        workTimeType: '01',
+      },
+      employer: '',
+      location: {
+        municipality: '',
+        postcode: '',
+      },
+      publishedAt: '2022-08-24T10:21:24+00:00',
+    },
+  ],
 };
 
 /**
@@ -104,4 +130,10 @@ export const handlers = [
       ])
     );
   }),
+  rest.post(
+    `${TESTBED_API_BASE_URL}/testbed/productizers/find-job-postings`,
+    (req, res, ctx) => {
+      return res(ctx.json(mockJobPostings));
+    }
+  ),
 ];

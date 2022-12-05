@@ -14,16 +14,6 @@ import { AUTH_GW_BASE_URL } from '../../api/endpoints';
 // constants
 import { appContextUrlEncoded } from '../../constants';
 
-// https://stackoverflow.com/questions/64813447/cannot-read-property-addlistener-of-undefined-react-testing-library
-global.matchMedia =
-  global.matchMedia ||
-  function () {
-    return {
-      addListener: jest.fn(),
-      removeListener: jest.fn(),
-    };
-  };
-
 describe('Test app authentication based rendering', () => {
   beforeEach(() => {
     // mock 'validLoginState' function in AppContext, return true value

@@ -38,6 +38,7 @@ jobs:
           REACT_APP_AUTH_GW_BASE_URL: ${{ secrets.AUTH_GW_BASE_URL }}
           REACT_APP_USER_API_BASE_URL: ${{ secrets.USER_API_BASE_URL }}
           REACT_APP_EXT_REGISTRATION_SERVICE_URL: ${{ secrets.EXT_REGISTRATION_SERVICE_URL }}
+          REACT_APP_TESTBED_API_BASE_URL: ${{ secrets.TESTBED_API_BASE_URL }}
       - name: Archive the build artifacts
         if: ${{ inputs.wants_artifacts }}
         uses: actions/upload-artifact@v3

@@ -1,4 +1,10 @@
-import { useState, useCallback, useEffect, FormEvent } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  FormEvent,
+  ChangeEvent,
+} from 'react';
 import {
   Button,
   Flex,
@@ -12,6 +18,7 @@ import {
   Tag,
   TagLabel,
   TagCloseButton,
+  Text,
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -19,15 +26,16 @@ import { CloseIcon } from '@chakra-ui/icons';
 import { useAppContext } from '../../context/AppContext/AppContext';
 
 // types
-import { PlaceType, PlaceSelection } from './types';
+import { PlaceType, PlaceSelection, JobPostingsRequestPayload } from './types';
 
 // components
 import JobPostingItem from './JobPostingItem';
 import Loading from '../Loading/Loading';
-import Pagination from '../Pagination/Pagination';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import LoadMore from '../LoadMore/LoadMore';
 
-// data hooks
-import usePokemons from './hooks/usePokemons';
+// hooks
+import useJobPostings from './hooks/useJobPostings';
 
 // selections
 import regions from './regionJsons/regions.json';
@@ -57,24 +65,22 @@ export default function TmtPage() {
 
   const [searchInputValue, setSearchInputValue] = useState<string>('');
   const [search, setSearch] = useState<string | null>(null);
-  const [selectedPlaces, setSelectedPlaces] = useState<PlaceSelection[]>([]);
-  const [paginationState, setPaginationState] = useState<{
-    offset: number;
-    limit: number;
-  }>({
-    offset: 0,
-    limit: 25,
-  });
+  const [selectedPlaces, setSelectedPlaces] = useState<PlaceSelection[] | null>(
+    null
+  );
+  const [itemsPerPage, setItemsPerPage] = useState<number>(25);
+
+  const [payload, setPayload] = useState<JobPostingsRequestPayload | null>(
+    null
+  );
 
   /**
    * Set default search keys from userProfile, if provided.
    */
   useEffect(() => {
-    if (userProfile?.id) {
-      if (userProfile.jobTitles?.length) {
-        setSearchInputValue(userProfile.jobTitles.join(' '));
-        setSearch(userProfile.jobTitles.join(' '));
-      }
+    if (userProfile?.id && userProfile.jobTitles?.length) {
+      setSearchInputValue(userProfile.jobTitles.join(' '));
+      setSearch(userProfile.jobTitles.join(' '));
     }
   }, [userProfile]);
 
@@ -82,80 +88,90 @@ export default function TmtPage() {
    * Set default selected places for filtering, if provided in userProfile.
    */
   useEffect(() => {
-    if (userProfile?.id) {
-      const selections: PlaceSelection[] = [...regions, ...municipalities];
-      let values: PlaceSelection[] = [];
-
-      if (userProfile.regions?.length) {
-        values = userProfile.regions.reduce(
-          (acc: PlaceSelection[], code: string) => {
-            const selected = selections.find(s => s.Koodi === code);
-            if (selected) acc.push(selected);
-            return acc;
-          },
-          []
-        );
-      }
+    if (userProfile?.id && userProfile.regions?.length) {
+      // merge region and municipality selections, map each and set type
+      const selections: PlaceSelection[] = [
+        ...regions.map(r => ({ ...r, type: PlaceType.REGION })),
+        ...municipalities.map(m => ({ ...m, type: PlaceType.MUNICIPALITY })),
+      ];
+      // reduce userProfile regions, find matches and set to selected places
+      const values: PlaceSelection[] = userProfile.regions.reduce(
+        (acc: PlaceSelection[], code: string) => {
+          const selected = selections.find(s => s.Koodi === code);
+          if (selected) acc.push(selected);
+          return acc;
+        },
+        []
+      );
 
       setSelectedPlaces(values);
     }
   }, [userProfile]);
 
+  /**
+   * useJobPostings hook
+   */
   const {
-    data: pokeData,
-    isLoading: dataLoading,
-    isFetching: dataFething,
-    refetch,
-  } = usePokemons({
-    search,
-    selectedPlaces,
-    limit: paginationState.limit,
-    offset: paginationState.offset,
-  });
+    data: jobPostings,
+    isLoading: jobPostingsLoading,
+    isFetching: jobPostingsFetching,
+    error: jobPostingsError,
+    refetch: fetchJobPostings,
+    fetchNextPage,
+    hasNextPage,
+  } = useJobPostings(payload);
 
+  /**
+   * Track search / selectedPlaces state and construct payload
+   */
   useEffect(() => {
-    if (typeof search === 'string' || selectedPlaces.length) {
-      /* const payload = {
+    if (typeof search === 'string' || selectedPlaces) {
+      const payload = {
         query: typeof search === 'string' ? search.split(' ').toString() : '',
         location: {
           regions: selectedPlaces
-            .filter(p => p.type === PlaceType.REGION)
-            .map(p => p.Koodi),
+            ? selectedPlaces
+                .filter(p => p.type === PlaceType.REGION)
+                .map(p => p.Koodi)
+            : [],
           municipalities: selectedPlaces
-            .filter(p => p.type === PlaceType.MUNICIPALITY)
-            .map(p => p.Koodi),
+            ? selectedPlaces
+                .filter(p => p.type === PlaceType.MUNICIPALITY)
+                .map(p => p.Koodi)
+            : [],
           countries: selectedPlaces
-            .filter(p => p.type === PlaceType.COUNTRY)
-            .map(p => p.Koodi),
+            ? selectedPlaces
+                .filter(p => p.type === PlaceType.COUNTRY)
+                .map(p => p.Koodi)
+            : [],
         },
         paging: {
-          limit: paginationState.limit || 25,
-          offset: paginationState.offset || 0,
+          items_per_page: itemsPerPage,
         },
-      }; */
-      refetch();
-    }
-  }, [
-    refetch,
-    paginationState.limit,
-    paginationState.offset,
-    search,
-    selectedPlaces,
-  ]);
+      };
 
+      setPayload(payload);
+    }
+  }, [itemsPerPage, search, selectedPlaces]);
+
+  /**
+   * Track payload state and fetch jobPostings on change
+   */
+  useEffect(() => {
+    if (payload) {
+      fetchJobPostings();
+    }
+  }, [fetchJobPostings, payload]);
+
+  /**
+   * Handle form submit (search input value)
+   */
   const handleSubmit = useCallback(
     (event: FormEvent) => {
       event.preventDefault();
       setSearch(searchInputValue);
     },
     [searchInputValue]
-  );
-
-  const handlePaginationStateChange = useCallback(
-    (offset: number, limit: number) => {
-      setPaginationState({ offset, limit });
-    },
-    []
   );
 
   return (
@@ -189,35 +205,57 @@ export default function TmtPage() {
               <Select
                 value="placeholder"
                 onChange={({ target }) =>
-                  setSelectedPlaces(places => [
-                    ...places,
-                    JSON.parse(target.value),
-                  ])
+                  setSelectedPlaces(prev => {
+                    let places = prev || [];
+                    return [...places, JSON.parse(target.value)];
+                  })
                 }
               >
                 <option disabled value="placeholder">
                   Select location...
                 </option>
                 <optgroup label="Region">
-                  {mapSelectOptions(PlaceType.REGION, regions, selectedPlaces)}
+                  {mapSelectOptions(
+                    PlaceType.REGION,
+                    regions,
+                    selectedPlaces || []
+                  )}
                 </optgroup>
                 <optgroup label="Municipality">
                   {mapSelectOptions(
                     PlaceType.MUNICIPALITY,
                     municipalities,
-                    selectedPlaces
+                    selectedPlaces || []
                   )}
                 </optgroup>
               </Select>
             </FormControl>
-            <Button type="submit" colorScheme="green" isDisabled={dataFething}>
+            <FormControl w="auto">
+              <FormLabel>Results per page</FormLabel>
+              <Select
+                w={40}
+                bg="white"
+                onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+                  setItemsPerPage(Number(event.target.value))
+                }
+              >
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </Select>
+            </FormControl>
+            <Button
+              type="submit"
+              colorScheme="green"
+              isDisabled={jobPostingsFetching}
+            >
               Show jobs
             </Button>
           </Stack>
         </form>
       </Flex>
 
-      {selectedPlaces.length > 0 && (
+      {selectedPlaces && selectedPlaces.length > 0 && (
         <Flex flexDirection={'row'} flexWrap="wrap" mt={4} gap={3}>
           {selectedPlaces.map(place => (
             <Tag
@@ -233,9 +271,10 @@ export default function TmtPage() {
               </TagLabel>
               <TagCloseButton
                 onClick={() =>
-                  setSelectedPlaces(places =>
-                    places.filter(p => p.Koodi !== place.Koodi)
-                  )
+                  setSelectedPlaces(prev => {
+                    const places = prev || [];
+                    return places.filter(p => p.Koodi !== place.Koodi);
+                  })
                 }
               />
             </Tag>
@@ -255,22 +294,58 @@ export default function TmtPage() {
         </Flex>
       )}
 
-      {dataLoading && dataFething && <Loading />}
+      {jobPostingsLoading && jobPostingsFetching && (
+        <Stack mt={6}>
+          <Loading />
+        </Stack>
+      )}
 
-      {pokeData?.results && (
+      {jobPostingsError && (
+        <Flex alignItems="center" justifyContent="center" mt={6}>
+          <Stack w="full" maxW="md">
+            <ErrorMessage error={jobPostingsError} />
+          </Stack>
+        </Flex>
+      )}
+
+      {jobPostings?.pages && (
         <div style={{ position: 'relative' }}>
-          {dataFething && <Loading asOverlay />}
+          {jobPostingsFetching && <Loading asOverlay />}
 
-          <SimpleGrid columns={1} spacing={5} mt={6} mb={6}>
-            {pokeData.results.map((item: any, index: number) => (
-              <JobPostingItem key={item.name} mockItem={item} index={index} />
-            ))}
-          </SimpleGrid>
+          {jobPostings.pages.length > 0 && (
+            <>
+              <SimpleGrid columns={1} spacing={5} mt={6} mb={6}>
+                {jobPostings.pages.map((page, index) => (
+                  <React.Fragment key={index}>
+                    {page?.results.map(item => (
+                      <JobPostingItem key={item.id} item={item} />
+                    ))}
+                  </React.Fragment>
+                ))}
+              </SimpleGrid>
 
-          <Pagination
-            total={pokeData.count}
-            onPaginationStateChange={handlePaginationStateChange}
-          />
+              <LoadMore
+                isLoading={jobPostingsFetching}
+                isDisabled={!hasNextPage}
+                handleClick={() => fetchNextPage()}
+              />
+
+              {!jobPostingsFetching && !hasNextPage && (
+                <Flex
+                  alignItems="center"
+                  justifyContent="center"
+                  mb={8}
+                  border={1}
+                >
+                  <Stack w="full" maxW="md" textAlign="center">
+                    <Text fontSize="xl" fontWeight="semibold" color="blue.400">
+                      All results loaded!
+                    </Text>
+                  </Stack>
+                </Flex>
+              )}
+            </>
+          )}
         </div>
       )}
     </>
