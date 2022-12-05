@@ -89,7 +89,12 @@ export default function TmtPage() {
    */
   useEffect(() => {
     if (userProfile?.id && userProfile.regions?.length) {
-      const selections: PlaceSelection[] = [...regions, ...municipalities];
+      // merge region and municipality selections, map each and set type
+      const selections: PlaceSelection[] = [
+        ...regions.map(r => ({ ...r, type: PlaceType.REGION })),
+        ...municipalities.map(m => ({ ...m, type: PlaceType.MUNICIPALITY })),
+      ];
+      // reduce userProfile regions, find matches and set to selected places
       const values: PlaceSelection[] = userProfile.regions.reduce(
         (acc: PlaceSelection[], code: string) => {
           const selected = selections.find(s => s.Koodi === code);
@@ -103,6 +108,9 @@ export default function TmtPage() {
     }
   }, [userProfile]);
 
+  /**
+   * useJobPostings hook
+   */
   const {
     data: jobPostings,
     isLoading: jobPostingsLoading,
