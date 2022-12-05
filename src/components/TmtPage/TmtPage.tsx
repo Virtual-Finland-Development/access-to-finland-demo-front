@@ -235,7 +235,6 @@ export default function TmtPage() {
               <Select
                 w={40}
                 bg="white"
-                disabled={jobPostingsFetching}
                 onChange={(event: ChangeEvent<HTMLSelectElement>) =>
                   setItemsPerPage(Number(event.target.value))
                 }
