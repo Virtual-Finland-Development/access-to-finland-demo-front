@@ -32,7 +32,7 @@ export default function JobPostingItem({ item }: { item: JobPostingEntry }) {
     item.applicationUrl && domain?.host
       ? domain.host.replace('www.', '')
       : null;
-  console.log(domain);
+
   const pathName =
     item.applicationUrl && domain?.pathname ? domain.pathname : '';
 
