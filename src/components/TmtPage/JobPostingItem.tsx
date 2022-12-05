@@ -79,9 +79,12 @@ export default function JobPostingItem({ item }: { item: JobPostingEntry }) {
           gap={2}
           alignItems={{ base: 'start', md: 'end' }}
         >
-          <Badge variant="solid" colorScheme="purple">
-            {item.jobsSource}
-          </Badge>
+          {item.jobsSource && (
+            <Badge variant="solid" colorScheme="purple">
+              {item.jobsSource === 'tyomarkkinatori' && 'Job Market Finland'}
+              {item.jobsSource === 'jobs_in_finland' && 'Jobs In Finland'}
+            </Badge>
+          )}
           {['01', '02'].includes(item.basicInfo.workTimeType) && (
             <Badge variant="solid" colorScheme="blue">
               {item.basicInfo.workTimeType === '01' ? 'Full-time' : 'Part-time'}
