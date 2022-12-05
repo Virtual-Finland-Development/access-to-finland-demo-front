@@ -35,7 +35,6 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import LoadMore from '../LoadMore/LoadMore';
 
 // hooks
-import usePrevious from './hooks/usePrevious';
 import useJobPostings from './hooks/useJobPostings';
 
 // selections
@@ -66,7 +65,9 @@ export default function TmtPage() {
 
   const [searchInputValue, setSearchInputValue] = useState<string>('');
   const [search, setSearch] = useState<string | null>(null);
-  const [selectedPlaces, setSelectedPlaces] = useState<PlaceSelection[]>([]);
+  const [selectedPlaces, setSelectedPlaces] = useState<PlaceSelection[] | null>(
+    null
+  );
   const [itemsPerPage, setItemsPerPage] = useState<number>(25);
 
   const [payload, setPayload] = useState<JobPostingsRequestPayload | null>(
@@ -77,11 +78,9 @@ export default function TmtPage() {
    * Set default search keys from userProfile, if provided.
    */
   useEffect(() => {
-    if (userProfile?.id) {
-      if (userProfile.jobTitles?.length) {
-        setSearchInputValue(userProfile.jobTitles.join(' '));
-        setSearch(userProfile.jobTitles.join(' '));
-      }
+    if (userProfile?.id && userProfile.jobTitles?.length) {
+      setSearchInputValue(userProfile.jobTitles.join(' '));
+      setSearch(userProfile.jobTitles.join(' '));
     }
   }, [userProfile]);
 
@@ -89,20 +88,16 @@ export default function TmtPage() {
    * Set default selected places for filtering, if provided in userProfile.
    */
   useEffect(() => {
-    if (userProfile?.id) {
+    if (userProfile?.id && userProfile.regions?.length) {
       const selections: PlaceSelection[] = [...regions, ...municipalities];
-      let values: PlaceSelection[] = [];
-
-      if (userProfile.regions?.length) {
-        values = userProfile.regions.reduce(
-          (acc: PlaceSelection[], code: string) => {
-            const selected = selections.find(s => s.Koodi === code);
-            if (selected) acc.push(selected);
-            return acc;
-          },
-          []
-        );
-      }
+      const values: PlaceSelection[] = userProfile.regions.reduce(
+        (acc: PlaceSelection[], code: string) => {
+          const selected = selections.find(s => s.Koodi === code);
+          if (selected) acc.push(selected);
+          return acc;
+        },
+        []
+      );
 
       setSelectedPlaces(values);
     }
@@ -118,29 +113,29 @@ export default function TmtPage() {
     hasNextPage,
   } = useJobPostings(payload);
 
-  // keep track of previous selected places to compare in useEffect
-  const previousPlaces = usePrevious(selectedPlaces);
-
   /**
    * Track search / selectedPlaces state and construct payload
    */
   useEffect(() => {
-    if (
-      typeof search === 'string' ||
-      selectedPlaces.length !== previousPlaces.length
-    ) {
+    if (typeof search === 'string' || selectedPlaces) {
       const payload = {
         query: typeof search === 'string' ? search.split(' ').toString() : '',
         location: {
           regions: selectedPlaces
-            .filter(p => p.type === PlaceType.REGION)
-            .map(p => p.Koodi),
+            ? selectedPlaces
+                .filter(p => p.type === PlaceType.REGION)
+                .map(p => p.Koodi)
+            : [],
           municipalities: selectedPlaces
-            .filter(p => p.type === PlaceType.MUNICIPALITY)
-            .map(p => p.Koodi),
+            ? selectedPlaces
+                .filter(p => p.type === PlaceType.MUNICIPALITY)
+                .map(p => p.Koodi)
+            : [],
           countries: selectedPlaces
-            .filter(p => p.type === PlaceType.COUNTRY)
-            .map(p => p.Koodi),
+            ? selectedPlaces
+                .filter(p => p.type === PlaceType.COUNTRY)
+                .map(p => p.Koodi)
+            : [],
         },
         paging: {
           items_per_page: itemsPerPage,
@@ -149,7 +144,7 @@ export default function TmtPage() {
 
       setPayload(payload);
     }
-  }, [itemsPerPage, previousPlaces.length, search, selectedPlaces]);
+  }, [itemsPerPage, search, selectedPlaces]);
 
   /**
    * Track payload state and fetch jobPostings on change
@@ -160,6 +155,9 @@ export default function TmtPage() {
     }
   }, [fetchJobPostings, payload]);
 
+  /**
+   * Handle form submit (search input value)
+   */
   const handleSubmit = useCallback(
     (event: FormEvent) => {
       event.preventDefault();
@@ -199,23 +197,27 @@ export default function TmtPage() {
               <Select
                 value="placeholder"
                 onChange={({ target }) =>
-                  setSelectedPlaces(places => [
-                    ...places,
-                    JSON.parse(target.value),
-                  ])
+                  setSelectedPlaces(prev => {
+                    let places = prev || [];
+                    return [...places, JSON.parse(target.value)];
+                  })
                 }
               >
                 <option disabled value="placeholder">
                   Select location...
                 </option>
                 <optgroup label="Region">
-                  {mapSelectOptions(PlaceType.REGION, regions, selectedPlaces)}
+                  {mapSelectOptions(
+                    PlaceType.REGION,
+                    regions,
+                    selectedPlaces || []
+                  )}
                 </optgroup>
                 <optgroup label="Municipality">
                   {mapSelectOptions(
                     PlaceType.MUNICIPALITY,
                     municipalities,
-                    selectedPlaces
+                    selectedPlaces || []
                   )}
                 </optgroup>
               </Select>
@@ -246,7 +248,7 @@ export default function TmtPage() {
         </form>
       </Flex>
 
-      {selectedPlaces.length > 0 && (
+      {selectedPlaces && selectedPlaces.length > 0 && (
         <Flex flexDirection={'row'} flexWrap="wrap" mt={4} gap={3}>
           {selectedPlaces.map(place => (
             <Tag
@@ -262,9 +264,10 @@ export default function TmtPage() {
               </TagLabel>
               <TagCloseButton
                 onClick={() =>
-                  setSelectedPlaces(places =>
-                    places.filter(p => p.Koodi !== place.Koodi)
-                  )
+                  setSelectedPlaces(prev => {
+                    const places = prev || [];
+                    return places.filter(p => p.Koodi !== place.Koodi);
+                  })
                 }
               />
             </Tag>

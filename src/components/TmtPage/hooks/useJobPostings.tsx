@@ -11,20 +11,15 @@ export default function useJobPostings(
   payload: JobPostingsRequestPayload | null
 ) {
   const jobPostingsQuery = useInfiniteQuery(
-    [
-      'jobPostings',
-      payload?.query,
-      payload?.location?.countries,
-      payload?.location?.municipalities,
-      payload?.location?.regions,
-      payload?.paging?.items_per_page,
-    ],
+    ['jobPostings'],
     async ({ pageParam = 1 }) => {
       if (!payload) return;
+
       const response = await api.data.getJobPostings({
         ...payload,
         paging: { ...payload.paging, page_number: pageParam - 1 },
       });
+
       return response.data as JobPostingsResponse;
     },
     {
