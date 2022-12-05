@@ -35,6 +35,7 @@ const mockUser = {
 const mockJobPostings = {
   results: [
     {
+      id: '12312342345',
       applicationEndDate: '2023-01-31T13:00:00+00:00',
       applicationUrl: null,
       basicInfo: {
