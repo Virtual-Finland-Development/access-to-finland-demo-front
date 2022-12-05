@@ -146,7 +146,7 @@ export default function TmtPage() {
             : [],
         },
         paging: {
-          items_per_page: itemsPerPage,
+          itemsPerPage: itemsPerPage,
         },
       };
 

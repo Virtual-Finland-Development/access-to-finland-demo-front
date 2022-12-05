@@ -50,8 +50,8 @@ export interface JobPostingsRequestPayload {
     countries: string[];
   };
   paging: {
-    items_per_page: number;
-    page_number?: number;
+    itemsPerPage: number;
+    pageNumber?: number;
   };
 }
 

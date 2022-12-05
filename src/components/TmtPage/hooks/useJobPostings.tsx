@@ -17,7 +17,7 @@ export default function useJobPostings(
 
       const response = await api.data.getJobPostings({
         ...payload,
-        paging: { ...payload.paging, page_number: pageParam - 1 },
+        paging: { ...payload.paging, pageNumber: pageParam - 1 },
       });
 
       return response.data as JobPostingsResponse;
@@ -32,7 +32,7 @@ export default function useJobPostings(
         if (lastPage && payload?.paging) {
           if (
             lastPage.results.length === 0 ||
-            lastPage.results.length < payload.paging.items_per_page
+            lastPage.results.length < payload.paging.itemsPerPage
           ) {
             return undefined;
           }
