@@ -196,7 +196,7 @@ export default function TmtPage() {
               <Input
                 placeholder="Search..."
                 _placeholder={{ color: 'gray.500' }}
-                defaultValue={search || ''}
+                value={searchInputValue}
                 onChange={({ target }) => setSearchInputValue(target.value)}
                 type="text"
               />
