@@ -48,7 +48,7 @@ export default function JobPostingItem({ item }: { item: JobPostingEntry }) {
           )}
           {host && (
             <Link href={item.applicationUrl} isExternal color="blue.400">
-              {host}
+              {`${host}${pathName && `${pathName}`}`}
             </Link>
           )}
         </Stack>
