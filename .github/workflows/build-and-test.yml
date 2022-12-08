@@ -31,26 +31,56 @@ jobs:
         run: |
           npm install
           npm test
-      # testing pulumi outputs action
-      - name: Testing pulumi outputs actions
+      # pulumi outputs actions
+      - name: auth-gw url from Pulumi
+        if: ${{ inputs.deployment_stage }}
         uses: Virtual-Finland-Development/pulumi-outputs-action@v1
-        id: pulumi-outputs-test
+        id: auth-gw-url
         with:
-          pulumi-organization: 'virtualfinland'
-          pulumi-project: 'authentication-gw'
-          pulumi-stack: 'dev'
-          pulumi-resource: 'endpoint'
+          pulumi-organization: virtualfinland
+          pulumi-project: authentication-gw
+          pulumi-stack: ${{ inputs.deployment_stage }}
+          pulumi-resource: endpoint
           pulumi-access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-      # /testing pulumi outputs action
+      - name: users-api url from Pulumi
+        if: ${{ inputs.deployment_stage }}
+        uses: Virtual-Finland-Development/pulumi-outputs-action@v1
+        id: users-api-url
+        with:
+          pulumi-organization: virtualfinland
+          pulumi-project: users-api
+          pulumi-stack: ${{ inputs.deployment_stage }}
+          pulumi-resource: ApplicationUrl
+          pulumi-access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      - name: testbed-api url from Pulumi
+        if: ${{ inputs.deployment_stage }}
+        uses: Virtual-Finland-Development/pulumi-outputs-action@v1
+        id: testbed-api-url
+        with:
+          pulumi-organization: virtualfinland
+          pulumi-project: testbed-api
+          pulumi-stack: ${{ inputs.deployment_stage }}
+          pulumi-resource: url
+          pulumi-access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      - name: external-service-demo url from Pulumi
+        if: ${{ inputs.deployment_stage }}
+        uses: Virtual-Finland-Development/pulumi-outputs-action@v1
+        id: external-service-demo-url
+        with:
+          pulumi-organization: virtualfinland
+          pulumi-project: external-service-demo
+          pulumi-stack: ${{ inputs.deployment_stage }}
+          pulumi-resource: cdnURL
+          pulumi-access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      # /pulumi outputs actions
       - name: App build
         if: ${{ inputs.deployment_stage }}
         run: npm run build
         env:
-          REACT_APP_AUTH_GW_BASE_URL: ${{ secrets.AUTH_GW_BASE_URL }}
-          REACT_APP_USER_API_BASE_URL: ${{ secrets.USER_API_BASE_URL }}
-          REACT_APP_EXT_REGISTRATION_SERVICE_URL: ${{ secrets.EXT_REGISTRATION_SERVICE_URL }}
-          REACT_APP_TESTBED_API_BASE_URL: ${{ secrets.TESTBED_API_BASE_URL }}
-          REACT_APP_PULUMI_OUTPUTS_TEST: ${{ steps.pulumi-outputs-test.outputs.resource-output }}
+          REACT_APP_AUTH_GW_BASE_URL: ${{ steps.auth-gw-url.outputs.resource-output }}
+          REACT_APP_USERS_API_BASE_URL: ${{ steps.users-api-url.outputs.resource-output }}
+          REACT_APP_TESTBED_API_BASE_URL: ${{ steps.testbed-api-url.outputs.resource-output }}
+          REACT_APP_EXT_REGISTRATION_SERVICE_URL: ${{ steps.external-service-demo-url.outputs.resource-output }}
       - name: Archive the build artifacts
         if: ${{ inputs.wants_artifacts }}
         uses: actions/upload-artifact@v3

@@ -4,7 +4,7 @@ import { isPast, parseISO } from 'date-fns';
 // types
 
 // endpoints
-import { USER_API_BASE_URL, TESTBED_API_BASE_URL } from './endpoints';
+import { USERS_API_BASE_URL, TESTBED_API_BASE_URL } from './endpoints';
 
 // constants
 import {
@@ -19,13 +19,13 @@ import { JSONLocalStorage } from '../utils';
 // Create axios instance for api services
 const axiosInstance = axios.create();
 
-const USER_API_URLS = [
-  `${USER_API_BASE_URL}/identity/verify`,
-  `${USER_API_BASE_URL}/user`,
-  `${USER_API_BASE_URL}/code-sets/countries`,
-  `${USER_API_BASE_URL}/code-sets/occupations`,
-  `${USER_API_BASE_URL}/code-sets/languages`,
-  `${USER_API_BASE_URL}/code-sets/genders`,
+const USERS_API_URLS = [
+  `${USERS_API_BASE_URL}/identity/verify`,
+  `${USERS_API_BASE_URL}/user`,
+  `${USERS_API_BASE_URL}/code-sets/countries`,
+  `${USERS_API_BASE_URL}/code-sets/occupations`,
+  `${USERS_API_BASE_URL}/code-sets/languages`,
+  `${USERS_API_BASE_URL}/code-sets/genders`,
 ];
 
 const DATA_URLS = [
@@ -40,7 +40,7 @@ axiosInstance.interceptors.request.use(config => {
   if (config.url !== undefined && config.headers !== undefined) {
     if (loggedInState) {
       // pass id token for all user api calls
-      if (USER_API_URLS.includes(config.url)) {
+      if (USERS_API_URLS.includes(config.url)) {
         const idToken = loggedInState.idToken;
         config.headers.Authorization = idToken ? `Bearer ${idToken}` : '';
       }
