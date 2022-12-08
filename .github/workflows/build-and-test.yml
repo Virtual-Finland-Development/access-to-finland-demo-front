@@ -33,7 +33,7 @@ jobs:
           npm test
       # testing pulumi outputs action
       - name: Testing pulumi outputs actions
-        uses: Virtual-Finland-Development/pulumi-outputs-action
+        uses: Virtual-Finland-Development/pulumi-outputs-action@v1
         id: pulumi-outputs-test
         with:
           pulumi-organization: 'virtualfinland'
