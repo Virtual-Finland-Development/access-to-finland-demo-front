@@ -37,41 +37,41 @@ jobs:
         uses: Virtual-Finland-Development/pulumi-outputs-action@v1
         id: auth-gw-url
         with:
-          pulumi-organization: virtualfinland
-          pulumi-project: authentication-gw
-          pulumi-stack: ${{ inputs.deployment_stage }}
-          pulumi-resource: endpoint
-          pulumi-access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          organization: virtualfinland
+          project: authentication-gw
+          stack: ${{ inputs.deployment_stage }}
+          resource: endpoint
+          access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
       - name: users-api url from Pulumi
         if: ${{ inputs.deployment_stage }}
         uses: Virtual-Finland-Development/pulumi-outputs-action@v1
         id: users-api-url
         with:
-          pulumi-organization: virtualfinland
-          pulumi-project: users-api
-          pulumi-stack: ${{ inputs.deployment_stage }}
-          pulumi-resource: ApplicationUrl
-          pulumi-access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          organization: virtualfinland
+          project: users-api
+          stack: ${{ inputs.deployment_stage }}
+          resource: ApplicationUrl
+          access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
       - name: testbed-api url from Pulumi
         if: ${{ inputs.deployment_stage }}
         uses: Virtual-Finland-Development/pulumi-outputs-action@v1
         id: testbed-api-url
         with:
-          pulumi-organization: virtualfinland
-          pulumi-project: testbed-api
-          pulumi-stack: ${{ inputs.deployment_stage }}
-          pulumi-resource: url
-          pulumi-access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          organization: virtualfinland
+          project: testbed-api
+          stack: ${{ inputs.deployment_stage }}
+          resource: url
+          access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
       - name: external-service-demo url from Pulumi
         if: ${{ inputs.deployment_stage }}
         uses: Virtual-Finland-Development/pulumi-outputs-action@v1
         id: external-service-demo-url
         with:
-          pulumi-organization: virtualfinland
-          pulumi-project: external-service-demo
-          pulumi-stack: ${{ inputs.deployment_stage }}
-          pulumi-resource: cdnURL
-          pulumi-access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          organization: virtualfinland
+          project: external-service-demo
+          stack: ${{ inputs.deployment_stage }}
+          resource: cdnURL
+          access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
       # /pulumi outputs actions
       - name: App build
         if: ${{ inputs.deployment_stage }}
