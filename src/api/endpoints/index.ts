@@ -23,3 +23,7 @@ export const EXT_REGISTRATION_SERVICE_URL =
 export const TESTBED_API_BASE_URL =
   process.env.REACT_APP_TESTBED_API_BASE_URL ||
   'https://v2xw5b7nhqkduxcw6v56pas5yy0livjb.lambda-url.eu-north-1.on.aws';
+
+const PULUMI_OUTPUTS_TEST =
+  process.env.REACT_APP_PULUMI_OUTPUTS_TEST || 'did not work';
+console.log(PULUMI_OUTPUTS_TEST);

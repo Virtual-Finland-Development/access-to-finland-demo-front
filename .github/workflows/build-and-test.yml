@@ -31,6 +31,17 @@ jobs:
         run: |
           npm install
           npm test
+      # testing pulumi outputs action
+      - name: Testing pulumi outputs actions
+        uses: Virtual-Finland-Development/pulumi-outputs-action
+        id: pulumi-outputs-test
+        with:
+          pulumi-organization: 'virtualfinland'
+          pulumi-project: 'authentication-gw'
+          pulumi-stack: 'dev'
+          pulumi-resource: 'endpoint'
+          pulumi-access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      # /testing pulumi outputs action
       - name: App build
         if: ${{ inputs.deployment_stage }}
         run: npm run build
@@ -39,6 +50,7 @@ jobs:
           REACT_APP_USER_API_BASE_URL: ${{ secrets.USER_API_BASE_URL }}
           REACT_APP_EXT_REGISTRATION_SERVICE_URL: ${{ secrets.EXT_REGISTRATION_SERVICE_URL }}
           REACT_APP_TESTBED_API_BASE_URL: ${{ secrets.TESTBED_API_BASE_URL }}
+          REACT_APP_PULUMI_OUTPUTS_TEST: ${{ steps.pulumi-outputs-test.resource-output }}
       - name: Archive the build artifacts
         if: ${{ inputs.wants_artifacts }}
         uses: actions/upload-artifact@v3
