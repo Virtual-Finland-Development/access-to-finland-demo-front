@@ -15,8 +15,8 @@ export type LoggedInState = {
 };
 
 export enum Gender {
-  Male = "Male",
-  Female = "Female"
+  Male = 'Male',
+  Female = 'Female',
 }
 
 export interface Address {
@@ -56,8 +56,10 @@ export interface CountryOption {
 export interface OccupationOption {
   id: string;
   name: {
+    fi: string;
     en: string;
   };
+  hierarchyLevel: number;
 }
 
 export interface LanguageOption {
