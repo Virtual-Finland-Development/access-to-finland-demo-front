@@ -153,7 +153,7 @@ export default function ProfileForm(props: ProfileFormProps) {
   }, [regions, userId]);
 
   // Default countryOfBirthCode option
-  const defaultCountryOfBirthCode = useMemo(
+  const defaultCountryOfBirthOption = useMemo(
     () =>
       getDefaultSelectOption(
         countryOfBirthCode,
@@ -172,7 +172,7 @@ export default function ProfileForm(props: ProfileFormProps) {
   );
 
   // Default nativeLanguageCode option
-  const defaultNativelanguageCode = useMemo(
+  const defaultNativeLanguageOption = useMemo(
     () =>
       getDefaultSelectOption(
         nativeLanguageCode,
@@ -184,7 +184,7 @@ export default function ProfileForm(props: ProfileFormProps) {
   );
 
   // Default occupationCode option
-  const defaultOccupationCode = useMemo(
+  const defaultOccupationOption = useMemo(
     () =>
       getDefaultSelectOption(
         occupationCode,
@@ -430,7 +430,7 @@ export default function ProfileForm(props: ProfileFormProps) {
                   <Select<SelectOption, false, GroupBase<SelectOption>>
                     isMulti={false}
                     name="countryOfBirthCode"
-                    defaultValue={defaultCountryOfBirthCode}
+                    defaultValue={defaultCountryOfBirthOption}
                     options={countries.map(c => ({
                       label: c.englishName,
                       value: c.id,
@@ -471,7 +471,7 @@ export default function ProfileForm(props: ProfileFormProps) {
                 <Select<SelectOption, false, GroupBase<SelectOption>>
                   isMulti={false}
                   name="nativeLanguageCode"
-                  defaultValue={defaultNativelanguageCode}
+                  defaultValue={defaultNativeLanguageOption}
                   options={languages.map(l => ({
                     label: l.englishName,
                     value: l.id,
@@ -492,7 +492,7 @@ export default function ProfileForm(props: ProfileFormProps) {
                 <Select<SelectOption, false, GroupBase<SelectOption>>
                   isMulti={false}
                   name="occupationCode"
-                  defaultValue={defaultOccupationCode}
+                  defaultValue={defaultOccupationOption}
                   options={groupedOccupations}
                   placeholder="Type or select..."
                   closeMenuOnSelect={true}
