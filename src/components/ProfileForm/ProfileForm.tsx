@@ -581,6 +581,8 @@ export default function ProfileForm(props: ProfileFormProps) {
                 closeMenuOnSelect={false}
                 size="md"
                 onChange={handleMultiSelectChange}
+                menuPosition="fixed"
+                minMenuHeight={300}
               />
               <HookFormError
                 errors={errors}
