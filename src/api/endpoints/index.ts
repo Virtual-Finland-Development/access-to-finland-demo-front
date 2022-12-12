@@ -23,7 +23,7 @@ export const USERS_API_BASE_URL = process.env.REACT_APP_USERS_API_BASE_URL
 
 export const TESTBED_API_BASE_URL = process.env.REACT_APP_TESTBED_API_BASE_URL
   ? removeTrailingSlash(process.env.REACT_APP_TESTBED_API_BASE_URL)
-  : 'https://v2xw5b7nhqkduxcw6v56pas5yy0livjb.lambda-url.eu-north-1.on.aws';
+  : 'https://fnbyreu36buob6gy7spxxytnfi0tvjrl.lambda-url.eu-north-1.on.aws';
 
 export const EXT_REGISTRATION_SERVICE_URL =
   process.env.REACT_APP_EXT_REGISTRATION_SERVICE_URL || 'http://localhost:3001';
