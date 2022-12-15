@@ -27,6 +27,7 @@ import { useAppContext } from '../../context/AppContext/AppContext';
 
 // types
 import { PlaceType, PlaceSelection, JobPostingsRequestPayload } from './types';
+import { OccupationOption } from '../../@types';
 
 // components
 import JobPostingItem from './JobPostingItem';
@@ -40,6 +41,7 @@ import useJobPostings from './hooks/useJobPostings';
 // selections
 import regions from './regionJsons/regions.json';
 import municipalities from './regionJsons/municipalities.json';
+import OccupattionFilters from '../OccupationFilters/OccupationFilters';
 
 // utility component to render selection options (region, municipality, country)
 const mapSelectOptions = (
@@ -68,6 +70,11 @@ export default function TmtPage() {
   const [selectedPlaces, setSelectedPlaces] = useState<PlaceSelection[] | null>(
     null
   );
+  const [selectedOccupationNotations, setSelectedOccupationNotations] =
+    useState<string[] | null>(null);
+  const [selectedOccupations, setSelectedOccupations] = useState<
+    OccupationOption[] | null
+  >(null);
   const [itemsPerPage, setItemsPerPage] = useState<number>(25);
 
   const [payload, setPayload] = useState<JobPostingsRequestPayload | null>(
@@ -174,7 +181,7 @@ export default function TmtPage() {
     },
     [searchInputValue]
   );
-
+  console.log(selectedOccupationNotations);
   return (
     <>
       <Flex bg="white" flexDirection="column" shadow="lg" borderRadius="md">
@@ -252,6 +259,19 @@ export default function TmtPage() {
             >
               Show jobs
             </Button>
+          </Stack>
+          <Stack
+            direction={['column', 'row', 'row']}
+            pb={4}
+            px={3}
+            spacing={6}
+            alignItems={{ md: 'end' }}
+          >
+            <OccupattionFilters
+              onSelect={(selected: string[]) =>
+                setSelectedOccupationNotations(selected)
+              }
+            />
           </Stack>
         </form>
       </Flex>

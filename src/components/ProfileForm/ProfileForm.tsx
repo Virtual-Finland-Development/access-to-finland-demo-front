@@ -230,10 +230,10 @@ export default function ProfileForm(props: ProfileFormProps) {
     if (!occupations || !occupationCode) return null;
 
     return occupations
-      .filter(o => o.id === occupationCode)
+      .filter(o => o.notation === occupationCode)
       .map(o => ({
-        label: o.name.en,
-        value: o.id,
+        label: o.prefLabel.en,
+        value: o.notation,
       }));
   }, [occupationCode, occupations]);
 
@@ -536,8 +536,8 @@ export default function ProfileForm(props: ProfileFormProps) {
                   name="occupationCode"
                   defaultValue={defaultOccupationCode}
                   options={occupations.map(o => ({
-                    label: o.name.en,
-                    value: o.id,
+                    label: o.prefLabel.en,
+                    value: o.notation,
                   }))}
                   placeholder="Type or select..."
                   closeMenuOnSelect={true}
