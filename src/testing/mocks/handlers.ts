@@ -108,8 +108,9 @@ export const handlers = [
     return res(
       ctx.json([
         {
-          id: '0',
-          name: {
+          notation: '0',
+          uri: '',
+          prefLabel: {
             en: 'Armed forces',
           },
         },

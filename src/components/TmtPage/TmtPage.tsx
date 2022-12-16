@@ -181,7 +181,7 @@ export default function TmtPage() {
     },
     [searchInputValue]
   );
-  console.log(selectedOccupationNotations);
+
   return (
     <>
       <Flex bg="white" flexDirection="column" shadow="lg" borderRadius="md">
