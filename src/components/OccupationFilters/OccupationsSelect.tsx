@@ -65,7 +65,11 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
       const filtered = set
         .sort((a, b) => b.localeCompare(a))
         .reduce((acc: string[], item) => {
-          if (item.length === 4 && acc.findIndex(i => i === item) < 0) {
+          if (
+            (item.length === 4 && acc.findIndex(i => i === item) < 0) ||
+            (item.length > 1 &&
+              acc.findIndex(i => i.endsWith(notation.slice(-2))) < 0)
+          ) {
             acc.push(item);
           }
           if (!acc.some(i => i.startsWith(item.slice(0, 2)))) {
