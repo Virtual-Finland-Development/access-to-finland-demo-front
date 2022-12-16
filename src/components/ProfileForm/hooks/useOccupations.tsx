@@ -7,16 +7,20 @@ import { OccupationOption } from '../../../@types';
 // api
 import api from '../../../api';
 
+/**
+ * Flatten all occupations and child occupations (narrower lists) as one list
+ */
 function flattenOccupations(
-  occupations: OccupationOption[],
+  occupation: OccupationOption,
   destArr: OccupationOption[]
 ) {
-  for (let o of occupations) {
-    destArr.push(o);
-    if (o.narrower) flattenOccupations(o.narrower, destArr);
-  }
+  destArr.push(occupation);
 
-  return destArr;
+  if (occupation.narrower != null) {
+    for (let childOccupation of occupation.narrower) {
+      flattenOccupations(childOccupation, destArr);
+    }
+  }
 }
 
 export default function useOccupations() {
@@ -30,8 +34,14 @@ export default function useOccupations() {
    */
   const flattenedOccupations = useMemo(() => {
     if (!countriesQuery.data) return null;
+
     let destArr: OccupationOption[] = [];
-    return flattenOccupations(countriesQuery.data, destArr);
+
+    for (let occupation of countriesQuery.data) {
+      flattenOccupations(occupation, destArr);
+    }
+
+    return destArr;
   }, [countriesQuery.data]);
 
   return { ...countriesQuery, flattenedOccupations };
