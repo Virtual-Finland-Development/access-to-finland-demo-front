@@ -53,7 +53,9 @@ function ModalProvider({ children }: ModalProviderProps) {
       modal.onClose();
     }
 
-    setModal(null);
+    setTimeout(() => {
+      setModal(null);
+    }, 500);
   }, [modal, onClose]);
 
   return (
