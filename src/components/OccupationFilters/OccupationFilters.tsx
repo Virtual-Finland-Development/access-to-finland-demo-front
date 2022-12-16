@@ -9,11 +9,11 @@ import OccupationsSelect from './OccupationsSelect';
 
 interface OccupationFiltersProps {
   onSelect: (selected: string[]) => void;
+  defaultSelected: string[];
 }
 
-export default function OccupationFilters({
-  onSelect,
-}: OccupationFiltersProps) {
+export default function OccupationFilters(props: OccupationFiltersProps) {
+  const { onSelect, defaultSelected } = props;
   const { openModal, closeModal } = useModal();
 
   const handleOpenFiltersModal = () =>
@@ -21,6 +21,7 @@ export default function OccupationFilters({
       title: 'Choose occupational groups as search terms',
       content: (
         <OccupationsSelect
+          defaultSelected={defaultSelected}
           onSelectOccupations={(selected: string[]) => {
             onSelect(selected);
             closeModal();
@@ -35,11 +36,12 @@ export default function OccupationFilters({
   return (
     <Button
       colorScheme="purple"
-      variant="outline"
+      variant={defaultSelected.length ? 'solid' : 'outline'}
       rightIcon={<SmallAddIcon />}
       onClick={handleOpenFiltersModal}
     >
-      Choose occupational groups
+      Choose occupational groups{' '}
+      {defaultSelected.length > 0 && `(${defaultSelected.length})`}
     </Button>
   );
 }

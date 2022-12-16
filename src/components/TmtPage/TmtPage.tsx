@@ -320,6 +320,7 @@ export default function TmtPage() {
             alignItems={{ md: 'end' }}
           >
             <OccupattionFilters
+              defaultSelected={selectedOccupationNotations || []}
               onSelect={(selected: string[]) =>
                 setSelectedOccupationNotations(selected)
               }

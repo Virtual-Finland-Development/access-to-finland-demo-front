@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import {
   Box,
   Button,
@@ -20,18 +20,28 @@ import OccupationAccordionItem from './OccupationAccordionItem';
 import Loading from '../Loading/Loading';
 
 interface OccupationSelectProps {
+  defaultSelected: string[];
   onSelectOccupations: (selected: string[]) => void;
   onCancel: () => void;
 }
 
 export default function OccupationsSelect(props: OccupationSelectProps) {
-  const { onSelectOccupations, onCancel } = props;
+  const { defaultSelected, onSelectOccupations, onCancel } = props;
   const [selectedNotations, setSelectedNotations] = useState<string[]>([]);
   const {
     data: occupations,
     isLoading: occupationsLoading,
     flattenedOccupations,
   } = useOccupations();
+
+  /**
+   * Set default selected notations, if provided
+   */
+  useEffect(() => {
+    if (defaultSelected.length) {
+      setSelectedNotations(defaultSelected);
+    }
+  }, [defaultSelected]);
 
   /**
    * Handle select occupations (notation codes)
