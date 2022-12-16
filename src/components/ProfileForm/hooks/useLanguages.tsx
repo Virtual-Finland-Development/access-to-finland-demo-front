@@ -7,10 +7,16 @@ import { LanguageOption } from '../../../@types';
 import api from '../../../api';
 
 export default function useLanguages() {
-  const countriesQuery = useQuery(['languages'], async () => {
-    const response = await api.user.getLanguages();
-    return response.data as LanguageOption[];
-  });
+  const countriesQuery = useQuery(
+    ['languages'],
+    async () => {
+      const response = await api.user.getLanguages();
+      return response.data as LanguageOption[];
+    },
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   return countriesQuery;
 }

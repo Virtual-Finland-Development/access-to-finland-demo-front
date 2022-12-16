@@ -24,10 +24,16 @@ function flattenOccupations(
 }
 
 export default function useOccupations() {
-  const countriesQuery = useQuery(['occupations'], async () => {
-    const response = await api.user.getOccupations();
-    return response.data as OccupationOption[];
-  });
+  const countriesQuery = useQuery(
+    ['occupations'],
+    async () => {
+      const response = await api.user.getOccupations();
+      return response.data as OccupationOption[];
+    },
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   /**
    * Flatten occupations from hierarchy level to one level array

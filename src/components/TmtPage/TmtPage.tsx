@@ -15,12 +15,8 @@ import {
   Stack,
   Select,
   SimpleGrid,
-  Tag,
-  TagLabel,
-  TagCloseButton,
   Text,
 } from '@chakra-ui/react';
-import { CloseIcon } from '@chakra-ui/icons';
 
 // context
 import { useAppContext } from '../../context/AppContext/AppContext';
@@ -31,17 +27,19 @@ import { OccupationOption } from '../../@types';
 
 // components
 import JobPostingItem from './JobPostingItem';
+import SearchFilters from './SearchFilters';
+import OccupattionFilters from '../OccupationFilters/OccupationFilters';
 import Loading from '../Loading/Loading';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import LoadMore from '../LoadMore/LoadMore';
 
 // hooks
 import useJobPostings from './hooks/useJobPostings';
+import useOccupations from '../ProfileForm/hooks/useOccupations';
 
 // selections
 import regions from './regionJsons/regions.json';
 import municipalities from './regionJsons/municipalities.json';
-import OccupattionFilters from '../OccupationFilters/OccupationFilters';
 
 // utility component to render selection options (region, municipality, country)
 const mapSelectOptions = (
@@ -82,6 +80,38 @@ export default function TmtPage() {
   );
 
   /**
+   * useJobPostings hook
+   */
+  const {
+    data: jobPostings,
+    isLoading: jobPostingsLoading,
+    isFetching: jobPostingsFetching,
+    error: jobPostingsError,
+    refetch: fetchJobPostings,
+    fetchNextPage,
+    hasNextPage,
+  } = useJobPostings(payload);
+
+  /**
+   * useOccupations hook
+   */
+  const { flattenedOccupations, isLoading: occupationsLoading } =
+    useOccupations();
+
+  /**
+   * Track selected occupation notations, set selected occupations for UI accordingly
+   */
+  useEffect(() => {
+    if (flattenedOccupations && selectedOccupationNotations?.length) {
+      setSelectedOccupations(
+        flattenedOccupations.filter(
+          o => selectedOccupationNotations.indexOf(o.notation) > -1
+        )
+      );
+    }
+  }, [flattenedOccupations, selectedOccupationNotations]);
+
+  /**
    * Set default search keys from userProfile, if provided.
    */
   useEffect(() => {
@@ -114,19 +144,6 @@ export default function TmtPage() {
       setSelectedPlaces(values);
     }
   }, [userProfile]);
-
-  /**
-   * useJobPostings hook
-   */
-  const {
-    data: jobPostings,
-    isLoading: jobPostingsLoading,
-    isFetching: jobPostingsFetching,
-    error: jobPostingsError,
-    refetch: fetchJobPostings,
-    fetchNextPage,
-    hasNextPage,
-  } = useJobPostings(payload);
 
   /**
    * Track search / selectedPlaces state and construct payload
@@ -181,6 +198,41 @@ export default function TmtPage() {
     },
     [searchInputValue]
   );
+
+  /**
+   * Handle remove place / occupation filter
+   */
+  const handleRemoveFilter = useCallback(
+    (type: 'place' | 'occupation', identifier: string) => {
+      if (type === 'place') {
+        setSelectedPlaces(prev => {
+          const places = prev || [];
+          return places.filter(p => p.Koodi !== identifier);
+        });
+      }
+
+      if (type === 'occupation') {
+        setSelectedOccupationNotations(prev => {
+          const notations = prev || [];
+          return notations.filter(n => n !== identifier);
+        });
+      }
+    },
+    []
+  );
+
+  /**
+   * Handle remove all place / occupation filters, clear also occupation notations state
+   */
+  const handleRemoveAllFilters = useCallback(() => {
+    setSelectedPlaces(null);
+    setSelectedOccupationNotations(null);
+    setSelectedOccupations(null);
+  }, []);
+
+  if (occupationsLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -276,44 +328,17 @@ export default function TmtPage() {
         </form>
       </Flex>
 
-      {selectedPlaces && selectedPlaces.length > 0 && (
-        <Flex flexDirection={'row'} flexWrap="wrap" mt={4} gap={3}>
-          {selectedPlaces.map(place => (
-            <Tag
-              key={place.Koodi}
-              size="lg"
-              variant="outline"
-              colorScheme="teal"
-              bg="white"
-            >
-              <TagLabel fontSize="sm">
-                {place.Selitteet.find(s => s.Kielikoodi === 'en')?.Teksti ||
-                  place.Koodi}
-              </TagLabel>
-              <TagCloseButton
-                onClick={() =>
-                  setSelectedPlaces(prev => {
-                    const places = prev || [];
-                    return places.filter(p => p.Koodi !== place.Koodi);
-                  })
-                }
-              />
-            </Tag>
-          ))}
-
-          <Flex alignItems={'center'}>
-            <Button
-              rightIcon={<CloseIcon w={2.5} h="auto" />}
-              colorScheme="red"
-              variant="outline"
-              size="sm"
-              onClick={() => setSelectedPlaces([])}
-            >
-              Clear all
-            </Button>
-          </Flex>
-        </Flex>
-      )}
+      <SearchFilters
+        selectedPlaces={
+          selectedPlaces?.map(s => ({ ...s, filterType: 'place' })) || []
+        }
+        selectedOccupations={
+          selectedOccupations?.map(o => ({ ...o, filterType: 'occupation' })) ||
+          []
+        }
+        onClickRemoveFilter={handleRemoveFilter}
+        onClickRemoveAll={handleRemoveAllFilters}
+      />
 
       {jobPostingsLoading && jobPostingsFetching && (
         <Stack mt={6}>
@@ -345,26 +370,34 @@ export default function TmtPage() {
                 ))}
               </SimpleGrid>
 
-              <LoadMore
-                isLoading={jobPostingsFetching}
-                isDisabled={!hasNextPage}
-                handleClick={() => fetchNextPage()}
-              />
-
-              {!jobPostingsFetching && !hasNextPage && (
-                <Flex
-                  alignItems="center"
-                  justifyContent="center"
-                  mb={8}
-                  border={1}
-                >
-                  <Stack w="full" maxW="md" textAlign="center">
-                    <Text fontSize="xl" fontWeight="semibold" color="blue.400">
-                      All results loaded!
-                    </Text>
-                  </Stack>
-                </Flex>
+              {jobPostings.pages.some(p => p?.results.length) && (
+                <LoadMore
+                  isLoading={jobPostingsFetching}
+                  isDisabled={!hasNextPage}
+                  handleClick={() => fetchNextPage()}
+                />
               )}
+
+              {!jobPostingsFetching &&
+                !hasNextPage &&
+                jobPostings.pages.some(p => p?.results.length) && (
+                  <Flex
+                    alignItems="center"
+                    justifyContent="center"
+                    mb={8}
+                    border={1}
+                  >
+                    <Stack w="full" maxW="md" textAlign="center">
+                      <Text
+                        fontSize="xl"
+                        fontWeight="semibold"
+                        color="blue.400"
+                      >
+                        All results loaded!
+                      </Text>
+                    </Stack>
+                  </Flex>
+                )}
             </>
           )}
         </div>
