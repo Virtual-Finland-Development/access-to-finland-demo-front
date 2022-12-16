@@ -16,7 +16,7 @@ function flattenOccupations(
 ) {
   destArr.push(occupation);
 
-  if (occupation.narrower != null) {
+  if (occupation.narrower) {
     for (let childOccupation of occupation.narrower) {
       flattenOccupations(childOccupation, destArr);
     }
