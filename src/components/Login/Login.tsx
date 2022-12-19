@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { Button, Heading, Stack } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { IoLogIn } from 'react-icons/io5';
 
 // types
@@ -28,6 +28,11 @@ const SuomiFiIcon = () => (
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState<LoginType | null>(null);
+
+  // Send a wakeup signal to the external backends
+  useEffect(() => {
+    api.data.wakeup();
+  });
 
   /**
    * Handle login button click. Redirect user to auth gw login request route.
