@@ -12,3 +12,12 @@ export async function getJobPostings(payload: JobPostingsRequestPayload) {
     payload
   );
 }
+
+/**
+ * Signal wake up to the testbed API
+ *
+ * @returns
+ */
+export async function wakeup() {
+  return axiosInstance.get(`${TESTBED_API_BASE_URL}/wake-up`);
+}
