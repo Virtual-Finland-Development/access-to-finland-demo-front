@@ -21,6 +21,7 @@ export default function OccupationFilters(props: OccupationFiltersProps) {
       title: 'Choose occupational groups as search terms',
       content: (
         <OccupationsSelect
+          useAsFilter
           defaultSelected={defaultSelected}
           onSelectOccupations={(selected: string[]) => {
             onSelect(selected);

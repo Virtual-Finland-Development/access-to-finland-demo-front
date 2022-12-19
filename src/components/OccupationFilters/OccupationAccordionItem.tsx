@@ -44,28 +44,30 @@ export default function OccupationAccordionItem(
       <AccordionItem id={item.notation} borderTop="none" borderBottom="none">
         {({ isExpanded }) => (
           <>
-            <AccordionButton
-              py={0}
-              mb={1}
-              width="auto"
-              _hover={{ background: 'none' }}
-              onClick={e => e.stopPropagation()}
-            >
-              <Checkbox
-                mr={2}
-                textAlign="start"
-                cursor="default"
-                isChecked={isChecked}
-                isIndeterminate={isIndeterminate}
-                onChange={e => {
-                  e.stopPropagation();
-                  onSelect(item.notation, e.target.checked, isIndeterminate);
-                }}
+            <h2>
+              <AccordionButton
+                py={0}
+                mb={1}
+                width="auto"
+                _hover={{ background: 'none' }}
+                onClick={e => e.stopPropagation()}
               >
-                <Text fontSize="sm">{item.prefLabel.en}</Text>
-              </Checkbox>
-              <AccordionIcon />
-            </AccordionButton>
+                <Checkbox
+                  mr={2}
+                  textAlign="start"
+                  cursor="default"
+                  isChecked={isChecked}
+                  isIndeterminate={isIndeterminate}
+                  onChange={e => {
+                    e.stopPropagation();
+                    onSelect(item.notation, e.target.checked, isIndeterminate);
+                  }}
+                >
+                  <Text fontSize="sm">{item.prefLabel.en}</Text>
+                </Checkbox>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
             <AccordionPanel py={0} pr={0}>
               <Accordion allowMultiple reduceMotion>
                 {isExpanded &&

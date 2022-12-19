@@ -24,7 +24,7 @@ export default function Modal(props: ModalProps) {
       isOpen={isOpen}
       onClose={onClose}
       isCentered
-      size={size || '2xl'}
+      size={size || '3xl'}
     >
       <ModalOverlay />
       <ModalContent mx={{ base: 2, md: 0 }} maxH="100vh" overflowY="auto">

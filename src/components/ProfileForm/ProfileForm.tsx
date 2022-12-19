@@ -21,7 +21,10 @@ import {
   RadioGroup,
   Stack,
   useToast,
+  Link,
+  SimpleGrid,
 } from '@chakra-ui/react';
+import { SmallAddIcon, EditIcon } from '@chakra-ui/icons';
 import {
   ActionMeta,
   CreatableSelect,
@@ -37,6 +40,7 @@ import { Gender, UserProfile } from '../../@types';
 
 // context
 import { useAppContext } from '../../context/AppContext/AppContext';
+import { useModal } from '../../context/ModalContext/ModalContext';
 
 // utils
 import { isNewUser } from '../../utils';
@@ -56,6 +60,7 @@ import useLanguages from './hooks/useLanguages';
 // components
 import Fieldset from '../Fieldset/Fieldset';
 import Loading from '../Loading/Loading';
+import OccupationsSelect from '../OccupationFilters/OccupationsSelect';
 
 // api
 import api from '../../api';
@@ -88,13 +93,14 @@ const createOption = (label: string) => ({
 });
 
 interface ProfileFormProps {
-  onProfileSubmit: () => void;
+  onProfileSubmit?: () => void;
   onCancel?: () => void;
   isEdit?: boolean;
 }
 
 export default function ProfileForm(props: ProfileFormProps) {
   const { userProfile, setUserProfile } = useAppContext();
+  const { openModal, closeModal } = useModal();
   const { id: userId, created, modified, ...restOfProfile } = userProfile;
   const { onProfileSubmit, onCancel, isEdit } = props;
 
@@ -102,7 +108,11 @@ export default function ProfileForm(props: ProfileFormProps) {
 
   // User api provided lists and metadata
   const { data: countries, isLoading: countriesLoading } = useCountries();
-  const { data: occupations, isLoading: occupationsLoading } = useOccupations();
+  const {
+    data: occupations,
+    isLoading: occupationsLoading,
+    flattenedOccupations,
+  } = useOccupations();
   const { data: languages, isLoading: languagesLoading } = useLanguages();
 
   const listsLoading =
@@ -227,15 +237,15 @@ export default function ProfileForm(props: ProfileFormProps) {
 
   // Default value for 'occupationCode', mapped as react-select option (in array)
   const defaultOccupationCode = useMemo(() => {
-    if (!occupations || !occupationCode) return null;
+    if (!flattenedOccupations || !occupationCode) return null;
 
-    return occupations
+    return flattenedOccupations
       .filter(o => o.notation === occupationCode)
       .map(o => ({
         label: o.prefLabel.en,
         value: o.notation,
       }));
-  }, [occupationCode, occupations]);
+  }, [flattenedOccupations, occupationCode]);
 
   /**
    * Handle form submit.
@@ -259,7 +269,11 @@ export default function ProfileForm(props: ProfileFormProps) {
         // loop through all dirty input values, set to payload
         if (dirtyKeys.length) {
           for (const key of dirtyKeys) {
-            if (typeof values[key] === 'boolean' || values[key]) {
+            if (
+              typeof values[key] === 'boolean' ||
+              key === 'occupationCode' ||
+              values[key]
+            ) {
               payload[key as keyof UserProfile] = values[key];
             }
           }
@@ -269,7 +283,9 @@ export default function ProfileForm(props: ProfileFormProps) {
 
         setUserProfile(response.data);
 
-        onProfileSubmit();
+        if (typeof onProfileSubmit === 'function') {
+          onProfileSubmit();
+        }
 
         toast({
           title: 'Profile saved.',
@@ -364,277 +380,304 @@ export default function ProfileForm(props: ProfileFormProps) {
       [jobTitlesInputValue, jobTitles, setValue]
     );
 
+  /**
+   * Handle open occupational group selection, present in modal.
+   */
+  const handleOpenOccupationSelect = () =>
+    openModal({
+      title: 'Choose your occupation',
+      content: (
+        <OccupationsSelect
+          defaultSelected={occupationCode ? [occupationCode] : []}
+          onSelectOccupations={(selected: string[]) => {
+            setValue('occupationCode', selected.length ? selected[0] : '', {
+              shouldDirty: true,
+            });
+            closeModal();
+          }}
+          onCancel={closeModal}
+        />
+      ),
+      size: '3xl',
+      onClose: () => {},
+    });
+
   if (listsLoading) {
     return <Loading />;
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={4} mx={-2}>
-        <Fieldset title="Personal information">
-          <Stack spacing={4}>
-            <Flex direction={{ base: 'column', md: 'row' }} gap={4}>
+      <Stack spacing={6}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+          <Fieldset title="Personal information">
+            <Stack spacing={4}>
+              <Flex direction={{ base: 'column', md: 'row' }} gap={4}>
+                <FormControl
+                  isInvalid={Boolean(errors?.firstName)}
+                  id="firstName"
+                >
+                  <FormLabel>First name</FormLabel>
+                  <Input
+                    type="text"
+                    placeholder="John"
+                    _placeholder={{ color: 'gray.500' }}
+                    {...register('firstName')}
+                    readOnly
+                  />
+                  <HookFormError
+                    errors={errors}
+                    as={<FormErrorMessage />}
+                    name="firstName"
+                  />
+                </FormControl>
+                <FormControl
+                  isInvalid={Boolean(errors?.lastName)}
+                  id="lastName"
+                >
+                  <FormLabel>Last name</FormLabel>
+                  <Input
+                    type="text"
+                    placeholder="Doe"
+                    _placeholder={{ color: 'gray.500' }}
+                    {...register('lastName')}
+                    readOnly
+                  />
+                  <HookFormError
+                    errors={errors}
+                    as={<FormErrorMessage />}
+                    name="lastName"
+                  />
+                </FormControl>
+              </Flex>
+              <FormControl id="address">
+                <FormLabel>Address</FormLabel>
+                <Input
+                  type="text"
+                  placeholder="Address"
+                  _placeholder={{ color: 'gray.500' }}
+                  defaultValue={formatAddress(address)}
+                  readOnly
+                />
+                <HookFormError
+                  errors={errors}
+                  as={<FormErrorMessage />}
+                  name="address"
+                />
+              </FormControl>
+              <Flex direction={{ base: 'column', md: 'row' }} gap={4}>
+                <FormControl>
+                  <FormLabel>Gender</FormLabel>
+                  <Controller
+                    name="gender"
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                      <RadioGroup onChange={onChange} value={value}>
+                        <Stack direction="row">
+                          <Radio value={Gender.Male}>Male</Radio>
+                          <Radio value={Gender.Female}>Female</Radio>
+                        </Stack>
+                      </RadioGroup>
+                    )}
+                  />
+                </FormControl>
+                <FormControl
+                  isInvalid={Boolean(errors?.dateOfBirth)}
+                  id="dateOfBirth"
+                >
+                  <FormLabel>Date of birth</FormLabel>
+                  <Input
+                    type="date"
+                    {...register('dateOfBirth', {
+                      validate: value => {
+                        if (value && !isMatch(value, 'yyyy-MM-dd')) {
+                          return 'Incorrect value';
+                        }
+                        return true;
+                      },
+                    })}
+                  />
+                  <HookFormError
+                    errors={errors}
+                    as={<FormErrorMessage />}
+                    name="dateOfBirth"
+                  />
+                </FormControl>
+              </Flex>
+              {countries && (
+                <>
+                  <FormControl
+                    isInvalid={Boolean(errors?.countryOfBirthCode)}
+                    id="countryOfBirthCode"
+                  >
+                    <FormLabel>Country of birth</FormLabel>
+                    <Select<Option, false, GroupBase<Option>>
+                      isMulti={false}
+                      name="countryOfBirthCode"
+                      defaultValue={defaultCountryOfBirthCode}
+                      options={countries.map(c => ({
+                        label: c.englishName,
+                        value: c.id,
+                      }))}
+                      placeholder="Type or select..."
+                      closeMenuOnSelect={true}
+                      size="md"
+                      onChange={handleSingleSelectChange}
+                    />
+                  </FormControl>
+                  <FormControl
+                    isInvalid={Boolean(errors?.citizenshipCode)}
+                    id="citizenshipCode"
+                  >
+                    <FormLabel>Citizenship</FormLabel>
+                    <Select<Option, false, GroupBase<Option>>
+                      isMulti={false}
+                      name="citizenshipCode"
+                      defaultValue={defaultCitizenshipCode}
+                      options={countries.map(c => ({
+                        label: c.englishName,
+                        value: c.id,
+                      }))}
+                      placeholder="Type or select..."
+                      closeMenuOnSelect={true}
+                      size="md"
+                      onChange={handleSingleSelectChange}
+                    />
+                  </FormControl>
+                </>
+              )}
+              {languages && (
+                <FormControl
+                  isInvalid={Boolean(errors?.nativeLanguageCode)}
+                  id="nativeLanguageCode"
+                >
+                  <FormLabel>Native language</FormLabel>
+                  <Select<Option, false, GroupBase<Option>>
+                    isMulti={false}
+                    name="nativeLanguageCode"
+                    defaultValue={defaultNativeLanguageCode}
+                    options={languages.map(l => ({
+                      label: l.englishName,
+                      value: l.id,
+                    }))}
+                    placeholder="Type or select..."
+                    closeMenuOnSelect={true}
+                    size="md"
+                    onChange={handleSingleSelectChange}
+                  />
+                </FormControl>
+              )}
+              {occupations && (
+                <FormControl
+                  isInvalid={Boolean(errors?.occupationCode)}
+                  id="occupationCode"
+                >
+                  <FormLabel>Occupation</FormLabel>
+                  <Link
+                    color="blue.500"
+                    fontWeight="medium"
+                    onClick={handleOpenOccupationSelect}
+                  >
+                    {defaultOccupationCode ? (
+                      <>
+                        {defaultOccupationCode[0].label} <EditIcon />
+                      </>
+                    ) : (
+                      <>
+                        Select occupation <SmallAddIcon />
+                      </>
+                    )}
+                  </Link>
+                </FormControl>
+              )}
+            </Stack>
+          </Fieldset>
+
+          <Fieldset title="Search profile">
+            <Stack spacing={4}>
               <FormControl
-                isInvalid={Boolean(errors?.firstName)}
-                id="firstName"
+                isInvalid={Boolean(errors?.jobTitles)}
+                id="jobTitles"
               >
-                <FormLabel>First name</FormLabel>
-                <Input
-                  type="text"
-                  placeholder="John"
-                  _placeholder={{ color: 'gray.500' }}
-                  {...register('firstName')}
-                  readOnly
-                />
-                <HookFormError
-                  errors={errors}
-                  as={<FormErrorMessage />}
-                  name="firstName"
-                />
-              </FormControl>
-              <FormControl isInvalid={Boolean(errors?.lastName)} id="lastName">
-                <FormLabel>Last name</FormLabel>
-                <Input
-                  type="text"
-                  placeholder="Doe"
-                  _placeholder={{ color: 'gray.500' }}
-                  {...register('lastName')}
-                  readOnly
-                />
-                <HookFormError
-                  errors={errors}
-                  as={<FormErrorMessage />}
-                  name="lastName"
-                />
-              </FormControl>
-            </Flex>
-            <FormControl id="address">
-              <FormLabel>Address</FormLabel>
-              <Input
-                type="text"
-                placeholder="Address"
-                _placeholder={{ color: 'gray.500' }}
-                defaultValue={formatAddress(address)}
-                readOnly
-              />
-              <HookFormError
-                errors={errors}
-                as={<FormErrorMessage />}
-                name="address"
-              />
-            </FormControl>
-            <Flex direction={{ base: 'column', md: 'row' }} gap={4}>
-              <FormControl>
-                <FormLabel>Gender</FormLabel>
-                <Controller
-                  name="gender"
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <RadioGroup onChange={onChange} value={value}>
-                      <Stack direction="row">
-                        <Radio value={Gender.Male}>Male</Radio>
-                        <Radio value={Gender.Female}>Female</Radio>
-                      </Stack>
-                    </RadioGroup>
+                <FormLabel>
+                  Job titles or job tasks you are looking for
+                </FormLabel>
+                <CreatableSelect<Option, true, GroupBase<Option>>
+                  isMulti
+                  isClearable
+                  menuIsOpen={false}
+                  name="jobTitles"
+                  placeholder="Type to add and press enter..."
+                  components={{ DropdownIndicator: null }}
+                  formatCreateLabel={(inputValue: string) => (
+                    <>Add "{inputValue}"</>
                   )}
+                  inputValue={jobTitlesInputValue}
+                  value={jobTitles ? jobTitles.map(v => createOption(v)) : []}
+                  onChange={handleMultiSelectChange}
+                  onInputChange={(value: string) =>
+                    setJobTitlesInputValue(value)
+                  }
+                  onKeyDown={handleJobTitlesKeyDown}
                 />
               </FormControl>
-              <FormControl
-                isInvalid={Boolean(errors?.dateOfBirth)}
-                id="dateOfBirth"
-              >
-                <FormLabel>Date of birth</FormLabel>
-                <Input
-                  type="date"
-                  {...register('dateOfBirth', {
-                    validate: value => {
-                      if (value && !isMatch(value, 'yyyy-MM-dd')) {
-                        return 'Incorrect value';
-                      }
-                      return true;
-                    },
-                  })}
+              <FormControl isInvalid={Boolean(errors?.regions)} id="regions">
+                <FormLabel>Preferred regions to work in</FormLabel>
+                <Select<Option, true, GroupBase<Option>>
+                  isMulti
+                  name="regions"
+                  defaultValue={regionsDefaultOptions}
+                  options={groupedRegionOptions}
+                  placeholder="Type or select..."
+                  closeMenuOnSelect={false}
+                  size="md"
+                  onChange={handleMultiSelectChange}
+                  menuPosition="fixed"
+                  minMenuHeight={300}
                 />
                 <HookFormError
                   errors={errors}
                   as={<FormErrorMessage />}
-                  name="dateOfBirth"
+                  name="regions"
                 />
               </FormControl>
-            </Flex>
-            {countries && (
-              <>
-                <FormControl
-                  isInvalid={Boolean(errors?.countryOfBirthCode)}
-                  id="countryOfBirthCode"
-                >
-                  <FormLabel>Country of birth</FormLabel>
-                  <Select<Option, false, GroupBase<Option>>
-                    isMulti={false}
-                    name="countryOfBirthCode"
-                    defaultValue={defaultCountryOfBirthCode}
-                    options={countries.map(c => ({
-                      label: c.englishName,
-                      value: c.id,
-                    }))}
-                    placeholder="Type or select..."
-                    closeMenuOnSelect={true}
-                    size="md"
-                    onChange={handleSingleSelectChange}
-                  />
+              {isEdit && (
+                <FormControl id="jobsDataConsent">
+                  <FormLabel>Profile consent</FormLabel>
+                  <Checkbox
+                    {...register('jobsDataConsent')}
+                    defaultChecked={jobsDataConsent}
+                  >
+                    I permit my profile data to be used in vacancies search
+                  </Checkbox>
+                  <FormHelperText>
+                    Your profile information will be used to improve search
+                    capabilities in a third party service.
+                  </FormHelperText>
                 </FormControl>
-                <FormControl
-                  isInvalid={Boolean(errors?.citizenshipCode)}
-                  id="citizenshipCode"
-                >
-                  <FormLabel>Citizenship</FormLabel>
-                  <Select<Option, false, GroupBase<Option>>
-                    isMulti={false}
-                    name="citizenshipCode"
-                    defaultValue={defaultCitizenshipCode}
-                    options={countries.map(c => ({
-                      label: c.englishName,
-                      value: c.id,
-                    }))}
-                    placeholder="Type or select..."
-                    closeMenuOnSelect={true}
-                    size="md"
-                    onChange={handleSingleSelectChange}
-                  />
-                </FormControl>
-              </>
-            )}
-            {languages && (
-              <FormControl
-                isInvalid={Boolean(errors?.nativeLanguageCode)}
-                id="nativeLanguageCode"
-              >
-                <FormLabel>Native language</FormLabel>
-                <Select<Option, false, GroupBase<Option>>
-                  isMulti={false}
-                  name="nativeLanguageCode"
-                  defaultValue={defaultNativeLanguageCode}
-                  options={languages.map(l => ({
-                    label: l.englishName,
-                    value: l.id,
-                  }))}
-                  placeholder="Type or select..."
-                  closeMenuOnSelect={true}
-                  size="md"
-                  onChange={handleSingleSelectChange}
-                />
-              </FormControl>
-            )}
-            {occupations && (
-              <FormControl
-                isInvalid={Boolean(errors?.occupationCode)}
-                id="occupationCode"
-              >
-                <FormLabel>Occupation</FormLabel>
-                <Select<Option, false, GroupBase<Option>>
-                  isMulti={false}
-                  name="occupationCode"
-                  defaultValue={defaultOccupationCode}
-                  options={occupations.map(o => ({
-                    label: o.prefLabel.en,
-                    value: o.notation,
-                  }))}
-                  placeholder="Type or select..."
-                  closeMenuOnSelect={true}
-                  size="md"
-                  onChange={handleSingleSelectChange}
-                />
-              </FormControl>
-            )}
-          </Stack>
-        </Fieldset>
+              )}
+            </Stack>
+          </Fieldset>
+        </SimpleGrid>
 
-        <Fieldset title="Search profile">
-          <Stack spacing={4}>
-            <FormControl isInvalid={Boolean(errors?.jobTitles)} id="jobTitles">
-              <FormLabel>Job titles or job tasks you are looking for</FormLabel>
-              <CreatableSelect<Option, true, GroupBase<Option>>
-                isMulti
-                isClearable
-                menuIsOpen={false}
-                name="jobTitles"
-                placeholder="Type to add and press enter..."
-                components={{ DropdownIndicator: null }}
-                formatCreateLabel={(inputValue: string) => (
-                  <>Add "{inputValue}"</>
-                )}
-                inputValue={jobTitlesInputValue}
-                value={jobTitles ? jobTitles.map(v => createOption(v)) : []}
-                onChange={handleMultiSelectChange}
-                onInputChange={(value: string) => setJobTitlesInputValue(value)}
-                onKeyDown={handleJobTitlesKeyDown}
-              />
-            </FormControl>
-            <FormControl isInvalid={Boolean(errors?.regions)} id="regions">
-              <FormLabel>Preferred regions to work in</FormLabel>
-              <Select<Option, true, GroupBase<Option>>
-                isMulti
-                name="regions"
-                defaultValue={regionsDefaultOptions}
-                options={groupedRegionOptions}
-                placeholder="Type or select..."
-                closeMenuOnSelect={false}
-                size="md"
-                onChange={handleMultiSelectChange}
-                menuPosition="fixed"
-                minMenuHeight={300}
-              />
-              <HookFormError
-                errors={errors}
-                as={<FormErrorMessage />}
-                name="regions"
-              />
-            </FormControl>
-            {isEdit && (
-              <FormControl id="jobsDataConsent">
-                <FormLabel>Profile consent</FormLabel>
-                <Checkbox
-                  {...register('jobsDataConsent')}
-                  defaultChecked={jobsDataConsent}
-                >
-                  I permit my profile data to be used in vacancies search
-                </Checkbox>
-                <FormHelperText>
-                  Your profile information will be used to improve search
-                  capabilities in a third party service.
-                </FormHelperText>
-              </FormControl>
-            )}
-          </Stack>
-        </Fieldset>
-
-        <Stack spacing={6} direction={['column', 'row']}>
-          {isEdit && (
-            <Button
-              /* {...(!isEdit && {
-                bg: 'red.400',
-                color: 'white',
-                _hover: { bg: 'red.500' },
-              })} */
-              w="full"
-              disabled={isSubmitting}
-              onClick={onCancel}
-            >
+        <Stack spacing={6} direction={['column', 'row']} justifyContent="end">
+          {/* isEdit && (
+            <Button w="full" disabled={isSubmitting} onClick={onCancel}>
               {!isEdit ? 'Skip' : 'Cancel'}
             </Button>
-          )}
+          ) */}
           <Button
             type="submit"
-            bg={'blue.400'}
-            color={'white'}
-            w="full"
+            bg="blue.400"
+            color="white"
+            // w="full"
             _hover={{
               bg: 'blue.500',
             }}
             isLoading={isSubmitting}
             disabled={isSubmitting}
           >
-            Save
+            Save profile
           </Button>
         </Stack>
       </Stack>

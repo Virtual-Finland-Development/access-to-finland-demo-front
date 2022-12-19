@@ -17,16 +17,18 @@ import useOccupations from '../ProfileForm/hooks/useOccupations';
 
 // components
 import OccupationAccordionItem from './OccupationAccordionItem';
+import OccupationCollapseItem from './OccupationCollapseItem';
 import Loading from '../Loading/Loading';
 
 interface OccupationSelectProps {
+  useAsFilter?: boolean;
   defaultSelected: string[];
   onSelectOccupations: (selected: string[]) => void;
   onCancel: () => void;
 }
 
 export default function OccupationsSelect(props: OccupationSelectProps) {
-  const { defaultSelected, onSelectOccupations, onCancel } = props;
+  const { useAsFilter, defaultSelected, onSelectOccupations, onCancel } = props;
   const [selectedNotations, setSelectedNotations] = useState<string[]>([]);
   const {
     data: occupations,
@@ -50,6 +52,14 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
    */
   const handleSelect = useCallback(
     (notation: string, isChecked: boolean, isIndeterminate: boolean) => {
+      if (!useAsFilter) {
+        if (isChecked || isIndeterminate) {
+          return setSelectedNotations([notation]);
+        } else {
+          return setSelectedNotations([]);
+        }
+      }
+
       let set = [...selectedNotations];
 
       if (isChecked) {
@@ -80,7 +90,7 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
 
       setSelectedNotations(filtered);
     },
-    [selectedNotations]
+    [useAsFilter, selectedNotations]
   );
 
   /**
@@ -112,9 +122,11 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
           Occupational groups
         </Heading>
         <Text mt={2}>
-          You may select one or more occupational groups from the list as search
+          {useAsFilter
+            ? `You may select one or more occupational groups from the list as search
           terms. Choice of occupational group also includes all lower-level
-          occupational groups.
+          occupational groups.`
+            : 'Select your occupational group.'}
         </Text>
         <Box
           py={2}
@@ -126,7 +138,7 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
           h={300}
           overflowY="auto"
         >
-          {occupations && (
+          {/* occupations && (
             <Accordion allowMultiple reduceMotion>
               {occupations.map(item => (
                 <OccupationAccordionItem
@@ -137,23 +149,42 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
                 />
               ))}
             </Accordion>
+          ) */}
+          {occupations && (
+            <Box mx={4}>
+              {occupations.map(item => (
+                <OccupationCollapseItem
+                  key={item.notation}
+                  item={item}
+                  selectedNotations={selectedNotations}
+                  onSelect={handleSelect}
+                />
+              ))}
+            </Box>
           )}
         </Box>
         {selectedOccupations.length > 0 && (
-          <Flex flexDirection={'row'} flexWrap="wrap" mt={4} gap={2}>
-            {selectedOccupations.map(s => (
-              <Tag key={s.notation} size="md" colorScheme="purple">
-                <TagLabel fontSize="sm">{s.prefLabel.en}</TagLabel>
-                <TagCloseButton
-                  onClick={() =>
-                    setSelectedNotations(prev =>
-                      prev.filter(i => i !== s.notation)
-                    )
-                  }
-                />
-              </Tag>
-            ))}
-          </Flex>
+          <Box mt={4}>
+            <Text fontWeight="semibold" fontSize="md">
+              {useAsFilter
+                ? 'Occupational groups you have chosen'
+                : 'Selected occupational group'}
+            </Text>
+            <Flex flexDirection={'row'} flexWrap="wrap" mt={2} gap={2}>
+              {selectedOccupations.map(s => (
+                <Tag key={s.notation} size="md" colorScheme="purple">
+                  <TagLabel fontSize="sm">{s.prefLabel.en}</TagLabel>
+                  <TagCloseButton
+                    onClick={() =>
+                      setSelectedNotations(prev =>
+                        prev.filter(i => i !== s.notation)
+                      )
+                    }
+                  />
+                </Tag>
+              ))}
+            </Flex>
+          </Box>
         )}
       </Box>
       <Stack
@@ -171,7 +202,7 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
           }}
           onClick={() => onSelectOccupations(selectedNotations)}
         >
-          Add to search terms
+          {useAsFilter ? 'Add to search terms' : 'Select'}
         </Button>
       </Stack>
     </React.Fragment>

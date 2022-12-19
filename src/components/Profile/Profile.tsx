@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Heading, Stack, Flex, Button, Spinner } from '@chakra-ui/react';
 
 // types
@@ -16,13 +16,15 @@ import ProfileForm from '../ProfileForm/ProfileForm';
 // api
 import api from '../../api';
 
-export default function Profile() {
+export default function Profile({ isEdit }: { isEdit?: boolean }) {
   const { logIn } = useAppContext();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onProfileSubmit = () => {
-    logIn();
+    if (!isEdit) {
+      logIn();
+    }
   };
 
   /**
@@ -39,39 +41,44 @@ export default function Profile() {
     <Stack
       spacing={4}
       w="full"
-      maxW="2xl"
       bg="white"
-      rounded="xl"
+      rounded="lg"
       boxShadow="lg"
       p={6}
-      my={12}
-      mx={{ base: 4, md: 0 }}
+      maxW="container.xl"
     >
       <Flex justifyContent="space-between" w="100" position="relative">
         <Stack>
           <Heading lineHeight={1.1} fontSize={{ base: 'xl', sm: '2xl' }}>
-            Welcome
+            {!isEdit ? 'Welcome' : 'Profile'}
           </Heading>
-          <Heading fontSize={{ base: 'lg', sm: 'xl' }}>
-            Please fill your profile information to continue
-          </Heading>
+          {!isEdit && (
+            <Heading fontSize={{ base: 'lg', sm: 'xl' }}>
+              Please fill your profile information to continue
+            </Heading>
+          )}
         </Stack>
-        {!isLoading ? (
-          <Button
-            variant="link"
-            color="blue.500"
-            onClick={handleLogOutClick}
-            position="absolute"
-            right={0}
-            fontSize="sm"
-          >
-            Sign out
-          </Button>
-        ) : (
-          <Spinner size="md" color="blue.500" />
+        {!isEdit && (
+          <React.Fragment>
+            {!isLoading ? (
+              <Button
+                variant="link"
+                color="blue.500"
+                onClick={handleLogOutClick}
+                position="absolute"
+                right={0}
+                fontSize="sm"
+              >
+                Sign out
+              </Button>
+            ) : (
+              <Spinner size="md" color="blue.500" />
+            )}
+          </React.Fragment>
         )}
       </Flex>
-      <ProfileForm onProfileSubmit={onProfileSubmit} isEdit={false} />
+
+      <ProfileForm onProfileSubmit={onProfileSubmit} isEdit={isEdit} />
     </Stack>
   );
 }
