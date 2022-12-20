@@ -28,7 +28,7 @@ import { OccupationOption } from '../../@types';
 // components
 import JobPostingItem from './JobPostingItem';
 import SearchFilters from './SearchFilters';
-import OccupattionFilters from '../OccupationFilters/OccupationFilters';
+import OccupationFilters from '../OccupationFilters/OccupationFilters';
 import Loading from '../Loading/Loading';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import LoadMore from '../LoadMore/LoadMore';
@@ -341,11 +341,14 @@ export default function TmtPage() {
             spacing={6}
             alignItems={{ md: 'end' }}
           >
-            <OccupattionFilters
+            <OccupationFilters
               defaultSelected={selectedOccupationNotations || []}
-              onSelect={(selected: string[]) =>
-                setSelectedOccupationNotations(selected)
-              }
+              onSelect={(selected: string[]) => {
+                setSelectedOccupationNotations(
+                  selected.length ? selected : null
+                );
+                if (!selected.length) setSelectedOccupations(null);
+              }}
             />
           </Stack>
         </form>
