@@ -37,6 +37,9 @@ import LoadMore from '../LoadMore/LoadMore';
 import useJobPostings from './hooks/useJobPostings';
 import useOccupations from '../ProfileForm/hooks/useOccupations';
 
+// utils
+import { constructJobPostingsPayload } from './utils';
+
 // selections
 import regions from './regionJsons/regions.json';
 import municipalities from './regionJsons/municipalities.json';
@@ -159,37 +162,12 @@ export default function TmtPage() {
    */
   useEffect(() => {
     if (typeof search === 'string' || selectedPlaces || selectedOccupations) {
-      const payload = {
-        query: typeof search === 'string' ? search.split(' ').toString() : '',
-        location: {
-          regions: selectedPlaces
-            ? selectedPlaces
-                .filter(p => p.type === PlaceType.REGION)
-                .map(p => p.Koodi)
-            : [],
-          municipalities: selectedPlaces
-            ? selectedPlaces
-                .filter(p => p.type === PlaceType.MUNICIPALITY)
-                .map(p => p.Koodi)
-            : [],
-          countries: selectedPlaces
-            ? selectedPlaces
-                .filter(p => p.type === PlaceType.COUNTRY)
-                .map(p => p.Koodi)
-            : [],
-        },
-        requirements: {
-          occupations: selectedOccupations
-            ? selectedOccupations.map(o => o.uri)
-            : [],
-          skills: [],
-        },
-        paging: {
-          itemsPerPage: itemsPerPage,
-          pageNumber: 0,
-        },
-      };
-
+      const payload = constructJobPostingsPayload({
+        search,
+        selectedPlaces,
+        selectedOccupations,
+        itemsPerPage,
+      });
       setPayload(payload);
     }
   }, [itemsPerPage, search, selectedOccupations, selectedPlaces]);
