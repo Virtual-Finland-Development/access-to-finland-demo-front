@@ -8,6 +8,19 @@ import { OccupationOption } from '../../../@types';
 import api from '../../../api';
 
 /**
+ * Get the most inner depth of occupations narrower (hierarchived occupations)
+ */
+function getOccupationsMostInnerDepth(
+  item: OccupationOption | OccupationOption[]
+): number {
+  return Array.isArray(item)
+    ? 1 + Math.max(...item.map(getOccupationsMostInnerDepth))
+    : Array.isArray(item.narrower)
+    ? 1 + Math.max(...item.narrower.map(getOccupationsMostInnerDepth))
+    : 0;
+}
+
+/**
  * Flatten all occupations and child occupations (narrower lists) as one list
  */
 function flattenOccupations(
@@ -36,19 +49,24 @@ export default function useOccupations() {
   );
 
   /**
-   * Flatten occupations from hierarchy level to one level array
+   * Flatten occupations from hierarchy level to one level array.
+   * Also get the most inner depth of occupation.narrower level
    */
-  const flattenedOccupations = useMemo(() => {
+  const flattenAndGetMostInnerDepth = useMemo(() => {
     if (!countriesQuery.data) return null;
 
-    let destArr: OccupationOption[] = [];
+    let flattenedOccupations: OccupationOption[] = [];
 
     for (let occupation of countriesQuery.data) {
-      flattenOccupations(occupation, destArr);
+      flattenOccupations(occupation, flattenedOccupations);
     }
 
-    return destArr;
+    const occupationsMostInnerDepth = getOccupationsMostInnerDepth(
+      countriesQuery.data
+    );
+
+    return { flattenedOccupations, occupationsMostInnerDepth };
   }, [countriesQuery.data]);
 
-  return { ...countriesQuery, flattenedOccupations };
+  return { ...countriesQuery, ...flattenAndGetMostInnerDepth };
 }

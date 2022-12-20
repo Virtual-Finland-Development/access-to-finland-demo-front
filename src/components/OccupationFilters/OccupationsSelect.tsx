@@ -32,6 +32,7 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
     data: occupations,
     isLoading: occupationsLoading,
     flattenedOccupations,
+    occupationsMostInnerDepth,
   } = useOccupations();
 
   /**
@@ -74,7 +75,8 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
         .sort((a, b) => b.localeCompare(a))
         .reduce((acc: string[], item) => {
           if (
-            (item.length === 4 && acc.findIndex(i => i === item) < 0) ||
+            (item.length === occupationsMostInnerDepth &&
+              acc.findIndex(i => i === item) < 0) ||
             (item.length > 1 &&
               acc.findIndex(i => i.endsWith(notation.slice(-2))) < 0)
           ) {
@@ -88,7 +90,7 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
 
       setSelectedNotations(filtered);
     },
-    [useAsFilter, selectedNotations]
+    [useAsFilter, selectedNotations, occupationsMostInnerDepth]
   );
 
   /**
