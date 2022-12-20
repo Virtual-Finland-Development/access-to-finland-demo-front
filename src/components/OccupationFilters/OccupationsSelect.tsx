@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import {
   Box,
   Button,
-  Accordion,
   Heading,
   Text,
   Flex,
@@ -16,7 +15,6 @@ import {
 import useOccupations from '../ProfileForm/hooks/useOccupations';
 
 // components
-import OccupationAccordionItem from './OccupationAccordionItem';
 import OccupationCollapseItem from './OccupationCollapseItem';
 import Loading from '../Loading/Loading';
 
@@ -138,18 +136,6 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
           h={300}
           overflowY="auto"
         >
-          {/* occupations && (
-            <Accordion allowMultiple reduceMotion>
-              {occupations.map(item => (
-                <OccupationAccordionItem
-                  key={item.notation}
-                  item={item}
-                  selectedNotations={selectedNotations}
-                  onSelect={handleSelect}
-                />
-              ))}
-            </Accordion>
-          ) */}
           {occupations && (
             <Box mx={4}>
               {occupations.map(item => (
