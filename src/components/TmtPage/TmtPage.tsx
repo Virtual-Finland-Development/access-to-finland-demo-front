@@ -158,11 +158,7 @@ export default function TmtPage() {
    * Track search / selectedPlaces state and construct payload
    */
   useEffect(() => {
-    if (
-      typeof search === 'string' ||
-      selectedPlaces ||
-      selectedOccupationNotations
-    ) {
+    if (typeof search === 'string' || selectedPlaces || selectedOccupations) {
       const payload = {
         query: typeof search === 'string' ? search.split(' ').toString() : '',
         location: {
@@ -183,8 +179,8 @@ export default function TmtPage() {
             : [],
         },
         requirements: {
-          occupations: selectedOccupationNotations
-            ? selectedOccupationNotations
+          occupations: selectedOccupations
+            ? selectedOccupations.map(o => o.uri)
             : [],
           skills: [],
         },
@@ -196,7 +192,7 @@ export default function TmtPage() {
 
       setPayload(payload);
     }
-  }, [itemsPerPage, search, selectedOccupationNotations, selectedPlaces]);
+  }, [itemsPerPage, search, selectedOccupations, selectedPlaces]);
 
   /**
    * Track payload state and fetch jobPostings on change

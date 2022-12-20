@@ -46,6 +46,7 @@ export default function Profile({ isEdit }: { isEdit?: boolean }) {
       boxShadow="lg"
       p={6}
       maxW="container.xl"
+      {...(!isEdit ? { my: 6 } : { mb: 6 })}
     >
       <Flex justifyContent="space-between" w="100" position="relative">
         <Stack>
