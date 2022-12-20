@@ -146,10 +146,23 @@ export default function TmtPage() {
   }, [userProfile]);
 
   /**
+   * Set default occupation notation for filtering, if provided in userProfile.
+   */
+  useEffect(() => {
+    if (userProfile?.id && userProfile.occupationCode) {
+      setSelectedOccupationNotations([userProfile.occupationCode]);
+    }
+  }, [userProfile?.id, userProfile.occupationCode]);
+
+  /**
    * Track search / selectedPlaces state and construct payload
    */
   useEffect(() => {
-    if (typeof search === 'string' || selectedPlaces) {
+    if (
+      typeof search === 'string' ||
+      selectedPlaces ||
+      selectedOccupationNotations
+    ) {
       const payload = {
         query: typeof search === 'string' ? search.split(' ').toString() : '',
         location: {
@@ -169,6 +182,12 @@ export default function TmtPage() {
                 .map(p => p.Koodi)
             : [],
         },
+        requirements: {
+          occupations: selectedOccupationNotations
+            ? selectedOccupationNotations
+            : [],
+          skills: [],
+        },
         paging: {
           itemsPerPage: itemsPerPage,
           pageNumber: 0,
@@ -177,7 +196,7 @@ export default function TmtPage() {
 
       setPayload(payload);
     }
-  }, [itemsPerPage, search, selectedPlaces]);
+  }, [itemsPerPage, search, selectedOccupationNotations, selectedPlaces]);
 
   /**
    * Track payload state and fetch jobPostings on change

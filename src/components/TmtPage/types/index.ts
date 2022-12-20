@@ -49,6 +49,10 @@ export interface JobPostingsRequestPayload {
     municipalities: string[];
     countries: string[];
   };
+  requirements: {
+    occupations: string[];
+    skills: string[];
+  };
   paging: {
     itemsPerPage: number;
     pageNumber: number;
