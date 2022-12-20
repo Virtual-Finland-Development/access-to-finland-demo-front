@@ -231,13 +231,16 @@ export default function TmtPage() {
       }
 
       if (type === 'occupation') {
-        setSelectedOccupationNotations(prev => {
-          const notations = prev || [];
-          return notations.filter(n => n !== identifier);
-        });
+        let notations = selectedOccupationNotations || [];
+        notations = notations.filter(n => n !== identifier);
+        setSelectedOccupationNotations(notations);
+
+        if (!notations.length) {
+          setSelectedOccupations(null);
+        }
       }
     },
-    []
+    [selectedOccupationNotations]
   );
 
   /**
