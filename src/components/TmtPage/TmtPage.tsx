@@ -34,8 +34,8 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import LoadMore from '../LoadMore/LoadMore';
 
 // hooks
-import useJobPostings from './hooks/useJobPostings';
-import useOccupations from '../ProfileForm/hooks/useOccupations';
+import useJobPostings from '../../hooks/useJobPostings';
+import useOccupations from '../../hooks/useOccupations';
 
 // utils
 import { constructJobPostingsPayload } from './utils';

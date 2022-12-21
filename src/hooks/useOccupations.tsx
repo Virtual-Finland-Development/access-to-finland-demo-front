@@ -2,10 +2,13 @@ import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 // types
-import { OccupationOption } from '../../../@types';
+import { OccupationOption } from '../@types';
+
+// hooks
+import useErrorToast from './useErrorToast';
 
 // api
-import api from '../../../api';
+import api from '../api';
 
 /**
  * Get the most inner depth of occupations narrower (hierarchived occupations)
@@ -37,11 +40,11 @@ function flattenOccupations(
 }
 
 export default function useOccupations() {
-  const countriesQuery = useQuery(
+  const occupationsQuery = useQuery(
     ['occupations'],
     async () => {
-      const response = await api.user.getOccupations();
-      return response.data as OccupationOption[];
+      const occupations = await api.user.getOccupations();
+      return occupations;
     },
     {
       refetchOnWindowFocus: false,
@@ -53,20 +56,26 @@ export default function useOccupations() {
    * Also get the most inner depth of occupation.narrower level
    */
   const flattenAndGetMostInnerDepth = useMemo(() => {
-    if (!countriesQuery.data) return null;
+    if (!occupationsQuery.data) return null;
 
     let flattenedOccupations: OccupationOption[] = [];
 
-    for (let occupation of countriesQuery.data) {
+    for (let occupation of occupationsQuery.data) {
       flattenOccupations(occupation, flattenedOccupations);
     }
 
     const occupationsMostInnerDepth = getOccupationsMostInnerDepth(
-      countriesQuery.data
+      occupationsQuery.data
     );
 
     return { flattenedOccupations, occupationsMostInnerDepth };
-  }, [countriesQuery.data]);
+  }, [occupationsQuery.data]);
 
-  return { ...countriesQuery, ...flattenAndGetMostInnerDepth };
+  // display error in toast, if any
+  useErrorToast({
+    title: 'Could not fetch occupations',
+    error: occupationsQuery.error,
+  });
+
+  return { ...occupationsQuery, ...flattenAndGetMostInnerDepth };
 }

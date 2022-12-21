@@ -53,9 +53,9 @@ import municipalitiesJson from '../TmtPage/regionJsons/municipalities.json';
 import { pickRandomAddress, pickRandomName, formatAddress } from './utils';
 
 // hooks
-import useCountries from './hooks/useCountries';
-import useOccupations from './hooks/useOccupations';
-import useLanguages from './hooks/useLanguages';
+import useCountries from '../../hooks/useCountries';
+import useOccupations from '../../hooks/useOccupations';
+import useLanguages from '../../hooks/useLanguages';
 
 // components
 import Fieldset from '../Fieldset/Fieldset';
@@ -102,7 +102,7 @@ export default function ProfileForm(props: ProfileFormProps) {
   const { userProfile, setUserProfile } = useAppContext();
   const { openModal, closeModal } = useModal();
   const { id: userId, created, modified, ...restOfProfile } = userProfile;
-  const { onProfileSubmit, onCancel, isEdit } = props;
+  const { onProfileSubmit, isEdit } = props;
 
   const [jobTitlesInputValue, setJobTitlesInputValue] = useState<string>('');
 

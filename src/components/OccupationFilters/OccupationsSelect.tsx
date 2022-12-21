@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 
 // hooks
-import useOccupations from '../ProfileForm/hooks/useOccupations';
+import useOccupations from '../../hooks/useOccupations';
 
 // components
 import OccupationCollapseItem from './OccupationCollapseItem';
