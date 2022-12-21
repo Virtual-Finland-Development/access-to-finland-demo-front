@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import {
   Box,
   Button,
@@ -26,23 +26,22 @@ interface OccupationSelectProps {
 }
 
 export default function OccupationsSelect(props: OccupationSelectProps) {
-  const { useAsFilter, defaultSelected, onSelectOccupations, onCancel } = props;
-  const [selectedNotations, setSelectedNotations] = useState<string[]>([]);
+  const {
+    useAsFilter,
+    defaultSelected = [],
+    onSelectOccupations,
+    onCancel,
+  } = props;
+
+  const [selectedNotations, setSelectedNotations] =
+    useState<string[]>(defaultSelected);
+
   const {
     data: occupations,
     isLoading: occupationsLoading,
     flattenedOccupations,
     occupationsMostInnerDepth,
   } = useOccupations();
-
-  /**
-   * Set default selected notations, if provided
-   */
-  useEffect(() => {
-    if (defaultSelected.length) {
-      setSelectedNotations(defaultSelected);
-    }
-  }, [defaultSelected]);
 
   /**
    * Handle select occupations (notation codes)

@@ -23,7 +23,6 @@ interface Props {
 
 export default function OccupationCollapseItem(props: Props) {
   const { item, selectedNotations, onSelect } = props;
-  const { isOpen, onToggle } = useDisclosure();
 
   const isChecked = useMemo(
     () => selectedNotations.findIndex(s => s.startsWith(item.notation)) > -1,
@@ -35,6 +34,16 @@ export default function OccupationCollapseItem(props: Props) {
       isChecked && selectedNotations.findIndex(s => s === item.notation) < 0,
     [isChecked, item.notation, selectedNotations]
   );
+
+  const { isOpen, onToggle } = useDisclosure({
+    defaultIsOpen:
+      (isChecked || isIndeterminate) &&
+      (item.notation.length !== 1 ||
+        (item.notation.length === 1 &&
+          selectedNotations.some(
+            n => n !== item.notation && n.startsWith(item.notation)
+          ))),
+  });
 
   const ToggleIcon = !isOpen ? ChevronDownIcon : ChevronUpIcon;
 
