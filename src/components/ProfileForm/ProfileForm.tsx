@@ -30,13 +30,13 @@ import {
   CreatableSelect,
   GroupBase,
   MultiValue,
-  OptionBase,
   Select,
   SingleValue,
 } from 'chakra-react-select';
 
 // types
 import { Gender, UserProfile } from '../../@types';
+import { SelectOption } from './types';
 
 // context
 import { useAppContext } from '../../context/AppContext/AppContext';
@@ -45,12 +45,16 @@ import { useModal } from '../../context/ModalContext/ModalContext';
 // utils
 import { isNewUser } from '../../utils';
 
-// region selections
-import regionsJson from '../TmtPage/regionJsons/regions.json';
-import municipalitiesJson from '../TmtPage/regionJsons/municipalities.json';
-
-// utils
-import { pickRandomAddress, pickRandomName, formatAddress } from './utils';
+// profile form context utils
+import {
+  pickRandomAddress,
+  pickRandomName,
+  formatAddress,
+  createOption,
+  getDefaultSelectOption,
+  getDefaultRegionOptions,
+  groupedRegionOptions,
+} from './utils';
 
 // hooks
 import useCountries from '../../hooks/useCountries';
@@ -64,33 +68,6 @@ import OccupationsSelect from '../OccupationFilters/OccupationsSelect';
 
 // api
 import api from '../../api';
-
-interface Option extends OptionBase {
-  label: string;
-  value: string;
-}
-
-const groupedRegionOptions = [
-  {
-    label: 'Regions',
-    options: regionsJson.map(r => ({
-      value: r.Koodi,
-      label: r.Selitteet[2].Teksti,
-    })),
-  },
-  {
-    label: 'Municipalities',
-    options: municipalitiesJson.map(m => ({
-      value: m.Koodi,
-      label: m.Selitteet[2].Teksti,
-    })),
-  },
-];
-
-const createOption = (label: string) => ({
-  label,
-  value: label,
-});
 
 interface ProfileFormProps {
   onProfileSubmit?: () => void;
@@ -172,80 +149,54 @@ export default function ProfileForm(props: ProfileFormProps) {
     address,
   } = watch();
 
-  /**
-   * Get default values for regions select, if provided in userProfile.
-   */
+  // Get default values for regions select, if provided in userProfile.
   const regionsDefaultOptions = useMemo(() => {
     if (!userId) return [];
-
-    let options: Option[] = [];
-    const selections = [...regionsJson, ...municipalitiesJson];
-
-    if (regions?.length) {
-      options = regions.reduce((acc: Option[], code) => {
-        const selected = selections.find(s => s.Koodi === code);
-
-        if (selected) {
-          acc.push({
-            value: selected.Koodi,
-            label: selected.Selitteet[2].Teksti,
-          });
-        }
-
-        return acc;
-      }, []);
-    }
-
-    return options;
+    return getDefaultRegionOptions(regions);
   }, [regions, userId]);
 
-  // Default value for 'countryOfBirthCode', mapped as react-select option (in array)
-  const defaultCountryOfBirthCode = useMemo(() => {
-    if (!countries || !countryOfBirthCode) return null;
+  // Default countryOfBirthCode option
+  const defaultCountryOfBirthOption = useMemo(
+    () =>
+      getDefaultSelectOption(
+        countryOfBirthCode,
+        countries,
+        'id',
+        'englishName'
+      ),
+    [countries, countryOfBirthCode]
+  );
 
-    return countries
-      .filter(c => c.id === countryOfBirthCode)
-      .map(c => ({
-        label: c.englishName,
-        value: c.id,
-      }));
-  }, [countries, countryOfBirthCode]);
+  // Default citizenshipCode option
+  const defaultCitizenshipOption = useMemo(
+    () =>
+      getDefaultSelectOption(citizenshipCode, countries, 'id', 'englishName'),
+    [citizenshipCode, countries]
+  );
 
-  // Default value for 'citizenshipCode', mapped as react-select option (in array)
-  const defaultCitizenshipCode = useMemo(() => {
-    if (!countries || !citizenshipCode) return null;
+  // Default nativeLanguageCode option
+  const defaultNativeLanguageOption = useMemo(
+    () =>
+      getDefaultSelectOption(
+        nativeLanguageCode,
+        languages,
+        'id',
+        'englishName'
+      ),
+    [languages, nativeLanguageCode]
+  );
 
-    return countries
-      .filter(c => c.id === citizenshipCode)
-      .map(c => ({
-        label: c.englishName,
-        value: c.id,
-      }));
-  }, [countries, citizenshipCode]);
-
-  // Default value for 'nativeLanguageCode', mapped as react-select option (in array)
-  const defaultNativeLanguageCode = useMemo(() => {
-    if (!languages || !nativeLanguageCode) return null;
-
-    return languages
-      .filter(l => l.id === nativeLanguageCode)
-      .map(l => ({
-        label: l.englishName,
-        value: l.id,
-      }));
-  }, [languages, nativeLanguageCode]);
-
-  // Default value for 'occupationCode', mapped as react-select option (in array)
-  const defaultOccupationCode = useMemo(() => {
-    if (!flattenedOccupations || !occupationCode) return null;
-
-    return flattenedOccupations
-      .filter(o => o.notation === occupationCode)
-      .map(o => ({
-        label: o.prefLabel.en,
-        value: o.notation,
-      }));
-  }, [flattenedOccupations, occupationCode]);
+  // Default occupationCode option
+  const defaultOccupationCode = useMemo(
+    () =>
+      getDefaultSelectOption(
+        occupationCode,
+        flattenedOccupations?.map(o => ({ ...o, name: o.prefLabel.en })),
+        'notation',
+        'name'
+      ),
+    [flattenedOccupations, occupationCode]
+  );
 
   /**
    * Handle form submit.
@@ -312,8 +263,8 @@ export default function ProfileForm(props: ProfileFormProps) {
    * Handle single select input changes.
    */
   const handleSingleSelectChange = (
-    selected: SingleValue<Option>,
-    meta: ActionMeta<Option>
+    selected: SingleValue<SelectOption>,
+    meta: ActionMeta<SelectOption>
   ) => {
     const field = meta.name as
       | 'countryOfBirthCode'
@@ -331,8 +282,8 @@ export default function ProfileForm(props: ProfileFormProps) {
    * Handle multi select input changes.
    */
   const handleMultiSelectChange = (
-    selections: MultiValue<Option>,
-    meta: ActionMeta<Option>
+    selections: MultiValue<SelectOption>,
+    meta: ActionMeta<SelectOption>
   ) => {
     if (!meta.name) return;
 
@@ -511,10 +462,10 @@ export default function ProfileForm(props: ProfileFormProps) {
                     id="countryOfBirthCode"
                   >
                     <FormLabel>Country of birth</FormLabel>
-                    <Select<Option, false, GroupBase<Option>>
+                    <Select<SelectOption, false, GroupBase<SelectOption>>
                       isMulti={false}
                       name="countryOfBirthCode"
-                      defaultValue={defaultCountryOfBirthCode}
+                      defaultValue={defaultCountryOfBirthOption}
                       options={countries.map(c => ({
                         label: c.englishName,
                         value: c.id,
@@ -530,10 +481,10 @@ export default function ProfileForm(props: ProfileFormProps) {
                     id="citizenshipCode"
                   >
                     <FormLabel>Citizenship</FormLabel>
-                    <Select<Option, false, GroupBase<Option>>
+                    <Select<SelectOption, false, GroupBase<SelectOption>>
                       isMulti={false}
                       name="citizenshipCode"
-                      defaultValue={defaultCitizenshipCode}
+                      defaultValue={defaultCitizenshipOption}
                       options={countries.map(c => ({
                         label: c.englishName,
                         value: c.id,
@@ -552,10 +503,10 @@ export default function ProfileForm(props: ProfileFormProps) {
                   id="nativeLanguageCode"
                 >
                   <FormLabel>Native language</FormLabel>
-                  <Select<Option, false, GroupBase<Option>>
+                  <Select<SelectOption, false, GroupBase<SelectOption>>
                     isMulti={false}
                     name="nativeLanguageCode"
-                    defaultValue={defaultNativeLanguageCode}
+                    defaultValue={defaultNativeLanguageOption}
                     options={languages.map(l => ({
                       label: l.englishName,
                       value: l.id,
@@ -602,7 +553,7 @@ export default function ProfileForm(props: ProfileFormProps) {
                 <FormLabel>
                   Job titles or job tasks you are looking for
                 </FormLabel>
-                <CreatableSelect<Option, true, GroupBase<Option>>
+                <CreatableSelect<SelectOption, true, GroupBase<SelectOption>>
                   isMulti
                   isClearable
                   menuIsOpen={false}
@@ -623,7 +574,7 @@ export default function ProfileForm(props: ProfileFormProps) {
               </FormControl>
               <FormControl isInvalid={Boolean(errors?.regions)} id="regions">
                 <FormLabel>Preferred regions to work in</FormLabel>
-                <Select<Option, true, GroupBase<Option>>
+                <Select<SelectOption, true, GroupBase<SelectOption>>
                   isMulti
                   name="regions"
                   defaultValue={regionsDefaultOptions}
