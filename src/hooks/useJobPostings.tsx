@@ -1,11 +1,14 @@
 import { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
+// hooks
+import useErrorToast from './useErrorToast';
+
 // types
-import { JobPostingsRequestPayload, JobPostingsResponse } from '../types';
+import { JobPostingsRequestPayload } from '../components/TmtPage/types';
 
 // api
-import api from '../../../api';
+import api from '../api';
 
 export default function useJobPostings(
   payload: JobPostingsRequestPayload | null
@@ -21,7 +24,7 @@ export default function useJobPostings(
         paging: { ...payload.paging, pageNumber: pageParam - 1 },
       });
 
-      return response.data as JobPostingsResponse;
+      return response;
     },
     {
       enabled: Boolean(payload),
@@ -43,6 +46,12 @@ export default function useJobPostings(
       },
     }
   );
+
+  // display error in toast, if any
+  useErrorToast({
+    title: 'Could not fetch job postings',
+    error: jobPostingsQuery.error,
+  });
 
   /**
    * Remove the query from cache on unmount.

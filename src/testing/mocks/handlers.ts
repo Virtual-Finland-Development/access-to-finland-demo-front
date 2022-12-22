@@ -3,8 +3,8 @@ import { rest } from 'msw';
 // endpoints
 import {
   AUTH_GW_BASE_URL,
-  USERS_API_BASE_URL,
   TESTBED_API_BASE_URL,
+  USERS_API_BASE_URL,
 } from '../../api/endpoints';
 
 const mockAuthUser = {
@@ -108,8 +108,9 @@ export const handlers = [
     return res(
       ctx.json([
         {
-          id: '0',
-          name: {
+          notation: '0',
+          uri: '',
+          prefLabel: {
             en: 'Armed forces',
           },
         },
@@ -136,4 +137,7 @@ export const handlers = [
       return res(ctx.json(mockJobPostings));
     }
   ),
+  rest.get(`${TESTBED_API_BASE_URL}/wake-up`, (req, res, ctx) => {
+    return res();
+  }),
 ];

@@ -12,6 +12,9 @@ export const JSONLocalStorage = {
   set(key: string, value: any) {
     localStorage.setItem(key, JSON.stringify(value));
   },
+  clear() {
+    localStorage.clear();
+  },
 };
 
 // Helper function to scroll to an element.

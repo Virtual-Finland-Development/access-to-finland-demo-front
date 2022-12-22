@@ -4,8 +4,8 @@ import lastNames from '../fakeData/lastNames.json';
 import regionsJson from '../../TmtPage/regionJsons/regions.json';
 import municipalitiesJson from '../../TmtPage/regionJsons/municipalities.json';
 
-import { Address, OccupationOption } from '../../../@types';
-import { SelectOption, SelectGroupedOption } from '../types';
+import { Address } from '../../../@types';
+import { SelectOption } from '../types';
 
 // pick and format random address from addresses json
 export const pickRandomAddress = () => {
@@ -71,37 +71,6 @@ export function getDefaultSelectOption<T, U, V extends keyof U>(
       label: item[labelProperty],
       value: item[identifier],
     }));
-}
-
-// map grouped occupation options for react-select
-export function getGroupedOccupations(occupations: OccupationOption[]) {
-  return occupations.reduce(
-    (grouped: SelectGroupedOption[], occupation, _index, allOccupations) => {
-      if (occupation.hierarchyLevel === 1) {
-        grouped.push({
-          label: occupation.name.en,
-          options: allOccupations
-            .filter(o => o.hierarchyLevel > 1 && o.id.startsWith(occupation.id))
-            .reduce((options: SelectOption[], occupation) => {
-              const foundIndex = options.findIndex(
-                o => o.label === occupation.name.en
-              );
-
-              if (foundIndex < 0) {
-                options.push({
-                  label: occupation.name.en,
-                  value: occupation.id,
-                });
-              }
-              return options;
-            }, [])
-            .sort((a, b) => a.label.localeCompare(b.label)),
-        });
-      }
-      return grouped;
-    },
-    []
-  );
 }
 
 // map default region options for react-select from user profile regions

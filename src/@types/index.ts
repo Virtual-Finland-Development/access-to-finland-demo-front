@@ -54,12 +54,12 @@ export interface CountryOption {
 }
 
 export interface OccupationOption {
-  id: string;
-  name: {
-    fi: string;
+  notation: string;
+  uri: string;
+  prefLabel: {
     en: string;
   };
-  hierarchyLevel: number;
+  narrower?: OccupationOption[];
 }
 
 export interface LanguageOption {

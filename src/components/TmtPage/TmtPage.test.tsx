@@ -20,7 +20,7 @@ describe('TmtPage tests', () => {
   test('Should fetch jobs and show some results', async () => {
     customRender1(<TmtPage />);
 
-    const searchInput = screen.getByLabelText('Word search');
+    const searchInput = await screen.findByLabelText('Word search');
     expect(searchInput).toBeInTheDocument();
 
     userEvent.type(searchInput, 'cook');

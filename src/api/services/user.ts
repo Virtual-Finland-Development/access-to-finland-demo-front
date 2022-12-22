@@ -1,7 +1,12 @@
 import axiosInstance from '../axiosInstance';
 
 // types
-import { UserProfile } from '../../@types';
+import {
+  UserProfile,
+  CountryOption,
+  OccupationOption,
+  LanguageOption,
+} from '../../@types';
 
 // endpoints
 import { USERS_API_BASE_URL } from '../endpoints';
@@ -19,16 +24,25 @@ export async function patch(payload: Partial<UserProfile>) {
 }
 
 // profile related codesets
-export function getCountries() {
-  return axiosInstance.get(`${USERS_API_BASE_URL}/code-sets/countries`);
+export async function getCountries(): Promise<CountryOption[]> {
+  const { data } = await axiosInstance.get(
+    `${USERS_API_BASE_URL}/code-sets/countries`
+  );
+  return data;
 }
 
-export function getOccupations() {
-  return axiosInstance.get(`${USERS_API_BASE_URL}/code-sets/occupations`);
+export async function getOccupations(): Promise<OccupationOption[]> {
+  const { data } = await axiosInstance.get(
+    `${USERS_API_BASE_URL}/code-sets/occupations`
+  );
+  return data;
 }
 
-export function getLanguages() {
-  return axiosInstance.get(`${USERS_API_BASE_URL}/code-sets/languages`);
+export async function getLanguages(): Promise<LanguageOption[]> {
+  const { data } = await axiosInstance.get(
+    `${USERS_API_BASE_URL}/code-sets/languages`
+  );
+  return data;
 }
 
 export function getGenders() {

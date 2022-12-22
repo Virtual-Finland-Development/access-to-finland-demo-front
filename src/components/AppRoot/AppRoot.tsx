@@ -48,11 +48,9 @@ export default function AppRoot() {
             );
           }
 
-          return !authenticated ? (
-            <LoginRoutes />
-          ) : (
+          return (
             <ModalProvider>
-              <AuthRoutes />
+              {!authenticated ? <LoginRoutes /> : <AuthRoutes />}
             </ModalProvider>
           );
         }}

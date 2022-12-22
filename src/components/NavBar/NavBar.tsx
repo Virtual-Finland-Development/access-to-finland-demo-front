@@ -39,12 +39,6 @@ import { useAppContext } from '../../context/AppContext/AppContext';
 // constants
 import { LOCAL_STORAGE_AUTH_PROVIDER } from '../../constants';
 
-// context
-import { useModal } from '../../context/ModalContext/ModalContext';
-
-// components
-import ProfileForm from '../ProfileForm/ProfileForm';
-
 // api
 import api from '../../api';
 
@@ -58,25 +52,7 @@ export default function WithSubnavigation() {
     onClose: onCloseMobileNav,
   } = useDisclosure();
 
-  const { openModal, closeModal } = useModal();
-
   const navigate = useNavigate();
-
-  /**
-   * Handle open userProfile modal with useModal hook.
-   */
-  const openUserProfile = () =>
-    openModal({
-      title: 'Edit your profile',
-      content: (
-        <ProfileForm
-          onProfileSubmit={closeModal}
-          onCancel={closeModal}
-          isEdit
-        />
-      ),
-      onClose: () => {},
-    });
 
   /**
    * Handle log out click.
@@ -204,7 +180,9 @@ export default function WithSubnavigation() {
                     </HStack>
                   </MenuButton>
                   <MenuList bg="white" borderColor="gray.200">
-                    <MenuItem onClick={openUserProfile}>Profile</MenuItem>
+                    <MenuItem onClick={() => navigate('profile')}>
+                      Profile
+                    </MenuItem>
                     <MenuDivider />
                     <MenuItem onClick={handleLogOutClick}>Sign out</MenuItem>
                   </MenuList>
