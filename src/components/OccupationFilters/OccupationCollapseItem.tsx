@@ -1,3 +1,4 @@
+import React, { useMemo } from 'react';
 import {
   Collapse,
   Flex,
@@ -9,7 +10,6 @@ import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 
 // types
 import { OccupationOption } from '../../@types';
-import React, { useMemo } from 'react';
 
 interface Props {
   item: OccupationOption;
