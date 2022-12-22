@@ -12,6 +12,7 @@ import NavBar from '../NavBar/NavBar';
 import Loading from '../Loading/Loading';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import ConsentSentry from '../ConsentSentry/ConsentSentry';
+import Profile from '../Profile/Profile';
 
 const LazyTmt = lazy(() => import('../TmtPage/TmtPage'));
 
@@ -54,6 +55,7 @@ export default function AppRoutes() {
         <Route index element={<WelcomePage />} />
         <Route path="vacancies" element={<TmtPageConsentSentry />} />
         <Route path="services" element={<ServicesPage />} />
+        <Route path="profile" element={<Profile isEdit />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

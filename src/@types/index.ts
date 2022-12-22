@@ -15,8 +15,8 @@ export type LoggedInState = {
 };
 
 export enum Gender {
-  Male = "Male",
-  Female = "Female"
+  Male = 'Male',
+  Female = 'Female',
 }
 
 export interface Address {
@@ -54,10 +54,12 @@ export interface CountryOption {
 }
 
 export interface OccupationOption {
-  id: string;
-  name: {
+  notation: string;
+  uri: string;
+  prefLabel: {
     en: string;
   };
+  narrower?: OccupationOption[];
 }
 
 export interface LanguageOption {

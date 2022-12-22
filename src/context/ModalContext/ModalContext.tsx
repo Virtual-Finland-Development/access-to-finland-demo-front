@@ -23,6 +23,7 @@ interface IModal {
   title: string | null;
   content: string | ReactElement;
   onClose?: () => void;
+  size?: string;
 }
 
 // context
@@ -70,6 +71,7 @@ function ModalProvider({ children }: ModalProviderProps) {
           onClose={closeModal}
           title={modal?.title || ''}
           content={modal?.content}
+          size={modal?.size}
         />
       </>
     </ModalContext.Provider>

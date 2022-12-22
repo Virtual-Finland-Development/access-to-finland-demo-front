@@ -13,13 +13,19 @@ interface ModalProps {
   onClose: () => void;
   title?: string;
   content?: string | ReactElement;
+  size?: string;
 }
 
 export default function Modal(props: ModalProps) {
-  const { isOpen, onClose, title, content } = props;
+  const { isOpen, onClose, title, content, size } = props;
 
   return (
-    <ChakraModal isOpen={isOpen} onClose={onClose} isCentered size="2xl">
+    <ChakraModal
+      isOpen={isOpen}
+      onClose={onClose}
+      isCentered
+      size={size || '3xl'}
+    >
       <ModalOverlay />
       <ModalContent mx={{ base: 2, md: 0 }} maxH="100vh" overflowY="auto">
         <ModalHeader>{title || ''}</ModalHeader>

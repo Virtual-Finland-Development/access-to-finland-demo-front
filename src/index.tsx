@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ChakraProvider } from '@chakra-ui/react';
+import { extendTheme, ChakraProvider } from '@chakra-ui/react';
 import reportWebVitals from './reportWebVitals';
 
 // components
@@ -10,6 +10,19 @@ import AppRoot from './components/AppRoot/AppRoot';
 
 // Create react-query client
 const queryClient = new QueryClient();
+
+// override checkbox label style a bit to silence chakra-ui error, when checkbox used in modal...
+const theme = extendTheme({
+  components: {
+    Checkbox: {
+      baseStyle: {
+        label: {
+          touchAction: 'none',
+        },
+      },
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -19,7 +32,7 @@ root.render(
   <React.Fragment>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <ChakraProvider>
+        <ChakraProvider theme={theme}>
           <AppRoot />
         </ChakraProvider>
       </QueryClientProvider>
