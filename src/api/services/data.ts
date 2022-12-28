@@ -36,7 +36,7 @@ export async function getJmfRecommendations(
   payload: JmfRecommendationsRequestPayload
 ): Promise<JmfRecommendationsResponse> {
   const { data } = await axiosInstance.post(
-    `${TESTBED_API_BASE_URL}/testbed/jmf-recommendations`,
+    `${TESTBED_API_BASE_URL}/jmf/recommendations`,
     payload
   );
   return data;

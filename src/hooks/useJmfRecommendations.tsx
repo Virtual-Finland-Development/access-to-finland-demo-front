@@ -7,16 +7,19 @@ import useErrorToast from './useErrorToast';
 // api
 import api from '../api';
 
-export default function useJmfRecommendations(textContent: string) {
+export default function useJmfRecommendations(content: string | null) {
   const recommendationsQuery = useQuery(
     ['recommendations'],
-    async () =>
-      await api.data.getJmfRecommendations({
-        text: textContent,
-        maxNumberOfSkills: 20,
-        maxNumberOfOccupations: 7,
-        language: 'en',
-      }),
+    async () => {
+      if (content) {
+        return await api.data.getJmfRecommendations({
+          text: content,
+          maxNumberOfSkills: 20,
+          maxNumberOfOccupations: 7,
+          language: 'en',
+        });
+      }
+    },
     {
       refetchOnWindowFocus: false,
       enabled: false,

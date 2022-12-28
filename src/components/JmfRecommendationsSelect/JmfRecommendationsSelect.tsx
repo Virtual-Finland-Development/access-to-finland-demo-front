@@ -1,4 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+  ChangeEvent,
+} from 'react';
 import {
   Box,
   Heading,
@@ -10,6 +16,8 @@ import {
   VStack,
   Stack,
   Text,
+  Link,
+  useToast,
 } from '@chakra-ui/react';
 
 // types
@@ -17,6 +25,9 @@ import { JmfRecommendation } from '../../@types';
 
 // hooks
 import useJmfRecommendations from '../../hooks/useJmfRecommendations';
+
+// utils
+import { extractPdfTextContent } from './utils';
 
 // components
 import RecommendationItem from './RecommendationItem';
@@ -31,8 +42,17 @@ export default function JmfRecommendationsSelect(
   props: JmfRecommendationsSelectProps
 ) {
   const { onSelect, onCancel } = props;
-  const [textContent, setTextContent] = useState<string>('');
+  const [textContent, setTextContent] = useState<string | null>('');
+  const [extractedTextContent, setExtractedTextContent] = useState<
+    string | null
+  >('');
+  const [selectedFileName, setSelectedFileName] = useState<string>('');
   const [selected, setSelected] = useState<JmfRecommendation[]>([]);
+
+  // file input ref
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const toast = useToast();
 
   /**
    * Recommendations query
@@ -41,7 +61,16 @@ export default function JmfRecommendationsSelect(
     data: recommendations,
     isFetching: recommendationsFetching,
     refetch: fetchRecommendations,
-  } = useJmfRecommendations(textContent);
+  } = useJmfRecommendations(textContent || extractedTextContent);
+
+  /**
+   * Track extractedTextContent value and fetch recommendations when set
+   */
+  useEffect(() => {
+    if (extractedTextContent && !textContent) {
+      fetchRecommendations();
+    }
+  }, [extractedTextContent, fetchRecommendations, textContent]);
 
   /**
    * Handle save selected recommendations
@@ -69,6 +98,34 @@ export default function JmfRecommendationsSelect(
     });
   }, []);
 
+  /**
+   * Handle file select / parsing
+   */
+  const handleFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
+      const fileReader = new FileReader();
+
+      fileReader.onload = async () => {
+        try {
+          const content = await extractPdfTextContent(fileReader.result);
+          setTextContent(null);
+          setExtractedTextContent(content);
+        } catch (error: any) {
+          toast({
+            title: 'Error.',
+            description: error.message,
+            status: 'error',
+            duration: 5000,
+            isClosable: true,
+          });
+        }
+      };
+
+      setSelectedFileName(e.target.files[0].name);
+      fileReader.readAsArrayBuffer(e.target.files[0]);
+    }
+  };
+
   return (
     <React.Fragment>
       <VStack spacing={4}>
@@ -87,23 +144,43 @@ export default function JmfRecommendationsSelect(
             <Textarea
               size="sm"
               backgroundColor="white"
-              value={textContent}
+              placeholder={
+                selectedFileName ? `Using upload: ${selectedFileName}` : ''
+              }
+              value={textContent || ''}
               onChange={({ target }) => setTextContent(target.value)}
             />
             <FormHelperText fontSize="xs">
               You will get keyword suggestions based on your text. Please choose
               the most suitable ones. Keywords are used for job recommendations.
+              You can also upload a text file or your CV.
             </FormHelperText>
           </FormControl>
-          <Button
-            mt={2}
-            size="sm"
-            colorScheme="teal"
-            disabled={!textContent.length || recommendationsFetching}
-            onClick={() => fetchRecommendations()}
-          >
-            Select keywords
-          </Button>
+          <Flex alignItems="center" mt={2} gap={4}>
+            <Button
+              size="sm"
+              colorScheme="teal"
+              disabled={!textContent?.length || recommendationsFetching}
+              onClick={() => fetchRecommendations()}
+            >
+              Select keywords
+            </Button>
+            <Link
+              color="blue.500"
+              fontSize="sm"
+              fontWeight="semibold"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              Upload text file or CV (PDF)
+            </Link>
+            <input
+              hidden
+              type="file"
+              accept="text/plain, text/rtf, application/pdf"
+              ref={fileInputRef}
+              onChange={handleFileSelect}
+            />
+          </Flex>
         </Box>
         {recommendationsFetching && (
           <Flex minH="155px" alignItems="center" justifyContent="center">
