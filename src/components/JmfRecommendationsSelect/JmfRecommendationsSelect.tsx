@@ -27,7 +27,7 @@ import { JmfRecommendation } from '../../@types';
 import useJmfRecommendations from '../../hooks/useJmfRecommendations';
 
 // utils
-import { extractPdfTextContent } from './utils';
+import { extractPdfTextContent, convertToPlainText } from './utils';
 
 // components
 import RecommendationItem from './RecommendationItem';
@@ -104,16 +104,33 @@ export default function JmfRecommendationsSelect(
   const handleFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
       const fileReader = new FileReader();
+      const file = e.target.files[0];
+
+      setSelectedFileName(file.name);
 
       fileReader.onload = async () => {
         try {
-          const content = await extractPdfTextContent(fileReader.result);
+          let extractedContent;
+
+          if (file.type === 'application/pdf') {
+            extractedContent = await extractPdfTextContent(fileReader.result);
+          } else if (file.type === 'text/rtf') {
+            extractedContent = convertToPlainText(
+              typeof fileReader.result === 'string' ? fileReader.result : ''
+            );
+          } else {
+            extractedContent = fileReader.result;
+          }
+
+          console.log(extractedContent);
           setTextContent(null);
-          setExtractedTextContent(content);
+          setExtractedTextContent(
+            typeof extractedContent === 'string' ? extractedContent : null
+          );
         } catch (error: any) {
           toast({
             title: 'Error.',
-            description: error.message,
+            description: error?.message || 'Unexpected error occured',
             status: 'error',
             duration: 5000,
             isClosable: true,
@@ -121,8 +138,11 @@ export default function JmfRecommendationsSelect(
         }
       };
 
-      setSelectedFileName(e.target.files[0].name);
-      fileReader.readAsArrayBuffer(e.target.files[0]);
+      if (file.type === 'application/pdf') {
+        fileReader.readAsArrayBuffer(file);
+      } else {
+        fileReader.readAsText(file);
+      }
     }
   };
 

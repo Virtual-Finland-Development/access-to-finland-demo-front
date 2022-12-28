@@ -7,6 +7,9 @@ function isValidTextItem(item: any): item is TextItem {
   return Boolean(item.str);
 }
 
+/**
+ * Extract all text content from a PDF file
+ */
 export async function extractPdfTextContent(data: any) {
   try {
     const pdfTextContent = await getDocument(data).promise.then(pdf => {
@@ -44,4 +47,16 @@ export async function extractPdfTextContent(data: any) {
       }`
     );
   }
+}
+
+/**
+ * "Convert" RTF text to plain text, not a very robust solution...
+ * https://stackoverflow.com/questions/29922771/convert-rtf-to-and-from-plain-text
+ */
+export function convertToPlainText(rtf: string) {
+  rtf = rtf.replace(/\\par[d]?/g, '');
+  rtf = rtf.replace(/irnaturaltightenfactor0/g, '');
+  return rtf
+    .replace(/\{\*?\\[^{}]+}|[{}]|\\\n?[A-Za-z]+\n?(?:-?\d+)?[ ]?/g, '')
+    .trim();
 }
