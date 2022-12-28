@@ -1,11 +1,7 @@
-import {
-  getDocument,
-  GlobalWorkerOptions,
-  version as pdfJsVersion,
-} from 'pdfjs-dist';
+import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist';
 import { TextItem } from 'pdfjs-dist/types/src/display/api';
 
-GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfJsVersion}/pdf.worker.js`;
+GlobalWorkerOptions.workerSrc = `${window.location.origin}/pdf.worker.min.js`;
 
 function isValidTextItem(item: any): item is TextItem {
   return Boolean(item.str);
