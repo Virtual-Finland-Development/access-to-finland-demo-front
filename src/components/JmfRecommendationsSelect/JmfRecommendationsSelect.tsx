@@ -172,7 +172,7 @@ export default function JmfRecommendationsSelect(
             <FormHelperText fontSize="xs">
               You will get keyword suggestions based on your text. Please choose
               the most suitable ones. Keywords are used for job recommendations.
-              You can also upload a text file or your CV.
+              You can also upload a text file or your CV (PDF).
             </FormHelperText>
           </FormControl>
           <Flex alignItems="center" mt={2} gap={4}>
@@ -190,7 +190,7 @@ export default function JmfRecommendationsSelect(
               fontWeight="semibold"
               onClick={() => fileInputRef.current?.click()}
             >
-              Upload text file or CV (PDF)
+              Upload text file or CV
             </Link>
             <input
               hidden
