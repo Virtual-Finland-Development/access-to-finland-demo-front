@@ -122,7 +122,6 @@ export default function JmfRecommendationsSelect(
             extractedContent = fileReader.result;
           }
 
-          console.log(extractedContent);
           setTextContent(null);
           setExtractedTextContent(
             typeof extractedContent === 'string' ? extractedContent : null
