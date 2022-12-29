@@ -145,6 +145,16 @@ export default function JmfRecommendationsSelect(
     }
   };
 
+  /**
+   * Handle upload click
+   */
+  const handleUploadClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+      fileInputRef.current?.click();
+    }
+  };
+
   return (
     <React.Fragment>
       <VStack spacing={4}>
@@ -188,7 +198,7 @@ export default function JmfRecommendationsSelect(
               color="blue.500"
               fontSize="sm"
               fontWeight="semibold"
-              onClick={() => fileInputRef.current?.click()}
+              onClick={handleUploadClick}
             >
               Upload text file or CV
             </Link>
