@@ -12,32 +12,31 @@ function isValidTextItem(item: any): item is TextItem {
  */
 export async function extractPdfTextContent(data: any) {
   try {
-    const pdfTextContent = await getDocument(data).promise.then(pdf => {
-      const pages = [];
+    const pdf = await getDocument(data).promise;
 
-      for (let i = 0; i < pdf.numPages; i++) {
-        pages.push(i + 1);
-      }
+    const pages = [];
 
-      return Promise.all(
-        pages.map(pageNumber => {
-          return pdf.getPage(pageNumber).then(page => {
-            return page.getTextContent().then(textContent => {
-              return textContent.items
-                .map(item => {
-                  if (isValidTextItem(item)) {
-                    return item.str;
-                  }
-                  return '';
-                })
-                .join(' ');
-            });
-          });
+    for (let i = 0; i < pdf.numPages; i++) {
+      pages.push(i + 1);
+    }
+
+    const getPageContent = async (pageNumber: number) => {
+      const page = await pdf.getPage(pageNumber);
+      const content = await page.getTextContent();
+
+      return content.items
+        .map(item => {
+          if (isValidTextItem(item)) {
+            return item.str;
+          }
+          return '';
         })
-      ).then(pages => {
-        return pages.join('\r\n');
-      });
-    });
+        .join(' ');
+    };
+
+    const pdfTextContent = (await Promise.all(pages.map(getPageContent))).join(
+      '\r\n'
+    );
 
     return pdfTextContent;
   } catch (error: any) {
