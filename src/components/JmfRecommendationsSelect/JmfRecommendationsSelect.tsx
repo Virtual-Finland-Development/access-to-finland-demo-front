@@ -27,11 +27,17 @@ import { JmfRecommendation } from '../../@types';
 import useJmfRecommendations from '../../hooks/useJmfRecommendations';
 
 // utils
-import { extractPdfTextContent, convertToPlainText } from './utils';
+import { extractPdfTextContent, convertRtfToPlainText } from './utils';
 
 // components
 import RecommendationItem from './RecommendationItem';
 import Loading from '../Loading/Loading';
+
+const FILE_TYPES = {
+  pdf: 'application/json',
+  txt: 'text/plain',
+  rtf: 'text/rtf',
+};
 
 interface JmfRecommendationsSelectProps {
   onSelect: (selected: string[]) => void;
@@ -112,11 +118,11 @@ export default function JmfRecommendationsSelect(
         try {
           let extractedContent;
 
-          if (file.type === 'application/pdf') {
+          if (file.type === FILE_TYPES.pdf) {
             extractedContent = await extractPdfTextContent(fileReader.result);
-          } else if (file.type === 'text/rtf') {
-            extractedContent = convertToPlainText(
-              typeof fileReader.result === 'string' ? fileReader.result : ''
+          } else if (file.type === FILE_TYPES.rtf) {
+            extractedContent = await convertRtfToPlainText(
+              fileReader.result as ArrayBuffer
             );
           } else {
             extractedContent = fileReader.result;
@@ -137,10 +143,10 @@ export default function JmfRecommendationsSelect(
         }
       };
 
-      if (file.type === 'application/pdf') {
-        fileReader.readAsArrayBuffer(file);
-      } else {
+      if (file.type === FILE_TYPES.txt) {
         fileReader.readAsText(file);
+      } else {
+        fileReader.readAsArrayBuffer(file);
       }
     }
   };
@@ -205,7 +211,7 @@ export default function JmfRecommendationsSelect(
             <input
               hidden
               type="file"
-              accept="text/plain, text/rtf, application/pdf"
+              accept={Object.values(FILE_TYPES).join(', ')}
               ref={fileInputRef}
               onChange={handleFileSelect}
             />

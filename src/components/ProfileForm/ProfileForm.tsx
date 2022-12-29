@@ -598,7 +598,7 @@ export default function ProfileForm(props: ProfileFormProps) {
                   fontSize="sm"
                   onClick={handleOpenRecommendationsSelect}
                 >
-                  Ask for recommendtations
+                  Ask for recommendations
                 </Link>
               </FormControl>
               <FormControl isInvalid={Boolean(errors?.regions)} id="regions">

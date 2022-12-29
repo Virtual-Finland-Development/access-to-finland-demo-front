@@ -1,7 +1,9 @@
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist';
 import { TextItem } from 'pdfjs-dist/types/src/display/api';
+import { RTFJS } from 'rtf.js';
 
 GlobalWorkerOptions.workerSrc = `${window.location.origin}/pdf.worker.min.js`;
+RTFJS.loggingEnabled(false);
 
 function isValidTextItem(item: any): item is TextItem {
   return Boolean(item.str);
@@ -50,12 +52,29 @@ export async function extractPdfTextContent(data: any) {
 
 /**
  * "Convert" RTF text to plain text, not a very robust solution...
- * https://stackoverflow.com/questions/29922771/convert-rtf-to-and-from-plain-text
+ * Use rtf.js to convert RTF ArrayBuffer to html elements, loop trough all elements and parse text contents from them.
+ * There seems to be no better way (in browser) to do this, other than using some regex hacks for RTF files, which do not work correclty.
  */
-export function convertToPlainText(rtf: string) {
-  rtf = rtf.replace(/\\par[d]?/g, '');
-  rtf = rtf.replace(/irnaturaltightenfactor0/g, '');
-  return rtf
-    .replace(/\{\*?\\[^{}]+}|[{}]|\\\n?[A-Za-z]+\n?(?:-?\d+)?[ ]?/g, '')
-    .trim();
+export async function convertRtfToPlainText(rtf: ArrayBuffer) {
+  try {
+    const doc = new RTFJS.Document(rtf, {});
+    const contents: string[] = [];
+
+    // eslint-disable-next-line testing-library/render-result-naming-convention
+    const htmlElements = await doc.render();
+
+    for (let el of htmlElements) {
+      if (el.textContent) {
+        contents.push(el.textContent);
+      }
+    }
+
+    return contents.join(' ');
+  } catch (error: any) {
+    throw new Error(
+      `Could not parse document: ${
+        error?.message || 'unexpected error occured'
+      }`
+    );
+  }
 }
