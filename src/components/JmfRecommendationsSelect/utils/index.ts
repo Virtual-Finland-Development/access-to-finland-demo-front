@@ -54,6 +54,7 @@ export async function extractPdfTextContent(data: any) {
  * "Convert" RTF text to plain text, not a very robust solution...
  * Use rtf.js to convert RTF ArrayBuffer to html elements, loop trough all elements and parse text contents from them.
  * There seems to be no better way (in browser) to do this, other than using some regex hacks for RTF files, which do not work correclty.
+ * Idea came from here: https://stackoverflow.com/questions/51096049/how-can-i-get-the-text-from-a-word-document-with-rtf-extension
  */
 export async function convertRtfToPlainText(rtf: ArrayBuffer) {
   try {
