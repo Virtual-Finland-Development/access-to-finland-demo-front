@@ -145,8 +145,16 @@ export default function JmfRecommendationsSelect(
 
       if (file.type === FILE_TYPES.txt) {
         fileReader.readAsText(file);
-      } else {
+      } else if (file.type === FILE_TYPES.pdf || file.type === FILE_TYPES.rtf) {
         fileReader.readAsArrayBuffer(file);
+      } else {
+        toast({
+          title: 'Not supported',
+          description: 'This file format is not supported.',
+          status: 'warning',
+          duration: 5000,
+          isClosable: true,
+        });
       }
     }
   };
