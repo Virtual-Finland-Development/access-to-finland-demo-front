@@ -44,6 +44,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!rtf.js/.*)"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
