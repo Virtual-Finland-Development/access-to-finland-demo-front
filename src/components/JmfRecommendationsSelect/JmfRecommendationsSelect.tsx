@@ -34,7 +34,7 @@ import RecommendationItem from './RecommendationItem';
 import Loading from '../Loading/Loading';
 
 const FILE_TYPES = {
-  pdf: 'application/json',
+  pdf: 'application/pdf',
   txt: 'text/plain',
   rtf: 'text/rtf',
 };
