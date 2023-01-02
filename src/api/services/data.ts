@@ -5,6 +5,10 @@ import { TESTBED_API_BASE_URL } from '../endpoints';
 
 // types
 import {
+  JmfRecommendationsRequestPayload,
+  JmfRecommendationsResponse,
+} from '../../@types';
+import {
   JobPostingsRequestPayload,
   JobPostingsResponse,
 } from '../../components/TmtPage/types';
@@ -26,4 +30,14 @@ export async function getJobPostings(
  */
 export async function wakeup() {
   return axiosInstance.get(`${TESTBED_API_BASE_URL}/wake-up`);
+}
+
+export async function getJmfRecommendations(
+  payload: JmfRecommendationsRequestPayload
+): Promise<JmfRecommendationsResponse> {
+  const { data } = await axiosInstance.post(
+    `${TESTBED_API_BASE_URL}/jmf/recommendations`,
+    payload
+  );
+  return data;
 }

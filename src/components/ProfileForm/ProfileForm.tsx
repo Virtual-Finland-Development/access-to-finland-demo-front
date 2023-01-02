@@ -65,6 +65,7 @@ import useLanguages from '../../hooks/useLanguages';
 import Fieldset from '../Fieldset/Fieldset';
 import Loading from '../Loading/Loading';
 import OccupationsSelect from '../OccupationFilters/OccupationsSelect';
+import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect';
 
 // api
 import api from '../../api';
@@ -353,6 +354,26 @@ export default function ProfileForm(props: ProfileFormProps) {
       onClose: () => {},
     });
 
+  /**
+   * Handle open jmf occupations / skills selection
+   */
+  const handleOpenRecommendationsSelect = () =>
+    openModal({
+      title: 'Knowledge and skills recommendations',
+      content: (
+        <JmfRecommendationsSelect
+          onSelect={(selected: string[]) => {
+            const previousTitles = jobTitles ? jobTitles : [];
+            const newTitles = new Set([...previousTitles, ...selected]);
+            setValue('jobTitles', Array.from(newTitles), { shouldDirty: true });
+            closeModal();
+          }}
+          onCancel={closeModal}
+        />
+      ),
+      onClose: () => {},
+    });
+
   if (listsLoading) {
     return <Loading />;
   }
@@ -548,6 +569,14 @@ export default function ProfileForm(props: ProfileFormProps) {
                   }
                   onKeyDown={handleJobTitlesKeyDown}
                 />
+                <Link
+                  color="blue.500"
+                  fontWeight="medium"
+                  fontSize="sm"
+                  onClick={handleOpenRecommendationsSelect}
+                >
+                  Ask for recommendations
+                </Link>
               </FormControl>
               {occupations && (
                 <FormControl
