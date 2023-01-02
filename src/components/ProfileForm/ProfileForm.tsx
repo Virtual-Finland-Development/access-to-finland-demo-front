@@ -539,29 +539,6 @@ export default function ProfileForm(props: ProfileFormProps) {
                   />
                 </FormControl>
               )}
-              {occupations && (
-                <FormControl
-                  isInvalid={Boolean(errors?.occupationCode)}
-                  id="occupationCode"
-                >
-                  <FormLabel>Occupation</FormLabel>
-                  <Link
-                    color="blue.500"
-                    fontWeight="medium"
-                    onClick={handleOpenOccupationSelect}
-                  >
-                    {defaultOccupationCode ? (
-                      <>
-                        {defaultOccupationCode[0].label} <EditIcon />
-                      </>
-                    ) : (
-                      <>
-                        Select occupation <SmallAddIcon />
-                      </>
-                    )}
-                  </Link>
-                </FormControl>
-              )}
             </Stack>
           </Fieldset>
 
@@ -601,6 +578,29 @@ export default function ProfileForm(props: ProfileFormProps) {
                   Ask for recommendations
                 </Link>
               </FormControl>
+              {occupations && (
+                <FormControl
+                  isInvalid={Boolean(errors?.occupationCode)}
+                  id="occupationCode"
+                >
+                  <FormLabel>Occupation</FormLabel>
+                  <Link
+                    color="blue.500"
+                    fontWeight="medium"
+                    onClick={handleOpenOccupationSelect}
+                  >
+                    {defaultOccupationCode ? (
+                      <>
+                        {defaultOccupationCode[0].label} <EditIcon />
+                      </>
+                    ) : (
+                      <>
+                        Select occupation <SmallAddIcon />
+                      </>
+                    )}
+                  </Link>
+                </FormControl>
+              )}
               <FormControl isInvalid={Boolean(errors?.regions)} id="regions">
                 <FormLabel>Preferred regions to work in</FormLabel>
                 <Select<SelectOption, true, GroupBase<SelectOption>>
