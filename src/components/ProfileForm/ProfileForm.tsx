@@ -35,7 +35,12 @@ import {
 } from 'chakra-react-select';
 
 // types
-import { Gender, UserProfile } from '../../@types';
+import {
+  Gender,
+  UserProfile,
+  Occupation,
+  UserOccupationSelection,
+} from '../../@types';
 import { SelectOption } from './types';
 
 // context
@@ -59,6 +64,7 @@ import {
 // hooks
 import useCountries from '../../hooks/useCountries';
 import useOccupations from '../../hooks/useOccupations';
+import useOccupationsFlat from '../../hooks/useOccupationsFlat';
 import useLanguages from '../../hooks/useLanguages';
 
 // components
@@ -66,6 +72,7 @@ import Fieldset from '../Fieldset/Fieldset';
 import Loading from '../Loading/Loading';
 import OccupationsSelect from '../OccupationFilters/OccupationsSelect';
 import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect';
+import UserOccupations from './UserOccupations';
 
 // api
 import api from '../../api';
@@ -86,15 +93,16 @@ export default function ProfileForm(props: ProfileFormProps) {
 
   // User api provided lists and metadata
   const { data: countries, isLoading: countriesLoading } = useCountries();
-  const {
-    data: occupations,
-    isLoading: occupationsLoading,
-    flattenedOccupations,
-  } = useOccupations();
+  const { data: occupations, isLoading: occupationsLoading } = useOccupations();
+  const { data: flattenedOccupations, isLoading: occupationsFlatLoading } =
+    useOccupationsFlat();
   const { data: languages, isLoading: languagesLoading } = useLanguages();
 
   const listsLoading =
-    countriesLoading || occupationsLoading || languagesLoading;
+    countriesLoading ||
+    occupationsLoading ||
+    occupationsFlatLoading ||
+    languagesLoading;
 
   const isNewProfile =
     !(created && modified) || isNewUser({ created, modified });
@@ -136,6 +144,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     register('citizenshipCode');
     register('nativeLanguageCode');
     register('address');
+    register('occupations');
   }, [register]);
 
   // watch field values
@@ -148,6 +157,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     nativeLanguageCode,
     occupationCode,
     address,
+    occupations: userOccupations,
   } = watch();
 
   // Get default values for regions select, if provided in userProfile.
@@ -199,6 +209,34 @@ export default function ProfileForm(props: ProfileFormProps) {
     [flattenedOccupations, occupationCode]
   );
 
+  function handleOccupationsForPayload(
+    changed: UserOccupationSelection[],
+    previous: UserOccupationSelection[]
+  ) {
+    const changedOccupations = changed.reduce(
+      (acc: UserOccupationSelection[], occupation) => {
+        const existing = previous.find(p => p.id === occupation.id);
+
+        if (occupation.id && occupation.delete) {
+          acc.push({ id: occupation.id, delete: true });
+        }
+
+        if (!occupation.id) {
+          acc.push({ escoUri: occupation.escoUri });
+        }
+
+        if (existing && occupation.workMonths !== existing.workMonths) {
+          acc.push({ id: existing.id, workMonths: occupation.workMonths });
+        }
+
+        return acc;
+      },
+      []
+    );
+
+    return changedOccupations;
+  }
+
   /**
    * Handle form submit.
    */
@@ -221,7 +259,16 @@ export default function ProfileForm(props: ProfileFormProps) {
         // loop through all dirty input values, set to payload
         if (dirtyKeys.length) {
           for (const key of dirtyKeys) {
-            if (
+            if (key === 'occupations') {
+              const modifiedOccupations = handleOccupationsForPayload(
+                values.occupations,
+                userOccupations
+              );
+
+              if (modifiedOccupations.length) {
+                payload.occupations = modifiedOccupations;
+              }
+            } else if (
               typeof values[key] === 'boolean' ||
               key === 'occupationCode' ||
               values[key]
@@ -231,7 +278,47 @@ export default function ProfileForm(props: ProfileFormProps) {
           }
         }
 
-        const response = await api.user.patch(payload);
+        /* const occupations: Occupation[] = [
+          {
+            naceCode: '62.01',
+            escoUri:
+              'http://data.europa.eu/esco/occupation/b5e21e2b-ab0c-4c8d-8277-d98be4ad79c4',
+            escoCode: '62.01',
+            id: '4aff252f-5cb8-47bc-b037-9919b964c72c',
+            workMonths: 12,
+          },
+        ]; */
+
+        const occupations: Occupation[] = [
+          /* {
+            escoUri:
+              'http://data.europa.eu/esco/occupation/f7066fc0-5f2f-43a9-bd35-a99e6119490d',
+          },
+          {
+            escoUri:
+              'http://data.europa.eu/esco/occupation/f7450c1f-20b7-45dd-b3bb-25095830bf3f',
+          },
+          {
+            escoUri:
+              'http://data.europa.eu/esco/occupation/f84aae41-28cc-4aa0-a0df-e7c3030516fd',
+          },
+          {
+            escoUri:
+              'http://data.europa.eu/esco/occupation/fd882949-aad7-42ff-825e-00d49a5ec469',
+          }, */
+        ];
+
+        if (payload) {
+          console.log(payload);
+        }
+
+        const response = await api.user.patch({ ...payload /* occupations */ });
+
+        if (payload.occupations) {
+          setValue('occupations', response.data.occupations, {
+            shouldDirty: false,
+          });
+        }
 
         setUserProfile(response.data);
 
@@ -257,7 +344,15 @@ export default function ProfileForm(props: ProfileFormProps) {
         });
       }
     },
-    [dirtyFields, isNewProfile, onProfileSubmit, setUserProfile, toast]
+    [
+      dirtyFields,
+      isNewProfile,
+      onProfileSubmit,
+      setUserProfile,
+      setValue,
+      toast,
+      userOccupations,
+    ]
   );
 
   /**
@@ -374,10 +469,17 @@ export default function ProfileForm(props: ProfileFormProps) {
       onClose: () => {},
     });
 
+  const handleOccupationsChange = useCallback(
+    (changedOccupations: UserOccupationSelection[]) => {
+      setValue('occupations', changedOccupations, { shouldDirty: true });
+    },
+    [setValue]
+  );
+
   if (listsLoading) {
     return <Loading />;
   }
-
+  console.log(userOccupations);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={6}>
@@ -578,7 +680,7 @@ export default function ProfileForm(props: ProfileFormProps) {
                   Ask for recommendations
                 </Link>
               </FormControl>
-              {occupations && (
+              {/* occupations && (
                 <FormControl
                   isInvalid={Boolean(errors?.occupationCode)}
                   id="occupationCode"
@@ -599,6 +701,21 @@ export default function ProfileForm(props: ProfileFormProps) {
                       </>
                     )}
                   </Link>
+                </FormControl>
+              ) */}
+              {flattenedOccupations && (
+                <FormControl
+                  isInvalid={Boolean(errors?.occupations)}
+                  id="occupations"
+                >
+                  <FormLabel>Occupations</FormLabel>
+                  <UserOccupations
+                    userOccupations={userOccupations}
+                    occupationOptions={flattenedOccupations
+                      .filter(o => o.notation.includes('.'))
+                      .sort((a, b) => a.notation.localeCompare(b.notation))}
+                    handleSave={handleOccupationsChange}
+                  />
                 </FormControl>
               )}
               <FormControl isInvalid={Boolean(errors?.regions)} id="regions">

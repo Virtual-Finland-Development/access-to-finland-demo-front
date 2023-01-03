@@ -26,6 +26,28 @@ export interface Address {
   country: string;
 }
 
+export interface Occupation {
+  id?: string;
+  naceCode?: string;
+  escoUri?: string;
+  escoCode?: string;
+  workMonths?: number;
+}
+
+export interface UserOccupationSelection extends Occupation {
+  label?: string;
+  delete?: boolean;
+}
+
+export interface WorkPreference {
+  id?: string;
+  preferredRegionEnum: string[];
+  preferredMunicipalityEnum: string[];
+  employmentTypeCode: 'permanent' | 'temporary' | 'seasonal' | 'summerJob';
+  workingTimeEnum: '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08';
+  workingLanguageEnum: string;
+}
+
 export interface UserProfile {
   id: string;
   firstName: string;
@@ -42,6 +64,8 @@ export interface UserProfile {
   nativeLanguageCode: string;
   gender: Gender;
   dateOfBirth: string;
+  occupations: Occupation[];
+  workPreferences: WorkPreference;
 }
 
 export interface CountryOption {
