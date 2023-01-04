@@ -23,6 +23,7 @@ import {
   useToast,
   Link,
   SimpleGrid,
+  Select as ChakraSelect,
 } from '@chakra-ui/react';
 import {
   ActionMeta,
@@ -34,7 +35,12 @@ import {
 } from 'chakra-react-select';
 
 // types
-import { Gender, UserProfile, UserOccupationSelection } from '../../@types';
+import {
+  Gender,
+  UserProfile,
+  UserOccupationSelection,
+  EmploymentType,
+} from '../../@types';
 import { RegionSelectOption, RegionType, SelectOption } from './types';
 
 // context
@@ -54,6 +60,8 @@ import {
   getDefaultRegionOptions,
   groupedRegionOptions,
   handleOccupationsForPayload,
+  handleWorkPreferencesForPayload,
+  EMPLOYMENT_TYPE_LABELS,
 } from './utils';
 
 // hooks
@@ -64,7 +72,6 @@ import useLanguages from '../../hooks/useLanguages';
 // components
 import Fieldset from '../Fieldset/Fieldset';
 import Loading from '../Loading/Loading';
-// import OccupationsSelect from '../OccupationFilters/OccupationsSelect';
 import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect';
 import UserOccupations from './UserOccupations';
 
@@ -134,7 +141,8 @@ export default function ProfileForm(props: ProfileFormProps) {
     register('nativeLanguageCode');
     register('address');
     register('occupations');
-    register('workPreferences');
+    register('workPreferences.preferredRegionEnum');
+    register('workPreferences.preferredMunicipalityEnum');
   }, [register]);
 
   // watch field values
@@ -217,6 +225,11 @@ export default function ProfileForm(props: ProfileFormProps) {
               if (modifiedOccupations.length) {
                 payload.occupations = modifiedOccupations;
               }
+            } else if (key === 'workPreferences') {
+              payload.workPreferences = handleWorkPreferencesForPayload(
+                values.workPreferences,
+                userProfile.workPreferences
+              );
             } else if (typeof values[key] === 'boolean' || values[key]) {
               payload[key as keyof UserProfile] = values[key];
             }
@@ -246,6 +259,7 @@ export default function ProfileForm(props: ProfileFormProps) {
           isClosable: true,
         });
       } catch (error: any) {
+        console.log(error);
         toast({
           title: error?.title || 'Error.',
           description:
@@ -264,6 +278,7 @@ export default function ProfileForm(props: ProfileFormProps) {
       setValue,
       toast,
       userProfile.occupations,
+      userProfile.workPreferences,
     ]
   );
 
@@ -555,7 +570,7 @@ export default function ProfileForm(props: ProfileFormProps) {
             </Stack>
           </Fieldset>
 
-          <Fieldset title="Search profile">
+          <Fieldset title="Search profile & work preferences">
             <Stack spacing={4}>
               <FormControl
                 isInvalid={Boolean(errors?.jobTitles)}
@@ -606,6 +621,31 @@ export default function ProfileForm(props: ProfileFormProps) {
                   />
                 </FormControl>
               )}
+              <FormControl
+                isInvalid={Boolean(errors?.workPreferences?.employmentTypeCode)}
+                id="workPreferences.employmentTypeCode"
+              >
+                <FormLabel>Preferred employment type</FormLabel>
+                <ChakraSelect
+                  defaultValue={workPreferences?.employmentTypeCode || ''}
+                  {...register('workPreferences.employmentTypeCode')}
+                >
+                  <option disabled value="">
+                    Select...
+                  </option>
+                  {Object.keys(EmploymentType)
+                    .filter((key: any) => !isNaN(Number(EmploymentType[key])))
+                    .map(type => (
+                      <option key={type} value={type}>
+                        {
+                          EMPLOYMENT_TYPE_LABELS[
+                            type as keyof typeof EMPLOYMENT_TYPE_LABELS
+                          ]
+                        }
+                      </option>
+                    ))}
+                </ChakraSelect>
+              </FormControl>
               <FormControl
                 isInvalid={Boolean(
                   errors?.workPreferences?.preferredRegionEnum ||

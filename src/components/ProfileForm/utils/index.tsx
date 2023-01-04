@@ -88,8 +88,12 @@ export function getDefaultRegionOptions(workPreferences: WorkPreference) {
   if (!workPreferences) return [];
 
   const selected = [
-    ...workPreferences.preferredRegionEnum,
-    ...workPreferences.preferredMunicipalityEnum,
+    ...(workPreferences.preferredRegionEnum
+      ? workPreferences.preferredRegionEnum
+      : []),
+    ...(workPreferences.preferredMunicipalityEnum
+      ? workPreferences.preferredMunicipalityEnum
+      : []),
   ];
 
   if (selected?.length) {
@@ -131,7 +135,7 @@ export const groupedRegionOptions = [
   },
 ];
 
-// parse changed occupations for profile save payload
+// parse changed occupations for profile payload
 export function handleOccupationsForPayload(
   changed: UserOccupationSelection[],
   userOccupations: UserOccupationSelection[]
@@ -162,3 +166,53 @@ export function handleOccupationsForPayload(
 
   return changedOccupations;
 }
+
+// parse changed workPreferences object for profile payload
+export function handleWorkPreferencesForPayload(
+  values: WorkPreference,
+  userWorkPreferences: WorkPreference | null
+) {
+  try {
+    let changedWorkPreferences: any = {};
+
+    if (!userWorkPreferences?.id) {
+      changedWorkPreferences = values;
+    } else {
+      changedWorkPreferences = {
+        id: userWorkPreferences.id,
+      };
+
+      for (const prefKey of Object.keys(values)) {
+        const changed = values[prefKey as keyof WorkPreference];
+        const existing = userWorkPreferences[prefKey as keyof WorkPreference];
+
+        // if property is array (regions / municipalities)
+        if (Array.isArray(changed) && Array.isArray(existing)) {
+          const isSame =
+            changed.length === existing.length &&
+            changed.every(
+              (item: string, index: number) => item === existing[index]
+            );
+
+          if (!isSame) {
+            changedWorkPreferences[prefKey] = changed;
+          }
+          // else if not array, but value has changed
+        } else if (changed !== existing) {
+          changedWorkPreferences[prefKey] = changed;
+        }
+      }
+    }
+
+    return changedWorkPreferences;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const EMPLOYMENT_TYPE_LABELS = {
+  permanent: 'Permanent',
+  temporary: 'Temporary',
+  seasonal: 'Seasonal',
+  summerJob: 'Summer job',
+};

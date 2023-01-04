@@ -39,13 +39,20 @@ export interface UserOccupationSelection extends Occupation {
   delete?: boolean;
 }
 
+export enum EmploymentType {
+  'permanent',
+  'temporary',
+  'seasonal',
+  'summerJob',
+}
+
 export interface WorkPreference {
   id?: string;
-  preferredRegionEnum: string[];
-  preferredMunicipalityEnum: string[];
-  employmentTypeCode: 'permanent' | 'temporary' | 'seasonal' | 'summerJob';
-  workingTimeEnum: '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08';
-  workingLanguageEnum: string;
+  preferredRegionEnum?: string[];
+  preferredMunicipalityEnum?: string[];
+  employmentTypeCode?: EmploymentType;
+  workingTimeEnum?: '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08';
+  workingLanguageEnum?: string;
 }
 
 export interface UserProfile {
