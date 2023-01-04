@@ -133,7 +133,7 @@ export default function ProfileForm(props: ProfileFormProps) {
   const toast = useToast();
 
   /**
-   * Custom register languages.
+   * Custom register some properties.
    */
   useEffect(() => {
     register('jobTitles');
@@ -145,6 +145,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     register('occupations');
     register('workPreferences.preferredRegionEnum');
     register('workPreferences.preferredMunicipalityEnum');
+    register('workPreferences.workingLanguageEnum');
   }, [register]);
 
   // watch field values
@@ -158,7 +159,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     occupations: userOccupations,
     workPreferences,
   } = watch();
-
+  console.log(workPreferences);
   // Get default values for regions select, if provided in userProfile (workPreferences).
   const regionsDefaultOptions = useMemo(() => {
     if (!userId) return [];
@@ -194,6 +195,18 @@ export default function ProfileForm(props: ProfileFormProps) {
         'englishName'
       ),
     [languages, nativeLanguageCode]
+  );
+
+  // Default workingPreferences.workingLanguageEnum
+  const defaultWorkingLanguageOption = useMemo(
+    () =>
+      getDefaultSelectOption(
+        workPreferences?.workingLanguageEnum || '',
+        languages,
+        'id',
+        'englishName'
+      ),
+    [languages, workPreferences?.workingLanguageEnum]
   );
 
   /**
@@ -291,9 +304,16 @@ export default function ProfileForm(props: ProfileFormProps) {
     selected: SingleValue<SelectOption>,
     meta: ActionMeta<SelectOption>
   ) => {
-    const field = meta.name as 'countryOfBirthCode' | 'citizenshipCode';
+    const field = meta.name as
+      | 'countryOfBirthCode'
+      | 'citizenshipCode'
+      | 'nativeLanguageCode'
+      | 'workPreferences.workingLanguageEnum';
 
-    if (errors?.[`${field}`]) {
+    if (
+      field !== 'workPreferences.workingLanguageEnum' &&
+      errors?.[`${field}`]
+    ) {
       clearErrors(field);
     }
 
@@ -673,6 +693,29 @@ export default function ProfileForm(props: ProfileFormProps) {
                     ))}
                 </ChakraSelect>
               </FormControl>
+              {languages && (
+                <FormControl
+                  isInvalid={Boolean(
+                    errors?.workPreferences?.workingLanguageEnum
+                  )}
+                  id="workPreferences.workingLanguageEnum"
+                >
+                  <FormLabel>Preferred working language</FormLabel>
+                  <Select<SelectOption, false, GroupBase<SelectOption>>
+                    isMulti={false}
+                    name="workPreferences.workingLanguageEnum"
+                    defaultValue={defaultWorkingLanguageOption}
+                    options={languages.map(l => ({
+                      label: l.englishName,
+                      value: l.id,
+                    }))}
+                    placeholder="Type or select..."
+                    closeMenuOnSelect={true}
+                    size="md"
+                    onChange={handleSingleSelectChange}
+                  />
+                </FormControl>
+              )}
               <FormControl
                 isInvalid={Boolean(
                   errors?.workPreferences?.preferredRegionEnum ||
