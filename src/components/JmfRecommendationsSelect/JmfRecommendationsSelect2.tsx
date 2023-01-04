@@ -21,11 +21,7 @@ import {
 } from '@chakra-ui/react';
 
 // types
-import {
-  JmfRecommendation,
-  Occupation,
-  UserOccupationSelection,
-} from '../../@types';
+import { JmfRecommendation, UserOccupationSelection } from '../../@types';
 
 // hooks
 import useJmfRecommendations from '../../hooks/useJmfRecommendations';
@@ -72,7 +68,10 @@ export default function JmfRecommendationsSelect2(
     data: recommendations,
     isFetching: recommendationsFetching,
     refetch: fetchRecommendations,
-  } = useJmfRecommendations(textContent || extractedTextContent);
+  } = useJmfRecommendations(textContent || extractedTextContent, {
+    maxNumberOfSkills: 1,
+    maxNumberOfOccupations: 20,
+  });
 
   /**
    * Track extractedTextContent value and fetch recommendations when set

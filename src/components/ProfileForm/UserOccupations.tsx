@@ -4,18 +4,20 @@ import {
   Link,
   SimpleGrid,
   Text,
-  Select,
   Flex,
   IconButton,
   Heading,
-  FormLabel,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  Tooltip,
+  Tag,
+  TagLabel,
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
+import { yearsToMonths } from 'date-fns';
 
 // types
 import {
@@ -29,7 +31,6 @@ import {
 import { useModal } from '../../context/ModalContext/ModalContext';
 
 // components
-import OccupationItem from './OccupationItem';
 import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect2';
 
 interface UserOccupationsProps {
@@ -128,7 +129,9 @@ export default function UserOccupations(props: UserOccupationsProps) {
         </Link>
         <Stack alignItems="start" spacing={1}>
           {userOccupationsWithLables.map(o => (
-            <OccupationItem key={o.escoUri} item={o} />
+            <Tag key={o.escoUri}>
+              <TagLabel>{o.label}</TagLabel>
+            </Tag>
           ))}
         </Stack>
       </React.Fragment>
@@ -169,10 +172,36 @@ function UserOccupationsEdit(props: UserOccupationsEditProps) {
         });
       }
 
-      return selected.filter(s => !(!s.id && s.delete));
+      return selected.filter(s => s.id || (!s.id && !s.delete));
     });
   }, []);
-  console.log(selected);
+
+  /**
+   * Change occupation workMonths
+   */
+  const updateOccupationExperience = useCallback(
+    (occupation: UserOccupationSelection, experienceInYears: string) => {
+      try {
+        setSelected(prev => {
+          let modified = [...prev].map(o => {
+            if (!o.delete && o.escoUri === occupation.escoUri) {
+              return {
+                ...o,
+                workMonths: yearsToMonths(parseFloat(experienceInYears)),
+              };
+            }
+            return o;
+          });
+
+          return modified;
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    []
+  );
+
   /**
    * Remove occupation from selected
    */
@@ -215,30 +244,32 @@ function UserOccupationsEdit(props: UserOccupationsEditProps) {
                   {occupation.label}
                 </Text>
                 <Flex alignItems="center">
-                  {/* <Select
-                    size="sm"
-                    onChange={({ target }) => {
-                      if (['none', '0'].includes(target.value)) {
-                        console.log(6);
-                      }
-                    }}
+                  <Tooltip
+                    hasArrow
+                    placement="auto"
+                    label="Work experience in years"
                   >
-                    <option value="none">No experience</option>
-                    <option value="0">Less than a year</option>
-                    <option value="1">One year</option>
-                    <option value="2">Two years</option>
-                    <option value="4">Four years</option>
-                    <option value="5">Five years</option>
-                    <option value="7">More than five years</option>
-                    <option value="10">More than ten years</option>
-                  </Select> */}
-                  <NumberInput size="sm" flexGrow={1}>
-                    <NumberInputField placeholder="Work experience in years" />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
+                    <NumberInput
+                      size="sm"
+                      flexGrow={1}
+                      min={0}
+                      step={0.5}
+                      defaultValue={
+                        occupation.workMonths
+                          ? (occupation.workMonths / 12).toFixed(1).toString()
+                          : undefined
+                      }
+                      onBlur={({ target }) =>
+                        updateOccupationExperience(occupation, target.value)
+                      }
+                    >
+                      <NumberInputField placeholder="Work experience in years" />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </Tooltip>
                   <IconButton
                     aria-label="remove occupation"
                     size="sm"

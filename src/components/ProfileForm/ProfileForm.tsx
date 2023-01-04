@@ -24,7 +24,6 @@ import {
   Link,
   SimpleGrid,
 } from '@chakra-ui/react';
-import { SmallAddIcon, EditIcon } from '@chakra-ui/icons';
 import {
   ActionMeta,
   CreatableSelect,
@@ -35,12 +34,7 @@ import {
 } from 'chakra-react-select';
 
 // types
-import {
-  Gender,
-  UserProfile,
-  Occupation,
-  UserOccupationSelection,
-} from '../../@types';
+import { Gender, UserProfile, UserOccupationSelection } from '../../@types';
 import { SelectOption } from './types';
 
 // context
@@ -59,18 +53,18 @@ import {
   getDefaultSelectOption,
   getDefaultRegionOptions,
   groupedRegionOptions,
+  handleOccupationsForPayload,
 } from './utils';
 
 // hooks
 import useCountries from '../../hooks/useCountries';
-import useOccupations from '../../hooks/useOccupations';
 import useOccupationsFlat from '../../hooks/useOccupationsFlat';
 import useLanguages from '../../hooks/useLanguages';
 
 // components
 import Fieldset from '../Fieldset/Fieldset';
 import Loading from '../Loading/Loading';
-import OccupationsSelect from '../OccupationFilters/OccupationsSelect';
+// import OccupationsSelect from '../OccupationFilters/OccupationsSelect';
 import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect';
 import UserOccupations from './UserOccupations';
 
@@ -93,16 +87,12 @@ export default function ProfileForm(props: ProfileFormProps) {
 
   // User api provided lists and metadata
   const { data: countries, isLoading: countriesLoading } = useCountries();
-  const { data: occupations, isLoading: occupationsLoading } = useOccupations();
   const { data: flattenedOccupations, isLoading: occupationsFlatLoading } =
     useOccupationsFlat();
   const { data: languages, isLoading: languagesLoading } = useLanguages();
 
   const listsLoading =
-    countriesLoading ||
-    occupationsLoading ||
-    occupationsFlatLoading ||
-    languagesLoading;
+    countriesLoading || occupationsFlatLoading || languagesLoading;
 
   const isNewProfile =
     !(created && modified) || isNewUser({ created, modified });
@@ -140,7 +130,6 @@ export default function ProfileForm(props: ProfileFormProps) {
     register('jobTitles');
     register('regions');
     register('countryOfBirthCode');
-    register('occupationCode');
     register('citizenshipCode');
     register('nativeLanguageCode');
     register('address');
@@ -155,7 +144,6 @@ export default function ProfileForm(props: ProfileFormProps) {
     countryOfBirthCode,
     citizenshipCode,
     nativeLanguageCode,
-    occupationCode,
     address,
     occupations: userOccupations,
   } = watch();
@@ -197,46 +185,6 @@ export default function ProfileForm(props: ProfileFormProps) {
     [languages, nativeLanguageCode]
   );
 
-  // Default occupationCode option
-  const defaultOccupationCode = useMemo(
-    () =>
-      getDefaultSelectOption(
-        occupationCode,
-        flattenedOccupations?.map(o => ({ ...o, name: o.prefLabel.en })),
-        'notation',
-        'name'
-      ),
-    [flattenedOccupations, occupationCode]
-  );
-
-  function handleOccupationsForPayload(
-    changed: UserOccupationSelection[],
-    previous: UserOccupationSelection[]
-  ) {
-    const changedOccupations = changed.reduce(
-      (acc: UserOccupationSelection[], occupation) => {
-        const existing = previous.find(p => p.id === occupation.id);
-
-        if (occupation.id && occupation.delete) {
-          acc.push({ id: occupation.id, delete: true });
-        }
-
-        if (!occupation.id) {
-          acc.push({ escoUri: occupation.escoUri });
-        }
-
-        if (existing && occupation.workMonths !== existing.workMonths) {
-          acc.push({ id: existing.id, workMonths: occupation.workMonths });
-        }
-
-        return acc;
-      },
-      []
-    );
-
-    return changedOccupations;
-  }
-
   /**
    * Handle form submit.
    */
@@ -262,58 +210,21 @@ export default function ProfileForm(props: ProfileFormProps) {
             if (key === 'occupations') {
               const modifiedOccupations = handleOccupationsForPayload(
                 values.occupations,
-                userOccupations
+                userProfile.occupations || []
               );
 
               if (modifiedOccupations.length) {
                 payload.occupations = modifiedOccupations;
               }
-            } else if (
-              typeof values[key] === 'boolean' ||
-              key === 'occupationCode' ||
-              values[key]
-            ) {
+            } else if (typeof values[key] === 'boolean' || values[key]) {
               payload[key as keyof UserProfile] = values[key];
             }
           }
         }
 
-        /* const occupations: Occupation[] = [
-          {
-            naceCode: '62.01',
-            escoUri:
-              'http://data.europa.eu/esco/occupation/b5e21e2b-ab0c-4c8d-8277-d98be4ad79c4',
-            escoCode: '62.01',
-            id: '4aff252f-5cb8-47bc-b037-9919b964c72c',
-            workMonths: 12,
-          },
-        ]; */
+        const response = await api.user.patch(payload);
 
-        const occupations: Occupation[] = [
-          /* {
-            escoUri:
-              'http://data.europa.eu/esco/occupation/f7066fc0-5f2f-43a9-bd35-a99e6119490d',
-          },
-          {
-            escoUri:
-              'http://data.europa.eu/esco/occupation/f7450c1f-20b7-45dd-b3bb-25095830bf3f',
-          },
-          {
-            escoUri:
-              'http://data.europa.eu/esco/occupation/f84aae41-28cc-4aa0-a0df-e7c3030516fd',
-          },
-          {
-            escoUri:
-              'http://data.europa.eu/esco/occupation/fd882949-aad7-42ff-825e-00d49a5ec469',
-          }, */
-        ];
-
-        if (payload) {
-          console.log(payload);
-        }
-
-        const response = await api.user.patch({ ...payload /* occupations */ });
-
+        // update occupations to form-hook state without dirtying, if payload includes occupation changes
         if (payload.occupations) {
           setValue('occupations', response.data.occupations, {
             shouldDirty: false,
@@ -351,7 +262,7 @@ export default function ProfileForm(props: ProfileFormProps) {
       setUserProfile,
       setValue,
       toast,
-      userOccupations,
+      userProfile.occupations,
     ]
   );
 
@@ -362,10 +273,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     selected: SingleValue<SelectOption>,
     meta: ActionMeta<SelectOption>
   ) => {
-    const field = meta.name as
-      | 'countryOfBirthCode'
-      | 'citizenshipCode'
-      | 'occupationCode';
+    const field = meta.name as 'countryOfBirthCode' | 'citizenshipCode';
 
     if (errors?.[`${field}`]) {
       clearErrors(field);
@@ -428,28 +336,6 @@ export default function ProfileForm(props: ProfileFormProps) {
     );
 
   /**
-   * Handle open occupational group selection, present in modal.
-   */
-  const handleOpenOccupationSelect = () =>
-    openModal({
-      title: 'Choose your occupation',
-      content: (
-        <OccupationsSelect
-          defaultSelected={occupationCode ? [occupationCode] : []}
-          onSelectOccupations={(selected: string[]) => {
-            setValue('occupationCode', selected.length ? selected[0] : '', {
-              shouldDirty: true,
-            });
-            closeModal();
-          }}
-          onCancel={closeModal}
-        />
-      ),
-      size: '3xl',
-      onClose: () => {},
-    });
-
-  /**
    * Handle open jmf occupations / skills selection
    */
   const handleOpenRecommendationsSelect = () =>
@@ -469,6 +355,9 @@ export default function ProfileForm(props: ProfileFormProps) {
       onClose: () => {},
     });
 
+  /**
+   * Handle set changed occupations to hook-form state
+   */
   const handleOccupationsChange = useCallback(
     (changedOccupations: UserOccupationSelection[]) => {
       setValue('occupations', changedOccupations, { shouldDirty: true });
@@ -479,7 +368,7 @@ export default function ProfileForm(props: ProfileFormProps) {
   if (listsLoading) {
     return <Loading />;
   }
-  console.log(userOccupations);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={6}>
@@ -680,29 +569,6 @@ export default function ProfileForm(props: ProfileFormProps) {
                   Ask for recommendations
                 </Link>
               </FormControl>
-              {/* occupations && (
-                <FormControl
-                  isInvalid={Boolean(errors?.occupationCode)}
-                  id="occupationCode"
-                >
-                  <FormLabel>Occupation</FormLabel>
-                  <Link
-                    color="blue.500"
-                    fontWeight="medium"
-                    onClick={handleOpenOccupationSelect}
-                  >
-                    {defaultOccupationCode ? (
-                      <>
-                        {defaultOccupationCode[0].label} <EditIcon />
-                      </>
-                    ) : (
-                      <>
-                        Select occupation <SmallAddIcon />
-                      </>
-                    )}
-                  </Link>
-                </FormControl>
-              ) */}
               {flattenedOccupations && (
                 <FormControl
                   isInvalid={Boolean(errors?.occupations)}
@@ -758,16 +624,10 @@ export default function ProfileForm(props: ProfileFormProps) {
         </SimpleGrid>
 
         <Stack spacing={6} direction={['column', 'row']} justifyContent="end">
-          {/* isEdit && (
-            <Button w="full" disabled={isSubmitting} onClick={onCancel}>
-              {!isEdit ? 'Skip' : 'Cancel'}
-            </Button>
-          ) */}
           <Button
             type="submit"
             bg="blue.400"
             color="white"
-            // w="full"
             _hover={{
               bg: 'blue.500',
             }}

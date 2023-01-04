@@ -67,7 +67,10 @@ export default function JmfRecommendationsSelect(
     data: recommendations,
     isFetching: recommendationsFetching,
     refetch: fetchRecommendations,
-  } = useJmfRecommendations(textContent || extractedTextContent);
+  } = useJmfRecommendations(textContent || extractedTextContent, {
+    maxNumberOfSkills: 20,
+    maxNumberOfOccupations: 7,
+  });
 
   /**
    * Track extractedTextContent value and fetch recommendations when set

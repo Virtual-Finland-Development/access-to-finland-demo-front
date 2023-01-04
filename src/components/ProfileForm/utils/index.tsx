@@ -4,7 +4,7 @@ import lastNames from '../fakeData/lastNames.json';
 import regionsJson from '../../TmtPage/regionJsons/regions.json';
 import municipalitiesJson from '../../TmtPage/regionJsons/municipalities.json';
 
-import { Address } from '../../../@types';
+import { Address, UserOccupationSelection } from '../../../@types';
 import { SelectOption } from '../types';
 
 // pick and format random address from addresses json
@@ -113,3 +113,35 @@ export const groupedRegionOptions = [
     })),
   },
 ];
+
+// parse changed occupations for profile save payload
+export function handleOccupationsForPayload(
+  changed: UserOccupationSelection[],
+  userOccupations: UserOccupationSelection[]
+) {
+  const changedOccupations = changed.reduce(
+    (acc: UserOccupationSelection[], occupation) => {
+      const existing = userOccupations.find(p => p.id === occupation.id);
+
+      if (occupation.id && occupation.delete) {
+        acc.push({ id: occupation.id, delete: true });
+      }
+
+      if (!occupation.id) {
+        acc.push({
+          escoUri: occupation.escoUri,
+          workMonths: occupation.workMonths,
+        });
+      }
+
+      if (existing && occupation.workMonths !== existing.workMonths) {
+        acc.push({ id: existing.id, workMonths: occupation.workMonths });
+      }
+
+      return acc;
+    },
+    []
+  );
+
+  return changedOccupations;
+}
