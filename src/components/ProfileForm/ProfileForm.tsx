@@ -40,6 +40,7 @@ import {
   UserProfile,
   UserOccupationSelection,
   EmploymentType,
+  WorkingTime,
 } from '../../@types';
 import { RegionSelectOption, RegionType, SelectOption } from './types';
 
@@ -62,6 +63,7 @@ import {
   handleOccupationsForPayload,
   handleWorkPreferencesForPayload,
   EMPLOYMENT_TYPE_LABELS,
+  WORKING_TIME_LABELS,
 } from './utils';
 
 // hooks
@@ -640,6 +642,31 @@ export default function ProfileForm(props: ProfileFormProps) {
                         {
                           EMPLOYMENT_TYPE_LABELS[
                             type as keyof typeof EMPLOYMENT_TYPE_LABELS
+                          ]
+                        }
+                      </option>
+                    ))}
+                </ChakraSelect>
+              </FormControl>
+              <FormControl
+                isInvalid={Boolean(errors?.workPreferences?.workingTimeEnum)}
+                id="workPreferences.workingTimeEnum"
+              >
+                <FormLabel>Preferred working time</FormLabel>
+                <ChakraSelect
+                  defaultValue={workPreferences?.workingTimeEnum || ''}
+                  {...register('workPreferences.workingTimeEnum')}
+                >
+                  <option disabled value="">
+                    Select...
+                  </option>
+                  {Object.keys(WorkingTime)
+                    .filter(key => key.length === 2)
+                    .map(time => (
+                      <option key={time} value={time}>
+                        {
+                          WORKING_TIME_LABELS[
+                            time as keyof typeof WORKING_TIME_LABELS
                           ]
                         }
                       </option>

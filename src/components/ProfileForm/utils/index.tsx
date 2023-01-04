@@ -216,3 +216,14 @@ export const EMPLOYMENT_TYPE_LABELS = {
   seasonal: 'Seasonal',
   summerJob: 'Summer job',
 };
+
+export const WORKING_TIME_LABELS = {
+  '01': 'Day shift',
+  '02': 'Evening shift',
+  '03': 'Night shift',
+  '04': 'Work in episodes',
+  '05': 'Flexible hours',
+  '06': 'Normal days',
+  '07': 'Weekend hours',
+  '08': 'Work in shifts',
+};

@@ -46,12 +46,23 @@ export enum EmploymentType {
   'summerJob',
 }
 
+export enum WorkingTime {
+  '01',
+  '02',
+  '03',
+  '04',
+  '05',
+  '06',
+  '07',
+  '08',
+}
+
 export interface WorkPreference {
   id?: string;
   preferredRegionEnum?: string[];
   preferredMunicipalityEnum?: string[];
   employmentTypeCode?: EmploymentType;
-  workingTimeEnum?: '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08';
+  workingTimeEnum?: WorkingTime;
   workingLanguageEnum?: string;
 }
 
