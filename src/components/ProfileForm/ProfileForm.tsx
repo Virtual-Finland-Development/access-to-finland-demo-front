@@ -35,7 +35,7 @@ import {
 
 // types
 import { Gender, UserProfile, UserOccupationSelection } from '../../@types';
-import { SelectOption } from './types';
+import { RegionSelectOption, RegionType, SelectOption } from './types';
 
 // context
 import { useAppContext } from '../../context/AppContext/AppContext';
@@ -134,25 +134,26 @@ export default function ProfileForm(props: ProfileFormProps) {
     register('nativeLanguageCode');
     register('address');
     register('occupations');
+    register('workPreferences');
   }, [register]);
 
   // watch field values
   const {
     jobTitles,
-    regions,
     jobsDataConsent,
     countryOfBirthCode,
     citizenshipCode,
     nativeLanguageCode,
     address,
     occupations: userOccupations,
+    workPreferences,
   } = watch();
 
-  // Get default values for regions select, if provided in userProfile.
+  // Get default values for regions select, if provided in userProfile (workPreferences).
   const regionsDefaultOptions = useMemo(() => {
     if (!userId) return [];
-    return getDefaultRegionOptions(regions);
-  }, [regions, userId]);
+    return getDefaultRegionOptions(workPreferences);
+  }, [workPreferences, userId]);
 
   // Default countryOfBirthCode option
   const defaultCountryOfBirthOption = useMemo(
@@ -302,6 +303,27 @@ export default function ProfileForm(props: ProfileFormProps) {
       selections.map(s => s.value),
       { shouldDirty: true }
     );
+  };
+
+  /**
+   * Handle workPreferences region / municipality changes
+   */
+  const handleRegionsSelectChange = (
+    selections: MultiValue<RegionSelectOption>
+  ) => {
+    const regions = selections
+      .filter(s => s.type === RegionType.REGION)
+      .map(r => r.value);
+    const municipalities = selections
+      .filter(s => s.type === RegionType.MUNICIPALITY)
+      .map(m => m.value);
+
+    setValue('workPreferences.preferredRegionEnum', regions, {
+      shouldDirty: true,
+    });
+    setValue('workPreferences.preferredMunicipalityEnum', municipalities, {
+      shouldDirty: true,
+    });
   };
 
   /**
@@ -584,24 +606,30 @@ export default function ProfileForm(props: ProfileFormProps) {
                   />
                 </FormControl>
               )}
-              <FormControl isInvalid={Boolean(errors?.regions)} id="regions">
+              <FormControl
+                isInvalid={Boolean(
+                  errors?.workPreferences?.preferredRegionEnum ||
+                    errors?.workPreferences?.preferredMunicipalityEnum
+                )}
+                id="workPreferences"
+              >
                 <FormLabel>Preferred regions to work in</FormLabel>
-                <Select<SelectOption, true, GroupBase<SelectOption>>
+                <Select<RegionSelectOption, true, GroupBase<RegionSelectOption>>
                   isMulti
-                  name="regions"
+                  name="workPreferences"
                   defaultValue={regionsDefaultOptions}
                   options={groupedRegionOptions}
                   placeholder="Type or select..."
                   closeMenuOnSelect={false}
                   size="md"
-                  onChange={handleMultiSelectChange}
+                  onChange={handleRegionsSelectChange}
                   menuPosition="fixed"
                   minMenuHeight={300}
                 />
                 <HookFormError
                   errors={errors}
                   as={<FormErrorMessage />}
-                  name="regions"
+                  name="workPreferences"
                 />
               </FormControl>
               {isEdit && (

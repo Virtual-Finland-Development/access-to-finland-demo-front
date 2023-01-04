@@ -4,8 +4,12 @@ import lastNames from '../fakeData/lastNames.json';
 import regionsJson from '../../TmtPage/regionJsons/regions.json';
 import municipalitiesJson from '../../TmtPage/regionJsons/municipalities.json';
 
-import { Address, UserOccupationSelection } from '../../../@types';
-import { SelectOption } from '../types';
+import {
+  Address,
+  UserOccupationSelection,
+  WorkPreference,
+} from '../../../@types';
+import { RegionSelectOption, RegionType } from '../types';
 
 // pick and format random address from addresses json
 export const pickRandomAddress = () => {
@@ -73,19 +77,30 @@ export function getDefaultSelectOption<T, U, V extends keyof U>(
     }));
 }
 
-// map default region options for react-select from user profile regions
-export function getDefaultRegionOptions(regions: string[]) {
-  let options: SelectOption[] = [];
-  const selections = [...regionsJson, ...municipalitiesJson];
+// map default region options for react-select from user profile workPreferences regions/municipalities
+export function getDefaultRegionOptions(workPreferences: WorkPreference) {
+  let options: RegionSelectOption[] = [];
+  const selections = [
+    ...regionsJson.map(r => ({ ...r, type: RegionType.REGION })),
+    ...municipalitiesJson.map(m => ({ ...m, type: RegionType.MUNICIPALITY })),
+  ];
 
-  if (regions?.length) {
-    options = regions.reduce((acc: SelectOption[], code) => {
-      const selected = selections.find(s => s.Koodi === code);
+  if (!workPreferences) return [];
 
-      if (selected) {
+  const selected = [
+    ...workPreferences.preferredRegionEnum,
+    ...workPreferences.preferredMunicipalityEnum,
+  ];
+
+  if (selected?.length) {
+    options = selected.reduce((acc: RegionSelectOption[], code) => {
+      const singleSelected = selections.find(s => s.Koodi === code);
+
+      if (singleSelected) {
         acc.push({
-          value: selected.Koodi,
-          label: selected.Selitteet[2].Teksti,
+          value: singleSelected.Koodi,
+          label: singleSelected.Selitteet[2].Teksti,
+          type: singleSelected.type,
         });
       }
 
@@ -103,6 +118,7 @@ export const groupedRegionOptions = [
     options: regionsJson.map(r => ({
       value: r.Koodi,
       label: r.Selitteet[2].Teksti,
+      type: RegionType.REGION,
     })),
   },
   {
@@ -110,6 +126,7 @@ export const groupedRegionOptions = [
     options: municipalitiesJson.map(m => ({
       value: m.Koodi,
       label: m.Selitteet[2].Teksti,
+      type: RegionType.MUNICIPALITY,
     })),
   },
 ];
