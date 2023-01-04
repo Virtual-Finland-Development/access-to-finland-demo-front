@@ -159,7 +159,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     occupations: userOccupations,
     workPreferences,
   } = watch();
-  console.log(workPreferences);
+
   // Get default values for regions select, if provided in userProfile (workPreferences).
   const regionsDefaultOptions = useMemo(() => {
     if (!userId) return [];
@@ -274,7 +274,6 @@ export default function ProfileForm(props: ProfileFormProps) {
           isClosable: true,
         });
       } catch (error: any) {
-        console.log(error);
         toast({
           title: error?.title || 'Error.',
           description:
