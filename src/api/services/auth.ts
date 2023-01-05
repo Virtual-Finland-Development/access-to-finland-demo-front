@@ -13,7 +13,7 @@ import {
 } from '../../constants';
 
 // utils
-import { JSONLocalStorage } from '../../utils';
+import { JSONLocalStorage } from '../../utils/JSONStorage';
 
 function getAuthRoute(authProvider: AuthProvider) {
   let route = '';

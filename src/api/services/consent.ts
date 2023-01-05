@@ -3,7 +3,7 @@ import {
   appContextUrlEncoded,
   LOCAL_STORAGE_AUTH_TOKENS,
 } from '../../constants';
-import { JSONLocalStorage } from '../../utils';
+import { JSONLocalStorage } from '../../utils/JSONStorage';
 import { AUTH_GW_BASE_URL } from '../endpoints';
 
 const consentDataSource =

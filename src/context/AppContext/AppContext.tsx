@@ -22,7 +22,8 @@ import {
 } from '../../constants';
 
 // utils
-import { isNewUser, JSONLocalStorage } from '../../utils';
+import { isNewUser } from '../../utils';
+import { JSONLocalStorage } from '../../utils/JSONStorage';
 
 // reducers
 import {
