@@ -1,21 +1,26 @@
-import { useState } from 'react';
 import {
   Box,
-  Heading,
-  Container,
-  Text,
   Button,
+  Container,
+  Heading,
   Stack,
+  Text,
   useToast,
 } from '@chakra-ui/react';
+import { useState } from 'react';
 
 // context
 import { useAppContext } from '../../context/AppContext/AppContext';
 
 // api
 import api from '../../api';
+import { ConsentSituation } from '../../api/services/consent';
 
-export default function ConsentSentry() {
+export default function ConsentSentry({
+  consentSituation,
+}: {
+  consentSituation: ConsentSituation;
+}) {
   const { setUserProfile } = useAppContext();
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
@@ -25,6 +30,16 @@ export default function ConsentSentry() {
    * Handle 'jobsConsent' update for user profile.
    */
   const handleConsent = async () => {
+    setIsSaving(true);
+
+    try {
+      api.consent.directToConsentService(consentSituation);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleConsentResponse = async () => {
     setIsSaving(true);
 
     try {

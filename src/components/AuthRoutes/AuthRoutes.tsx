@@ -1,18 +1,18 @@
-import { lazy, Suspense } from 'react';
-import { Routes, Route, Outlet } from 'react-router-dom';
 import { Box, Container } from '@chakra-ui/react';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import { Outlet, Route, Routes } from 'react-router-dom';
 
 // context
-import { useAppContext } from '../../context/AppContext/AppContext';
 
 // components
-import WelcomePage from '../WelcomePage/WelcomePage';
-import ServicesPage from '../ServicesPage/ServicesPage';
-import NavBar from '../NavBar/NavBar';
-import Loading from '../Loading/Loading';
-import PageNotFound from '../PageNotFound/PageNotFound';
+import api from '../../api';
 import ConsentSentry from '../ConsentSentry/ConsentSentry';
+import Loading from '../Loading/Loading';
+import NavBar from '../NavBar/NavBar';
+import PageNotFound from '../PageNotFound/PageNotFound';
 import Profile from '../Profile/Profile';
+import ServicesPage from '../ServicesPage/ServicesPage';
+import WelcomePage from '../WelcomePage/WelcomePage';
 
 const LazyTmt = lazy(() => import('../TmtPage/TmtPage'));
 
@@ -21,12 +21,20 @@ const LazyTmt = lazy(() => import('../TmtPage/TmtPage'));
  * Show ConsentSentry to user for approving giving consent before vacancies can be shown
  */
 function TmtPageConsentSentry() {
-  const {
-    userProfile: { jobsDataConsent },
-  } = useAppContext();
+  const [consentSituation, setConsentSituation] = useState({
+    consentStatus: '',
+  });
 
-  if (!jobsDataConsent) {
-    return <ConsentSentry />;
+  useEffect(() => {
+    async function fetchConsent() {
+      const consentSituation = await api.consent.checkConsent();
+      setConsentSituation(consentSituation);
+    }
+    fetchConsent();
+  });
+
+  if (consentSituation.consentStatus !== 'consentGranted') {
+    return <ConsentSentry consentSituation={consentSituation} />;
   }
 
   return (
