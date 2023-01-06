@@ -1,11 +1,14 @@
 import { Box, Container } from '@chakra-ui/react';
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useContext } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
 // context
 
 // components
-import api from '../../api';
+import {
+  ConsentContext,
+  ConsentProvider,
+} from '../../context/ConsentContext/ConsentContext';
 import ConsentSentry from '../ConsentSentry/ConsentSentry';
 import Loading from '../Loading/Loading';
 import NavBar from '../NavBar/NavBar';
@@ -21,20 +24,23 @@ const LazyTmt = lazy(() => import('../TmtPage/TmtPage'));
  * Show ConsentSentry to user for approving giving consent before vacancies can be shown
  */
 function TmtPageConsentSentry() {
-  const [consentSituation, setConsentSituation] = useState({
-    consentStatus: '',
-  });
+  const { isConsentInitialized, initializeConsentSituation, isConsentGranted } =
+    useContext(ConsentContext);
 
-  useEffect(() => {
-    async function fetchConsent() {
-      const consentSituation = await api.consent.checkConsent();
-      setConsentSituation(consentSituation);
-    }
-    fetchConsent();
-  });
+  if (!isConsentInitialized('USER_PROFILE')) {
+    initializeConsentSituation('USER_PROFILE');
+    return <Loading />;
+  }
 
-  if (consentSituation.consentStatus !== 'consentGranted') {
-    return <ConsentSentry consentSituation={consentSituation} />;
+  if (!isConsentGranted('USER_PROFILE')) {
+    return (
+      <ConsentSentry
+        dataSourceName="USER_PROFILE"
+        infoText="To continue to use vacancies search, you need to give your consent to
+    use your profile information for search capabilities in third party
+    service."
+      />
+    );
   }
 
   return (
@@ -61,7 +67,14 @@ export default function AppRoutes() {
         }
       >
         <Route index element={<WelcomePage />} />
-        <Route path="vacancies" element={<TmtPageConsentSentry />} />
+        <Route
+          path="vacancies"
+          element={
+            <ConsentProvider>
+              <TmtPageConsentSentry />
+            </ConsentProvider>
+          }
+        />
         <Route path="services" element={<ServicesPage />} />
         <Route path="profile" element={<Profile isEdit />} />
         <Route path="*" element={<PageNotFound />} />

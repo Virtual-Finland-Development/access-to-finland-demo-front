@@ -1,69 +1,26 @@
+import { Box, Button, Container, Heading, Stack, Text } from '@chakra-ui/react';
+import { useContext, useState } from 'react';
+import { KnownConsentDataSourceNames } from '../../constants/ConsentDataSources';
 import {
-  Box,
-  Button,
-  Container,
-  Heading,
-  Stack,
-  Text,
-  useToast,
-} from '@chakra-ui/react';
-import { useState } from 'react';
-
-// context
-import { useAppContext } from '../../context/AppContext/AppContext';
-
-// api
-import api from '../../api';
-import { ConsentSituation } from '../../api/services/consent';
+  ConsentContext,
+  ConsentProvider,
+} from '../../context/ConsentContext/ConsentContext';
 
 export default function ConsentSentry({
-  consentSituation,
+  dataSourceName,
+  infoText,
 }: {
-  consentSituation: ConsentSituation;
+  dataSourceName: KnownConsentDataSourceNames;
+  infoText: string;
 }) {
-  const { setUserProfile } = useAppContext();
+  const { redirectToConsentService } = useContext(ConsentContext);
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
-  const toast = useToast();
-
-  /**
-   * Handle 'jobsConsent' update for user profile.
-   */
   const handleConsent = async () => {
     setIsSaving(true);
 
     try {
-      api.consent.directToConsentService(consentSituation);
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const handleConsentResponse = async () => {
-    setIsSaving(true);
-
-    try {
-      const payload = { jobsDataConsent: true };
-      const response = await api.user.patch(payload);
-
-      setUserProfile(response.data);
-
-      toast({
-        title: 'Profile saved.',
-        description: 'Your profile was updated successfully.',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      });
-    } catch (error: any) {
-      toast({
-        title: error?.title || 'Error.',
-        description:
-          error?.detail || 'Something went wrong, please try again later.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
+      await redirectToConsentService(dataSourceName);
     } finally {
       setIsSaving(false);
     }
@@ -78,11 +35,7 @@ export default function ConsentSentry({
         >
           Consent needed
         </Heading>
-        <Text color={'gray.500'}>
-          To continue to use vacancies search, you need to give your consent to
-          use your profile information for search capabilities in third party
-          service.
-        </Text>
+        <Text color={'gray.500'}>{infoText}</Text>
         <Stack
           direction={'column'}
           spacing={3}
@@ -90,19 +43,21 @@ export default function ConsentSentry({
           alignSelf={'center'}
           position={'relative'}
         >
-          <Button
-            colorScheme={'blue'}
-            bg={'blue.500'}
-            // rounded={'full'}
-            px={6}
-            _hover={{
-              bg: 'blue.600',
-            }}
-            onClick={handleConsent}
-            isLoading={isSaving}
-          >
-            Approve
-          </Button>
+          <ConsentProvider>
+            <Button
+              colorScheme={'blue'}
+              bg={'blue.500'}
+              // rounded={'full'}
+              px={6}
+              _hover={{
+                bg: 'blue.600',
+              }}
+              onClick={handleConsent}
+              isLoading={isSaving}
+            >
+              Approve
+            </Button>
+          </ConsentProvider>
         </Stack>
       </Stack>
     </Container>
