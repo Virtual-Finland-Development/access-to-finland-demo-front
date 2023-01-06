@@ -4,7 +4,7 @@ import { ConsentSituation } from '../../api/services/consent';
 import { ConsentDataSource } from '../../constants/ConsentDataSource';
 
 interface ConsentContextState<ConsentDataSource> {
-  dataSource?: ConsentDataSource;
+  dataSource: ConsentDataSource;
   consentSituation: ConsentSituation;
   isConsentInitialized: boolean;
   isConsentGranted: boolean;
@@ -13,7 +13,9 @@ interface ConsentContextState<ConsentDataSource> {
 }
 
 // Default context state
-function getDefaultContextState(dataSource: ConsentDataSource) {
+function getDefaultContextState(
+  dataSource: ConsentDataSource
+): ConsentContextState<ConsentDataSource> {
   return {
     dataSource: dataSource,
     consentSituation: { consentStatus: '' },
@@ -106,6 +108,7 @@ function getConsentProvider(
     return (
       <ConsentContext.Provider
         value={{
+          dataSource,
           consentSituation,
           isConsentInitialized,
           isConsentGranted,
