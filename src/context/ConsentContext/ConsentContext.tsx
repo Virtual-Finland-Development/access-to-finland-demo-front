@@ -1,94 +1,112 @@
-import { createContext, useState } from 'react';
+import { Context, createContext, useState } from 'react';
 import api from '../../api';
 import { ConsentSituation } from '../../api/services/consent';
-import ConsentDataSources, {
-  KnownConsentDataSourceNames,
-} from '../../constants/ConsentDataSources';
+import { ConsentDataSource } from '../../constants/ConsentDataSource';
 
-type ConsentSituations = {
-  [K in KnownConsentDataSourceNames]?: ConsentSituation;
-};
+interface ConsentContextState<ConsentDataSource> {
+  dataSource?: ConsentDataSource;
+  consentSituation: ConsentSituation;
+  isConsentInitialized: boolean;
+  isConsentGranted: boolean;
+  initializeConsentSituation: () => Promise<ConsentSituation>;
+  redirectToConsentService: () => void;
+}
 
-type ConsentContextState = {
-  consentSituations: ConsentSituations;
-  isConsentInitialized(consentName: KnownConsentDataSourceNames): boolean;
-  isConsentGranted(consentName: KnownConsentDataSourceNames): boolean;
-  initializeConsentSituation: (
-    consentName: KnownConsentDataSourceNames
-  ) => Promise<ConsentSituation>;
-  redirectToConsentService: (
-    consentName: KnownConsentDataSourceNames
-  ) => Promise<void>;
-};
+//
+// useContext, provider with parameters, keep as singleton
+//
+const singletonContentContexts: {
+  [contextName: string]: {
+    ConsentContext: Context<ConsentContextState<ConsentDataSource>>;
+    ConsentProvider: React.FC;
+  };
+} = {};
 
-const contextDefaultValues: ConsentContextState = {
-  consentSituations: {},
-  isConsentInitialized: (consentName: KnownConsentDataSourceNames) => false,
-  isConsentGranted: (consentName: KnownConsentDataSourceNames) => false,
-  initializeConsentSituation: (consentName: KnownConsentDataSourceNames) => {
-    return Promise.resolve({} as ConsentSituation);
-  },
-  redirectToConsentService: (consentName: KnownConsentDataSourceNames) => {
-    return Promise.resolve();
-  },
-};
-
-export const ConsentContext =
-  createContext<ConsentContextState>(contextDefaultValues);
-
-export function ConsentProvider({ children }: any) {
-  const [consentSituations, setConsentSituations] = useState<ConsentSituations>(
-    contextDefaultValues.consentSituations
-  );
-
-  function isConsentInitialized(
-    consentName: KnownConsentDataSourceNames
-  ): boolean {
-    return typeof consentSituations[consentName] !== 'undefined';
+/**
+ *
+ * @param consentName
+ * @returns
+ */
+export default function getConsentContext(dataSource: ConsentDataSource): {
+  ConsentContext: Context<ConsentContextState<ConsentDataSource>>;
+  ConsentProvider: any;
+} {
+  if (typeof singletonContentContexts[dataSource] === 'undefined') {
+    const context = createContext<ConsentContextState<ConsentDataSource>>({
+      dataSource: dataSource,
+      consentSituation: { consentStatus: '' },
+      isConsentInitialized: false,
+      isConsentGranted: false,
+      initializeConsentSituation: () => {
+        return Promise.resolve({} as ConsentSituation);
+      },
+      redirectToConsentService: () => {},
+    });
+    singletonContentContexts[dataSource] = {
+      ConsentContext: context,
+      ConsentProvider: getConsentProvider(dataSource, context),
+    };
   }
+  return singletonContentContexts[dataSource];
+}
 
-  function isConsentGranted(consentName: KnownConsentDataSourceNames): boolean {
-    return consentSituations.USER_PROFILE?.consentStatus === 'consentGranted';
-  }
+/**
+ * Creates a ConsentProvider for given context
+ *
+ * @param context
+ * @returns
+ */
+function getConsentProvider(
+  dataSource: ConsentDataSource,
+  ConsentContext: Context<ConsentContextState<ConsentDataSource>>
+) {
+  return function ConsentProvider({ children }: React.PropsWithChildren) {
+    //
+    // Reactive flags and states
+    //
+    const [consentSituation, setConsentSituation] = useState<ConsentSituation>({
+      consentStatus: '',
+    });
+    const [isConsentInitialized, setIsConsentInitialized] =
+      useState<boolean>(false);
+    const [isConsentGranted, setIsConsentGranted] = useState<boolean>(false);
 
-  async function initializeConsentSituation(
-    consentName: KnownConsentDataSourceNames
-  ): Promise<ConsentSituation> {
-    if (!isConsentInitialized(consentName)) {
-      await fetchCurrentConsentSituation(consentName);
+    //
+    // Actions
+    //
+    async function initializeConsentSituation(): Promise<ConsentSituation> {
+      if (!isConsentInitialized) {
+        await fetchCurrentConsentSituation();
+        setIsConsentInitialized(true);
+      }
+      return consentSituation;
     }
-    return consentSituations[consentName] as ConsentSituation; // Typescript does not know that we checked for undefined
-  }
 
-  //
-  // Calls to external services
-  //
-  async function fetchCurrentConsentSituation(
-    consentName: KnownConsentDataSourceNames
-  ) {
-    const dataSource = ConsentDataSources[consentName];
-    consentSituations[consentName] = await api.consent.checkConsent(dataSource);
-    setConsentSituations(consentSituations);
-  }
+    //
+    // External service calls
+    //
+    async function fetchCurrentConsentSituation() {
+      const responseSituation = await api.consent.checkConsent(dataSource);
+      setConsentSituation(responseSituation);
+      setIsConsentGranted(responseSituation.consentStatus === 'consentGranted');
+    }
 
-  async function redirectToConsentService(
-    consentName: KnownConsentDataSourceNames
-  ): Promise<void> {
-    const consentSituation = await initializeConsentSituation(consentName);
-    api.consent.directToConsentService(consentSituation);
-  }
+    function redirectToConsentService(): void {
+      api.consent.directToConsentService(consentSituation);
+    }
 
-  return (
-    <ConsentContext.Provider
-      value={{
-        consentSituations,
-        isConsentInitialized,
-        isConsentGranted,
-        initializeConsentSituation,
-        redirectToConsentService,
-      }}
-    >
-      {children}
-    </ConsentContext.Provider>
-  );
+    return (
+      <ConsentContext.Provider
+        value={{
+          consentSituation,
+          isConsentInitialized,
+          isConsentGranted,
+          initializeConsentSituation,
+          redirectToConsentService,
+        }}
+      >
+        {children}
+      </ConsentContext.Provider>
+    );
+  };
 }

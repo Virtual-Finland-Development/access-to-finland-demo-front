@@ -1,26 +1,20 @@
 import { Box, Button, Container, Heading, Stack, Text } from '@chakra-ui/react';
-import { useContext, useState } from 'react';
-import { KnownConsentDataSourceNames } from '../../constants/ConsentDataSources';
-import {
-  ConsentContext,
-  ConsentProvider,
-} from '../../context/ConsentContext/ConsentContext';
+import { useState } from 'react';
 
 export default function ConsentSentry({
-  dataSourceName,
+  approveFunction,
   infoText,
 }: {
-  dataSourceName: KnownConsentDataSourceNames;
+  approveFunction: Function;
   infoText: string;
 }) {
-  const { redirectToConsentService } = useContext(ConsentContext);
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
   const handleConsent = async () => {
     setIsSaving(true);
 
     try {
-      await redirectToConsentService(dataSourceName);
+      await approveFunction();
     } finally {
       setIsSaving(false);
     }
@@ -43,21 +37,19 @@ export default function ConsentSentry({
           alignSelf={'center'}
           position={'relative'}
         >
-          <ConsentProvider>
-            <Button
-              colorScheme={'blue'}
-              bg={'blue.500'}
-              // rounded={'full'}
-              px={6}
-              _hover={{
-                bg: 'blue.600',
-              }}
-              onClick={handleConsent}
-              isLoading={isSaving}
-            >
-              Approve
-            </Button>
-          </ConsentProvider>
+          <Button
+            colorScheme={'blue'}
+            bg={'blue.500'}
+            // rounded={'full'}
+            px={6}
+            _hover={{
+              bg: 'blue.600',
+            }}
+            onClick={handleConsent}
+            isLoading={isSaving}
+          >
+            Approve
+          </Button>
         </Stack>
       </Stack>
     </Container>

@@ -1,14 +1,12 @@
 import { Box, Container } from '@chakra-ui/react';
 import { lazy, Suspense, useContext } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
+import { ConsentDataSource } from '../../constants/ConsentDataSource';
 
 // context
 
 // components
-import {
-  ConsentContext,
-  ConsentProvider,
-} from '../../context/ConsentContext/ConsentContext';
+import getConsentContext from '../../context/ConsentContext/ConsentContext';
 import ConsentSentry from '../ConsentSentry/ConsentSentry';
 import Loading from '../Loading/Loading';
 import NavBar from '../NavBar/NavBar';
@@ -19,23 +17,32 @@ import WelcomePage from '../WelcomePage/WelcomePage';
 
 const LazyTmt = lazy(() => import('../TmtPage/TmtPage'));
 
+// Get context and provider for given data source
+const { ConsentContext, ConsentProvider } = getConsentContext(
+  ConsentDataSource.USER_PROFILE
+);
+
 /**
  * User needs to give consent to use profile data in vacancies seach
  * Show ConsentSentry to user for approving giving consent before vacancies can be shown
  */
 function TmtPageConsentSentry() {
-  const { isConsentInitialized, initializeConsentSituation, isConsentGranted } =
-    useContext(ConsentContext);
+  const {
+    isConsentInitialized,
+    initializeConsentSituation,
+    isConsentGranted,
+    redirectToConsentService,
+  } = useContext(ConsentContext);
 
-  if (!isConsentInitialized('USER_PROFILE')) {
-    initializeConsentSituation('USER_PROFILE');
+  if (!isConsentInitialized) {
+    initializeConsentSituation();
     return <Loading />;
   }
 
-  if (!isConsentGranted('USER_PROFILE')) {
+  if (!isConsentGranted) {
     return (
       <ConsentSentry
-        dataSourceName="USER_PROFILE"
+        approveFunction={redirectToConsentService}
         infoText="To continue to use vacancies search, you need to give your consent to
     use your profile information for search capabilities in third party
     service."
