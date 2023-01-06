@@ -12,36 +12,44 @@ interface ConsentContextState<ConsentDataSource> {
   redirectToConsentService: () => void;
 }
 
+// Default context state
+function getDefaultContextState(dataSource: ConsentDataSource) {
+  return {
+    dataSource: dataSource,
+    consentSituation: { consentStatus: '' },
+    isConsentInitialized: false,
+    isConsentGranted: false,
+    initializeConsentSituation: () => {
+      return Promise.resolve({} as ConsentSituation);
+    },
+    redirectToConsentService: () => {},
+  };
+}
+
 //
 // useContext, provider with parameters, keep as singleton
 //
 const singletonContentContexts: {
   [contextName: string]: {
     ConsentContext: Context<ConsentContextState<ConsentDataSource>>;
-    ConsentProvider: React.FC;
+    ConsentProvider: React.FC<React.PropsWithChildren>;
   };
 } = {};
 
 /**
+ * Creates a ConsentContext and a provider for given data source
  *
- * @param consentName
+ * @param dataSource
  * @returns
  */
 export default function getConsentContext(dataSource: ConsentDataSource): {
   ConsentContext: Context<ConsentContextState<ConsentDataSource>>;
-  ConsentProvider: any;
+  ConsentProvider: React.FC<React.PropsWithChildren>;
 } {
   if (typeof singletonContentContexts[dataSource] === 'undefined') {
-    const context = createContext<ConsentContextState<ConsentDataSource>>({
-      dataSource: dataSource,
-      consentSituation: { consentStatus: '' },
-      isConsentInitialized: false,
-      isConsentGranted: false,
-      initializeConsentSituation: () => {
-        return Promise.resolve({} as ConsentSituation);
-      },
-      redirectToConsentService: () => {},
-    });
+    const context = createContext<ConsentContextState<ConsentDataSource>>(
+      getDefaultContextState(dataSource)
+    );
     singletonContentContexts[dataSource] = {
       ConsentContext: context,
       ConsentProvider: getConsentProvider(dataSource, context),
