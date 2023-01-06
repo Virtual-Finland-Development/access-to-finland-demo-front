@@ -27,15 +27,10 @@ const { ConsentContext, ConsentProvider } = getConsentContext(
  * Show ConsentSentry to user for approving giving consent before vacancies can be shown
  */
 function TmtPageConsentSentry() {
-  const {
-    isConsentInitialized,
-    initializeConsentSituation,
-    isConsentGranted,
-    redirectToConsentService,
-  } = useContext(ConsentContext);
+  const { isConsentInitialized, isConsentGranted, redirectToConsentService } =
+    useContext(ConsentContext);
 
   if (!isConsentInitialized) {
-    initializeConsentSituation();
     return <Loading />;
   }
 

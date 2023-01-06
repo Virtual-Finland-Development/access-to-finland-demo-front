@@ -1,4 +1,10 @@
-import { Context, createContext, useState } from 'react';
+import {
+  Context,
+  createContext,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import api from '../../api';
 import { ConsentSituation } from '../../api/services/consent';
 import { ConsentDataSource } from '../../constants/ConsentDataSource';
@@ -8,7 +14,6 @@ interface ConsentContextState<ConsentDataSource> {
   consentSituation: ConsentSituation;
   isConsentInitialized: boolean;
   isConsentGranted: boolean;
-  initializeConsentSituation: () => Promise<ConsentSituation>;
   redirectToConsentService: () => void;
 }
 
@@ -21,9 +26,6 @@ function getDefaultContextState(
     consentSituation: { consentStatus: '' },
     isConsentInitialized: false,
     isConsentGranted: false,
-    initializeConsentSituation: () => {
-      return Promise.resolve({} as ConsentSituation);
-    },
     redirectToConsentService: () => {},
   };
 }
@@ -84,13 +86,16 @@ function getConsentProvider(
     //
     // Actions
     //
-    async function initializeConsentSituation(): Promise<ConsentSituation> {
+    const initializeConsentSituation = useCallback(async () => {
       if (!isConsentInitialized) {
         await fetchCurrentConsentSituation();
         setIsConsentInitialized(true);
       }
-      return consentSituation;
-    }
+    }, [isConsentInitialized]);
+
+    useEffect(() => {
+      initializeConsentSituation();
+    }, [initializeConsentSituation]);
 
     //
     // External service calls
@@ -112,7 +117,6 @@ function getConsentProvider(
           consentSituation,
           isConsentInitialized,
           isConsentGranted,
-          initializeConsentSituation,
           redirectToConsentService,
         }}
       >
