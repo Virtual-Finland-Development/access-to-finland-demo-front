@@ -1,7 +1,6 @@
-import React, { useMemo, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Stack,
-  Link,
   SimpleGrid,
   Text,
   Flex,
@@ -13,8 +12,6 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Tooltip,
-  Tag,
-  TagLabel,
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { yearsToMonths } from 'date-fns';
@@ -23,131 +20,20 @@ import { yearsToMonths } from 'date-fns';
 import {
   JmfRecommendation,
   Occupation,
-  OccupationOption,
   UserOccupationSelection,
 } from '../../@types';
-
-// context
-import { useModal } from '../../context/ModalContext/ModalContext';
 
 // components
 import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect2';
 
-interface UserOccupationsProps {
-  userOccupations: UserOccupationSelection[] | null;
-  occupationOptions: OccupationOption[];
-  handleSave: (selected: UserOccupationSelection[]) => void;
-}
-
-export default function UserOccupations(props: UserOccupationsProps) {
-  const { userOccupations, occupationOptions, handleSave } = props;
-
-  const { openModal, closeModal } = useModal();
-
-  /**
-   * Add labels to user occupations
-   */
-  const userOccupationsWithLables = useMemo(() => {
-    if (!userOccupations?.length || !occupationOptions) return [];
-
-    return userOccupations
-      .filter(o => !o.delete)
-      .map(o => ({
-        ...o,
-        label:
-          occupationOptions.find(option => option.uri === o.escoUri)?.prefLabel
-            ?.en || '',
-      }));
-  }, [occupationOptions, userOccupations]);
-
-  /**
-   * Handle open occupations edit modal
-   */
-  const handleOpenEdit = () => {
-    openModal({
-      title: 'Occupations',
-      content: (
-        <UserOccupationsEdit
-          userOccupations={userOccupationsWithLables}
-          occupationOptions={occupationOptions}
-          onSave={selected => {
-            handleSave(selected);
-            closeModal();
-          }}
-          onCancel={() => closeModal()}
-        />
-      ),
-      size: '3xl',
-      onClose: () => {},
-    });
-  };
-
-  if (!userOccupationsWithLables?.length) {
-    return (
-      <Text fontSize="sm">
-        No occupations selected,{' '}
-        <Link color="blue.500" fontWeight="medium" onClick={handleOpenEdit}>
-          click here to add.
-        </Link>
-      </Text>
-    );
-  }
-
-  return (
-    <Stack
-      spacing={1}
-      p={2}
-      borderWidth={1}
-      rounded="md"
-      transitionDuration="0.2s"
-      transitionTimingFunction="ease-in-out"
-      _hover={{
-        cursor: 'pointer',
-        borderColor: 'gray.300',
-        transitionDuration: '0.2s',
-        transitionTimingFunction: 'ease-in-out',
-      }}
-      onClick={handleOpenEdit}
-    >
-      <React.Fragment>
-        <Link
-          fontWeight="medium"
-          fontSize="sm"
-          color="blue.500"
-          position="absolute"
-          right={2}
-          opacity={0}
-          transitionDuration="0.2s"
-          transitionTimingFunction="ease-in-out"
-          _groupHover={{
-            opacity: 1,
-            transitionDuration: '0.2s',
-            transitionTimingFunction: 'ease-in-out',
-          }}
-        >
-          Click to edit
-        </Link>
-        <Stack alignItems="start" spacing={1}>
-          {userOccupationsWithLables.map(o => (
-            <Tag key={o.escoUri}>
-              <TagLabel>{o.label}</TagLabel>
-            </Tag>
-          ))}
-        </Stack>
-      </React.Fragment>
-    </Stack>
-  );
-}
-
 interface UserOccupationsEditProps {
   userOccupations: UserOccupationSelection[] | null;
-  occupationOptions: OccupationOption[];
   onSave: (selected: UserOccupationSelection[]) => void;
   onCancel: () => void;
 }
 
-function UserOccupationsEdit(props: UserOccupationsEditProps) {
-  const { userOccupations, occupationOptions, onSave, onCancel } = props;
+export default function UserOccupationsEdit(props: UserOccupationsEditProps) {
+  const { userOccupations, onSave, onCancel } = props;
 
   const [selected, setSelected] = useState<UserOccupationSelection[]>(
     userOccupations || []

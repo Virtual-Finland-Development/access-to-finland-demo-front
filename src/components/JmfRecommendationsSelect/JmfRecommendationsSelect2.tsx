@@ -19,9 +19,12 @@ import {
   Link,
   useToast,
 } from '@chakra-ui/react';
+import { SingleValue, AsyncSelect } from 'chakra-react-select';
+import debounce from 'lodash.debounce';
 
 // types
 import { JmfRecommendation, UserOccupationSelection } from '../../@types';
+import { SelectOption } from '../ProfileForm/types';
 
 // hooks
 import useJmfRecommendations from '../../hooks/useJmfRecommendations';
@@ -32,6 +35,9 @@ import { extractPdfTextContent, convertRtfToPlainText } from './utils';
 // components
 import RecommendationItem from './RecommendationItem';
 import Loading from '../Loading/Loading';
+
+// api
+import api from '../../api';
 
 const FILE_TYPES = {
   pdf: 'application/pdf',
@@ -157,6 +163,46 @@ export default function JmfRecommendationsSelect2(
     }
   };
 
+  const [asyncInputValue, setAsyncInputValue] = useState('');
+  const [asyncInputCachedOptions, setAsyncInputCachedOptions] = useState<
+    SelectOption[]
+  >([]);
+
+  /**
+   * Handle load more recommendations (react-select async input)
+   */
+  const loadMoreRecommendations = useCallback(
+    (inputValue: string, callback: (options: SelectOption[]) => void) => {
+      api.data
+        .getJmfRecommendations({
+          text: inputValue,
+          maxNumberOfOccupations: 100,
+          maxNumberOfSkills: 1,
+          language: 'en',
+        })
+        .then(response => {
+          const occupations = response.occupations
+            .filter(o => !selected.some(s => !s.delete && s.escoUri === o.uri))
+            .map(o => ({
+              label: o.label,
+              value: o.uri,
+            }));
+          setAsyncInputCachedOptions(occupations);
+          callback(occupations);
+        })
+        .catch((error: any) => {
+          toast({
+            title: 'Error.',
+            description: error?.message || 'Unexpected error occured',
+            status: 'error',
+            duration: 5000,
+            isClosable: true,
+          });
+        });
+    },
+    [selected, toast]
+  );
+
   return (
     <React.Fragment>
       <VStack spacing={4}>
@@ -278,6 +324,53 @@ export default function JmfRecommendationsSelect2(
                   )}
                 </Flex>
               </Stack> */}
+            <Stack>
+              <Text fontWeight="semibold">
+                Did not find what you were looking for? Use free search.
+              </Text>
+              <AsyncSelect
+                isOptionSelected={option =>
+                  selected.findIndex(s => s.escoUri === option.value) > -1
+                }
+                inputValue={asyncInputValue}
+                menuPlacement="top"
+                minMenuHeight={300}
+                openMenuOnClick={false}
+                controlShouldRenderValue={false}
+                isClearable={false}
+                closeMenuOnSelect={false}
+                blurInputOnSelect={false}
+                placeholder="Search..."
+                cacheOptions={false}
+                defaultOptions={asyncInputCachedOptions}
+                loadOptions={debounce(loadMoreRecommendations, 300)}
+                chakraStyles={{
+                  menuList: provided => ({
+                    ...provided,
+                    borderColor: '#3182ce',
+                    boxShadow: '0 0 0 1px #3182ce',
+                    borderWidth: '2px',
+                  }),
+                  loadingMessage: provided => ({
+                    ...provided,
+                    color: '#3182ce',
+                  }),
+                }}
+                onInputChange={(value, action) => {
+                  if (action.action === 'input-change') {
+                    setAsyncInputValue(value);
+                  }
+                }}
+                onChange={(selection: SingleValue<SelectOption>) => {
+                  if (selection) {
+                    handleSelect({
+                      label: selection.label,
+                      uri: selection.value,
+                    });
+                  }
+                }}
+              />
+            </Stack>
           </Stack>
         )}
       </VStack>

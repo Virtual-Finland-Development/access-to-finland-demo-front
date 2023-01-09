@@ -75,7 +75,7 @@ import useLanguages from '../../hooks/useLanguages';
 import Fieldset from '../Fieldset/Fieldset';
 import Loading from '../Loading/Loading';
 import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect';
-import UserOccupations from './UserOccupations';
+import UserOccupations from '../UserOccupations/UserOccupations';
 
 // api
 import api from '../../api';
