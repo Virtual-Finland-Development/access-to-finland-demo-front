@@ -12,9 +12,15 @@ export type ConsentSituation = {
   redirectUrl?: string;
 };
 
+/**
+ *
+ * @param dataSourceUri
+ * @param consentToken, if provided the consent token is verified, otherwise a new consent token is requested from the testbed consent api
+ * @returns
+ */
 export async function checkConsent(
   dataSourceUri: string,
-  consentToken?: string
+  consentToken?: string | null
 ): Promise<ConsentSituation> {
   const idToken = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS).idToken;
 

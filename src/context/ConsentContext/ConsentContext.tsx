@@ -8,6 +8,7 @@ import {
 import api from '../../api';
 import { ConsentSituation } from '../../api/services/consent';
 import { ConsentDataSource } from '../../constants/ConsentDataSource';
+import { getEnumKeyFromValue } from '../../utils';
 
 interface ConsentContextState<ConsentDataSource> {
   dataSource: ConsentDataSource;
@@ -101,7 +102,23 @@ function getConsentProvider(
     // External service calls
     //
     async function fetchCurrentConsentSituation() {
-      const responseSituation = await api.consent.checkConsent(dataSource);
+      const consentStoreKey = `consent-${getEnumKeyFromValue(
+        ConsentDataSource,
+        dataSource
+      )}`;
+
+      const storedConsentToken = sessionStorage.getItem(consentStoreKey);
+      const responseSituation = await api.consent.checkConsent(
+        dataSource,
+        storedConsentToken
+      );
+
+      if (responseSituation.consentToken) {
+        sessionStorage.setItem(consentStoreKey, responseSituation.consentToken);
+      } else if (storedConsentToken) {
+        sessionStorage.removeItem(consentStoreKey);
+      }
+
       setConsentSituation(responseSituation);
       setIsConsentGranted(responseSituation.consentStatus === 'consentGranted');
     }
