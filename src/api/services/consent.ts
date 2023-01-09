@@ -31,7 +31,14 @@ export async function checkConsent(
     }
   );
 
-  return response.data;
+  const consentSituation = response.data.find(
+    (situation: { dataSource: string }) =>
+      situation.dataSource === dataSourceUri
+  );
+  if (!consentSituation) {
+    throw new Error('Invalid consent data response');
+  }
+  return consentSituation;
 }
 
 export function directToConsentService(consentSituation: ConsentSituation) {
