@@ -117,15 +117,19 @@ export default function MoreRecommendations(props: MoreRecommendationsProps) {
   return (
     <AsyncSelect
       isOptionSelected={option =>
-        selected.findIndex(s => s.escoUri === option.value) > -1
+        option
+          ? selected.findIndex(s => !s.delete && s.escoUri === option.value) >
+            -1
+          : false
       }
       inputValue={asyncInputValue}
+      value={null}
       menuPlacement="top"
       minMenuHeight={300}
-      openMenuOnClick={false}
+      openMenuOnClick={true}
       controlShouldRenderValue={false}
       isClearable={false}
-      closeMenuOnSelect={false}
+      closeMenuOnSelect={true}
       blurInputOnSelect={false}
       placeholder="Search..."
       cacheOptions={false}
