@@ -13,7 +13,8 @@ export type ConsentSituation = {
 };
 
 export async function checkConsent(
-  dataSource: string
+  dataSourceUri: string,
+  consentToken?: string
 ): Promise<ConsentSituation> {
   const idToken = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS).idToken;
 
@@ -21,7 +22,7 @@ export async function checkConsent(
     `${AUTH_GW_BASE_URL}/consents/testbed/consent-check`,
     JSON.stringify({
       appContext: appContextUrlEncoded,
-      dataSource: dataSource,
+      dataSources: [{ uri: dataSourceUri, consentToken: consentToken }],
     }),
     {
       headers: {
