@@ -6,7 +6,7 @@
 
 DOCKER_COMPOSE_COMMAND=""
 if [ "$1" = "up" ] || [ "$1" = "start" ]; then
-	DOCKER_COMPOSE_COMMAND="up -d"
+	DOCKER_COMPOSE_COMMAND="up -d --build"
 elif [ "$1" = "down" ] || [ "$1" = "stop" ]; then
 	DOCKER_COMPOSE_COMMAND="down"
 else
@@ -27,6 +27,12 @@ SERVICES=(
 
 for SERVICE in "${SERVICES[@]}"; do
 	echo "Running docker compose ${DOCKER_COMPOSE_COMMAND} for ${SERVICE}"
+	if [ ${SERVICE} = "users-api" ]; then
+		# If OS architecture is arm64, use the arm64 version of the users-api
+		if [ $(uname -m) = "aarch64" ]; then
+			export USERAPI_DOCKERFILE="Dockerfile.arm64"
+		fi
+	fi
 	docker compose -f ../${SERVICE}/docker-compose.yml ${DOCKER_COMPOSE_COMMAND}
 done
 
