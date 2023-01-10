@@ -70,47 +70,59 @@ export default function UserOccupations(props: UserOccupationsProps) {
   }
 
   return (
-    <Stack
-      spacing={1}
-      p={2}
-      borderWidth={1}
-      rounded="md"
-      transitionDuration="0.2s"
-      transitionTimingFunction="ease-in-out"
-      _hover={{
-        cursor: 'pointer',
-        borderColor: 'gray.300',
-        transitionDuration: '0.2s',
-        transitionTimingFunction: 'ease-in-out',
-      }}
-      onClick={handleOpenEdit}
-    >
-      <React.Fragment>
-        <Link
-          fontWeight="medium"
-          fontSize="sm"
-          color="blue.500"
-          position="absolute"
-          right={2}
-          opacity={0}
-          transitionDuration="0.2s"
-          transitionTimingFunction="ease-in-out"
-          _groupHover={{
-            opacity: 1,
-            transitionDuration: '0.2s',
-            transitionTimingFunction: 'ease-in-out',
-          }}
-        >
-          Click to edit
-        </Link>
-        <Stack alignItems="start" spacing={1}>
-          {userOccupationsWithLables.map(o => (
-            <Tag key={o.escoUri}>
-              <TagLabel>{o.label}</TagLabel>
-            </Tag>
-          ))}
-        </Stack>
-      </React.Fragment>
-    </Stack>
+    <React.Fragment>
+      <Stack
+        spacing={1}
+        p={2}
+        borderWidth={1}
+        rounded="md"
+        transitionDuration="0.2s"
+        transitionTimingFunction="ease-in-out"
+        _hover={{
+          cursor: 'pointer',
+          borderColor: 'gray.300',
+          transitionDuration: '0.2s',
+          transitionTimingFunction: 'ease-in-out',
+        }}
+        onClick={handleOpenEdit}
+      >
+        <React.Fragment>
+          <Link
+            display={{ base: 'none', md: 'initial' }}
+            fontWeight="medium"
+            fontSize="sm"
+            color="blue.500"
+            position="absolute"
+            right={2}
+            opacity={0}
+            transitionDuration="0.2s"
+            transitionTimingFunction="ease-in-out"
+            _groupHover={{
+              opacity: 1,
+              transitionDuration: '0.2s',
+              transitionTimingFunction: 'ease-in-out',
+            }}
+          >
+            Click to edit
+          </Link>
+          <Stack alignItems="start" spacing={1}>
+            {userOccupationsWithLables.map(o => (
+              <Tag key={o.escoUri}>
+                <TagLabel>{o.label}</TagLabel>
+              </Tag>
+            ))}
+          </Stack>
+        </React.Fragment>
+      </Stack>
+      <Link
+        display={{ md: 'none' }}
+        color="blue.500"
+        fontWeight="medium"
+        fontSize="sm"
+        onClick={handleOpenEdit}
+      >
+        Click to edit
+      </Link>
+    </React.Fragment>
   );
 }

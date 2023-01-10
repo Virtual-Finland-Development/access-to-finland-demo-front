@@ -10,7 +10,7 @@ import { CheckIcon } from '@chakra-ui/icons';
 import debounce from 'lodash.debounce';
 
 // types
-import { JmfRecommendation, UserOccupationSelection } from '../../@types';
+import { JmfRecommendation } from '../../@types';
 import { SelectOption } from '../ProfileForm/types';
 
 // api
