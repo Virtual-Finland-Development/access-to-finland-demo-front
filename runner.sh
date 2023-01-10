@@ -25,8 +25,22 @@ SERVICES=(
 	#"JobsInFinland.Api.Productizer"
 )
 
+# Validate that the services folders exist
 for SERVICE in "${SERVICES[@]}"; do
-	echo "Running docker compose ${DOCKER_COMPOSE_COMMAND} for ${SERVICE}"
+	if [ ! -d "../${SERVICE}" ]; then
+		echo "Service folder not found: ${SERVICE}"
+		exit 1
+	fi
+	if [ ! -f "../${SERVICE}/docker-compose.yml" ]; then
+		echo "docker-compose.yml not found in service folder: ${SERVICE}"
+		exit 1
+	fi
+done
+
+# Run docker compose for each service
+for SERVICE in "${SERVICES[@]}"; do
+	echo "Running 'docker compose ${DOCKER_COMPOSE_COMMAND}' for ${SERVICE}"
+	# Exception for users-api
 	if [ ${SERVICE} = "users-api" ]; then
 		# If OS architecture is arm64, use the arm64 version of the users-api
 		if [ $(uname -m) = "aarch64" ]; then
