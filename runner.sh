@@ -50,4 +50,8 @@ for SERVICE in "${SERVICES[@]}"; do
 	docker compose -f ../${SERVICE}/docker-compose.yml ${DOCKER_COMPOSE_COMMAND}
 done
 
+# Echo the status of the services
+echo ""
+echo "> Status of the services:"
+docker ps
  
