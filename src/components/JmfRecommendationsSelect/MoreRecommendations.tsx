@@ -29,7 +29,7 @@ const customComponents = {
     <chakraComponents.LoadingIndicator color="blue.500" {...props} />
   ),
   Option: (props: any) => (
-    <chakraComponents.Option {...props}>
+    <chakraComponents.Option {...props} style={{ background: 'white' }}>
       {props.children}
       {props.isSelected && <CheckIcon ml={2} color="blue.500" />}
     </chakraComponents.Option>
@@ -128,7 +128,7 @@ export default function MoreRecommendations(props: MoreRecommendationsProps) {
       openMenuOnClick={true}
       controlShouldRenderValue={false}
       isClearable={false}
-      closeMenuOnSelect={true}
+      closeMenuOnSelect={false}
       blurInputOnSelect={false}
       placeholder="Search..."
       cacheOptions={false}
@@ -149,7 +149,10 @@ export default function MoreRecommendations(props: MoreRecommendationsProps) {
         option: (provided, state) => ({
           ...provided,
           color: '#000',
-          backgroundColor: state.isFocused ? 'gray.100' : '#fff',
+          backgroundColor: '#fff',
+          '&:hover': {
+            backgroundColor: state.isFocused ? 'gray.100' : '#fff',
+          },
         }),
       }}
       onInputChange={onAsyncInputChange}
