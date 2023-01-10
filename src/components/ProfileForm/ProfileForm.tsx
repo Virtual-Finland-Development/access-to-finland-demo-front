@@ -235,7 +235,8 @@ export default function ProfileForm(props: ProfileFormProps) {
             if (key === 'occupations') {
               const modifiedOccupations = handleOccupationsForPayload(
                 values.occupations,
-                userProfile.occupations || []
+                userProfile.occupations || [],
+                flattenedOccupations || []
               );
 
               if (modifiedOccupations.length) {
@@ -287,6 +288,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     },
     [
       dirtyFields,
+      flattenedOccupations,
       isNewProfile,
       onProfileSubmit,
       setUserProfile,

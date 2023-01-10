@@ -6,6 +6,7 @@ import municipalitiesJson from '../../TmtPage/regionJsons/municipalities.json';
 
 import {
   Address,
+  OccupationOption,
   UserOccupationSelection,
   WorkPreference,
 } from '../../../@types';
@@ -138,7 +139,8 @@ export const groupedRegionOptions = [
 // parse changed occupations for profile payload
 export function handleOccupationsForPayload(
   changed: UserOccupationSelection[],
-  userOccupations: UserOccupationSelection[]
+  userOccupations: UserOccupationSelection[],
+  occupations: OccupationOption[]
 ) {
   const changedOccupations = changed.reduce(
     (acc: UserOccupationSelection[], occupation) => {
@@ -149,9 +151,12 @@ export function handleOccupationsForPayload(
       }
 
       if (!occupation.id && !occupation.delete) {
+        const escoCode =
+          occupations.find(o => o.uri === occupation.escoUri)?.notation || '';
         acc.push({
           escoUri: occupation.escoUri,
           workMonths: occupation.workMonths,
+          escoCode,
         });
       }
 

@@ -23,7 +23,7 @@ import { useAppContext } from '../../context/AppContext/AppContext';
 
 // types
 import { PlaceType, PlaceSelection, JobPostingsRequestPayload } from './types';
-import { OccupationOption } from '../../@types';
+import { Occupation, OccupationOption } from '../../@types';
 
 // components
 import JobPostingItem from './JobPostingItem';
@@ -35,7 +35,7 @@ import LoadMore from '../LoadMore/LoadMore';
 
 // hooks
 import useJobPostings from '../../hooks/useJobPostings';
-import useOccupations from '../../hooks/useOccupations';
+import useOccupationsFlat from '../../hooks/useOccupationsFlat';
 
 // utils
 import { constructJobPostingsPayload } from './utils';
@@ -98,8 +98,8 @@ export default function TmtPage() {
   /**
    * useOccupations hook
    */
-  const { flattenedOccupations, isLoading: occupationsLoading } =
-    useOccupations();
+  const { data: flattenedOccupations, isLoading: occupationsLoading } =
+    useOccupationsFlat();
 
   /**
    * Track selected occupation notations, set selected occupations for UI accordingly
@@ -152,10 +152,12 @@ export default function TmtPage() {
    * Set default occupation notation for filtering, if provided in userProfile.
    */
   useEffect(() => {
-    if (userProfile?.id && userProfile.occupationCode) {
-      setSelectedOccupationNotations([userProfile.occupationCode]);
+    if (userProfile?.id && userProfile.occupations?.length) {
+      setSelectedOccupationNotations(
+        userProfile.occupations.map((o: Occupation) => o.escoCode)
+      );
     }
-  }, [userProfile?.id, userProfile.occupationCode]);
+  }, [userProfile?.id, userProfile.occupations]);
 
   /**
    * Track search / selectedPlaces state and construct payload
@@ -318,6 +320,7 @@ export default function TmtPage() {
             <OccupationFilters
               defaultSelected={selectedOccupationNotations || []}
               onSelect={(selected: string[]) => {
+                console.log(selected);
                 setSelectedOccupationNotations(
                   selected.length ? selected : null
                 );

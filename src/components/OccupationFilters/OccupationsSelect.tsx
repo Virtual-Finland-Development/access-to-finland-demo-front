@@ -13,6 +13,7 @@ import {
 
 // hooks
 import useOccupations from '../../hooks/useOccupations';
+import useOccupationsFlat from '../../hooks/useOccupationsFlat';
 
 // components
 import OccupationCollapseItem from './OccupationCollapseItem';
@@ -39,13 +40,16 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
   const {
     data: occupations,
     isLoading: occupationsLoading,
-    flattenedOccupations,
     occupationsMostInnerDepth,
   } = useOccupations();
 
+  const { data: flattenedOccupations, isLoading: occupationsFlatLoading } =
+    useOccupationsFlat();
+
   /**
    * Handle select occupations (notation codes)
-   * Only include top level notations, if no sub level notations are not selected
+   * Only include top level notations (ISCO codes), if no sub level notations are not selected
+   * Always include user occupations codes (ESCO codes with dot notation) when filtering
    * This 'algorithm' could be improved...
    */
   const handleSelect = useCallback(
@@ -73,6 +77,12 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
       const filtered = set
         .sort((a, b) => b.localeCompare(a))
         .reduce((acc: string[], item) => {
+          // if notation code is ESCO code (user profile occupation code)
+          if (item.includes('.') && acc.findIndex(i => i === item) < 0) {
+            acc.push(item);
+            return acc;
+          }
+
           if (
             (item.length === occupationsMostInnerDepth &&
               acc.findIndex(i => i === item) < 0) ||
@@ -84,6 +94,7 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
           if (!acc.some(i => i.startsWith(item.slice(0, 2)))) {
             acc.push(item);
           }
+
           return acc;
         }, []);
 
@@ -104,9 +115,19 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
     return [];
   }, [flattenedOccupations, selectedNotations]);
 
-  if (occupationsLoading) {
+  if (occupationsLoading || occupationsFlatLoading) {
     return <Loading />;
   }
+
+  /**
+   * Separate selected occupational groups (ISCO), and user occupations (ESCO)
+   */
+  const selectedOccupationGroups = selectedOccupations.filter(
+    o => !o.notation.includes('.')
+  );
+  const userOccupations = selectedOccupations.filter(o =>
+    o.notation.includes('.')
+  );
 
   return (
     <React.Fragment>
@@ -150,7 +171,28 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
             </Box>
           )}
         </Box>
-        {selectedOccupations.length > 0 && (
+        {userOccupations.length > 0 && (
+          <Box mt={4}>
+            <Text fontWeight="semibold" fontSize="md">
+              Your occupations
+            </Text>
+            <Flex flexDirection={'row'} flexWrap="wrap" mt={2} gap={2}>
+              {userOccupations.map(s => (
+                <Tag key={s.notation} size="md" colorScheme="purple">
+                  <TagLabel fontSize="sm">{s.prefLabel.en}</TagLabel>
+                  <TagCloseButton
+                    onClick={() =>
+                      setSelectedNotations(prev =>
+                        prev.filter(i => i !== s.notation)
+                      )
+                    }
+                  />
+                </Tag>
+              ))}
+            </Flex>
+          </Box>
+        )}
+        {selectedOccupationGroups.length > 0 && (
           <Box mt={4}>
             <Text fontWeight="semibold" fontSize="md">
               {useAsFilter
@@ -158,7 +200,7 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
                 : 'Selected occupational group'}
             </Text>
             <Flex flexDirection={'row'} flexWrap="wrap" mt={2} gap={2}>
-              {selectedOccupations.map(s => (
+              {selectedOccupationGroups.map(s => (
                 <Tag key={s.notation} size="md" colorScheme="purple">
                   <TagLabel fontSize="sm">{s.prefLabel.en}</TagLabel>
                   <TagCloseButton
