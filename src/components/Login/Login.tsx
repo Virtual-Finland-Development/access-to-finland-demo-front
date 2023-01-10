@@ -1,4 +1,4 @@
-import { Button, Heading, Stack } from '@chakra-ui/react';
+import { Button, Heading, Stack, Tooltip } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { IoLogIn } from 'react-icons/io5';
 
@@ -85,38 +85,42 @@ export default function Login() {
         >
           Login with Testbed
         </Button>
-        <Button
-          bg="#203CCC"
-          color="white"
-          _hover={{
-            bg: 'blue.600',
-            _disabled: {
-              bg: '#203CCC',
-            },
-          }}
-          leftIcon={<SinunaIcon />}
-          onClick={() => handleLoginClick(LoginType.SINUNA)}
-          isLoading={isLoading === LoginType.SINUNA}
-          disabled={true}
-        >
-          Login with Sinuna
-        </Button>
-        <Button
-          bg="#003479"
-          color="white"
-          _hover={{
-            bg: '#003479',
-          }}
-          _active={{
-            bg: '#003479',
-          }}
-          leftIcon={<SuomiFiIcon />}
-          onClick={() => handleLoginClick(LoginType.SUOMIFI)}
-          isLoading={isLoading === LoginType.SUOMIFI}
-          disabled={true}
-        >
-          Login with Suomi.fi
-        </Button>
+        <Tooltip label="Disabled: incompatibility with the consents flow">
+          <Button
+            bg="#203CCC"
+            color="white"
+            _hover={{
+              bg: 'blue.600',
+              _disabled: {
+                bg: '#203CCC',
+              },
+            }}
+            leftIcon={<SinunaIcon />}
+            onClick={() => handleLoginClick(LoginType.SINUNA)}
+            isLoading={isLoading === LoginType.SINUNA}
+            disabled={true}
+          >
+            Login with Sinuna
+          </Button>
+        </Tooltip>
+        <Tooltip label="Disabled: incompatibility with the consents flow">
+          <Button
+            bg="#003479"
+            color="white"
+            _hover={{
+              bg: '#003479',
+            }}
+            _active={{
+              bg: '#003479',
+            }}
+            leftIcon={<SuomiFiIcon />}
+            onClick={() => handleLoginClick(LoginType.SUOMIFI)}
+            isLoading={isLoading === LoginType.SUOMIFI}
+            disabled={true}
+          >
+            Login with Suomi.fi
+          </Button>
+        </Tooltip>
         {/* <Button colorScheme="linkedin" leftIcon={<IoLogoLinkedin />} disabled>
           Login with LinkedIn
         </Button> */}
