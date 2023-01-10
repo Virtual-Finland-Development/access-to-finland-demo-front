@@ -1,8 +1,6 @@
 import axios from 'axios';
-import {
-  appContextUrlEncoded,
-  LOCAL_STORAGE_AUTH_TOKENS,
-} from '../../constants';
+import { LOCAL_STORAGE_AUTH_TOKENS } from '../../constants';
+import { generateAppContextHash } from '../../utils';
 import { JSONLocalStorage } from '../../utils/JSONStorage';
 import { AUTH_GW_BASE_URL } from '../endpoints';
 
@@ -24,10 +22,13 @@ export async function checkConsent(
 ): Promise<ConsentSituation> {
   const idToken = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS).idToken;
 
+  const redirectUrl = new URL(window.location.href); // redirect back to the current page
+  redirectUrl.searchParams.set('clear', 'true'); // Applies an url param cleanup after consent flow
+
   const response = await axios.post(
     `${AUTH_GW_BASE_URL}/consents/testbed/consent-check`,
     JSON.stringify({
-      appContext: appContextUrlEncoded,
+      appContext: generateAppContextHash({ redirectUrl: redirectUrl }),
       dataSources: [{ uri: dataSourceUri, consentToken: consentToken }],
     }),
     {

@@ -4,8 +4,10 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
+import { useLocation } from 'react-router-dom';
 import api from '../../api';
 import { ConsentSituation } from '../../api/services/consent';
 import { ConsentDataSource } from '../../constants/ConsentDataSource';
@@ -95,6 +97,24 @@ function getConsentProvider(
     function redirectToConsentService(): void {
       api.consent.directToConsentService(consentSituation);
     }
+
+    //
+    // URL redirect response handlers
+    //
+    const { search } = useLocation();
+    const queryParams = useMemo(() => new URLSearchParams(search), [search]);
+    const clearQueryParamsFromUrl = queryParams.get('clear');
+
+    /**
+     * On a query param: 'clear', remove query params from the current URL.
+     * @TODO: maybe refactor to some general hook handler
+     */
+    useEffect(() => {
+      if (clearQueryParamsFromUrl === 'true') {
+        window.location.href =
+          window.location.origin + window.location.pathname;
+      }
+    });
 
     return (
       <ConsentContext.Provider

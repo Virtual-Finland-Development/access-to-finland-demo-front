@@ -1,7 +1,9 @@
+import { Buffer } from 'buffer';
 import { isSameSecond, parseISO } from 'date-fns';
 
 // types
-import { UserProfile } from '../@types';
+import { AppContextObj, UserProfile } from '../@types';
+import { baseAppContext } from '../constants';
 
 // Helper function to scroll to an element.
 export function scrollToElement(element: HTMLElement) {
@@ -33,4 +35,21 @@ export function getEnumKeyFromValue<T extends object>(
 ) {
   const index = Object.values(myEnum).indexOf(enumValue as T[keyof T]);
   return Object.keys(myEnum)[index];
+}
+
+/**
+ *
+ * @param applicationContextObj
+ * @returns
+ */
+export function generateAppContextHash(
+  applicationContextObj?: Partial<AppContextObj>
+) {
+  const appContextBase64 = Buffer.from(
+    JSON.stringify({
+      ...baseAppContext,
+      ...(applicationContextObj || {}),
+    })
+  ).toString('base64');
+  return encodeURIComponent(appContextBase64);
 }
