@@ -630,6 +630,8 @@ export default function ProfileForm(props: ProfileFormProps) {
                   to be used in vacancies search:
                   <Stack direction="row" spacing={4} mt={2}>
                     <Button
+                      colorScheme="teal"
+                      variant="solid"
                       isDisabled={isConsentGranted}
                       onClick={() => {
                         redirectToConsentService();
@@ -639,6 +641,8 @@ export default function ProfileForm(props: ProfileFormProps) {
                     </Button>
                     <Button
                       isDisabled={!isConsentGranted}
+                      colorScheme="red"
+                      variant="outline"
                       onClick={() => {
                         toast({
                           title: 'Warning',
