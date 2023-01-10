@@ -97,7 +97,7 @@ export default function Login() {
           leftIcon={<SinunaIcon />}
           onClick={() => handleLoginClick(LoginType.SINUNA)}
           isLoading={isLoading === LoginType.SINUNA}
-          disabled={isLoading !== null}
+          disabled={true}
         >
           Login with Sinuna
         </Button>
@@ -113,7 +113,7 @@ export default function Login() {
           leftIcon={<SuomiFiIcon />}
           onClick={() => handleLoginClick(LoginType.SUOMIFI)}
           isLoading={isLoading === LoginType.SUOMIFI}
-          disabled={isLoading !== null}
+          disabled={true}
         >
           Login with Suomi.fi
         </Button>
