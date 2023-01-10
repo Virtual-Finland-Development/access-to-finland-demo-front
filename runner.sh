@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# Starts and stops all the related services
+# The script assumes that the services folders are located in the relative parent folder of this script
+# The service folders must contain a docker-compose.yml file
+#
 
 DOCKER_COMPOSE_COMMAND=""
 if [ "$1" = "up" ] || [ "$1" = "start" ]; then
