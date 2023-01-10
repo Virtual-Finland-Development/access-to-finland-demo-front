@@ -38,6 +38,10 @@ export async function checkConsent(
     }
   );
 
+  if (response.status !== 200) {
+    throw new Error('Invalid consent data response');
+  }
+
   const consentSituation = response.data.find(
     (situation: { dataSource: string }) =>
       situation.dataSource === dataSourceUri
