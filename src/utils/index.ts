@@ -3,7 +3,7 @@ import { isSameSecond, parseISO } from 'date-fns';
 
 // types
 import { AppContextObj, UserProfile } from '../@types';
-import { baseAppContext } from '../constants';
+import { baseAppContextObj } from '../constants';
 
 // Helper function to scroll to an element.
 export function scrollToElement(element: HTMLElement) {
@@ -47,7 +47,7 @@ export function generateAppContextHash(
 ) {
   const appContextBase64 = Buffer.from(
     JSON.stringify({
-      ...baseAppContext,
+      ...baseAppContextObj,
       ...(applicationContextObj || {}),
     })
   ).toString('base64');

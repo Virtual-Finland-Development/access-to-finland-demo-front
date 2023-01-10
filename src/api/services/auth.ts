@@ -7,12 +7,10 @@ import { AuthProvider, LoggedInState } from '../../@types';
 import { AUTH_GW_BASE_URL } from '../endpoints';
 
 // constants
-import {
-  appContextUrlEncoded,
-  LOCAL_STORAGE_AUTH_TOKENS,
-} from '../../constants';
+import { LOCAL_STORAGE_AUTH_TOKENS } from '../../constants';
 
 // utils
+import { generateAppContextHash } from '../../utils';
 import { JSONLocalStorage } from '../../utils/JSONStorage';
 
 function getAuthRoute(authProvider: AuthProvider) {
@@ -36,7 +34,7 @@ function getAuthRoute(authProvider: AuthProvider) {
 export function directToAuthGwLogin(authProvider: AuthProvider) {
   const authRoute = getAuthRoute(authProvider);
   window.location.assign(
-    `${AUTH_GW_BASE_URL}/auth/${authRoute}/${authProvider}/authentication-request?appContext=${appContextUrlEncoded}`
+    `${AUTH_GW_BASE_URL}/auth/${authRoute}/${authProvider}/authentication-request?appContext=${generateAppContextHash()}`
   );
 }
 
@@ -48,7 +46,7 @@ export function directToAuthGwLogout(authProvider: AuthProvider) {
   JSONLocalStorage.clear();
 
   window.location.assign(
-    `${AUTH_GW_BASE_URL}/auth/${authRoute}/${authProvider}/logout-request?appContext=${appContextUrlEncoded}&idToken=${idToken}`
+    `${AUTH_GW_BASE_URL}/auth/${authRoute}/${authProvider}/logout-request?appContext=${generateAppContextHash()}&idToken=${idToken}`
   );
 }
 

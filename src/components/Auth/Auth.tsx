@@ -13,10 +13,7 @@ import { AuthProvider } from '../../@types';
 import { useAppContext } from '../../context/AppContext/AppContext';
 
 // constants
-import {
-  appContextUrlEncoded,
-  LOCAL_STORAGE_ROUTE_NAME,
-} from '../../constants';
+import { LOCAL_STORAGE_ROUTE_NAME } from '../../constants';
 
 // components
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
@@ -24,6 +21,7 @@ import Loading from '../Loading/Loading';
 
 // api
 import api from '../../api';
+import { generateAppContextHash } from '../../utils';
 
 export default function Auth() {
   const { storeAuthKeysAndVerifyUser, logOut } = useAppContext();
@@ -69,7 +67,7 @@ export default function Auth() {
         const loggedInState = await api.auth.logIn(
           {
             loginCode: loginCodeParam as string,
-            appContext: appContextUrlEncoded,
+            appContext: generateAppContextHash(),
           },
           authProvider
         );
