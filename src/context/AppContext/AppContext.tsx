@@ -184,6 +184,7 @@ function AppProvider({ children }: AppProviderProps) {
   const logOut = useCallback(() => {
     dispatch({ type: ActionTypes.LOG_OUT });
     localStorage.clear();
+    sessionStorage.clear();
   }, []);
 
   /**

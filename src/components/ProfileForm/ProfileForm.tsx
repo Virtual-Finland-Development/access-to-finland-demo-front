@@ -1,7 +1,6 @@
 import { EditIcon, SmallAddIcon } from '@chakra-ui/icons';
 import {
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -80,7 +79,7 @@ interface ProfileFormProps {
 
 export default function ProfileForm(props: ProfileFormProps) {
   const { userProfile, setUserProfile } = useAppContext();
-  const { isConsentGranted } = useConsentContext(
+  const { isConsentGranted, redirectToConsentService } = useConsentContext(
     ConsentDataSource.USER_PROFILE
   );
   const { openModal, closeModal } = useModal();
@@ -627,10 +626,32 @@ export default function ProfileForm(props: ProfileFormProps) {
               </FormControl>
               {isEdit && (
                 <FormControl id="jobsDataConsent">
-                  <FormLabel>Profile consent</FormLabel>
-                  <Checkbox isChecked={isConsentGranted} isDisabled>
-                    I permit my profile data to be used in vacancies search
-                  </Checkbox>
+                  <FormLabel>Profile consent</FormLabel>I permit my profile data
+                  to be used in vacancies search:
+                  <Stack direction="row" spacing={4} mt={2}>
+                    <Button
+                      isDisabled={isConsentGranted}
+                      onClick={() => {
+                        redirectToConsentService();
+                      }}
+                    >
+                      Give consent
+                    </Button>
+                    <Button
+                      isDisabled={!isConsentGranted}
+                      onClick={() => {
+                        toast({
+                          title: 'Warning',
+                          description: 'Consent revoke not implemented yet',
+                          status: 'warning',
+                          duration: 5000,
+                          isClosable: true,
+                        });
+                      }}
+                    >
+                      Revoke consent
+                    </Button>
+                  </Stack>
                   <FormHelperText>
                     Your profile information will be used to improve search
                     capabilities in a third party service.
