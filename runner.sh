@@ -26,7 +26,7 @@ SERVICES=(
 )
 
 for SERVICE in "${SERVICES[@]}"; do
-	echo "Running docker compose for ${SERVICE}"
+	echo "Running docker compose ${DOCKER_COMPOSE_COMMAND} for ${SERVICE}"
 	docker compose -f ../${SERVICE}/docker-compose.yml ${DOCKER_COMPOSE_COMMAND}
 done
 
