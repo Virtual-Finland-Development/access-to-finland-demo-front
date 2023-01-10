@@ -63,7 +63,7 @@ const mapSelectOptions = (
   </>
 );
 
-export default function TmtPage() {
+export default function VacanciesPage() {
   const { userProfile } = useAppContext();
 
   const [searchInputValue, setSearchInputValue] = useState<string>('');

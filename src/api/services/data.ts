@@ -11,7 +11,7 @@ import {
 import {
   JobPostingsRequestPayload,
   JobPostingsResponse,
-} from '../../components/TmtPage/types';
+} from '../../components/VacanciesPage/types';
 
 export async function getJobPostings(
   payload: JobPostingsRequestPayload

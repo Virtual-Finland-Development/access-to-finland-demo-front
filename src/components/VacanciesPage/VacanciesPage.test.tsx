@@ -3,11 +3,11 @@ import {
   customRender1,
   screen,
 } from '../../testing/utils/testing-library-utils';
-import TmtPage from './TmtPage';
+import VacanciesPage from './VacanciesPage';
 
 import * as AppContextExports from '../../context/AppContext/AppContext';
 
-describe('TmtPage tests', () => {
+describe('VacanciesPage tests', () => {
   beforeEach(() => {
     // mock 'validLoginState' function in AppContext, return true value
     const mockValidLoginState = jest.spyOn(
@@ -18,7 +18,7 @@ describe('TmtPage tests', () => {
   });
 
   test('Should fetch jobs and show some results', async () => {
-    customRender1(<TmtPage />);
+    customRender1(<VacanciesPage />);
 
     const searchInput = await screen.findByLabelText('Word search');
     expect(searchInput).toBeInTheDocument();

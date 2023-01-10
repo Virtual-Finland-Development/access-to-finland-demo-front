@@ -5,7 +5,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import useErrorToast from './useErrorToast';
 
 // types
-import { JobPostingsRequestPayload } from '../components/TmtPage/types';
+import { JobPostingsRequestPayload } from '../components/VacanciesPage/types';
 
 // api
 import api from '../api';
