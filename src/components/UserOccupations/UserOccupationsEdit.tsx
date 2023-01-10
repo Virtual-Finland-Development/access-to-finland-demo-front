@@ -24,7 +24,7 @@ import {
 } from '../../@types';
 
 // components
-import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect2';
+import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect';
 
 interface UserOccupationsEditProps {
   userOccupations: UserOccupationSelection[] | null;
@@ -175,8 +175,14 @@ export default function UserOccupationsEdit(props: UserOccupationsEditProps) {
         )}
       </Stack>
       <JmfRecommendationsSelect
-        selected={selected}
-        setSelected={selectOccupation}
+        type="occupations"
+        isControlled
+        controlledSelected={selected.map(s => ({
+          uri: s.escoUri!,
+          label: s.label!,
+          delete: s.delete || false,
+        }))}
+        onSelect={selectOccupation}
         onSave={handleSave}
         onCancel={onCancel}
       />

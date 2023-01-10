@@ -10,14 +10,14 @@ import { CheckIcon } from '@chakra-ui/icons';
 import debounce from 'lodash.debounce';
 
 // types
-import { UserOccupationSelection } from '../../@types';
+import { JmfRecommendation, UserOccupationSelection } from '../../@types';
 import { SelectOption } from '../ProfileForm/types';
 
 // api
 import api from '../../api';
 
 interface MoreRecommendationsProps {
-  selected: UserOccupationSelection[];
+  selected: (JmfRecommendation & { delete?: boolean })[];
   onChange: (selection: SingleValue<SelectOption>) => void;
 }
 
@@ -60,7 +60,7 @@ export default function MoreRecommendations(props: MoreRecommendationsProps) {
         })
         .then(response => {
           const occupations = response.occupations
-            .filter(o => !selected.some(s => !s.delete && s.escoUri === o.uri))
+            .filter(o => !selected.some(s => !s.delete && s.uri === o.uri))
             .map(o => ({
               label: o.label,
               value: o.uri,
@@ -118,8 +118,7 @@ export default function MoreRecommendations(props: MoreRecommendationsProps) {
     <AsyncSelect
       isOptionSelected={option =>
         option
-          ? selected.findIndex(s => !s.delete && s.escoUri === option.value) >
-            -1
+          ? selected.findIndex(s => !s.delete && s.uri === option.value) > -1
           : false
       }
       inputValue={asyncInputValue}

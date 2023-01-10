@@ -148,7 +148,7 @@ export function handleOccupationsForPayload(
         acc.push({ id: occupation.id, delete: true });
       }
 
-      if (!occupation.id) {
+      if (!occupation.id && !occupation.delete) {
         acc.push({
           escoUri: occupation.escoUri,
           workMonths: occupation.workMonths,

@@ -41,6 +41,7 @@ import {
   UserOccupationSelection,
   EmploymentType,
   WorkingTime,
+  JmfRecommendation,
 } from '../../@types';
 import { RegionSelectOption, RegionType, SelectOption } from './types';
 
@@ -401,11 +402,20 @@ export default function ProfileForm(props: ProfileFormProps) {
       title: 'Knowledge and skills recommendations',
       content: (
         <JmfRecommendationsSelect
-          onSelect={(selected: string[]) => {
-            const previousTitles = jobTitles ? jobTitles : [];
-            const newTitles = new Set([...previousTitles, ...selected]);
-            setValue('jobTitles', Array.from(newTitles), { shouldDirty: true });
-            closeModal();
+          type="skills"
+          isControlled={false}
+          onSave={(selected?: JmfRecommendation[]) => {
+            if (selected) {
+              const previousTitles = jobTitles ? jobTitles : [];
+              const newTitles = new Set([
+                ...previousTitles,
+                ...selected.map(s => s.label),
+              ]);
+              setValue('jobTitles', Array.from(newTitles), {
+                shouldDirty: true,
+              });
+              closeModal();
+            }
           }}
           onCancel={closeModal}
         />

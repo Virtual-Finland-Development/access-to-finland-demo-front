@@ -31,6 +31,7 @@ import { extractPdfTextContent, convertRtfToPlainText } from './utils';
 
 // components
 import RecommendationItem from './RecommendationItem';
+import MoreRecommendations from './MoreRecommendations';
 import Loading from '../Loading/Loading';
 
 const FILE_TYPES = {
@@ -40,20 +41,33 @@ const FILE_TYPES = {
 };
 
 interface JmfRecommendationsSelectProps {
-  onSelect: (selected: string[]) => void;
+  type?: 'occupations' | 'skills' | 'both';
+  isControlled: boolean;
+  controlledSelected?: JmfRecommendation[];
+  onSelect?: (selected: JmfRecommendation) => void;
+  onSave: (selected?: JmfRecommendation[]) => void;
   onCancel: () => void;
 }
 
-export default function JmfRecommendationsSelect(
+export default function JmfRecommendationsSelect2(
   props: JmfRecommendationsSelectProps
 ) {
-  const { onSelect, onCancel } = props;
+  const {
+    type = 'both',
+    isControlled,
+    controlledSelected,
+    onSelect,
+    onSave,
+    onCancel,
+  } = props;
   const [textContent, setTextContent] = useState<string | null>('');
   const [extractedTextContent, setExtractedTextContent] = useState<
     string | null
   >('');
   const [selectedFileName, setSelectedFileName] = useState<string>('');
-  const [selected, setSelected] = useState<JmfRecommendation[]>([]);
+  const [selected, setSelected] = useState<
+    (JmfRecommendation & { delete?: boolean })[]
+  >([]);
 
   // file input ref
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -68,8 +82,8 @@ export default function JmfRecommendationsSelect(
     isFetching: recommendationsFetching,
     refetch: fetchRecommendations,
   } = useJmfRecommendations(textContent || extractedTextContent, {
-    maxNumberOfSkills: 20,
-    maxNumberOfOccupations: 7,
+    maxNumberOfSkills: type === 'both' ? 20 : type === 'occupations' ? 1 : 20,
+    maxNumberOfOccupations: type === 'both' ? 7 : type === 'skills' ? 1 : 20,
   });
 
   /**
@@ -82,30 +96,54 @@ export default function JmfRecommendationsSelect(
   }, [extractedTextContent, fetchRecommendations, textContent]);
 
   /**
-   * Handle save selected recommendations
+   * Track parent selected state, if component if controlled by parent
    */
-  const handleSaveSelections = useCallback(() => {
-    onSelect(selected.map(s => s.label));
-  }, [onSelect, selected]);
+  useEffect(() => {
+    if (isControlled && controlledSelected) {
+      setSelected(controlledSelected);
+    }
+  }, [isControlled, controlledSelected]);
 
   /**
    * Handle select / de-select recommendation
+   * If component is controlled by parent update parent state, otherwise update inner state
    */
-  const handleSelect = useCallback((recommendation: JmfRecommendation) => {
-    setSelected(prev => {
-      let selected = [...prev];
-      const isSelected =
-        selected.findIndex(s => s.uri === recommendation.uri) > -1;
-
-      if (isSelected) {
-        selected = selected.filter(s => s.uri !== recommendation.uri);
-      } else {
-        selected.push(recommendation);
+  const handleSelect = useCallback(
+    (recommendation: JmfRecommendation) => {
+      if (isControlled && typeof onSelect === 'function') {
+        onSelect(recommendation);
+        return;
       }
 
-      return selected;
-    });
-  }, []);
+      setSelected(prev => {
+        let selected = [...prev];
+        const isSelected =
+          selected.findIndex(s => s.uri === recommendation.uri) > -1;
+
+        if (isSelected) {
+          selected = selected.filter(s => s.uri !== recommendation.uri);
+        } else {
+          selected.push(recommendation);
+        }
+
+        return selected;
+      });
+    },
+    [isControlled, onSelect]
+  );
+
+  /**
+   * Handle save selections
+   * If controlled by parent, pass no input
+   * Otherwise pass component inner selected state as input
+   */
+  const handleSave = useCallback(() => {
+    if (isControlled) {
+      onSave();
+    } else {
+      onSave(selected);
+    }
+  }, [isControlled, onSave, selected]);
 
   /**
    * Handle file select / parsing
@@ -243,54 +281,80 @@ export default function JmfRecommendationsSelect(
             w="100%"
             minH="155px"
           >
-            <Stack>
-              <Heading as="h5" size="sm">
-                Suggested occupations
-              </Heading>
-              <Flex gap={2} flexWrap="wrap">
-                {recommendations.occupations.length ? (
-                  <React.Fragment>
-                    {recommendations.occupations.map(item => (
-                      <RecommendationItem
-                        type="occupation"
-                        key={item.uri}
-                        item={item}
-                        isSelected={
-                          selected.findIndex(s => s.uri === item.uri) > -1
-                        }
-                        handleClick={() => handleSelect(item)}
-                      />
-                    ))}
-                  </React.Fragment>
-                ) : (
-                  <Text fontSize="sm">No suggestions found</Text>
-                )}
-              </Flex>
-            </Stack>
-            <Stack>
-              <Heading as="h5" size="sm">
-                Suggested skills
-              </Heading>
-              <Flex gap={2} flexWrap="wrap">
-                {recommendations.skills.length ? (
-                  <React.Fragment>
-                    {recommendations.skills.map(item => (
-                      <RecommendationItem
-                        type="skill"
-                        key={item.uri}
-                        item={item}
-                        isSelected={
-                          selected.findIndex(s => s.uri === item.uri) > -1
-                        }
-                        handleClick={() => handleSelect(item)}
-                      />
-                    ))}
-                  </React.Fragment>
-                ) : (
-                  <Text fontSize="sm">No suggestions found</Text>
-                )}
-              </Flex>
-            </Stack>
+            {['both', 'occupations'].includes(type) && (
+              <Stack>
+                <Heading as="h5" size="sm">
+                  Suggested occupations
+                </Heading>
+                <Flex gap={2} flexWrap="wrap">
+                  {recommendations.occupations.length ? (
+                    <React.Fragment>
+                      {recommendations.occupations.map(item => (
+                        <RecommendationItem
+                          type="occupation"
+                          key={item.uri}
+                          item={item}
+                          isSelected={
+                            selected.findIndex(
+                              s => s.uri === item.uri && !s.delete
+                            ) > -1
+                          }
+                          handleClick={() => handleSelect(item)}
+                        />
+                      ))}
+                    </React.Fragment>
+                  ) : (
+                    <Text fontSize="sm">No suggestions found</Text>
+                  )}
+                </Flex>
+              </Stack>
+            )}
+            {['both', 'skills'].includes(type) && (
+              <Stack>
+                <Heading as="h5" size="sm">
+                  Suggested skills
+                </Heading>
+                <Flex gap={2} flexWrap="wrap">
+                  {recommendations.skills.length ? (
+                    <React.Fragment>
+                      {recommendations.skills.map(item => (
+                        <RecommendationItem
+                          type="skill"
+                          key={item.uri}
+                          item={item}
+                          isSelected={
+                            selected.findIndex(
+                              s => s.uri === item.uri && !s.delete
+                            ) > -1
+                          }
+                          handleClick={() => handleSelect(item)}
+                        />
+                      ))}
+                    </React.Fragment>
+                  ) : (
+                    <Text fontSize="sm">No suggestions found</Text>
+                  )}
+                </Flex>
+              </Stack>
+            )}
+            {type === 'occupations' && (
+              <Stack>
+                <Text fontWeight="semibold">
+                  Did not find what you were looking for? Use free search.
+                </Text>
+                <MoreRecommendations
+                  selected={selected}
+                  onChange={selection => {
+                    if (selection) {
+                      handleSelect({
+                        label: selection.label,
+                        uri: selection.value,
+                      });
+                    }
+                  }}
+                />
+              </Stack>
+            )}
           </Stack>
         )}
       </VStack>
@@ -309,7 +373,7 @@ export default function JmfRecommendationsSelect(
             bg: 'blue.500',
           }}
           disabled={!selected.length}
-          onClick={handleSaveSelections}
+          onClick={handleSave}
         >
           Save selection
         </Button>
