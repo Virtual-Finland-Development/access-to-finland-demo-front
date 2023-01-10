@@ -6,7 +6,7 @@ import { ConsentDataSource } from '../../constants/ConsentDataSource';
 // context
 
 // components
-import getConsentContext from '../../context/ConsentContext/ConsentContext';
+import { getConsentContext } from '../../context/ConsentContext/ConsentContext';
 import ConsentSentry from '../ConsentSentry/ConsentSentry';
 import Loading from '../Loading/Loading';
 import NavBar from '../NavBar/NavBar';
@@ -78,7 +78,14 @@ export default function AppRoutes() {
           }
         />
         <Route path="services" element={<ServicesPage />} />
-        <Route path="profile" element={<Profile isEdit />} />
+        <Route
+          path="profile"
+          element={
+            <ConsentProvider>
+              <Profile isEdit />
+            </ConsentProvider>
+          }
+        />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

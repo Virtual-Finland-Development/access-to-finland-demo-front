@@ -1,13 +1,4 @@
-import {
-  KeyboardEventHandler,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { ErrorMessage as HookFormError } from '@hookform/error-message';
-import { format, isMatch, parseISO } from 'date-fns';
+import { EditIcon, SmallAddIcon } from '@chakra-ui/icons';
 import {
   Button,
   Checkbox,
@@ -17,14 +8,14 @@ import {
   FormHelperText,
   FormLabel,
   Input,
+  Link,
   Radio,
   RadioGroup,
+  SimpleGrid,
   Stack,
   useToast,
-  Link,
-  SimpleGrid,
 } from '@chakra-ui/react';
-import { SmallAddIcon, EditIcon } from '@chakra-ui/icons';
+import { ErrorMessage as HookFormError } from '@hookform/error-message';
 import {
   ActionMeta,
   CreatableSelect,
@@ -33,6 +24,15 @@ import {
   Select,
   SingleValue,
 } from 'chakra-react-select';
+import { format, isMatch, parseISO } from 'date-fns';
+import {
+  KeyboardEventHandler,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
 // types
 import { Gender, UserProfile } from '../../@types';
@@ -47,28 +47,30 @@ import { isNewUser } from '../../utils';
 
 // profile form context utils
 import {
+  createOption,
+  formatAddress,
+  getDefaultRegionOptions,
+  getDefaultSelectOption,
+  groupedRegionOptions,
   pickRandomAddress,
   pickRandomName,
-  formatAddress,
-  createOption,
-  getDefaultSelectOption,
-  getDefaultRegionOptions,
-  groupedRegionOptions,
 } from './utils';
 
 // hooks
+import useConsentContext from '../../context/ConsentContext/ConsentContext';
 import useCountries from '../../hooks/useCountries';
-import useOccupations from '../../hooks/useOccupations';
 import useLanguages from '../../hooks/useLanguages';
+import useOccupations from '../../hooks/useOccupations';
 
 // components
 import Fieldset from '../Fieldset/Fieldset';
+import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect';
 import Loading from '../Loading/Loading';
 import OccupationsSelect from '../OccupationFilters/OccupationsSelect';
-import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect';
 
 // api
 import api from '../../api';
+import { ConsentDataSource } from '../../constants/ConsentDataSource';
 
 interface ProfileFormProps {
   onProfileSubmit?: () => void;
@@ -78,6 +80,9 @@ interface ProfileFormProps {
 
 export default function ProfileForm(props: ProfileFormProps) {
   const { userProfile, setUserProfile } = useAppContext();
+  const { isConsentGranted } = useConsentContext(
+    ConsentDataSource.USER_PROFILE
+  );
   const { openModal, closeModal } = useModal();
   const { id: userId, created, modified, ...restOfProfile } = userProfile;
   const { onProfileSubmit, isEdit } = props;
@@ -142,7 +147,6 @@ export default function ProfileForm(props: ProfileFormProps) {
   const {
     jobTitles,
     regions,
-    jobsDataConsent,
     countryOfBirthCode,
     citizenshipCode,
     nativeLanguageCode,
@@ -624,10 +628,7 @@ export default function ProfileForm(props: ProfileFormProps) {
               {isEdit && (
                 <FormControl id="jobsDataConsent">
                   <FormLabel>Profile consent</FormLabel>
-                  <Checkbox
-                    {...register('jobsDataConsent')}
-                    defaultChecked={jobsDataConsent}
-                  >
+                  <Checkbox isChecked={isConsentGranted} isDisabled>
                     I permit my profile data to be used in vacancies search
                   </Checkbox>
                   <FormHelperText>
