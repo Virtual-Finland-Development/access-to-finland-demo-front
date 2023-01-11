@@ -10,6 +10,10 @@ import {
   TagCloseButton,
   Stack,
 } from '@chakra-ui/react';
+import { SingleValue } from 'chakra-react-select';
+
+// types
+import { SelectOption } from '../ProfileForm/types';
 
 // hooks
 import useOccupations from '../../hooks/useOccupations';
@@ -17,6 +21,7 @@ import useOccupationsFlat from '../../hooks/useOccupationsFlat';
 
 // components
 import OccupationCollapseItem from './OccupationCollapseItem';
+import MoreRecommendations from '../JmfRecommendationsSelect/MoreRecommendations';
 import Loading from '../Loading/Loading';
 
 interface OccupationSelectProps {
@@ -91,7 +96,9 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
           ) {
             acc.push(item);
           }
-          if (!acc.some(i => i.startsWith(item.slice(0, 2)))) {
+          if (
+            !acc.some(i => !i.includes('.') && i.startsWith(item.slice(0, 2)))
+          ) {
             acc.push(item);
           }
 
@@ -101,6 +108,25 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
       setSelectedNotations(filtered);
     },
     [useAsFilter, selectedNotations, occupationsMostInnerDepth]
+  );
+
+  /**
+   * Handle select occupation from recommendations, pass notation for handleSelect
+   */
+  const handleSelectOccupation = useCallback(
+    (occupation: SingleValue<SelectOption>) => {
+      if (occupation?.value) {
+        const notation = flattenedOccupations?.find(
+          o => o.uri === occupation.value
+        )?.notation;
+        const isChecked = selectedNotations.findIndex(n => n === notation) < 0;
+
+        if (notation) {
+          handleSelect(notation, isChecked, false);
+        }
+      }
+    },
+    [flattenedOccupations, handleSelect, selectedNotations]
   );
 
   /**
@@ -125,7 +151,7 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
   const selectedOccupationGroups = selectedOccupations.filter(
     o => !o.notation.includes('.')
   );
-  const userOccupations = selectedOccupations.filter(o =>
+  const selectedEscoOccupations = selectedOccupations.filter(o =>
     o.notation.includes('.')
   );
 
@@ -145,7 +171,7 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
           {useAsFilter
             ? `You may select one or more occupational groups from the list as search
           terms. Choice of occupational group also includes all lower-level
-          occupational groups.`
+          occupational groups. You may also search for specific occupations.`
             : 'Select your occupational group.'}
         </Text>
         <Box
@@ -171,13 +197,29 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
             </Box>
           )}
         </Box>
-        {userOccupations.length > 0 && (
+        <Box
+          mt={4}
+          p={4}
+          backgroundColor="white"
+          border="1px"
+          borderRadius="base"
+          borderColor="blue.100"
+        >
+          <MoreRecommendations
+            selected={selectedEscoOccupations.map(o => ({
+              uri: o.uri,
+              label: o.prefLabel.en,
+            }))}
+            onChange={handleSelectOccupation}
+          />
+        </Box>
+        {selectedEscoOccupations.length > 0 && (
           <Box mt={4}>
             <Text fontWeight="semibold" fontSize="md">
-              Your occupations
+              Occupations
             </Text>
             <Flex flexDirection={'row'} flexWrap="wrap" mt={2} gap={2}>
-              {userOccupations.map(s => (
+              {selectedEscoOccupations.map(s => (
                 <Tag key={s.notation} size="md" colorScheme="purple">
                   <TagLabel fontSize="sm">{s.prefLabel.en}</TagLabel>
                   <TagCloseButton
