@@ -232,7 +232,7 @@ export default function ProfileForm(props: ProfileFormProps) {
         // loop through all dirty input values, set to payload
         if (dirtyKeys.length) {
           for (const key of dirtyKeys) {
-            if (key === 'occupations') {
+            if (key === 'occupations' && values.occupations) {
               const modifiedOccupations = handleOccupationsForPayload(
                 values.occupations,
                 userProfile.occupations || [],
