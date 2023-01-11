@@ -40,9 +40,9 @@ export default function JobPostingItem({ item }: { item: JobPostingEntry }) {
     openModal({
       title: item.basicInfo.title,
       content: (
-        <Stack direction="column">
+        <Stack direction="column" spacing={6}>
           {item.basicInfo.description !== '-' && (
-            <Text textAlign="left" maxW="4xl">
+            <Text textAlign="left" whiteSpace="pre-wrap">
               {item.basicInfo.description}
             </Text>
           )}
