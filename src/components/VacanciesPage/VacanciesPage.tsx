@@ -231,7 +231,7 @@ export default function VacanciesPage() {
   if (occupationsLoading) {
     return <Loading />;
   }
-
+  console.log(jobPostings);
   return (
     <>
       <Flex bg="white" flexDirection="column" shadow="lg" borderRadius="md">
@@ -380,6 +380,11 @@ export default function VacanciesPage() {
                   handleClick={() => fetchNextPage()}
                 />
               )}
+
+              {!jobPostingsFetching &&
+                jobPostings.pages.every(p => !p?.results.length) && (
+                  <Text>No results found.</Text>
+                )}
 
               {!jobPostingsFetching &&
                 !hasNextPage &&
