@@ -125,7 +125,7 @@ export default function MoreRecommendations(props: MoreRecommendationsProps) {
       value={null}
       menuPlacement="top"
       minMenuHeight={300}
-      openMenuOnClick={true}
+      openMenuOnClick={asyncInputCachedOptions.length > 0}
       controlShouldRenderValue={false}
       isClearable={false}
       closeMenuOnSelect={false}
