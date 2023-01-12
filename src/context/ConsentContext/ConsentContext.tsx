@@ -1,3 +1,4 @@
+import { useToast } from '@chakra-ui/react';
 import {
   Context,
   createContext,
@@ -45,6 +46,8 @@ function getConsentProvider(
   ConsentContext: Context<ConsentContextState<ConsentDataSource>>
 ) {
   return function ConsentProvider({ children }: React.PropsWithChildren) {
+    const toast = useToast();
+
     //
     // Reactive flags and states
     //
@@ -60,10 +63,21 @@ function getConsentProvider(
     //
     const initializeConsentSituation = useCallback(async () => {
       if (!isConsentInitialized) {
-        await fetchCurrentConsentSituation();
-        setIsConsentInitialized(true);
+        try {
+          await fetchCurrentConsentSituation();
+          setIsConsentInitialized(true);
+        } catch (error) {
+          console.error(error);
+          toast({
+            title: 'Error.',
+            description: "Couldn't initialize consent situation.",
+            status: 'error',
+            duration: 5000,
+            isClosable: true,
+          });
+        }
       }
-    }, [isConsentInitialized]);
+    }, [toast, isConsentInitialized]);
 
     useEffect(() => {
       initializeConsentSituation();
