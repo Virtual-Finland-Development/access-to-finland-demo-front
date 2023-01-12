@@ -65,5 +65,11 @@ export async function logIn(
       withCredentials: true,
     }
   );
+
+  if (response.status !== 200) {
+    console.error(response.data);
+    throw new Error('Error in login request');
+  }
+
   return response.data;
 }

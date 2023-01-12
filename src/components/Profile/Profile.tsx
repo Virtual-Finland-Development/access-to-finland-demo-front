@@ -82,10 +82,7 @@ export default function Profile({ isEdit }: { isEdit?: boolean }) {
       </Flex>
 
       <ConsentConsumer>
-        {provider => {
-          if (typeof provider === 'undefined') {
-            return null;
-          }
+        {_ => {
           return (
             <ProfileForm onProfileSubmit={onProfileSubmit} isEdit={isEdit} />
           );
