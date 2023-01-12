@@ -15,7 +15,7 @@ import ProfileForm from '../ProfileForm/ProfileForm';
 // api
 import api from '../../api';
 import { ConsentDataSource } from '../../constants/ConsentDataSource';
-import { getConsentContext } from '../../context/ConsentContext/ConsentContext';
+import { getConsentContext } from '../../context/ConsentContext/ConsentContextFactory';
 const { ConsentConsumer } = getConsentContext(ConsentDataSource.USER_PROFILE);
 
 export default function Profile({ isEdit }: { isEdit?: boolean }) {

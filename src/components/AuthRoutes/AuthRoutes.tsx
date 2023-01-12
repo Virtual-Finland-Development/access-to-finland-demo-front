@@ -6,7 +6,7 @@ import { ConsentDataSource } from '../../constants/ConsentDataSource';
 // context
 
 // components
-import { getConsentContext } from '../../context/ConsentContext/ConsentContext';
+import { getConsentContext } from '../../context/ConsentContext/ConsentContextFactory';
 import ConsentSentry from '../ConsentSentry/ConsentSentry';
 import Loading from '../Loading/Loading';
 import NavBar from '../NavBar/NavBar';

@@ -56,7 +56,7 @@ import {
 } from './utils';
 
 // hooks
-import useConsentContext from '../../context/ConsentContext/ConsentContext';
+import useConsentContext from '../../context/ConsentContext/ConsentContextFactory';
 import useCountries from '../../hooks/useCountries';
 import useLanguages from '../../hooks/useLanguages';
 import useOccupations from '../../hooks/useOccupations';
