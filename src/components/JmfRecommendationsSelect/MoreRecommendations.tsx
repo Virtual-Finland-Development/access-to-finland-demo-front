@@ -85,7 +85,7 @@ export default function MoreRecommendations(props: MoreRecommendationsProps) {
    * Debounced handler
    */
   const loadMoreDebounced = useMemo(
-    () => debounce(loadMoreRecommendations, 300),
+    () => debounce(loadMoreRecommendations, 700),
     [loadMoreRecommendations]
   );
 
