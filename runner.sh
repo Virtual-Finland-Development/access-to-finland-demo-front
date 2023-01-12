@@ -4,6 +4,7 @@
 # The service folders must contain a docker-compose.yml file
 #
 
+ARCH=$(uname -m)
 DOCKER_COMPOSE_COMMAND=""
 if [ "$1" = "up" ] || [ "$1" = "start" ]; then
 	DOCKER_COMPOSE_COMMAND="up -d --build"
@@ -43,7 +44,7 @@ for SERVICE in "${SERVICES[@]}"; do
 	# Exception for users-api
 	if [ ${SERVICE} = "users-api" ]; then
 		# If OS architecture is arm64, use the arm64 version of the users-api
-		if [ $(uname -m) = "aarch64" ]; then
+		if [ ${ARCH} = "arm64" ] || [ ${ARCH} = "aarch64" ]; then
 			export USERAPI_DOCKERFILE="Dockerfile.arm64"
 		fi
 	fi
