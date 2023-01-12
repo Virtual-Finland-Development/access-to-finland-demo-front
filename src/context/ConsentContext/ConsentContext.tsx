@@ -128,7 +128,7 @@ function getConsentProvider(
         window.location.href =
           window.location.origin + window.location.pathname;
       }
-    });
+    }, [clearQueryParamsFromUrl]);
 
     return (
       <ConsentContext.Provider
@@ -192,7 +192,12 @@ export default function useConsentContext(dataSource: ConsentDataSource) {
   const context = useContext(ConsentContext);
 
   if (context === undefined || context === null) {
-    throw new Error('useAppContext must be used within AppProvider');
+    throw new Error(
+      `useConsentContext:${getEnumKeyFromValue(
+        ConsentDataSource,
+        dataSource
+      )} must be used within AppProvider`
+    );
   }
 
   return context;
