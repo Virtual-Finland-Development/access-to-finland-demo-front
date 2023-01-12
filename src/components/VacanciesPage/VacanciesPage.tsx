@@ -23,7 +23,7 @@ import { useAppContext } from '../../context/AppContext/AppContext';
 
 // types
 import { PlaceType, PlaceSelection, JobPostingsRequestPayload } from './types';
-import { Occupation, OccupationOption } from '../../@types';
+import { OccupationOption } from '../../@types';
 
 // components
 import JobPostingItem from './JobPostingItem';
@@ -38,7 +38,7 @@ import useJobPostings from '../../hooks/useJobPostings';
 import useOccupationsFlat from '../../hooks/useOccupationsFlat';
 
 // utils
-import { constructJobPostingsPayload } from './utils';
+import { getInitialStateValues, constructJobPostingsPayload } from './utils';
 
 // selections
 import regions from './regionJsons/regions.json';
@@ -102,62 +102,35 @@ export default function VacanciesPage() {
     useOccupationsFlat();
 
   /**
-   * Track selected occupation notations, set selected occupations for UI accordingly
+   * Set up initial state for page from userProfile
    */
   useEffect(() => {
-    if (flattenedOccupations && selectedOccupationNotations?.length) {
-      setSelectedOccupations(
-        flattenedOccupations.filter(
-          o => selectedOccupationNotations.indexOf(o.notation) > -1
-        )
-      );
-    }
-  }, [flattenedOccupations, selectedOccupationNotations]);
+    if (userProfile?.id && flattenedOccupations) {
+      const {
+        initialSearch,
+        initialOccupationNotations,
+        initialSelectedPlaces,
+      } = getInitialStateValues(userProfile);
 
-  /**
-   * Set default search keys from userProfile, if provided.
-   */
-  useEffect(() => {
-    if (userProfile?.id && userProfile.jobTitles?.length) {
-      setSearchInputValue(userProfile.jobTitles.join(' '));
-      setSearch(userProfile.jobTitles.join(' '));
-    }
-  }, [userProfile]);
+      if (initialSearch.length) {
+        setSearchInputValue(initialSearch);
+        setSearch(initialSearch);
+      }
 
-  /**
-   * Set default selected places for filtering, if provided in userProfile.
-   */
-  useEffect(() => {
-    if (userProfile?.id && userProfile.regions?.length) {
-      // merge region and municipality selections, map each and set type
-      const selections: PlaceSelection[] = [
-        ...regions.map(r => ({ ...r, type: PlaceType.REGION })),
-        ...municipalities.map(m => ({ ...m, type: PlaceType.MUNICIPALITY })),
-      ];
-      // reduce userProfile regions, find matches and set to selected places
-      const values: PlaceSelection[] = userProfile.regions.reduce(
-        (acc: PlaceSelection[], code: string) => {
-          const selected = selections.find(s => s.Koodi === code);
-          if (selected) acc.push(selected);
-          return acc;
-        },
-        []
-      );
+      if (initialOccupationNotations.length) {
+        setSelectedOccupationNotations(initialOccupationNotations);
+        setSelectedOccupations(
+          flattenedOccupations.filter(
+            o => initialOccupationNotations.indexOf(o.notation) > -1
+          )
+        );
+      }
 
-      setSelectedPlaces(values);
+      if (initialSelectedPlaces.length) {
+        setSelectedPlaces(initialSelectedPlaces);
+      }
     }
-  }, [userProfile]);
-
-  /**
-   * Set default occupation notation for filtering, if provided in userProfile.
-   */
-  useEffect(() => {
-    if (userProfile?.id && userProfile.occupations?.length) {
-      setSelectedOccupationNotations(
-        userProfile.occupations.map((o: Occupation) => o.escoCode)
-      );
-    }
-  }, [userProfile?.id, userProfile.occupations]);
+  }, [flattenedOccupations, userProfile]);
 
   /**
    * Track search / selectedPlaces state and construct payload
@@ -209,14 +182,18 @@ export default function VacanciesPage() {
       if (type === 'occupation') {
         let notations = selectedOccupationNotations || [];
         notations = notations.filter(n => n !== identifier);
+
         setSelectedOccupationNotations(notations);
+        setSelectedOccupations(
+          flattenedOccupations!.filter(o => notations.indexOf(o.notation) > -1)
+        );
 
         if (!notations.length) {
           setSelectedOccupations(null);
         }
       }
     },
-    [selectedOccupationNotations]
+    [flattenedOccupations, selectedOccupationNotations]
   );
 
   /**
@@ -227,6 +204,24 @@ export default function VacanciesPage() {
     setSelectedOccupationNotations(null);
     setSelectedOccupations(null);
   }, []);
+
+  /**
+   * Handle occupations filter select
+   */
+  const handleOccupationFiltersSelect = useCallback(
+    (selected: string[]) => {
+      if (selected.length) {
+        setSelectedOccupationNotations(selected);
+        setSelectedOccupations(
+          flattenedOccupations!.filter(o => selected.indexOf(o.notation) > -1)
+        );
+      } else {
+        setSelectedOccupationNotations(null);
+        setSelectedOccupations(null);
+      }
+    },
+    [flattenedOccupations]
+  );
 
   if (occupationsLoading) {
     return <Loading />;
@@ -319,13 +314,7 @@ export default function VacanciesPage() {
           >
             <OccupationFilters
               defaultSelected={selectedOccupationNotations || []}
-              onSelect={(selected: string[]) => {
-                console.log(selected);
-                setSelectedOccupationNotations(
-                  selected.length ? selected : null
-                );
-                if (!selected.length) setSelectedOccupations(null);
-              }}
+              onSelect={handleOccupationFiltersSelect}
             />
           </Stack>
         </form>

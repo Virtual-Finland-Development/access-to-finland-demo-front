@@ -27,7 +27,7 @@ export default function useJobPostings(
       return response;
     },
     {
-      enabled: Boolean(payload),
+      enabled: false,
       keepPreviousData: true,
       refetchOnWindowFocus: false,
       getNextPageParam: (_lastPage, pages) => {
