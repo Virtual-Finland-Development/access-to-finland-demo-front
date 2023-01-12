@@ -38,7 +38,7 @@ export async function checkConsent(
     }
   );
 
-  if (response.status !== 200) {
+  if (response.status !== 200 || !(response.data instanceof Array)) {
     throw new Error('Invalid consent data response');
   }
 
