@@ -35,10 +35,10 @@ import LoadMore from '../LoadMore/LoadMore';
 
 // hooks
 import useJobPostings from '../../hooks/useJobPostings';
-import useOccupations from '../../hooks/useOccupations';
+import useOccupationsFlat from '../../hooks/useOccupationsFlat';
 
 // utils
-import { constructJobPostingsPayload } from './utils';
+import { getInitialStateValues, constructJobPostingsPayload } from './utils';
 
 // selections
 import regions from './regionJsons/regions.json';
@@ -63,7 +63,7 @@ const mapSelectOptions = (
   </>
 );
 
-export default function TmtPage() {
+export default function VacanciesPage() {
   const { userProfile } = useAppContext();
 
   const [searchInputValue, setSearchInputValue] = useState<string>('');
@@ -98,64 +98,39 @@ export default function TmtPage() {
   /**
    * useOccupations hook
    */
-  const { flattenedOccupations, isLoading: occupationsLoading } =
-    useOccupations();
+  const { data: flattenedOccupations, isLoading: occupationsLoading } =
+    useOccupationsFlat();
 
   /**
-   * Track selected occupation notations, set selected occupations for UI accordingly
+   * Set up initial state for page from userProfile
    */
   useEffect(() => {
-    if (flattenedOccupations && selectedOccupationNotations?.length) {
-      setSelectedOccupations(
-        flattenedOccupations.filter(
-          o => selectedOccupationNotations.indexOf(o.notation) > -1
-        )
-      );
-    }
-  }, [flattenedOccupations, selectedOccupationNotations]);
+    if (userProfile?.id && flattenedOccupations) {
+      const {
+        initialSearch,
+        initialOccupationNotations,
+        initialSelectedPlaces,
+      } = getInitialStateValues(userProfile);
 
-  /**
-   * Set default search keys from userProfile, if provided.
-   */
-  useEffect(() => {
-    if (userProfile?.id && userProfile.jobTitles?.length) {
-      setSearchInputValue(userProfile.jobTitles.join(' '));
-      setSearch(userProfile.jobTitles.join(' '));
-    }
-  }, [userProfile]);
+      if (initialSearch.length) {
+        setSearchInputValue(initialSearch);
+        setSearch(initialSearch);
+      }
 
-  /**
-   * Set default selected places for filtering, if provided in userProfile.
-   */
-  useEffect(() => {
-    if (userProfile?.id && userProfile.regions?.length) {
-      // merge region and municipality selections, map each and set type
-      const selections: PlaceSelection[] = [
-        ...regions.map(r => ({ ...r, type: PlaceType.REGION })),
-        ...municipalities.map(m => ({ ...m, type: PlaceType.MUNICIPALITY })),
-      ];
-      // reduce userProfile regions, find matches and set to selected places
-      const values: PlaceSelection[] = userProfile.regions.reduce(
-        (acc: PlaceSelection[], code: string) => {
-          const selected = selections.find(s => s.Koodi === code);
-          if (selected) acc.push(selected);
-          return acc;
-        },
-        []
-      );
+      if (initialOccupationNotations.length) {
+        setSelectedOccupationNotations(initialOccupationNotations);
+        setSelectedOccupations(
+          flattenedOccupations.filter(
+            o => initialOccupationNotations.indexOf(o.notation) > -1
+          )
+        );
+      }
 
-      setSelectedPlaces(values);
+      if (initialSelectedPlaces.length) {
+        setSelectedPlaces(initialSelectedPlaces);
+      }
     }
-  }, [userProfile]);
-
-  /**
-   * Set default occupation notation for filtering, if provided in userProfile.
-   */
-  useEffect(() => {
-    if (userProfile?.id && userProfile.occupationCode) {
-      setSelectedOccupationNotations([userProfile.occupationCode]);
-    }
-  }, [userProfile?.id, userProfile.occupationCode]);
+  }, [flattenedOccupations, userProfile]);
 
   /**
    * Track search / selectedPlaces state and construct payload
@@ -207,14 +182,18 @@ export default function TmtPage() {
       if (type === 'occupation') {
         let notations = selectedOccupationNotations || [];
         notations = notations.filter(n => n !== identifier);
+
         setSelectedOccupationNotations(notations);
+        setSelectedOccupations(
+          flattenedOccupations!.filter(o => notations.indexOf(o.notation) > -1)
+        );
 
         if (!notations.length) {
           setSelectedOccupations(null);
         }
       }
     },
-    [selectedOccupationNotations]
+    [flattenedOccupations, selectedOccupationNotations]
   );
 
   /**
@@ -225,6 +204,24 @@ export default function TmtPage() {
     setSelectedOccupationNotations(null);
     setSelectedOccupations(null);
   }, []);
+
+  /**
+   * Handle occupations filter select
+   */
+  const handleOccupationFiltersSelect = useCallback(
+    (selected: string[]) => {
+      if (selected.length) {
+        setSelectedOccupationNotations(selected);
+        setSelectedOccupations(
+          flattenedOccupations!.filter(o => selected.indexOf(o.notation) > -1)
+        );
+      } else {
+        setSelectedOccupationNotations(null);
+        setSelectedOccupations(null);
+      }
+    },
+    [flattenedOccupations]
+  );
 
   if (occupationsLoading) {
     return <Loading />;
@@ -317,12 +314,7 @@ export default function TmtPage() {
           >
             <OccupationFilters
               defaultSelected={selectedOccupationNotations || []}
-              onSelect={(selected: string[]) => {
-                setSelectedOccupationNotations(
-                  selected.length ? selected : null
-                );
-                if (!selected.length) setSelectedOccupations(null);
-              }}
+              onSelect={handleOccupationFiltersSelect}
             />
           </Stack>
         </form>
@@ -377,6 +369,11 @@ export default function TmtPage() {
                   handleClick={() => fetchNextPage()}
                 />
               )}
+
+              {!jobPostingsFetching &&
+                jobPostings.pages.every(p => !p?.results.length) && (
+                  <Text>No results found.</Text>
+                )}
 
               {!jobPostingsFetching &&
                 !hasNextPage &&

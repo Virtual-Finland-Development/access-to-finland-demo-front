@@ -10,12 +10,18 @@ import {
   TagCloseButton,
   Stack,
 } from '@chakra-ui/react';
+import { SingleValue } from 'chakra-react-select';
+
+// types
+import { SelectOption } from '../ProfileForm/types';
 
 // hooks
 import useOccupations from '../../hooks/useOccupations';
+import useOccupationsFlat from '../../hooks/useOccupationsFlat';
 
 // components
 import OccupationCollapseItem from './OccupationCollapseItem';
+import MoreRecommendations from '../JmfRecommendationsSelect/MoreRecommendations';
 import Loading from '../Loading/Loading';
 
 interface OccupationSelectProps {
@@ -39,13 +45,16 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
   const {
     data: occupations,
     isLoading: occupationsLoading,
-    flattenedOccupations,
     occupationsMostInnerDepth,
   } = useOccupations();
 
+  const { data: flattenedOccupations, isLoading: occupationsFlatLoading } =
+    useOccupationsFlat();
+
   /**
    * Handle select occupations (notation codes)
-   * Only include top level notations, if no sub level notations are not selected
+   * Only include top level notations (ISCO codes), if no sub level notations are not selected
+   * Always include user occupations codes (ESCO codes with dot notation) when filtering
    * This 'algorithm' could be improved...
    */
   const handleSelect = useCallback(
@@ -73,6 +82,12 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
       const filtered = set
         .sort((a, b) => b.localeCompare(a))
         .reduce((acc: string[], item) => {
+          // if notation code is ESCO code (user profile occupation code)
+          if (item.includes('.') && acc.findIndex(i => i === item) < 0) {
+            acc.push(item);
+            return acc;
+          }
+
           if (
             (item.length === occupationsMostInnerDepth &&
               acc.findIndex(i => i === item) < 0) ||
@@ -81,15 +96,37 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
           ) {
             acc.push(item);
           }
-          if (!acc.some(i => i.startsWith(item.slice(0, 2)))) {
+          if (
+            !acc.some(i => !i.includes('.') && i.startsWith(item.slice(0, 2)))
+          ) {
             acc.push(item);
           }
+
           return acc;
         }, []);
 
       setSelectedNotations(filtered);
     },
     [useAsFilter, selectedNotations, occupationsMostInnerDepth]
+  );
+
+  /**
+   * Handle select occupation from recommendations, pass notation for handleSelect
+   */
+  const handleSelectOccupation = useCallback(
+    (occupation: SingleValue<SelectOption>) => {
+      if (occupation?.value) {
+        const notation = flattenedOccupations?.find(
+          o => o.uri === occupation.value
+        )?.notation;
+        const isChecked = selectedNotations.findIndex(n => n === notation) < 0;
+
+        if (notation) {
+          handleSelect(notation, isChecked, false);
+        }
+      }
+    },
+    [flattenedOccupations, handleSelect, selectedNotations]
   );
 
   /**
@@ -104,9 +141,19 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
     return [];
   }, [flattenedOccupations, selectedNotations]);
 
-  if (occupationsLoading) {
+  if (occupationsLoading || occupationsFlatLoading) {
     return <Loading />;
   }
+
+  /**
+   * Separate selected occupational groups (ISCO), and user occupations (ESCO)
+   */
+  const selectedOccupationGroups = selectedOccupations.filter(
+    o => !o.notation.includes('.')
+  );
+  const selectedEscoOccupations = selectedOccupations.filter(o =>
+    o.notation.includes('.')
+  );
 
   return (
     <React.Fragment>
@@ -124,7 +171,7 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
           {useAsFilter
             ? `You may select one or more occupational groups from the list as search
           terms. Choice of occupational group also includes all lower-level
-          occupational groups.`
+          occupational groups. You may also search for specific occupations.`
             : 'Select your occupational group.'}
         </Text>
         <Box
@@ -150,7 +197,44 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
             </Box>
           )}
         </Box>
-        {selectedOccupations.length > 0 && (
+        <Box
+          mt={4}
+          p={4}
+          backgroundColor="white"
+          border="1px"
+          borderRadius="base"
+          borderColor="blue.100"
+        >
+          <MoreRecommendations
+            selected={selectedEscoOccupations.map(o => ({
+              uri: o.uri,
+              label: o.prefLabel.en,
+            }))}
+            onChange={handleSelectOccupation}
+          />
+        </Box>
+        {selectedEscoOccupations.length > 0 && (
+          <Box mt={4}>
+            <Text fontWeight="semibold" fontSize="md">
+              Occupations
+            </Text>
+            <Flex flexDirection={'row'} flexWrap="wrap" mt={2} gap={2}>
+              {selectedEscoOccupations.map(s => (
+                <Tag key={s.notation} size="md" colorScheme="purple">
+                  <TagLabel fontSize="sm">{s.prefLabel.en}</TagLabel>
+                  <TagCloseButton
+                    onClick={() =>
+                      setSelectedNotations(prev =>
+                        prev.filter(i => i !== s.notation)
+                      )
+                    }
+                  />
+                </Tag>
+              ))}
+            </Flex>
+          </Box>
+        )}
+        {selectedOccupationGroups.length > 0 && (
           <Box mt={4}>
             <Text fontWeight="semibold" fontSize="md">
               {useAsFilter
@@ -158,7 +242,7 @@ export default function OccupationsSelect(props: OccupationSelectProps) {
                 : 'Selected occupational group'}
             </Text>
             <Flex flexDirection={'row'} flexWrap="wrap" mt={2} gap={2}>
-              {selectedOccupations.map(s => (
+              {selectedOccupationGroups.map(s => (
                 <Tag key={s.notation} size="md" colorScheme="purple">
                   <TagLabel fontSize="sm">{s.prefLabel.en}</TagLabel>
                   <TagCloseButton

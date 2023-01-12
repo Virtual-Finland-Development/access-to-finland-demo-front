@@ -7,16 +7,23 @@ import useErrorToast from './useErrorToast';
 // api
 import api from '../api';
 
-export default function useJmfRecommendations(content: string | null) {
+interface LimitOptions {
+  maxNumberOfSkills: number;
+  maxNumberOfOccupations: number;
+}
+
+export default function useJmfRecommendations(
+  content: string | null,
+  limitOptions: LimitOptions
+) {
   const recommendationsQuery = useQuery(
     ['recommendations'],
     async () => {
       if (content) {
         return await api.data.getJmfRecommendations({
           text: content,
-          maxNumberOfSkills: 20,
-          maxNumberOfOccupations: 7,
           language: 'en',
+          ...limitOptions,
         });
       }
     },

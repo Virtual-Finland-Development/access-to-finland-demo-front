@@ -14,13 +14,13 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 import ConsentSentry from '../ConsentSentry/ConsentSentry';
 import Profile from '../Profile/Profile';
 
-const LazyTmt = lazy(() => import('../TmtPage/TmtPage'));
+const LazyVacancies = lazy(() => import('../VacanciesPage/VacanciesPage'));
 
 /**
  * User needs to give consent to use profile data in vacancies seach
  * Show ConsentSentry to user for approving giving consent before vacancies can be shown
  */
-function TmtPageConsentSentry() {
+function VacanciesPageConsentSentry() {
   const {
     userProfile: { jobsDataConsent },
   } = useAppContext();
@@ -31,7 +31,7 @@ function TmtPageConsentSentry() {
 
   return (
     <Suspense fallback={<Loading />}>
-      <LazyTmt />
+      <LazyVacancies />
     </Suspense>
   );
 }
@@ -53,7 +53,7 @@ export default function AppRoutes() {
         }
       >
         <Route index element={<WelcomePage />} />
-        <Route path="vacancies" element={<TmtPageConsentSentry />} />
+        <Route path="vacancies" element={<VacanciesPageConsentSentry />} />
         <Route path="services" element={<ServicesPage />} />
         <Route path="profile" element={<Profile isEdit />} />
         <Route path="*" element={<PageNotFound />} />

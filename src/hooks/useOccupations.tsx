@@ -23,22 +23,6 @@ function getOccupationsMostInnerDepth(
     : 0;
 }
 
-/**
- * Flatten all occupations and child occupations (narrower lists) as one list
- */
-function flattenOccupations(
-  occupation: OccupationOption,
-  destArr: OccupationOption[]
-) {
-  destArr.push(occupation);
-
-  if (occupation.narrower) {
-    for (let childOccupation of occupation.narrower) {
-      flattenOccupations(childOccupation, destArr);
-    }
-  }
-}
-
 export default function useOccupations() {
   const occupationsQuery = useQuery(
     ['occupations'],
@@ -52,23 +36,16 @@ export default function useOccupations() {
   );
 
   /**
-   * Flatten occupations from hierarchy level to one level array.
-   * Also get the most inner depth of occupation.narrower level
+   * Get the most inner depth of occupation.narrower level
    */
-  const flattenAndGetMostInnerDepth = useMemo(() => {
+  const getMostInnerDepth = useMemo(() => {
     if (!occupationsQuery.data) return null;
-
-    let flattenedOccupations: OccupationOption[] = [];
-
-    for (let occupation of occupationsQuery.data) {
-      flattenOccupations(occupation, flattenedOccupations);
-    }
 
     const occupationsMostInnerDepth = getOccupationsMostInnerDepth(
       occupationsQuery.data
     );
 
-    return { flattenedOccupations, occupationsMostInnerDepth };
+    return { occupationsMostInnerDepth };
   }, [occupationsQuery.data]);
 
   // display error in toast, if any
@@ -77,5 +54,5 @@ export default function useOccupations() {
     error: occupationsQuery.error,
   });
 
-  return { ...occupationsQuery, ...flattenAndGetMostInnerDepth };
+  return { ...occupationsQuery, ...getMostInnerDepth };
 }

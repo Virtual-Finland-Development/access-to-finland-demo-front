@@ -38,6 +38,13 @@ export async function getOccupations(): Promise<OccupationOption[]> {
   return data;
 }
 
+export async function getOccupationsFlat(): Promise<OccupationOption[]> {
+  const { data } = await axiosInstance.get(
+    `${USERS_API_BASE_URL}/code-sets/occupations-flat`
+  );
+  return data;
+}
+
 export async function getLanguages(): Promise<LanguageOption[]> {
   const { data } = await axiosInstance.get(
     `${USERS_API_BASE_URL}/code-sets/languages`

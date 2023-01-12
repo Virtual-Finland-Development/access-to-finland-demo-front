@@ -24,6 +24,7 @@ const USERS_API_URLS = [
   `${USERS_API_BASE_URL}/user`,
   `${USERS_API_BASE_URL}/code-sets/countries`,
   `${USERS_API_BASE_URL}/code-sets/occupations`,
+  `${USERS_API_BASE_URL}/code-sets/occupations-flat`,
   `${USERS_API_BASE_URL}/code-sets/languages`,
   `${USERS_API_BASE_URL}/code-sets/genders`,
 ];
