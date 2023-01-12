@@ -90,7 +90,7 @@ export default function Profile({ isEdit }: { isEdit?: boolean }) {
 
           const { isConsentInitialized } = provider;
 
-          if (!isConsentInitialized) {
+          if (isEdit && !isConsentInitialized) {
             return <Loading />;
           }
 
