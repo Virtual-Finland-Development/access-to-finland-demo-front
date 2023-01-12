@@ -10,9 +10,7 @@ import * as AppContextExports from '../../context/AppContext/AppContext';
 
 // endpoints
 import { AUTH_GW_BASE_URL } from '../../api/endpoints';
-
-// constants
-import { appContextUrlEncoded } from '../../constants';
+import { generateAppContextHash } from '../../utils';
 
 describe('Test app authentication based rendering', () => {
   beforeEach(() => {
@@ -38,7 +36,7 @@ describe('Test app authentication based rendering', () => {
 
     // once login button clicked, user should be directed to testbed authentication (api gateway route)
     expect(window.location.assign).toBeCalledWith(
-      `${AUTH_GW_BASE_URL}/auth/openid/testbed/authentication-request?appContext=${appContextUrlEncoded}`
+      `${AUTH_GW_BASE_URL}/auth/openid/testbed/authentication-request?appContext=${generateAppContextHash()}`
     );
 
     // login button should be disabled when login action is clicked
@@ -86,7 +84,7 @@ describe('Test app authentication based rendering', () => {
 
     // once log out button clicked, user should be directed to authentication log out (api gateway route)
     expect(window.location.assign).toBeCalledWith(
-      `${AUTH_GW_BASE_URL}/auth/openid/testbed/logout-request?appContext=${appContextUrlEncoded}&idToken=test-token`
+      `${AUTH_GW_BASE_URL}/auth/openid/testbed/logout-request?appContext=${generateAppContextHash()}&idToken=test-token`
     );
 
     // loading spinner should appear

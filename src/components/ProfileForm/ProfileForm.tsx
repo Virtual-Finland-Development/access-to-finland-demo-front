@@ -1,30 +1,20 @@
-import {
-  KeyboardEventHandler,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { ErrorMessage as HookFormError } from '@hookform/error-message';
-import { format, isMatch, parseISO } from 'date-fns';
+import { EditIcon, SmallAddIcon } from '@chakra-ui/icons';
 import {
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormErrorMessage,
   FormHelperText,
   FormLabel,
   Input,
+  Link,
   Radio,
   RadioGroup,
+  SimpleGrid,
   Stack,
   useToast,
-  Link,
-  SimpleGrid,
 } from '@chakra-ui/react';
-import { SmallAddIcon, EditIcon } from '@chakra-ui/icons';
+import { ErrorMessage as HookFormError } from '@hookform/error-message';
 import {
   ActionMeta,
   CreatableSelect,
@@ -33,6 +23,15 @@ import {
   Select,
   SingleValue,
 } from 'chakra-react-select';
+import { format, isMatch, parseISO } from 'date-fns';
+import {
+  KeyboardEventHandler,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
 // types
 import { Gender, UserProfile } from '../../@types';
@@ -47,28 +46,30 @@ import { isNewUser } from '../../utils';
 
 // profile form context utils
 import {
+  createOption,
+  formatAddress,
+  getDefaultRegionOptions,
+  getDefaultSelectOption,
+  groupedRegionOptions,
   pickRandomAddress,
   pickRandomName,
-  formatAddress,
-  createOption,
-  getDefaultSelectOption,
-  getDefaultRegionOptions,
-  groupedRegionOptions,
 } from './utils';
 
 // hooks
+import useConsentContext from '../../context/ConsentContext/ConsentContextFactory';
 import useCountries from '../../hooks/useCountries';
-import useOccupations from '../../hooks/useOccupations';
 import useLanguages from '../../hooks/useLanguages';
+import useOccupations from '../../hooks/useOccupations';
 
 // components
 import Fieldset from '../Fieldset/Fieldset';
+import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect';
 import Loading from '../Loading/Loading';
 import OccupationsSelect from '../OccupationFilters/OccupationsSelect';
-import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect';
 
 // api
 import api from '../../api';
+import { ConsentDataSource } from '../../constants/ConsentDataSource';
 
 interface ProfileFormProps {
   onProfileSubmit?: () => void;
@@ -78,6 +79,9 @@ interface ProfileFormProps {
 
 export default function ProfileForm(props: ProfileFormProps) {
   const { userProfile, setUserProfile } = useAppContext();
+  const { isConsentGranted, redirectToConsentService } = useConsentContext(
+    ConsentDataSource.USER_PROFILE
+  );
   const { openModal, closeModal } = useModal();
   const { id: userId, created, modified, ...restOfProfile } = userProfile;
   const { onProfileSubmit, isEdit } = props;
@@ -142,7 +146,6 @@ export default function ProfileForm(props: ProfileFormProps) {
   const {
     jobTitles,
     regions,
-    jobsDataConsent,
     countryOfBirthCode,
     citizenshipCode,
     nativeLanguageCode,
@@ -623,13 +626,36 @@ export default function ProfileForm(props: ProfileFormProps) {
               </FormControl>
               {isEdit && (
                 <FormControl id="jobsDataConsent">
-                  <FormLabel>Profile consent</FormLabel>
-                  <Checkbox
-                    {...register('jobsDataConsent')}
-                    defaultChecked={jobsDataConsent}
-                  >
-                    I permit my profile data to be used in vacancies search
-                  </Checkbox>
+                  <FormLabel>Profile consent</FormLabel>I permit my profile data
+                  to be used in vacancies search:
+                  <Stack direction="row" spacing={4} mt={2}>
+                    <Button
+                      colorScheme="teal"
+                      variant="solid"
+                      isDisabled={isConsentGranted}
+                      onClick={() => {
+                        redirectToConsentService();
+                      }}
+                    >
+                      Give consent
+                    </Button>
+                    <Button
+                      isDisabled={!isConsentGranted}
+                      colorScheme="red"
+                      variant="outline"
+                      onClick={() => {
+                        toast({
+                          title: 'Warning',
+                          description: 'Consent revoke not implemented yet',
+                          status: 'warning',
+                          duration: 5000,
+                          isClosable: true,
+                        });
+                      }}
+                    >
+                      Revoke consent
+                    </Button>
+                  </Stack>
                   <FormHelperText>
                     Your profile information will be used to improve search
                     capabilities in a third party service.

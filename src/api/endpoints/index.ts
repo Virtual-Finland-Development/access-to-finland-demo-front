@@ -15,7 +15,7 @@ export const APP_BASE_URL = (() => {
 
 export const AUTH_GW_BASE_URL =
   process.env.REACT_APP_AUTH_GW_BASE_URL ||
-  'https://q88uo5prmh.execute-api.eu-north-1.amazonaws.com';
+  'https://virtualfinland-authgw.localhost';
 
 export const USERS_API_BASE_URL = process.env.REACT_APP_USERS_API_BASE_URL
   ? removeTrailingSlash(process.env.REACT_APP_USERS_API_BASE_URL)

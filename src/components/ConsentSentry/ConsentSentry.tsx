@@ -1,54 +1,20 @@
+import { Box, Button, Container, Heading, Stack, Text } from '@chakra-ui/react';
 import { useState } from 'react';
-import {
-  Box,
-  Heading,
-  Container,
-  Text,
-  Button,
-  Stack,
-  useToast,
-} from '@chakra-ui/react';
 
-// context
-import { useAppContext } from '../../context/AppContext/AppContext';
-
-// api
-import api from '../../api';
-
-export default function ConsentSentry() {
-  const { setUserProfile } = useAppContext();
+export default function ConsentSentry({
+  approveFunction,
+  infoText,
+}: {
+  approveFunction: Function;
+  infoText: string;
+}) {
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
-  const toast = useToast();
-
-  /**
-   * Handle 'jobsConsent' update for user profile.
-   */
   const handleConsent = async () => {
     setIsSaving(true);
 
     try {
-      const payload = { jobsDataConsent: true };
-      const response = await api.user.patch(payload);
-
-      setUserProfile(response.data);
-
-      toast({
-        title: 'Profile saved.',
-        description: 'Your profile was updated successfully.',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      });
-    } catch (error: any) {
-      toast({
-        title: error?.title || 'Error.',
-        description:
-          error?.detail || 'Something went wrong, please try again later.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
+      await approveFunction();
     } finally {
       setIsSaving(false);
     }
@@ -63,11 +29,7 @@ export default function ConsentSentry() {
         >
           Consent needed
         </Heading>
-        <Text color={'gray.500'}>
-          To continue to use vacancies search, you need to give your consent to
-          use your profile information for search capabilities in third party
-          service.
-        </Text>
+        <Text color={'gray.500'}>{infoText}</Text>
         <Stack
           direction={'column'}
           spacing={3}
