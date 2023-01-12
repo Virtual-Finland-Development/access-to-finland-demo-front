@@ -16,6 +16,7 @@ import ProfileForm from '../ProfileForm/ProfileForm';
 import api from '../../api';
 import { ConsentDataSource } from '../../constants/ConsentDataSource';
 import { getConsentContext } from '../../context/ConsentContext/ConsentContextFactory';
+import Loading from '../Loading/Loading';
 const { ConsentConsumer } = getConsentContext(ConsentDataSource.USER_PROFILE);
 
 export default function Profile({ isEdit }: { isEdit?: boolean }) {
@@ -82,7 +83,17 @@ export default function Profile({ isEdit }: { isEdit?: boolean }) {
       </Flex>
 
       <ConsentConsumer>
-        {_ => {
+        {provider => {
+          if (typeof provider === 'undefined') {
+            return null;
+          }
+
+          const { isConsentInitialized } = provider;
+
+          if (!isConsentInitialized) {
+            return <Loading />;
+          }
+
           return (
             <ProfileForm onProfileSubmit={onProfileSubmit} isEdit={isEdit} />
           );
