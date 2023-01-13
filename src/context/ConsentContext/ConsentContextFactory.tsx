@@ -8,7 +8,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../../api';
 import { ConsentSituation } from '../../api/services/consent';
 import { ConsentDataSource } from '../../constants/ConsentDataSource';
@@ -47,6 +47,7 @@ function getConsentProvider(
 ) {
   return function ConsentProvider({ children }: React.PropsWithChildren) {
     const toast = useToast();
+    const navigate = useNavigate();
 
     //
     // Reactive flags and states
@@ -125,10 +126,9 @@ function getConsentProvider(
      */
     useEffect(() => {
       if (clearQueryParamsFromUrl === 'true') {
-        window.location.href =
-          window.location.origin + window.location.pathname;
+        navigate(window.location.pathname);
       }
-    }, [clearQueryParamsFromUrl]);
+    }, [clearQueryParamsFromUrl, navigate]);
 
     return (
       <ConsentContext.Provider

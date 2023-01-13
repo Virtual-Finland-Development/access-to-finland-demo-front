@@ -21,14 +21,10 @@ export async function checkConsent(
   consentToken?: string | null
 ): Promise<ConsentSituation> {
   const idToken = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS).idToken;
-
-  const redirectUrl = new URL(window.location.href); // redirect back to the current page
-  redirectUrl.searchParams.set('clear', 'true'); // Applies an url param cleanup after consent flow
-
   const response = await axios.post(
     `${AUTH_GW_BASE_URL}/consents/testbed/consent-check`,
     JSON.stringify({
-      appContext: generateAppContextHash({ redirectUrl: redirectUrl }),
+      appContext: generateAppContextHash(),
       dataSources: [{ uri: dataSourceUri, consentToken: consentToken }],
     }),
     {
@@ -56,5 +52,15 @@ export function directToConsentService(consentSituation: ConsentSituation) {
   if (!consentSituation.redirectUrl) {
     throw new Error('Invalid consent situation');
   }
-  window.location.assign(consentSituation.redirectUrl);
+
+  const redirectBackUrl = new URL(window.location.href);
+  redirectBackUrl.searchParams.set('clear', 'true'); // Applies an url param cleanup after consent flow
+
+  const redirectToServiceUrl = new URL(consentSituation.redirectUrl);
+  redirectToServiceUrl.searchParams.set(
+    'appContext',
+    generateAppContextHash({ redirectUrl: redirectBackUrl })
+  );
+
+  window.location.assign(redirectToServiceUrl);
 }
