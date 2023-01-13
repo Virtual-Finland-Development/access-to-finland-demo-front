@@ -5,7 +5,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import useErrorToast from './useErrorToast';
 
 // types
-import { JobPostingsRequestPayload } from '../components/TmtPage/types';
+import { JobPostingsRequestPayload } from '../components/VacanciesPage/types';
 
 // api
 import api from '../api';
@@ -27,7 +27,7 @@ export default function useJobPostings(
       return response;
     },
     {
-      enabled: Boolean(payload),
+      enabled: false,
       keepPreviousData: true,
       refetchOnWindowFocus: false,
       getNextPageParam: (_lastPage, pages) => {

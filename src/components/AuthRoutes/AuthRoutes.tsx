@@ -3,8 +3,6 @@ import { lazy, Suspense, useContext } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import { ConsentDataSource } from '../../constants/ConsentDataSource';
 
-// context
-
 // components
 import { getConsentContext } from '../../context/ConsentContext/ConsentContextFactory';
 import ConsentSentry from '../ConsentSentry/ConsentSentry';
@@ -15,7 +13,7 @@ import Profile from '../Profile/Profile';
 import ServicesPage from '../ServicesPage/ServicesPage';
 import WelcomePage from '../WelcomePage/WelcomePage';
 
-const LazyTmt = lazy(() => import('../TmtPage/TmtPage'));
+const LazyVacancies = lazy(() => import('../VacanciesPage/VacanciesPage'));
 
 // Get context and provider for given data source
 const { ConsentContext, ConsentProvider } = getConsentContext(
@@ -26,7 +24,7 @@ const { ConsentContext, ConsentProvider } = getConsentContext(
  * User needs to give consent to use profile data in vacancies seach
  * Show ConsentSentry to user for approving giving consent before vacancies can be shown
  */
-function TmtPageConsentSentry() {
+function VacanciesPageConsentSentry() {
   const { isConsentInitialized, isConsentGranted, redirectToConsentService } =
     useContext(ConsentContext);
 
@@ -47,7 +45,7 @@ function TmtPageConsentSentry() {
 
   return (
     <Suspense fallback={<Loading />}>
-      <LazyTmt />
+      <LazyVacancies />
     </Suspense>
   );
 }
@@ -73,7 +71,7 @@ export default function AppRoutes() {
           path="vacancies"
           element={
             <ConsentProvider>
-              <TmtPageConsentSentry />
+              <VacanciesPageConsentSentry />
             </ConsentProvider>
           }
         />
