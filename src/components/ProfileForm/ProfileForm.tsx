@@ -23,8 +23,8 @@ import {
   useToast,
   Link,
   SimpleGrid,
+  Select as ChakraSelect,
 } from '@chakra-ui/react';
-import { SmallAddIcon, EditIcon } from '@chakra-ui/icons';
 import {
   ActionMeta,
   CreatableSelect,
@@ -35,8 +35,15 @@ import {
 } from 'chakra-react-select';
 
 // types
-import { Gender, UserProfile } from '../../@types';
-import { SelectOption } from './types';
+import {
+  Gender,
+  UserProfile,
+  UserOccupationSelection,
+  EmploymentType,
+  WorkingTime,
+  JmfRecommendation,
+} from '../../@types';
+import { RegionSelectOption, RegionType, SelectOption } from './types';
 
 // context
 import { useAppContext } from '../../context/AppContext/AppContext';
@@ -54,18 +61,22 @@ import {
   getDefaultSelectOption,
   getDefaultRegionOptions,
   groupedRegionOptions,
+  handleOccupationsForPayload,
+  handleWorkPreferencesForPayload,
+  EMPLOYMENT_TYPE_LABELS,
+  WORKING_TIME_LABELS,
 } from './utils';
 
 // hooks
 import useCountries from '../../hooks/useCountries';
-import useOccupations from '../../hooks/useOccupations';
+import useOccupationsFlat from '../../hooks/useOccupationsFlat';
 import useLanguages from '../../hooks/useLanguages';
 
 // components
 import Fieldset from '../Fieldset/Fieldset';
 import Loading from '../Loading/Loading';
-import OccupationsSelect from '../OccupationFilters/OccupationsSelect';
 import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect';
+import UserOccupations from '../UserOccupations/UserOccupations';
 
 // api
 import api from '../../api';
@@ -86,15 +97,12 @@ export default function ProfileForm(props: ProfileFormProps) {
 
   // User api provided lists and metadata
   const { data: countries, isLoading: countriesLoading } = useCountries();
-  const {
-    data: occupations,
-    isLoading: occupationsLoading,
-    flattenedOccupations,
-  } = useOccupations();
+  const { data: flattenedOccupations, isLoading: occupationsFlatLoading } =
+    useOccupationsFlat();
   const { data: languages, isLoading: languagesLoading } = useLanguages();
 
   const listsLoading =
-    countriesLoading || occupationsLoading || languagesLoading;
+    countriesLoading || occupationsFlatLoading || languagesLoading;
 
   const isNewProfile =
     !(created && modified) || isNewUser({ created, modified });
@@ -126,35 +134,38 @@ export default function ProfileForm(props: ProfileFormProps) {
   const toast = useToast();
 
   /**
-   * Custom register languages.
+   * Custom register some properties.
    */
   useEffect(() => {
     register('jobTitles');
     register('regions');
     register('countryOfBirthCode');
-    register('occupationCode');
     register('citizenshipCode');
     register('nativeLanguageCode');
     register('address');
+    register('occupations');
+    register('workPreferences.preferredRegionEnum');
+    register('workPreferences.preferredMunicipalityEnum');
+    register('workPreferences.workingLanguageEnum');
   }, [register]);
 
   // watch field values
   const {
     jobTitles,
-    regions,
     jobsDataConsent,
     countryOfBirthCode,
     citizenshipCode,
     nativeLanguageCode,
-    occupationCode,
     address,
+    occupations: userOccupations,
+    workPreferences,
   } = watch();
 
-  // Get default values for regions select, if provided in userProfile.
+  // Get default values for regions select, if provided in userProfile (workPreferences).
   const regionsDefaultOptions = useMemo(() => {
     if (!userId) return [];
-    return getDefaultRegionOptions(regions);
-  }, [regions, userId]);
+    return getDefaultRegionOptions(workPreferences);
+  }, [workPreferences, userId]);
 
   // Default countryOfBirthCode option
   const defaultCountryOfBirthOption = useMemo(
@@ -187,16 +198,16 @@ export default function ProfileForm(props: ProfileFormProps) {
     [languages, nativeLanguageCode]
   );
 
-  // Default occupationCode option
-  const defaultOccupationCode = useMemo(
+  // Default workingPreferences.workingLanguageEnum
+  const defaultWorkingLanguageOption = useMemo(
     () =>
       getDefaultSelectOption(
-        occupationCode,
-        flattenedOccupations?.map(o => ({ ...o, name: o.prefLabel.en })),
-        'notation',
-        'name'
+        workPreferences?.workingLanguageEnum || '',
+        languages,
+        'id',
+        'englishName'
       ),
-    [flattenedOccupations, occupationCode]
+    [languages, workPreferences?.workingLanguageEnum]
   );
 
   /**
@@ -221,17 +232,35 @@ export default function ProfileForm(props: ProfileFormProps) {
         // loop through all dirty input values, set to payload
         if (dirtyKeys.length) {
           for (const key of dirtyKeys) {
-            if (
-              typeof values[key] === 'boolean' ||
-              key === 'occupationCode' ||
-              values[key]
-            ) {
+            if (key === 'occupations' && values.occupations) {
+              const modifiedOccupations = handleOccupationsForPayload(
+                values.occupations,
+                userProfile.occupations || [],
+                flattenedOccupations || []
+              );
+
+              if (modifiedOccupations.length) {
+                payload.occupations = modifiedOccupations;
+              }
+            } else if (key === 'workPreferences') {
+              payload.workPreferences = handleWorkPreferencesForPayload(
+                values.workPreferences,
+                userProfile.workPreferences
+              );
+            } else if (typeof values[key] === 'boolean' || values[key]) {
               payload[key as keyof UserProfile] = values[key];
             }
           }
         }
 
         const response = await api.user.patch(payload);
+
+        // update occupations to form-hook state without dirtying, if payload includes occupation changes
+        if (payload.occupations) {
+          setValue('occupations', response.data.occupations, {
+            shouldDirty: false,
+          });
+        }
 
         setUserProfile(response.data);
 
@@ -257,7 +286,17 @@ export default function ProfileForm(props: ProfileFormProps) {
         });
       }
     },
-    [dirtyFields, isNewProfile, onProfileSubmit, setUserProfile, toast]
+    [
+      dirtyFields,
+      flattenedOccupations,
+      isNewProfile,
+      onProfileSubmit,
+      setUserProfile,
+      setValue,
+      toast,
+      userProfile.occupations,
+      userProfile.workPreferences,
+    ]
   );
 
   /**
@@ -270,9 +309,13 @@ export default function ProfileForm(props: ProfileFormProps) {
     const field = meta.name as
       | 'countryOfBirthCode'
       | 'citizenshipCode'
-      | 'occupationCode';
+      | 'nativeLanguageCode'
+      | 'workPreferences.workingLanguageEnum';
 
-    if (errors?.[`${field}`]) {
+    if (
+      field !== 'workPreferences.workingLanguageEnum' &&
+      errors?.[`${field}`]
+    ) {
       clearErrors(field);
     }
 
@@ -299,6 +342,27 @@ export default function ProfileForm(props: ProfileFormProps) {
       selections.map(s => s.value),
       { shouldDirty: true }
     );
+  };
+
+  /**
+   * Handle workPreferences region / municipality changes
+   */
+  const handleRegionsSelectChange = (
+    selections: MultiValue<RegionSelectOption>
+  ) => {
+    const regions = selections
+      .filter(s => s.type === RegionType.REGION)
+      .map(r => r.value);
+    const municipalities = selections
+      .filter(s => s.type === RegionType.MUNICIPALITY)
+      .map(m => m.value);
+
+    setValue('workPreferences.preferredRegionEnum', regions, {
+      shouldDirty: true,
+    });
+    setValue('workPreferences.preferredMunicipalityEnum', municipalities, {
+      shouldDirty: true,
+    });
   };
 
   /**
@@ -333,28 +397,6 @@ export default function ProfileForm(props: ProfileFormProps) {
     );
 
   /**
-   * Handle open occupational group selection, present in modal.
-   */
-  const handleOpenOccupationSelect = () =>
-    openModal({
-      title: 'Choose your occupation',
-      content: (
-        <OccupationsSelect
-          defaultSelected={occupationCode ? [occupationCode] : []}
-          onSelectOccupations={(selected: string[]) => {
-            setValue('occupationCode', selected.length ? selected[0] : '', {
-              shouldDirty: true,
-            });
-            closeModal();
-          }}
-          onCancel={closeModal}
-        />
-      ),
-      size: '3xl',
-      onClose: () => {},
-    });
-
-  /**
    * Handle open jmf occupations / skills selection
    */
   const handleOpenRecommendationsSelect = () =>
@@ -362,17 +404,36 @@ export default function ProfileForm(props: ProfileFormProps) {
       title: 'Knowledge and skills recommendations',
       content: (
         <JmfRecommendationsSelect
-          onSelect={(selected: string[]) => {
-            const previousTitles = jobTitles ? jobTitles : [];
-            const newTitles = new Set([...previousTitles, ...selected]);
-            setValue('jobTitles', Array.from(newTitles), { shouldDirty: true });
-            closeModal();
+          type="skills"
+          isControlled={false}
+          onSave={(selected?: JmfRecommendation[]) => {
+            if (selected) {
+              const previousTitles = jobTitles ? jobTitles : [];
+              const newTitles = new Set([
+                ...previousTitles,
+                ...selected.map(s => s.label),
+              ]);
+              setValue('jobTitles', Array.from(newTitles), {
+                shouldDirty: true,
+              });
+              closeModal();
+            }
           }}
           onCancel={closeModal}
         />
       ),
       onClose: () => {},
     });
+
+  /**
+   * Handle set changed occupations to hook-form state
+   */
+  const handleOccupationsChange = useCallback(
+    (changedOccupations: UserOccupationSelection[]) => {
+      setValue('occupations', changedOccupations, { shouldDirty: true });
+    },
+    [setValue]
+  );
 
   if (listsLoading) {
     return <Loading />;
@@ -542,7 +603,7 @@ export default function ProfileForm(props: ProfileFormProps) {
             </Stack>
           </Fieldset>
 
-          <Fieldset title="Search profile">
+          <Fieldset title="Search profile & work preferences">
             <Stack spacing={4}>
               <FormControl
                 isInvalid={Boolean(errors?.jobTitles)}
@@ -578,47 +639,118 @@ export default function ProfileForm(props: ProfileFormProps) {
                   Ask for recommendations
                 </Link>
               </FormControl>
-              {occupations && (
+              {flattenedOccupations && (
                 <FormControl
-                  isInvalid={Boolean(errors?.occupationCode)}
-                  id="occupationCode"
+                  isInvalid={Boolean(errors?.occupations)}
+                  id="occupations"
                 >
-                  <FormLabel>Occupation</FormLabel>
-                  <Link
-                    color="blue.500"
-                    fontWeight="medium"
-                    onClick={handleOpenOccupationSelect}
-                  >
-                    {defaultOccupationCode ? (
-                      <>
-                        {defaultOccupationCode[0].label} <EditIcon />
-                      </>
-                    ) : (
-                      <>
-                        Select occupation <SmallAddIcon />
-                      </>
-                    )}
-                  </Link>
+                  <FormLabel>Occupations</FormLabel>
+                  <UserOccupations
+                    userOccupations={userOccupations}
+                    occupationOptions={flattenedOccupations
+                      .filter(o => o.notation.includes('.'))
+                      .sort((a, b) => a.notation.localeCompare(b.notation))}
+                    handleSave={handleOccupationsChange}
+                  />
                 </FormControl>
               )}
-              <FormControl isInvalid={Boolean(errors?.regions)} id="regions">
+              <FormControl
+                isInvalid={Boolean(errors?.workPreferences?.employmentTypeCode)}
+                id="workPreferences.employmentTypeCode"
+              >
+                <FormLabel>Preferred employment type</FormLabel>
+                <ChakraSelect
+                  defaultValue={workPreferences?.employmentTypeCode || ''}
+                  {...register('workPreferences.employmentTypeCode')}
+                >
+                  <option disabled value="">
+                    Select...
+                  </option>
+                  {Object.keys(EmploymentType)
+                    .filter((key: any) => !isNaN(Number(EmploymentType[key])))
+                    .map(type => (
+                      <option key={type} value={type}>
+                        {
+                          EMPLOYMENT_TYPE_LABELS[
+                            type as keyof typeof EMPLOYMENT_TYPE_LABELS
+                          ]
+                        }
+                      </option>
+                    ))}
+                </ChakraSelect>
+              </FormControl>
+              <FormControl
+                isInvalid={Boolean(errors?.workPreferences?.workingTimeEnum)}
+                id="workPreferences.workingTimeEnum"
+              >
+                <FormLabel>Preferred working time</FormLabel>
+                <ChakraSelect
+                  defaultValue={workPreferences?.workingTimeEnum || ''}
+                  {...register('workPreferences.workingTimeEnum')}
+                >
+                  <option disabled value="">
+                    Select...
+                  </option>
+                  {Object.keys(WorkingTime)
+                    .filter(key => key.length === 2)
+                    .map(time => (
+                      <option key={time} value={time}>
+                        {
+                          WORKING_TIME_LABELS[
+                            time as keyof typeof WORKING_TIME_LABELS
+                          ]
+                        }
+                      </option>
+                    ))}
+                </ChakraSelect>
+              </FormControl>
+              {languages && (
+                <FormControl
+                  isInvalid={Boolean(
+                    errors?.workPreferences?.workingLanguageEnum
+                  )}
+                  id="workPreferences.workingLanguageEnum"
+                >
+                  <FormLabel>Preferred working language</FormLabel>
+                  <Select<SelectOption, false, GroupBase<SelectOption>>
+                    isMulti={false}
+                    name="workPreferences.workingLanguageEnum"
+                    defaultValue={defaultWorkingLanguageOption}
+                    options={languages.map(l => ({
+                      label: l.englishName,
+                      value: l.id,
+                    }))}
+                    placeholder="Type or select..."
+                    closeMenuOnSelect={true}
+                    size="md"
+                    onChange={handleSingleSelectChange}
+                  />
+                </FormControl>
+              )}
+              <FormControl
+                isInvalid={Boolean(
+                  errors?.workPreferences?.preferredRegionEnum ||
+                    errors?.workPreferences?.preferredMunicipalityEnum
+                )}
+                id="workPreferences"
+              >
                 <FormLabel>Preferred regions to work in</FormLabel>
-                <Select<SelectOption, true, GroupBase<SelectOption>>
+                <Select<RegionSelectOption, true, GroupBase<RegionSelectOption>>
                   isMulti
-                  name="regions"
+                  name="workPreferences"
                   defaultValue={regionsDefaultOptions}
                   options={groupedRegionOptions}
                   placeholder="Type or select..."
                   closeMenuOnSelect={false}
                   size="md"
-                  onChange={handleMultiSelectChange}
+                  onChange={handleRegionsSelectChange}
                   menuPosition="fixed"
                   minMenuHeight={300}
                 />
                 <HookFormError
                   errors={errors}
                   as={<FormErrorMessage />}
-                  name="regions"
+                  name="workPreferences"
                 />
               </FormControl>
               {isEdit && (
@@ -641,16 +773,10 @@ export default function ProfileForm(props: ProfileFormProps) {
         </SimpleGrid>
 
         <Stack spacing={6} direction={['column', 'row']} justifyContent="end">
-          {/* isEdit && (
-            <Button w="full" disabled={isSubmitting} onClick={onCancel}>
-              {!isEdit ? 'Skip' : 'Cancel'}
-            </Button>
-          ) */}
           <Button
             type="submit"
             bg="blue.400"
             color="white"
-            // w="full"
             _hover={{
               bg: 'blue.500',
             }}

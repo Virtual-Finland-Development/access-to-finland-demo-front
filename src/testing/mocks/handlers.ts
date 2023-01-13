@@ -117,6 +117,22 @@ export const handlers = [
       ])
     );
   }),
+  rest.get(
+    `${USERS_API_BASE_URL}/code-sets/occupations-flat`,
+    (req, res, ctx) => {
+      return res(
+        ctx.json([
+          {
+            notation: '0',
+            uri: '',
+            prefLabel: {
+              en: 'Armed forces',
+            },
+          },
+        ])
+      );
+    }
+  ),
   rest.get(`${USERS_API_BASE_URL}/code-sets/languages`, (req, res, ctx) => {
     return res(
       ctx.json([

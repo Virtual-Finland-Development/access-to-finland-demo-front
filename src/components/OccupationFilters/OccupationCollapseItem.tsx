@@ -25,7 +25,10 @@ export default function OccupationCollapseItem(props: Props) {
   const { item, selectedNotations, onSelect } = props;
 
   const isChecked = useMemo(
-    () => selectedNotations.findIndex(s => s.startsWith(item.notation)) > -1,
+    () =>
+      selectedNotations.findIndex(
+        s => !s.includes('.') && s.startsWith(item.notation)
+      ) > -1,
     [item.notation, selectedNotations]
   );
 

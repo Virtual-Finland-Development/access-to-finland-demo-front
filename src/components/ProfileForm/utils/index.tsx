@@ -1,11 +1,16 @@
 import addresses from '../fakeData/addresses.json';
 import firstNames from '../fakeData/firstNames.json';
 import lastNames from '../fakeData/lastNames.json';
-import regionsJson from '../../TmtPage/regionJsons/regions.json';
-import municipalitiesJson from '../../TmtPage/regionJsons/municipalities.json';
+import regionsJson from '../../VacanciesPage/regionJsons/regions.json';
+import municipalitiesJson from '../../VacanciesPage/regionJsons/municipalities.json';
 
-import { Address } from '../../../@types';
-import { SelectOption } from '../types';
+import {
+  Address,
+  OccupationOption,
+  UserOccupationSelection,
+  WorkPreference,
+} from '../../../@types';
+import { RegionSelectOption, RegionType } from '../types';
 
 // pick and format random address from addresses json
 export const pickRandomAddress = () => {
@@ -73,19 +78,34 @@ export function getDefaultSelectOption<T, U, V extends keyof U>(
     }));
 }
 
-// map default region options for react-select from user profile regions
-export function getDefaultRegionOptions(regions: string[]) {
-  let options: SelectOption[] = [];
-  const selections = [...regionsJson, ...municipalitiesJson];
+// map default region options for react-select from user profile workPreferences regions/municipalities
+export function getDefaultRegionOptions(workPreferences: WorkPreference) {
+  let options: RegionSelectOption[] = [];
+  const selections = [
+    ...regionsJson.map(r => ({ ...r, type: RegionType.REGION })),
+    ...municipalitiesJson.map(m => ({ ...m, type: RegionType.MUNICIPALITY })),
+  ];
 
-  if (regions?.length) {
-    options = regions.reduce((acc: SelectOption[], code) => {
-      const selected = selections.find(s => s.Koodi === code);
+  if (!workPreferences) return [];
 
-      if (selected) {
+  const selected = [
+    ...(workPreferences.preferredRegionEnum
+      ? workPreferences.preferredRegionEnum
+      : []),
+    ...(workPreferences.preferredMunicipalityEnum
+      ? workPreferences.preferredMunicipalityEnum
+      : []),
+  ];
+
+  if (selected?.length) {
+    options = selected.reduce((acc: RegionSelectOption[], code) => {
+      const singleSelected = selections.find(s => s.Koodi === code);
+
+      if (singleSelected) {
         acc.push({
-          value: selected.Koodi,
-          label: selected.Selitteet[2].Teksti,
+          value: singleSelected.Koodi,
+          label: singleSelected.Selitteet[2].Teksti,
+          type: singleSelected.type,
         });
       }
 
@@ -103,6 +123,7 @@ export const groupedRegionOptions = [
     options: regionsJson.map(r => ({
       value: r.Koodi,
       label: r.Selitteet[2].Teksti,
+      type: RegionType.REGION,
     })),
   },
   {
@@ -110,6 +131,104 @@ export const groupedRegionOptions = [
     options: municipalitiesJson.map(m => ({
       value: m.Koodi,
       label: m.Selitteet[2].Teksti,
+      type: RegionType.MUNICIPALITY,
     })),
   },
 ];
+
+// parse changed occupations for profile payload
+export function handleOccupationsForPayload(
+  changed: UserOccupationSelection[],
+  userOccupations: UserOccupationSelection[],
+  occupations: OccupationOption[]
+) {
+  const changedOccupations = changed.reduce(
+    (acc: UserOccupationSelection[], occupation) => {
+      const existing = userOccupations.find(p => p.id === occupation.id);
+
+      if (occupation.id && occupation.delete) {
+        acc.push({ id: occupation.id, delete: true });
+      }
+
+      if (!occupation.id && !occupation.delete) {
+        const escoCode =
+          occupations.find(o => o.uri === occupation.escoUri)?.notation || '';
+        acc.push({
+          escoUri: occupation.escoUri,
+          workMonths: occupation.workMonths,
+          escoCode,
+        });
+      }
+
+      if (existing && occupation.workMonths !== existing.workMonths) {
+        acc.push({ id: existing.id, workMonths: occupation.workMonths });
+      }
+
+      return acc;
+    },
+    []
+  );
+
+  return changedOccupations;
+}
+
+// parse changed workPreferences object for profile payload
+export function handleWorkPreferencesForPayload(
+  values: WorkPreference,
+  userWorkPreferences: WorkPreference | null
+) {
+  try {
+    let changedWorkPreferences: any = {};
+
+    if (!userWorkPreferences?.id) {
+      changedWorkPreferences = values;
+    } else {
+      changedWorkPreferences = {
+        id: userWorkPreferences.id,
+      };
+
+      for (const prefKey of Object.keys(values)) {
+        const changed = values[prefKey as keyof WorkPreference];
+        const existing = userWorkPreferences[prefKey as keyof WorkPreference];
+
+        // if property is array (regions / municipalities)
+        if (Array.isArray(changed) && Array.isArray(existing)) {
+          const isSame =
+            changed.length === existing.length &&
+            changed.every(
+              (item: string, index: number) => item === existing[index]
+            );
+
+          if (!isSame) {
+            changedWorkPreferences[prefKey] = changed;
+          }
+          // else if not array, but value has changed
+        } else if (changed !== existing) {
+          changedWorkPreferences[prefKey] = changed;
+        }
+      }
+    }
+
+    return changedWorkPreferences;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const EMPLOYMENT_TYPE_LABELS = {
+  permanent: 'Permanent',
+  temporary: 'Temporary',
+  seasonal: 'Seasonal',
+  summerJob: 'Summer job',
+};
+
+export const WORKING_TIME_LABELS = {
+  '01': 'Day shift',
+  '02': 'Evening shift',
+  '03': 'Night shift',
+  '04': 'Work in episodes',
+  '05': 'Flexible hours',
+  '06': 'Normal days',
+  '07': 'Weekend hours',
+  '08': 'Work in shifts',
+};
