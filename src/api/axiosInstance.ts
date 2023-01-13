@@ -4,7 +4,7 @@ import { isPast, parseISO } from 'date-fns';
 // types
 
 // endpoints
-import { USERS_API_BASE_URL, TESTBED_API_BASE_URL } from './endpoints';
+import { TESTBED_API_BASE_URL, USERS_API_BASE_URL } from './endpoints';
 
 // constants
 import {
@@ -14,7 +14,7 @@ import {
 } from '../constants';
 
 // utils
-import { JSONLocalStorage } from '../utils';
+import { JSONLocalStorage } from '../utils/JSONStorage';
 
 // Create axios instance for api services
 const axiosInstance = axios.create();

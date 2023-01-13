@@ -1,32 +1,46 @@
-import { lazy, Suspense } from 'react';
-import { Routes, Route, Outlet } from 'react-router-dom';
 import { Box, Container } from '@chakra-ui/react';
-
-// context
-import { useAppContext } from '../../context/AppContext/AppContext';
+import { lazy, Suspense, useContext } from 'react';
+import { Outlet, Route, Routes } from 'react-router-dom';
+import { ConsentDataSource } from '../../constants/ConsentDataSource';
 
 // components
-import WelcomePage from '../WelcomePage/WelcomePage';
-import ServicesPage from '../ServicesPage/ServicesPage';
-import NavBar from '../NavBar/NavBar';
-import Loading from '../Loading/Loading';
-import PageNotFound from '../PageNotFound/PageNotFound';
+import { getConsentContext } from '../../context/ConsentContext/ConsentContextFactory';
 import ConsentSentry from '../ConsentSentry/ConsentSentry';
+import Loading from '../Loading/Loading';
+import NavBar from '../NavBar/NavBar';
+import PageNotFound from '../PageNotFound/PageNotFound';
 import Profile from '../Profile/Profile';
+import ServicesPage from '../ServicesPage/ServicesPage';
+import WelcomePage from '../WelcomePage/WelcomePage';
 
 const LazyVacancies = lazy(() => import('../VacanciesPage/VacanciesPage'));
+
+// Get context and provider for given data source
+const { ConsentContext, ConsentProvider } = getConsentContext(
+  ConsentDataSource.USER_PROFILE
+);
 
 /**
  * User needs to give consent to use profile data in vacancies seach
  * Show ConsentSentry to user for approving giving consent before vacancies can be shown
  */
 function VacanciesPageConsentSentry() {
-  const {
-    userProfile: { jobsDataConsent },
-  } = useAppContext();
+  const { isConsentInitialized, isConsentGranted, redirectToConsentService } =
+    useContext(ConsentContext);
 
-  if (!jobsDataConsent) {
-    return <ConsentSentry />;
+  if (!isConsentInitialized) {
+    return <Loading />;
+  }
+
+  if (!isConsentGranted) {
+    return (
+      <ConsentSentry
+        approveFunction={redirectToConsentService}
+        infoText="To continue to use vacancies search, you need to give your consent to
+    use your profile information for search capabilities in third party
+    service."
+      />
+    );
   }
 
   return (
@@ -53,9 +67,23 @@ export default function AppRoutes() {
         }
       >
         <Route index element={<WelcomePage />} />
-        <Route path="vacancies" element={<VacanciesPageConsentSentry />} />
+        <Route
+          path="vacancies"
+          element={
+            <ConsentProvider>
+              <VacanciesPageConsentSentry />
+            </ConsentProvider>
+          }
+        />
         <Route path="services" element={<ServicesPage />} />
-        <Route path="profile" element={<Profile isEdit />} />
+        <Route
+          path="profile"
+          element={
+            <ConsentProvider>
+              <Profile isEdit />
+            </ConsentProvider>
+          }
+        />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

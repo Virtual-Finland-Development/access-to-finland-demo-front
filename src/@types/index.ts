@@ -4,6 +4,14 @@ export enum AuthProvider {
   SUOMIFI = 'suomifi',
 }
 
+export type AppContextObj = {
+  appName: string;
+  redirectUrl: string | URL;
+  guid?: string;
+  provider?: string;
+  meta?: Record<string, string>; // Additional metadata
+};
+
 export type LoggedInState = {
   idToken: string;
   expiresAt: string;

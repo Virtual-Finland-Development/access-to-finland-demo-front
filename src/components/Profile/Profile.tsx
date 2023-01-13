@@ -1,5 +1,5 @@
+import { Button, Flex, Heading, Spinner, Stack } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { Heading, Stack, Flex, Button, Spinner } from '@chakra-ui/react';
 
 // types
 import { AuthProvider } from '../../@types';
@@ -9,12 +9,15 @@ import { LOCAL_STORAGE_AUTH_PROVIDER } from '../../constants';
 
 // context
 import { useAppContext } from '../../context/AppContext/AppContext';
-
 // components
 import ProfileForm from '../ProfileForm/ProfileForm';
 
 // api
 import api from '../../api';
+import { ConsentDataSource } from '../../constants/ConsentDataSource';
+import { getConsentContext } from '../../context/ConsentContext/ConsentContextFactory';
+import Loading from '../Loading/Loading';
+const { ConsentConsumer } = getConsentContext(ConsentDataSource.USER_PROFILE);
 
 export default function Profile({ isEdit }: { isEdit?: boolean }) {
   const { logIn } = useAppContext();
@@ -79,7 +82,23 @@ export default function Profile({ isEdit }: { isEdit?: boolean }) {
         )}
       </Flex>
 
-      <ProfileForm onProfileSubmit={onProfileSubmit} isEdit={isEdit} />
+      <ConsentConsumer>
+        {provider => {
+          if (typeof provider === 'undefined') {
+            return null;
+          }
+
+          const { isConsentInitialized } = provider;
+
+          if (isEdit && !isConsentInitialized) {
+            return <Loading />;
+          }
+
+          return (
+            <ProfileForm onProfileSubmit={onProfileSubmit} isEdit={isEdit} />
+          );
+        }}
+      </ConsentConsumer>
     </Stack>
   );
 }
