@@ -30,6 +30,7 @@ export async function checkConsent(
     {
       headers: {
         Authorization: `Bearer ${idToken}`,
+        'Content-Type': 'application/json',
       },
     }
   );
