@@ -47,7 +47,8 @@ export default function Profile({ isEdit }: { isEdit?: boolean }) {
       bg="white"
       rounded="lg"
       boxShadow="lg"
-      p={6}
+      py={6}
+      px={4}
       maxW="container.xl"
       {...(!isEdit ? { my: 6 } : { mb: 6 })}
     >

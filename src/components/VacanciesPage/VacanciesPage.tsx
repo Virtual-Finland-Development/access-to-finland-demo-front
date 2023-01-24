@@ -232,7 +232,7 @@ export default function VacanciesPage() {
       <Flex bg="white" flexDirection="column" shadow="lg" borderRadius="md">
         <form onSubmit={handleSubmit}>
           <Flex flexDirection="column" px={3} pt={6}>
-            <Heading as="h2" size="md">
+            <Heading lineHeight={1.1} fontSize={{ base: 'xl', sm: '2xl' }}>
               Vacancies
             </Heading>
           </Flex>
