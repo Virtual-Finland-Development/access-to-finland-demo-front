@@ -11,6 +11,7 @@ import {
 import {
   InfoIcon,
   WarningIcon,
+  SettingsIcon,
   QuestionIcon,
   CheckCircleIcon,
 } from '@chakra-ui/icons';
@@ -19,7 +20,13 @@ import {
 import { LOCAL_STORAGE_AUTH_PROVIDER } from '../../constants';
 import { EXT_REGISTRATION_SERVICE_URL } from '../../api/endpoints';
 
-const dummyItems = [
+// hooks
+import useServiceStatus from '../../hooks/useServiceStatus';
+
+// components
+import Loading from '../Loading/Loading';
+
+const dummyServices = [
   {
     name: 'Service 2',
     status: '',
@@ -43,6 +50,12 @@ const dummyItems = [
 export default function ServicesPage() {
   const provider = localStorage.getItem(LOCAL_STORAGE_AUTH_PROVIDER);
 
+  const { data: status, isLoading } = useServiceStatus();
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <Container
       maxW={'3xl'}
@@ -51,6 +64,7 @@ export default function ServicesPage() {
       rounded="lg"
       boxShadow="lg"
       py={6}
+      mb={6}
     >
       <Stack as={Box} spacing={6}>
         <Heading lineHeight={1.1} fontSize={{ base: 'xl', sm: '2xl' }}>
@@ -60,14 +74,14 @@ export default function ServicesPage() {
           <ServiceItem
             service={{
               name: 'Foreigner Registration',
-              status: 'IN_PROGRESS',
+              status: status.statusValue || '',
               href: `${EXT_REGISTRATION_SERVICE_URL}/auth?provider=${provider}`,
               isDisabled: false,
             }}
           />
 
-          {dummyItems.map(item => (
-            <ServiceItem key={item.name} service={item} />
+          {dummyServices.map(service => (
+            <ServiceItem key={service.name} service={service} />
           ))}
         </Stack>
       </Stack>
@@ -84,12 +98,48 @@ interface ServiceItemProps {
   };
 }
 
+function getProgressSettings(status: string | undefined) {
+  switch (status) {
+    case 'SENT':
+      return {
+        progressValue: 100 / 3,
+        progressColorScheme: 'orange',
+        Icon: <InfoIcon color="orange.500" />,
+      };
+    case 'PROCESSING':
+      return {
+        progressValue: (100 / 3) * 2,
+        progressColorScheme: 'blue',
+        Icon: <SettingsIcon color="blue.500" />,
+      };
+    case 'WAITING_FOR_COMPLETION':
+      return {
+        progressValue: 75,
+        progressColorScheme: 'teal',
+        Icon: <WarningIcon color="teal.500" />,
+      };
+    case 'READY':
+      return {
+        progressValue: 100,
+        progressColorScheme: 'green',
+        Icon: <CheckCircleIcon color="green.500" />,
+      };
+    default:
+      return {
+        progressValue: 0,
+        progressColorScheme: '',
+        Icon: <QuestionIcon color="gray.200" />,
+      };
+  }
+}
+
 const statuses: Record<string, string> = {
-  IN_PROGRESS: 'Sent, awaiting processing',
-  COMPLETED: 'Completed',
-  FAILED: 'Declined, please contact service provider for further instructions',
-  CANCELLED:
-    'Cancelled, please contact service provider for further instructions',
+  SENT: 'Sent, awaiting processing',
+  READY: 'Completed',
+  PROCESSING: 'Processing',
+  WAITING_FOR_COMPLETION:
+    'Awaiting for completion, please contact the service provider for further instructions',
+  '': 'Awaiting your actions',
 };
 
 function ServiceItem(props: ServiceItemProps) {
@@ -97,20 +147,8 @@ function ServiceItem(props: ServiceItemProps) {
     service: { name, status, href, isDisabled },
   } = props;
 
-  const progressValue =
-    isDisabled || !status ? 0 : status === 'IN_PROGRESS' ? 50 : 100;
-
-  const Icon = isDisabled
-    ? QuestionIcon
-    : status === 'IN_PROGRESS'
-    ? InfoIcon
-    : WarningIcon;
-
-  const iconColor = isDisabled
-    ? 'gray.100'
-    : status === 'IN_PROGRESS'
-    ? 'orange.400'
-    : 'red';
+  const { progressValue, progressColorScheme, Icon } =
+    getProgressSettings(status);
 
   return (
     <Stack bg="gray.100" p={6} rounded="md">
@@ -128,13 +166,13 @@ function ServiceItem(props: ServiceItemProps) {
       </Link>
       <Stack bg="white" p={4} rounded="md" border="1px" borderColor="gray.200">
         <Flex alignItems="center" gap={2}>
-          <Icon boxSize="18px" color={iconColor} />
+          {Icon}
           <Text fontSize="sm">{statuses[status]}</Text>
         </Flex>
         <Progress
-          colorScheme="orange"
           size="md"
           hasStripe
+          colorScheme={progressColorScheme}
           value={progressValue}
         />
       </Stack>

@@ -41,3 +41,18 @@ export async function getJmfRecommendations(
   );
   return data;
 }
+
+export async function getServiceStatus(): Promise<any> {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({
+        id: '1f055292-380f-52de-9733-6fd0de2df727',
+        statusName: 'ExampleStatus',
+        statusValue: 'SENT',
+        updatedAt: '2023-01-25T07:16:41.481Z',
+        userEmail: 'test@mail.localhost',
+        userId: 'sdad123fsdfe',
+      });
+    }, 500);
+  });
+}
