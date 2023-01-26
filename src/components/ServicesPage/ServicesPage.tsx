@@ -74,7 +74,7 @@ export default function ServicesPage() {
           <ServiceItem
             service={{
               name: 'Foreigner Registration',
-              status: status.statusValue || '',
+              status: status?.statusValue || '',
               href: `${EXT_REGISTRATION_SERVICE_URL}/auth?provider=${provider}`,
               isDisabled: false,
             }}
@@ -138,7 +138,7 @@ const statuses: Record<string, string> = {
   READY: 'Completed',
   PROCESSING: 'Processing',
   WAITING_FOR_COMPLETION:
-    'Awaiting for completion, please contact the service provider for further instructions',
+    'Waiting for completion, please contact the service provider for further instructions',
   '': 'Awaiting your actions',
 };
 

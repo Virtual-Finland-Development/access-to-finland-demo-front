@@ -133,3 +133,12 @@ export interface JmfRecommendationsResponse {
   skills: JmfRecommendation[];
   occupations: JmfRecommendation[];
 }
+
+export interface StatusRecord {
+  id: string;
+  statusName: string;
+  statusValue: string;
+  updatedAt: string;
+  userId: string;
+  userEmail: string;
+}
