@@ -142,3 +142,10 @@ export interface StatusRecord {
   userId: string;
   userEmail: string;
 }
+
+export enum StatusValue {
+  SENT = 'SENT',
+  PROCESSING = 'PROCESSING',
+  WAITING_FOR_COMPLETION = 'WAITING_FOR_COMPLETION',
+  READY = 'READY',
+}
