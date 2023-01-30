@@ -15,8 +15,8 @@ function getProgressSettings(status: string | undefined) {
     case StatusValue.SENT:
       return {
         progressValue: 100 / 3,
-        progressColorScheme: 'orange',
-        Icon: <InfoIcon color="orange.500" />,
+        progressColorScheme: 'teal',
+        Icon: <InfoIcon color="teal.500" />,
       };
     case StatusValue.PROCESSING:
       return {
@@ -27,8 +27,8 @@ function getProgressSettings(status: string | undefined) {
     case StatusValue.WAITING_FOR_COMPLETION:
       return {
         progressValue: 75,
-        progressColorScheme: 'teal',
-        Icon: <WarningIcon color="teal.500" />,
+        progressColorScheme: 'orange',
+        Icon: <WarningIcon color="orange.500" />,
       };
     case StatusValue.READY:
       return {
