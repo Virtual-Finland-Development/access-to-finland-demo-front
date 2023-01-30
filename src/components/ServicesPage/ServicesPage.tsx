@@ -15,18 +15,21 @@ const dummyServices = [
   {
     name: 'Service 2',
     status: '',
+    statusLabel: '',
     href: '',
     isDisabled: true,
   },
   {
     name: 'Service 3',
     status: '',
+    statusLabel: '',
     href: '',
     isDisabled: true,
   },
   {
     name: 'Service 4',
     status: '',
+    statusLabel: '',
     href: '',
     isDisabled: true,
   },
@@ -60,6 +63,7 @@ export default function ServicesPage() {
             service={{
               name: 'Foreigner Registration',
               status: status?.statusValue || '',
+              statusLabel: status?.statusLabel || '',
               href: `${EXT_REGISTRATION_SERVICE_URL}/auth?provider=${provider}`,
               isDisabled: false,
             }}

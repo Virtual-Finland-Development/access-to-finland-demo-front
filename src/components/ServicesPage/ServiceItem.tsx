@@ -45,19 +45,21 @@ function getProgressSettings(status: string | undefined) {
   }
 }
 
-const statuses: Record<string, string> = {
-  [StatusValue.SENT]: 'Sent, awaiting processing',
-  [StatusValue.PROCESSING]: 'Processing',
-  [StatusValue.READY]: 'Completed',
+const statusInfo: Record<string, string> = {
+  [StatusValue.SENT]: 'Registration sent, awaiting processing.',
+  [StatusValue.PROCESSING]:
+    'Your registration has been received and is being processed.',
+  [StatusValue.READY]: 'Your registration has been received and is completed.',
   [StatusValue.WAITING_FOR_COMPLETION]:
-    'Waiting for completion, please contact the service provider for further instructions',
-  '': 'Awaiting your actions',
+    'Your registration has been received and is waiting for completion, please contact the service provider for further instructions.',
+  '': 'Awaiting your actions.',
 };
 
 interface ServiceItemProps {
   service: {
     name: string;
     status: string;
+    statusLabel: string;
     href: string;
     isDisabled: boolean;
   };
@@ -65,7 +67,7 @@ interface ServiceItemProps {
 
 export default function ServiceItem(props: ServiceItemProps) {
   const {
-    service: { name, status, href, isDisabled },
+    service: { name, status, statusLabel, href, isDisabled },
   } = props;
 
   const { progressValue, progressColorScheme, Icon } =
@@ -85,11 +87,21 @@ export default function ServiceItem(props: ServiceItemProps) {
       >
         {name}
       </Link>
-      <Stack bg="white" p={4} rounded="md" border="1px" borderColor="gray.200">
+      <Stack
+        bg="white"
+        p={4}
+        rounded="md"
+        border="1px"
+        borderColor="gray.200"
+        spacing={1}
+      >
         <Flex alignItems="center" gap={2}>
           {Icon}
-          <Text fontSize="sm">{statuses[status]}</Text>
+          <Text fontWeight="semibold">{statusLabel || 'Pending'}</Text>
         </Flex>
+        <Text fontSize="sm" mb={1}>
+          {statusInfo[status]}
+        </Text>
         <Progress
           size="md"
           colorScheme={progressColorScheme}

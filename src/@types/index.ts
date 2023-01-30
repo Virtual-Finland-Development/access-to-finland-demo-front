@@ -138,6 +138,7 @@ export interface StatusRecord {
   id: string;
   statusName: string;
   statusValue: string;
+  statusLabel: string;
   updatedAt: string;
   userId: string;
   userEmail: string;
