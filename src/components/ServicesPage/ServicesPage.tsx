@@ -1,54 +1,77 @@
-import { Container, Stack, Heading, Box, Link } from '@chakra-ui/react';
+import { Container, Stack, Heading, Box } from '@chakra-ui/react';
 
 // constants
-import {
-  LOCAL_STORAGE_AUTH_PROVIDER,
-} from '../../constants';
+import { LOCAL_STORAGE_AUTH_PROVIDER } from '../../constants';
 import { EXT_REGISTRATION_SERVICE_URL } from '../../api/endpoints';
+
+// hooks
+import useServiceStatus from '../../hooks/useServiceStatus';
+
+// components
+import ServiceItem from './ServiceItem';
+import Loading from '../Loading/Loading';
+
+const dummyServices = [
+  {
+    name: 'Service 2',
+    status: '',
+    statusLabel: '',
+    href: '',
+    isDisabled: true,
+  },
+  {
+    name: 'Service 3',
+    status: '',
+    statusLabel: '',
+    href: '',
+    isDisabled: true,
+  },
+  {
+    name: 'Service 4',
+    status: '',
+    statusLabel: '',
+    href: '',
+    isDisabled: true,
+  },
+];
 
 export default function ServicesPage() {
   const provider = localStorage.getItem(LOCAL_STORAGE_AUTH_PROVIDER);
 
+  const { data: status, isLoading } = useServiceStatus();
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
-    <Container maxW={'3xl'}>
-      <Stack as={Box} spacing={{ base: 8, md: 14 }}>
-        <Heading
-          fontWeight={600}
-          fontSize={{ base: 'xl', sm: '2xl', md: '4xl' }}
-          lineHeight={'110%'}
-        >
-          Other services
+    <Container
+      maxW={'3xl'}
+      w="full"
+      bg="white"
+      rounded="lg"
+      boxShadow="lg"
+      py={6}
+      mb={6}
+    >
+      <Stack as={Box} spacing={6}>
+        <Heading lineHeight={1.1} fontSize={{ base: 'xl', sm: '2xl' }}>
+          Services
         </Heading>
-        <Stack spacing={10} alignItems='start'>
-          <Link
-            color='blue.500'
-            isExternal
-            href={`${EXT_REGISTRATION_SERVICE_URL}/auth?provider=${provider}`}
-            fontSize='xl'
-          >
-            Foreigner Registration
-          </Link>
-          <Link
-            color='gray.500'
-            _hover={{ textDecoration: 'none', cursor: 'default' }}
-            fontSize='xl'
-          >
-            Disabled link to nowhere 1
-          </Link>
-          <Link
-            color='gray.500'
-            _hover={{ textDecoration: 'none', cursor: 'default' }}
-            fontSize='xl'
-          >
-            Disabled link to nowhere 2
-          </Link>
-          <Link
-            color='gray.500'
-            _hover={{ textDecoration: 'none', cursor: 'default' }}
-            fontSize='xl'
-          >
-            Disabled link to nowhere 3
-          </Link>
+        <Stack spacing={6}>
+          <ServiceItem
+            service={{
+              name: 'Foreigner Registration',
+              status: status?.statusValue || '',
+              statusLabel: status?.statusLabel || '',
+              href: `${EXT_REGISTRATION_SERVICE_URL}/auth?provider=${provider}`,
+              isDisabled: false,
+            }}
+          />
+
+          {dummyServices.map(service => (
+            <ServiceItem key={service.name} service={service} />
+          ))}
         </Stack>
       </Stack>
     </Container>

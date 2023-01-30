@@ -133,3 +133,20 @@ export interface JmfRecommendationsResponse {
   skills: JmfRecommendation[];
   occupations: JmfRecommendation[];
 }
+
+export interface StatusRecord {
+  id: string;
+  statusName: string;
+  statusValue: string;
+  statusLabel: string;
+  updatedAt: string;
+  userId: string;
+  userEmail: string;
+}
+
+export enum StatusValue {
+  SENT = 'SENT',
+  PROCESSING = 'PROCESSING',
+  WAITING_FOR_COMPLETION = 'WAITING_FOR_COMPLETION',
+  READY = 'READY',
+}

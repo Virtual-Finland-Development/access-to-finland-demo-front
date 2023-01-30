@@ -31,6 +31,7 @@ const USERS_API_URLS = [
 
 const DATA_URLS = [
   `${TESTBED_API_BASE_URL}/testbed/productizers/find-job-postings`,
+  `${TESTBED_API_BASE_URL}/testbed/productizers/fetch-user-status-info`,
 ];
 
 // Axios request interceptor. Pass token to request Authorization for selected routes, if found.

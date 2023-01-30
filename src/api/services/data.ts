@@ -7,6 +7,7 @@ import { TESTBED_API_BASE_URL } from '../endpoints';
 import {
   JmfRecommendationsRequestPayload,
   JmfRecommendationsResponse,
+  StatusRecord,
 } from '../../@types';
 import {
   JobPostingsRequestPayload,
@@ -38,6 +39,14 @@ export async function getJmfRecommendations(
   const { data } = await axiosInstance.post(
     `${TESTBED_API_BASE_URL}/jmf/recommendations`,
     payload
+  );
+  return data;
+}
+
+export async function getServiceStatus(): Promise<StatusRecord> {
+  const { data } = await axiosInstance.post(
+    `${TESTBED_API_BASE_URL}/testbed/productizers/fetch-user-status-info`,
+    { statusName: 'foreigner_reg_form' }
   );
   return data;
 }
