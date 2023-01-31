@@ -12,7 +12,7 @@ function shouldShowError(error: any) {
   try {
     return !(
       error.response.status === 404 &&
-      JSON.stringify(error.responsee).includes('Status information not found')
+      JSON.stringify(error.response).includes('Status information not found')
     );
   } catch (_) {
     return true;
