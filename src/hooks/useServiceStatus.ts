@@ -9,12 +9,14 @@ import api from '../api';
 
 // only custom 'Status information not found' error should be silenced
 function shouldShowError(error: any) {
-  return (
-    error.response.status !== 404 ||
-    (error.message.status === 404 && !error?.response?.data?.data?.message) ||
-    (error.response.data.data.message &&
-      error.response.data.data.message !== 'Status information not found')
-  );
+  try {
+    return !(
+      error.response.status === 404 &&
+      JSON.stringify(error.responsee).includes('Status information not found')
+    );
+  } catch (_) {
+    return true;
+  }
 }
 
 export default function useServiceStatus() {
