@@ -759,7 +759,7 @@ export default function ProfileForm(props: ProfileFormProps) {
                 />
               </FormControl>
               {isEdit && (
-                <FormControl id="jobsDataConsent">
+                <FormControl id="prorileConsent">
                   <FormLabel>Profile consent</FormLabel>I permit my profile data
                   to be used in vacancies search:
                   <Stack direction="row" spacing={4} mt={2}>

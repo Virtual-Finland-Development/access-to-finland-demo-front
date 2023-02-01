@@ -83,7 +83,6 @@ export interface UserProfile {
   regions: string[];
   created: string;
   modified: string;
-  jobsDataConsent: boolean;
   countryOfBirthCode: string;
   occupationCode: string;
   citizenshipCode: string;
