@@ -208,7 +208,7 @@ export default function ProfileForm(props: ProfileFormProps) {
       getDefaultSelectOption(
         workPreferences?.workingLanguageEnum || '',
         languages,
-        'id',
+        'twoLetterISOLanguageName',
         'englishName'
       ),
     [languages, workPreferences?.workingLanguageEnum]
@@ -720,10 +720,11 @@ export default function ProfileForm(props: ProfileFormProps) {
                     isMulti={false}
                     name="workPreferences.workingLanguageEnum"
                     defaultValue={defaultWorkingLanguageOption}
-                    options={languages.map(l => ({
-                      label: l.englishName,
-                      value: l.id,
-                    }))}
+                    options={[
+                      { label: 'English', value: 'en' },
+                      { label: 'Finnish', value: 'fi' },
+                      { label: 'Swedish', value: 'sv' },
+                    ]}
                     placeholder="Type or select..."
                     closeMenuOnSelect={true}
                     size="md"

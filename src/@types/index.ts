@@ -115,6 +115,7 @@ export interface OccupationOption {
 export interface LanguageOption {
   id: string;
   englishName: string;
+  twoLetterISOLanguageName: string;
 }
 
 export interface JmfRecommendation {
