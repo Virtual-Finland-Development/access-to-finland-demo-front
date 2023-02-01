@@ -181,7 +181,17 @@ export function handleWorkPreferencesForPayload(
     let changedWorkPreferences: any = {};
 
     if (!userWorkPreferences?.id) {
-      changedWorkPreferences = values;
+      const filledValues: any = {};
+
+      for (let key of Object.keys(values)) {
+        const workPreferenceKey = key as keyof WorkPreference;
+
+        if (values[workPreferenceKey]) {
+          filledValues[workPreferenceKey] = values[workPreferenceKey];
+        }
+      }
+
+      changedWorkPreferences = filledValues;
     } else {
       changedWorkPreferences = {
         id: userWorkPreferences.id,

@@ -208,7 +208,7 @@ export default function ProfileForm(props: ProfileFormProps) {
       getDefaultSelectOption(
         workPreferences?.workingLanguageEnum || '',
         languages,
-        'id',
+        'twoLetterISOLanguageName',
         'englishName'
       ),
     [languages, workPreferences?.workingLanguageEnum]
@@ -720,10 +720,11 @@ export default function ProfileForm(props: ProfileFormProps) {
                     isMulti={false}
                     name="workPreferences.workingLanguageEnum"
                     defaultValue={defaultWorkingLanguageOption}
-                    options={languages.map(l => ({
-                      label: l.englishName,
-                      value: l.id,
-                    }))}
+                    options={[
+                      { label: 'English', value: 'en' },
+                      { label: 'Finnish', value: 'fi' },
+                      { label: 'Swedish', value: 'sv' },
+                    ]}
                     placeholder="Type or select..."
                     closeMenuOnSelect={true}
                     size="md"
@@ -758,7 +759,7 @@ export default function ProfileForm(props: ProfileFormProps) {
                 />
               </FormControl>
               {isEdit && (
-                <FormControl id="jobsDataConsent">
+                <FormControl id="prorileConsent">
                   <FormLabel>Profile consent</FormLabel>I permit my profile data
                   to be used in vacancies search:
                   <Stack direction="row" spacing={4} mt={2}>
