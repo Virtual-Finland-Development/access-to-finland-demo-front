@@ -41,7 +41,7 @@ import useOccupationsFlat from '../../hooks/useOccupationsFlat';
 import { getInitialStateValues, constructJobPostingsPayload } from './utils';
 
 // selections
-import regions from './regionJsons/regions.json';
+import regions from './regionJsons/ISO3166-2.json';
 import municipalities from './regionJsons/municipalities.json';
 
 // utility component to render selection options (region, municipality, country)
@@ -53,11 +53,11 @@ const mapSelectOptions = (
   <>
     {items.map((item: PlaceSelection) => (
       <option
-        key={item.Koodi}
+        key={item.code}
         value={JSON.stringify({ ...item, type })}
-        disabled={Boolean(placesInState.find(p => p.Koodi === item.Koodi))}
+        disabled={Boolean(placesInState.find(p => p.code === item.code))}
       >
-        {item.Selitteet.find(s => s.Kielikoodi === 'en')?.Teksti || ''}
+        {item.label.en || ''}
       </option>
     ))}
   </>
@@ -175,7 +175,7 @@ export default function VacanciesPage() {
       if (type === 'place') {
         setSelectedPlaces(prev => {
           const places = prev || [];
-          return places.filter(p => p.Koodi !== identifier);
+          return places.filter(p => p.code !== identifier);
         });
       }
 
@@ -277,7 +277,14 @@ export default function VacanciesPage() {
                 <optgroup label="Municipality">
                   {mapSelectOptions(
                     PlaceType.MUNICIPALITY,
-                    municipalities,
+                    municipalities.map(m => ({
+                      code: m.Koodi,
+                      label: {
+                        en:
+                          m.Selitteet.find(s => s.Kielikoodi === 'en')
+                            ?.Teksti || '',
+                      },
+                    })),
                     selectedPlaces || []
                   )}
                 </optgroup>

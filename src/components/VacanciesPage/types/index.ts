@@ -6,7 +6,7 @@ export enum PlaceType {
 
 export interface PlaceSelection {
   type?: PlaceType;
-  Alkupaiva: string;
+  /* Alkupaiva: string;
   Koodi: string;
   Laajennukset?: any[];
   Loppupaiva: string;
@@ -14,7 +14,11 @@ export interface PlaceSelection {
   Selitteet: {
     Kielikoodi: string;
     Teksti: string;
-  }[];
+  }[]; */
+  code: string;
+  label: {
+    en: string;
+  };
 }
 
 export interface JobPostingEntry {

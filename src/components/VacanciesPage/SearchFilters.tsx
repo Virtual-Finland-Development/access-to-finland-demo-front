@@ -57,10 +57,8 @@ export default function SearchFilters(props: SearchFiltersProps) {
         let label = '';
 
         if (filter.filterType === 'place') {
-          identifier = filter.Koodi;
-          label =
-            filter.Selitteet.find(s => s.Kielikoodi === 'en')?.Teksti ||
-            filter.Koodi;
+          identifier = filter.code;
+          label = filter.label.en || filter.code;
         }
 
         if (filter.filterType === 'occupation') {
