@@ -1,8 +1,8 @@
 import addresses from '../fakeData/addresses.json';
 import firstNames from '../fakeData/firstNames.json';
 import lastNames from '../fakeData/lastNames.json';
-import regionsJson from '../../VacanciesPage/regionJsons/ISO3166-2.json';
-import municipalitiesJson from '../../VacanciesPage/regionJsons/municipalities.json';
+import regionsJson from '../../VacanciesPage/regionJsons/ISO3166-2-regions.json';
+import municipalitiesJson from '../../VacanciesPage/regionJsons/statistics-finland-municipalities.json';
 
 import {
   Address,

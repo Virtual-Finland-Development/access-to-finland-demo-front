@@ -41,8 +41,8 @@ import useOccupationsFlat from '../../hooks/useOccupationsFlat';
 import { getInitialStateValues, constructJobPostingsPayload } from './utils';
 
 // selections
-import regions from './regionJsons/ISO3166-2.json';
-import municipalities from './regionJsons/municipalities.json';
+import regions from './regionJsons/ISO3166-2-regions.json';
+import municipalities from './regionJsons/statistics-finland-municipalities.json';
 
 // utility component to render selection options (region, municipality, country)
 const mapSelectOptions = (

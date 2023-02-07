@@ -3,8 +3,8 @@ import { PlaceType, PlaceSelection, JobPostingsRequestPayload } from '../types';
 import { OccupationOption, UserProfile, Occupation } from '../../../@types';
 
 // selections
-import regions from '../regionJsons/ISO3166-2.json';
-import municipalities from '../regionJsons/municipalities.json';
+import regions from '../regionJsons/ISO3166-2-regions.json';
+import municipalities from '../regionJsons/statistics-finland-municipalities.json';
 
 /**
  * Return initial state values from userProfile for VacanciesPage
