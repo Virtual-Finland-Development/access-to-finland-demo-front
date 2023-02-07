@@ -79,7 +79,7 @@ export function constructJobPostingsPayload({
       regions: selectedPlaces
         ? selectedPlaces
             .filter(p => p.type === PlaceType.REGION)
-            .map(p => p.code)
+            .map(p => p.statisticsFinlandCode || p.code)
         : [],
       municipalities: selectedPlaces
         ? selectedPlaces
