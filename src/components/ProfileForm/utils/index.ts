@@ -4,8 +4,8 @@ import firstNames from '../fakeData/firstNames.json';
 import lastNames from '../fakeData/lastNames.json';
 import regionsJson from '../../VacanciesPage/regionJsons/regions.json';
 import municipalitiesJson from '../../VacanciesPage/regionJsons/municipalities.json';
-import naceCodes from '../../../nace.json';
-import naceDotNotations from '../../../nace-dot-notated.json';
+import naceCodes from '../../../jsons/nace.json';
+import naceDotNotations from '../../../jsons/nace-dot-notated.json';
 
 import {
   Address,
