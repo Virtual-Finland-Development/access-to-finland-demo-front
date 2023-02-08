@@ -454,7 +454,7 @@ export default function ProfileForm(props: ProfileFormProps) {
         <NaceSelect
           options={groupedNaceCodes}
           defaultSelected={
-            workPreferences.naceCode
+            workPreferences?.naceCode
               ? findNace(groupedNaceCodes, workPreferences.naceCode)
               : undefined
           }
@@ -695,13 +695,13 @@ export default function ProfileForm(props: ProfileFormProps) {
               <FormControl>
                 <FormLabel>Preferred industry</FormLabel>
                 <Text fontSize="sm">
-                  {!workPreferences.naceCode && <>No industry selected, </>}
+                  {!workPreferences?.naceCode && <>No industry selected, </>}
                   <Link
                     color="blue.500"
                     fontWeight="medium"
                     onClick={handleOpenNaceSelect}
                   >
-                    {!workPreferences.naceCode
+                    {!workPreferences?.naceCode
                       ? 'click here to add.'
                       : findNace(groupedNaceCodes, workPreferences.naceCode)
                           ?.prefLabel.en}
