@@ -72,6 +72,7 @@ export interface WorkPreference {
   employmentTypeCode?: EmploymentType;
   workingTimeEnum?: WorkingTime;
   workingLanguageEnum?: string;
+  naceCode?: string | null;
 }
 
 export interface UserProfile {
@@ -149,4 +150,22 @@ export enum StatusValue {
   PROCESSING = 'PROCESSING',
   WAITING_FOR_COMPLETION = 'WAITING_FOR_COMPLETION',
   READY = 'READY',
+}
+
+export interface Nace {
+  codeValue: string;
+  dotNotationCodeValue?: string;
+  topLevelGroupCode?: string;
+  order: number;
+  uri: string;
+  hierarchyLevel: number;
+  prefLabel: {
+    en: string;
+  };
+  broaderCode?: {
+    codeValue: string;
+    order: number;
+    hierarchyLevel: number;
+  };
+  children?: Nace[];
 }

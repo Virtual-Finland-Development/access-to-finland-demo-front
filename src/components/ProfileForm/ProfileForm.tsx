@@ -12,11 +12,10 @@ import {
   Select as ChakraSelect,
   SimpleGrid,
   Stack,
+  Text,
   useToast,
 } from '@chakra-ui/react';
-
 import { ErrorMessage as HookFormError } from '@hookform/error-message';
-
 import {
   ActionMeta,
   CreatableSelect,
@@ -52,6 +51,7 @@ import { useModal } from '../../context/ModalContext/ModalContext';
 
 // utils
 import { isNewUser } from '../../utils';
+import { findNace } from './utils';
 
 // profile form context utils
 import {
@@ -66,6 +66,7 @@ import {
   pickRandomAddress,
   pickRandomName,
   WORKING_TIME_LABELS,
+  getGroupedNaceCodes,
 } from './utils';
 
 // hooks
@@ -79,6 +80,7 @@ import Fieldset from '../Fieldset/Fieldset';
 import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect';
 import Loading from '../Loading/Loading';
 import UserOccupations from '../UserOccupations/UserOccupations';
+import NaceSelect from '../NaceSelect/NaceSelect';
 
 // api
 import api from '../../api';
@@ -89,6 +91,8 @@ interface ProfileFormProps {
   onCancel?: () => void;
   isEdit?: boolean;
 }
+
+const groupedNaceCodes = getGroupedNaceCodes();
 
 export default function ProfileForm(props: ProfileFormProps) {
   const { userProfile, setUserProfile } = useAppContext();
@@ -152,6 +156,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     register('workPreferences.preferredRegionEnum');
     register('workPreferences.preferredMunicipalityEnum');
     register('workPreferences.workingLanguageEnum');
+    register('workPreferences.naceCode');
   }, [register]);
 
   // watch field values
@@ -439,6 +444,35 @@ export default function ProfileForm(props: ProfileFormProps) {
     [setValue]
   );
 
+  /**
+   * Handle open nace code selection
+   */
+  const handleOpenNaceSelect = () =>
+    openModal({
+      title: 'Select your preferred indistry',
+      content: (
+        <NaceSelect
+          options={groupedNaceCodes}
+          defaultSelected={
+            workPreferences.naceCode
+              ? findNace(groupedNaceCodes, workPreferences.naceCode)
+              : undefined
+          }
+          onSelect={selected => {
+            setValue(
+              'workPreferences.naceCode',
+              selected?.dotNotationCodeValue || null,
+              { shouldDirty: true }
+            );
+            closeModal();
+          }}
+          onCancel={closeModal}
+        />
+      ),
+      size: '3xl',
+      onClose: () => {},
+    });
+
   if (listsLoading) {
     return <Loading />;
   }
@@ -658,6 +692,22 @@ export default function ProfileForm(props: ProfileFormProps) {
                   />
                 </FormControl>
               )}
+              <FormControl>
+                <FormLabel>Preferred industry</FormLabel>
+                <Text fontSize="sm">
+                  {!workPreferences.naceCode && <>No industry selected, </>}
+                  <Link
+                    color="blue.500"
+                    fontWeight="medium"
+                    onClick={handleOpenNaceSelect}
+                  >
+                    {!workPreferences.naceCode
+                      ? 'click here to add.'
+                      : findNace(groupedNaceCodes, workPreferences.naceCode)
+                          ?.prefLabel.en}
+                  </Link>
+                </Text>
+              </FormControl>
               <FormControl
                 isInvalid={Boolean(errors?.workPreferences?.employmentTypeCode)}
                 id="workPreferences.employmentTypeCode"
