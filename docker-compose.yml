@@ -17,3 +17,10 @@ services:
     # environment:
     # - CHOKIDAR_USEPOLLING=true
     # - WATCHPACK_POLLING=true
+    networks:
+      - vfd-network
+
+networks:
+  vfd-network:
+    external: true
+    driver: bridge
