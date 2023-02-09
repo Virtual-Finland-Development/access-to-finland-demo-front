@@ -21,13 +21,15 @@ interface CollapseLabelProps {
     isChecked: boolean,
     isIndeterminate: boolean
   ) => void;
+  onToggle: () => void;
 }
 
 function CollapseLabel(props: CollapseLabelProps) {
-  const { item, isTopLevel, isChecked, isIndeterminate, onSelect } = props;
+  const { item, isTopLevel, isChecked, isIndeterminate, onSelect, onToggle } =
+    props;
 
   return isTopLevel ? (
-    <Box>
+    <Box role="button" cursor="pointer" onClick={onToggle}>
       <Text fontSize="sm" fontWeight="medium">
         {item.prefLabel.en}
       </Text>
@@ -87,6 +89,7 @@ export default function NaceCollapseItem(props: NaceCollapseItemsProps) {
             isChecked={isChecked}
             isIndeterminate={isIndeterminate}
             onSelect={onSelect}
+            onToggle={onToggle}
           />
           <ToggleIcon role="button" onClick={onToggle} boxSize={5} />
         </Flex>
@@ -115,6 +118,7 @@ export default function NaceCollapseItem(props: NaceCollapseItemsProps) {
         isChecked={isChecked}
         isIndeterminate={isIndeterminate}
         onSelect={onSelect}
+        onToggle={onToggle}
       />
     </Flex>
   );
