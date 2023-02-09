@@ -1,0 +1,173 @@
+[
+  {
+    "code": "FI-01",
+    "statisticsFinlandCode": "21",
+    "label": {
+      "fi": "Ahvenanmaan maakunta",
+      "sv": "Landskapet Åland",
+      "en": "Åland"
+    }
+  },
+  {
+    "code": "FI-02",
+    "statisticsFinlandCode": "09",
+    "label": {
+      "fi": "Etelä-Karjala",
+      "sv": "Södra Karelen",
+      "en": "South Karelia"
+    }
+  },
+  {
+    "code": "FI-03",
+    "statisticsFinlandCode": "14",
+    "label": {
+      "fi": "Etelä-Pohjanmaa",
+      "sv": "Södra Österbotten",
+      "en": "Southern Ostrobothnia"
+    }
+  },
+  {
+    "code": "FI-04",
+    "statisticsFinlandCode": "10",
+    "label": {
+      "fi": "Etelä-Savo",
+      "sv": "Södra Savolax",
+      "en": "Southern Savonia"
+    }
+  },
+  {
+    "code": "FI-05",
+    "statisticsFinlandCode": "18",
+    "label": {
+      "fi": "Kainuu",
+      "sv": "Kajanaland",
+      "en": "Kainuu"
+    }
+  },
+  {
+    "code": "FI-06",
+    "statisticsFinlandCode": "05",
+    "label": {
+      "fi": "Kanta-Häme",
+      "sv": "Egentliga Tavastland",
+      "en": "Tavastia Proper"
+    }
+  },
+  {
+    "code": "FI-07",
+    "statisticsFinlandCode": "16",
+    "label": {
+      "fi": "Keski-Pohjanmaa",
+      "sv": "Mellersta Österbotten",
+      "en": "Central Ostrobothnia"
+    }
+  },
+  {
+    "code": "FI-08",
+    "statisticsFinlandCode": "13",
+    "label": {
+      "fi": "Keski-Suomi",
+      "sv": "Mellersta Finland",
+      "en": "Central Finland"
+    }
+  },
+  {
+    "code": "FI-09",
+    "statisticsFinlandCode": "08",
+    "label": {
+      "fi": "Kymenlaakso",
+      "sv": "Kymmenedalen",
+      "en": "Kymenlaakso"
+    }
+  },
+  {
+    "code": "FI-10",
+    "statisticsFinlandCode": "19",
+    "label": {
+      "fi": "Lappi",
+      "sv": "Lappland",
+      "en": "Lapland"
+    }
+  },
+  {
+    "code": "FI-11",
+    "statisticsFinlandCode": "06",
+    "label": {
+      "fi": "Pirkanmaa",
+      "sv": "Birkaland",
+      "en": "Pirkanmaa"
+    }
+  },
+  {
+    "code": "FI-12",
+    "statisticsFinlandCode": "15",
+    "label": {
+      "fi": "Pohjanmaa",
+      "sv": "Österbotten",
+      "en": "Ostrobothnia"
+    }
+  },
+  {
+    "code": "FI-13",
+    "statisticsFinlandCode": "12",
+    "label": {
+      "fi": "Pohjois-Karjala",
+      "sv": "Norra Karelen",
+      "en": "North Karelia"
+    }
+  },
+  {
+    "code": "FI-14",
+    "statisticsFinlandCode": "17",
+    "label": {
+      "fi": "Pohjois-Pohjanmaa",
+      "sv": "Norra Österbotten",
+      "en": "Northern Ostrobothnia"
+    }
+  },
+  {
+    "code": "FI-15",
+    "statisticsFinlandCode": "11",
+    "label": {
+      "fi": "Pohjois-Savo",
+      "sv": "Norra Savolax",
+      "en": "Northern Savonia"
+    }
+  },
+  {
+    "code": "FI-16",
+    "statisticsFinlandCode": "07",
+    "label": {
+      "fi": "Päijät-Häme",
+      "sv": "Päijänne-Tavastland",
+      "en": "Päijänne Tavastia"
+    }
+  },
+  {
+    "code": "FI-17",
+    "statisticsFinlandCode": "04",
+    "label": {
+      "fi": "Satakunta",
+      "sv": "Satakunta",
+      "en": "Satakunta"
+    }
+  },
+  {
+    "code": "FI-18",
+    "statisticsFinlandCode": "01",
+    "label": {
+      "fi": "Uusimaa",
+      "sv": "Nyland",
+      "en": "Uusimaa"
+    }
+  },
+  {
+    "code": "FI-19",
+    "statisticsFinlandCode": "02",
+    "label": {
+      "fi": "Varsinais-Suomi",
+      "sv": "Egentliga Finland",
+      "en": "Southwest Finland"
+    }
+  }
+]

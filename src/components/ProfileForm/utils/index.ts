@@ -2,8 +2,8 @@ import groupBy from 'lodash.groupby';
 import addresses from '../fakeData/addresses.json';
 import firstNames from '../fakeData/firstNames.json';
 import lastNames from '../fakeData/lastNames.json';
-import regionsJson from '../../VacanciesPage/regionJsons/regions.json';
-import municipalitiesJson from '../../VacanciesPage/regionJsons/municipalities.json';
+import regionsJson from '../../VacanciesPage/regionJsons/ISO3166-2-regions.json';
+import municipalitiesJson from '../../VacanciesPage/regionJsons/statistics-finland-municipalities.json';
 import naceCodes from '../../../jsons/nace.json';
 import naceDotNotations from '../../../jsons/nace-dot-notated.json';
 
@@ -85,9 +85,19 @@ export function getDefaultSelectOption<T, U, V extends keyof U>(
 // map default region options for react-select from user profile workPreferences regions/municipalities
 export function getDefaultRegionOptions(workPreferences: WorkPreference) {
   let options: RegionSelectOption[] = [];
-  const selections = [
+  const selections: {
+    type: RegionType;
+    code: string;
+    label: { en: string };
+  }[] = [
     ...regionsJson.map(r => ({ ...r, type: RegionType.REGION })),
-    ...municipalitiesJson.map(m => ({ ...m, type: RegionType.MUNICIPALITY })),
+    ...municipalitiesJson.map(m => ({
+      type: RegionType.MUNICIPALITY,
+      code: m.Koodi,
+      label: {
+        en: m.Selitteet.find(s => s.Kielikoodi === 'en')?.Teksti || '',
+      },
+    })),
   ];
 
   if (!workPreferences) return [];
@@ -103,12 +113,12 @@ export function getDefaultRegionOptions(workPreferences: WorkPreference) {
 
   if (selected?.length) {
     options = selected.reduce((acc: RegionSelectOption[], code) => {
-      const singleSelected = selections.find(s => s.Koodi === code);
+      const singleSelected = selections.find(s => s.code === code);
 
       if (singleSelected) {
         acc.push({
-          value: singleSelected.Koodi,
-          label: singleSelected.Selitteet[2].Teksti,
+          value: singleSelected.code,
+          label: singleSelected.label.en,
           type: singleSelected.type,
         });
       }
@@ -125,8 +135,8 @@ export const groupedRegionOptions = [
   {
     label: 'Regions',
     options: regionsJson.map(r => ({
-      value: r.Koodi,
-      label: r.Selitteet[2].Teksti,
+      value: r.code,
+      label: r.label.en,
       type: RegionType.REGION,
     })),
   },

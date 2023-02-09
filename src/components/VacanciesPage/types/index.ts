@@ -6,15 +6,11 @@ export enum PlaceType {
 
 export interface PlaceSelection {
   type?: PlaceType;
-  Alkupaiva: string;
-  Koodi: string;
-  Laajennukset?: any[];
-  Loppupaiva: string;
-  Muokkausaika: string;
-  Selitteet: {
-    Kielikoodi: string;
-    Teksti: string;
-  }[];
+  code: string;
+  label: {
+    en: string;
+  };
+  statisticsFinlandCode?: string;
 }
 
 export interface JobPostingEntry {
