@@ -13,7 +13,7 @@ import {
   SimpleGrid,
   Stack,
   Text,
-  useToast,
+  useToast
 } from '@chakra-ui/react';
 import { ErrorMessage as HookFormError } from '@hookform/error-message';
 import {
@@ -22,7 +22,7 @@ import {
   GroupBase,
   MultiValue,
   Select,
-  SingleValue,
+  SingleValue
 } from 'chakra-react-select';
 import { format, isMatch, parseISO } from 'date-fns';
 import {
@@ -30,7 +30,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useState,
+  useState
 } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
@@ -41,7 +41,7 @@ import {
   JmfRecommendation,
   UserOccupationSelection,
   UserProfile,
-  WorkingTime,
+  WorkingTime
 } from '../../@types';
 import { RegionSelectOption, RegionType, SelectOption } from './types';
 
@@ -59,14 +59,12 @@ import {
   EMPLOYMENT_TYPE_LABELS,
   formatAddress,
   getDefaultRegionOptions,
-  getDefaultSelectOption,
-  groupedRegionOptions,
+  getDefaultSelectOption, getGroupedNaceCodes, groupedRegionOptions,
   handleOccupationsForPayload,
   handleWorkPreferencesForPayload,
   pickRandomAddress,
   pickRandomName,
-  WORKING_TIME_LABELS,
-  getGroupedNaceCodes,
+  WORKING_TIME_LABELS
 } from './utils';
 
 // hooks
@@ -79,8 +77,8 @@ import useOccupationsFlat from '../../hooks/useOccupationsFlat';
 import Fieldset from '../Fieldset/Fieldset';
 import JmfRecommendationsSelect from '../JmfRecommendationsSelect/JmfRecommendationsSelect';
 import Loading from '../Loading/Loading';
-import UserOccupations from '../UserOccupations/UserOccupations';
 import NaceSelect from '../NaceSelect/NaceSelect';
+import UserOccupations from '../UserOccupations/UserOccupations';
 
 // api
 import api from '../../api';
@@ -208,14 +206,19 @@ export default function ProfileForm(props: ProfileFormProps) {
   );
 
   // Default workingPreferences.workingLanguageEnum
-  const defaultWorkingLanguageOption = useMemo(
-    () =>
-      getDefaultSelectOption(
-        workPreferences?.workingLanguageEnum || '',
+  const defaultWorkingLanguageOptions = useMemo(
+    () => (workPreferences?.workingLanguageEnum || []).reduce((options, wl) => {
+      const option = getDefaultSelectOption(
+        wl,
         languages,
         'twoLetterISOLanguageName',
         'englishName'
-      ),
+      );
+      if (option && option.length === 1) {
+        options.push(option[0]);
+      }
+      return options;
+    }, [] as SelectOption[]),
     [languages, workPreferences?.workingLanguageEnum]
   );
 
@@ -370,6 +373,17 @@ export default function ProfileForm(props: ProfileFormProps) {
       shouldDirty: true,
     });
     setValue('workPreferences.preferredMunicipalityEnum', municipalities, {
+      shouldDirty: true,
+    });
+  };
+
+  const handleWorkingLanguageChange = (
+    selections: MultiValue<SelectOption>
+  ) => {
+    const workingLanguages = selections
+      .map(r => r.value);
+
+    setValue('workPreferences.workingLanguageEnum', workingLanguages, {
       shouldDirty: true,
     });
   };
@@ -765,11 +779,11 @@ export default function ProfileForm(props: ProfileFormProps) {
                   )}
                   id="workPreferences.workingLanguageEnum"
                 >
-                  <FormLabel>Preferred working language</FormLabel>
-                  <Select<SelectOption, false, GroupBase<SelectOption>>
-                    isMulti={false}
+                  <FormLabel>Preferred working languages</FormLabel>
+                  <Select<SelectOption, true, GroupBase<SelectOption>>
+                    isMulti={true}
                     name="workPreferences.workingLanguageEnum"
-                    defaultValue={defaultWorkingLanguageOption}
+                    defaultValue={defaultWorkingLanguageOptions}
                     options={[
                       { label: 'English', value: 'en' },
                       { label: 'Finnish', value: 'fi' },
@@ -778,7 +792,7 @@ export default function ProfileForm(props: ProfileFormProps) {
                     placeholder="Type or select..."
                     closeMenuOnSelect={true}
                     size="md"
-                    onChange={handleSingleSelectChange}
+                    onChange={handleWorkingLanguageChange}
                   />
                 </FormControl>
               )}
