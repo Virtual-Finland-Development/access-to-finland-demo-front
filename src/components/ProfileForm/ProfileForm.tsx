@@ -779,7 +779,7 @@ export default function ProfileForm(props: ProfileFormProps) {
                   )}
                   id="workPreferences.workingLanguageEnum"
                 >
-                  <FormLabel>Preferred working language</FormLabel>
+                  <FormLabel>Preferred working languages</FormLabel>
                   <Select<SelectOption, true, GroupBase<SelectOption>>
                     isMulti={true}
                     name="workPreferences.workingLanguageEnum"
