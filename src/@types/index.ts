@@ -71,7 +71,7 @@ export interface WorkPreference {
   preferredMunicipalityEnum?: string[];
   employmentTypeCode?: EmploymentType;
   workingTimeEnum?: WorkingTime;
-  workingLanguageEnum?: string;
+  workingLanguageEnum?: string[];
   naceCode?: string | null;
 }
 
