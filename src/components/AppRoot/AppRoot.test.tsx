@@ -2,7 +2,7 @@ import userEvent from '@testing-library/user-event';
 import {
   customRender1,
   customRender2,
-  screen,
+  screen
 } from '../../testing/utils/testing-library-utils';
 import AppRoot from './AppRoot';
 
@@ -46,7 +46,7 @@ describe('Test app authentication based rendering', () => {
   test('User should be authenticated when directed to auth route with loginCode. After authentication, user fills profile information, saves profile and logs in to the app.', async () => {
     // user is redirected to auth route with loginCode query param, user should be logged in
     customRender2(<AppRoot />, {
-      initialEntries: ['/auth?provider=testbed&loginCode=123'],
+      initialEntries: ['/auth?provider=testbed&event=login&success=1&loginCode=123'],
     });
 
     const profileHeader = await screen.findByRole('heading', {
@@ -71,7 +71,7 @@ describe('Test app authentication based rendering', () => {
   test('User clicks sign out, logout request should occur.', async () => {
     // user is redirected to auth route with loginCode query param, user should be logged in
     customRender2(<AppRoot />, {
-      initialEntries: ['/auth?provider=testbed&loginCode=123'],
+      initialEntries: ['/auth?provider=testbed&event=login&success=1&loginCode=123'],
     });
 
     // logout button should be visible once user has authenticated (profile view)
