@@ -20,33 +20,39 @@ export async function checkConsent(
   dataSourceUri: string,
   consentToken?: string | null
 ): Promise<ConsentSituation> {
-  const idToken = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS).idToken;
-  const response = await axios.post(
-    `${AUTH_GW_BASE_URL}/consents/testbed/consent-check`,
-    JSON.stringify({
-      appContext: generateAppContextHash(),
-      dataSources: [{ uri: dataSourceUri, consentToken: consentToken }],
-    }),
-    {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-        'Content-Type': 'application/json',
-      },
+  try {
+    const idToken = JSONLocalStorage.get(LOCAL_STORAGE_AUTH_TOKENS).idToken;
+    const response = await axios.post(
+      `${AUTH_GW_BASE_URL}/consents/testbed/consent-check`,
+      JSON.stringify({
+        appContext: generateAppContextHash(),
+        dataSources: [{ uri: dataSourceUri, consentToken: consentToken }],
+      }),
+      {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    if (response.status !== 200 || !(response.data instanceof Array)) {
+      throw new Error('Invalid consent data response');
     }
-  );
 
-  if (response.status !== 200 || !(response.data instanceof Array)) {
-    throw new Error('Invalid consent data response');
+    const consentSituation = response.data.find(
+      (situation: { dataSource: string }) =>
+        situation.dataSource === dataSourceUri
+    );
+    if (!consentSituation) {
+      throw new Error('Invalid consent data response');
+    }
+    return consentSituation;
+  } catch (error) {
+    return {
+      consentStatus: 'error',
+    }
   }
-
-  const consentSituation = response.data.find(
-    (situation: { dataSource: string }) =>
-      situation.dataSource === dataSourceUri
-  );
-  if (!consentSituation) {
-    throw new Error('Invalid consent data response');
-  }
-  return consentSituation;
 }
 
 export function directToConsentService(consentSituation: ConsentSituation) {
