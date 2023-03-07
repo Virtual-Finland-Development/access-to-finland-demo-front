@@ -35,6 +35,7 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 
 // types
+import { ExternalLinkIcon } from '@chakra-ui/icons';
 import {
   EmploymentType,
   Gender,
@@ -837,22 +838,11 @@ export default function ProfileForm(props: ProfileFormProps) {
                     >
                       Give consent
                     </Button>
-                    <Button
-                      isDisabled={!isConsentGranted}
-                      colorScheme="red"
-                      variant="outline"
-                      onClick={() => {
-                        toast({
-                          title: 'Warning',
-                          description: 'Consent revoke not implemented yet',
-                          status: 'warning',
-                          duration: 5000,
-                          isClosable: true,
-                        });
-                      }}
-                    >
-                      Revoke consent
-                    </Button>
+                    {isConsentGranted && (
+                      <Link color="gray.500" href='https://consent.testbed.fi' isExternal>
+                        Revoke consent <ExternalLinkIcon />
+                      </Link>
+                    )}
                   </Stack>
                   <FormHelperText>
                     Your profile information will be used to improve search
