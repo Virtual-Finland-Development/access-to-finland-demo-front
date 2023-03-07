@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Link as ReactRouterLink,
   useLocation,
-  useNavigate,
+  useNavigate
 } from 'react-router-dom';
 
 // types
@@ -34,10 +34,14 @@ export default function Auth() {
   // parse query params
   const { search } = useLocation();
   const queryParams = useMemo(() => new URLSearchParams(search), [search]);
+  const eventParam = queryParams.get('event');
   const authProviderParam = queryParams.get('provider');
-  const loginCodeParam = queryParams.get('loginCode');
-  const logOutParam = queryParams.get('logout');
-  const errorParam = queryParams.get('error');
+  const successParam = queryParams.get('success') === 'true';
+  const messageParam = queryParams.get('message');
+
+  const loginCodeParam = eventParam === "login" && successParam && queryParams.get('loginCode');
+  const logOutParam = eventParam === "logout" && successParam && "success";
+  const errorParam = !successParam && messageParam;
   const errorType = queryParams.get('type');
   const authError = errorParam && errorType === 'danger';
 
