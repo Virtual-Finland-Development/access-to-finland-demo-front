@@ -838,10 +838,11 @@ export default function ProfileForm(props: ProfileFormProps) {
                     >
                       Give consent
                     </Button>
-                    
-                    <Link color="gray.500" href='https://consent.testbed.fi' isExternal>
-                      Revoke consent <ExternalLinkIcon />
-                    </Link>
+                    {isConsentGranted && (
+                      <Link color="gray.500" href='https://consent.testbed.fi' isExternal>
+                        Revoke consent <ExternalLinkIcon />
+                      </Link>
+                    )}
                   </Stack>
                   <FormHelperText>
                     Your profile information will be used to improve search
