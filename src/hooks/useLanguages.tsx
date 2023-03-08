@@ -10,7 +10,7 @@ export default function useLanguages() {
   const languagesQuery = useQuery(
     ['languages'],
     async () => {
-      const languages = await api.user.getLanguages();
+      const languages = await api.codesets.getLanguages();
       return languages;
     },
     {

@@ -10,7 +10,7 @@ import { TESTBED_API_BASE_URL, USERS_API_BASE_URL } from './endpoints';
 import {
   LOCAL_STORAGE_AUTH_PROVIDER,
   LOCAL_STORAGE_AUTH_TOKENS,
-  REQUEST_NOT_AUTHORIZED,
+  REQUEST_NOT_AUTHORIZED
 } from '../constants';
 
 // utils
@@ -22,11 +22,6 @@ const axiosInstance = axios.create();
 const USERS_API_URLS = [
   `${USERS_API_BASE_URL}/identity/verify`,
   `${USERS_API_BASE_URL}/user`,
-  `${USERS_API_BASE_URL}/code-sets/countries`,
-  `${USERS_API_BASE_URL}/code-sets/occupations`,
-  `${USERS_API_BASE_URL}/code-sets/occupations-flat`,
-  `${USERS_API_BASE_URL}/code-sets/languages`,
-  `${USERS_API_BASE_URL}/code-sets/genders`,
 ];
 
 const DATA_URLS = [
