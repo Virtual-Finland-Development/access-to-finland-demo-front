@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useMemo } from 'react';
 
 // types
 import { OccupationOption } from '../@types';
@@ -27,7 +27,7 @@ export default function useOccupations() {
   const occupationsQuery = useQuery(
     ['occupations'],
     async () => {
-      const occupations = await api.user.getOccupations();
+      const occupations = await api.codesets.getOccupations();
       return occupations;
     },
     {

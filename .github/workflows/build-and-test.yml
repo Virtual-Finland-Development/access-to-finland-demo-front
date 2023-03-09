@@ -72,6 +72,16 @@ jobs:
           stack: ${{ inputs.deployment_stage }}
           resource: cdnURL
           access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      - name: codesets url from Pulumi
+        if: ${{ inputs.deployment_stage }}
+        uses: Virtual-Finland-Development/pulumi-outputs-action@v1
+        id: codesets-url
+        with:
+          organization: virtualfinland
+          project: codesets
+          stack: ${{ inputs.deployment_stage }}
+          resource: url
+          access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
       # /pulumi outputs actions
       - name: App build
         if: ${{ inputs.deployment_stage }}
@@ -81,6 +91,7 @@ jobs:
           REACT_APP_USERS_API_BASE_URL: ${{ steps.users-api-url.outputs.resource-output }}
           REACT_APP_TESTBED_API_BASE_URL: ${{ steps.testbed-api-url.outputs.resource-output }}
           REACT_APP_EXT_REGISTRATION_SERVICE_URL: ${{ steps.external-service-demo-url.outputs.resource-output }}
+          REACT_APP_CODESETS_BASE_URL: ${{ steps.codesets-url.outputs.resource-output }}
       - name: Archive the build artifacts
         if: ${{ inputs.wants_artifacts }}
         uses: actions/upload-artifact@v3

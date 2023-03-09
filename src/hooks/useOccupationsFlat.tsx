@@ -10,7 +10,7 @@ export default function useOccupationsFlat() {
   const occupationsFlatQuery = useQuery(
     ['occupations-flat'],
     async () => {
-      const occupations = await api.user.getOccupationsFlat();
+      const occupations = await api.codesets.getOccupationsFlat();
       return occupations;
     },
     {

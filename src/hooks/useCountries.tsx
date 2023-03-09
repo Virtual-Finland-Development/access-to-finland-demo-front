@@ -10,7 +10,7 @@ export default function useCountries() {
   const countriesQuery = useQuery(
     ['countries'],
     async () => {
-      const countries = await api.user.getCountries();
+      const countries = await api.codesets.getCountries();
       return countries;
     },
     {
