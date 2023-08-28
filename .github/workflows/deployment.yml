@@ -1,6 +1,13 @@
 name: Deploy a stage
 
 on:
+  workflow_dispatch:
+    inputs:
+      deployment_stage:
+        description: 'Deployment stage'
+        required: true
+        type: environment
+        default: 'dev'
   workflow_call:
     inputs:
       deployment_stage:
