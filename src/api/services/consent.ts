@@ -13,7 +13,7 @@ export type ConsentSituation =
       consentStatus: 'verifyUserConsent';
       redirectUrl: string;
     }
-  | { consentStatus: 'noConsent' };
+  | { consentStatus: 'notChecked' };
 
 /**
  * Checks the consent status for a given data source URI.
