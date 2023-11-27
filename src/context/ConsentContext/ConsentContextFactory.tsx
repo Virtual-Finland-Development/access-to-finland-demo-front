@@ -1,12 +1,12 @@
 import { useToast } from '@chakra-ui/react';
 import {
-  Context,
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
+    Context,
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
 } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../../api';
@@ -28,7 +28,7 @@ function getDefaultContextState(
 ): ConsentContextState<ConsentDataSource> {
   return {
     dataSource: dataSource,
-    consentSituation: { consentStatus: '' },
+    consentSituation: { consentStatus: 'notChecked' },
     isConsentInitialized: false,
     isConsentGranted: false,
     redirectToConsentService: () => {},
@@ -53,7 +53,7 @@ function getConsentProvider(
     // Reactive flags and states
     //
     const [consentSituation, setConsentSituation] = useState<ConsentSituation>({
-      consentStatus: '',
+      consentStatus: 'notChecked',
     });
     const [isConsentInitialized, setIsConsentInitialized] =
       useState<boolean>(false);
@@ -99,7 +99,7 @@ function getConsentProvider(
         storedConsentToken
       );
 
-      if (responseSituation.consentToken) {
+      if (responseSituation.consentStatus === 'consentGranted') {
         sessionStorage.setItem(consentStoreKey, responseSituation.consentToken);
       } else if (storedConsentToken) {
         sessionStorage.removeItem(consentStoreKey);
