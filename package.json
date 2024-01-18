@@ -46,7 +46,7 @@
     "copy-pdf-worker": "cp ./node_modules/pdfjs-dist/build/pdf.worker.min.js ./public/",
     "start": "npm run copy-pdf-worker && react-scripts start",
     "build": "npm run copy-pdf-worker && react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
     "eject": "react-scripts eject"
   },
   "jest": {
